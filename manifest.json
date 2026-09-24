@@ -1,0 +1,22 @@
+{
+  "name": "Aura Sacra — Universal Christian Platform",
+  "short_name": "Aura Sacra",
+  "description": "An ecumenical, 100% offline spiritual platform with Scripture, prayer journal, sacred circadian themes, and dialogue with Jesus.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#141416",
+  "theme_color": "#c49a45",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

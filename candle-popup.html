@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Sacra — Living Candle (Pop-up Focus)</title>
+  <link rel="icon" type="image/png" href="./icons/favicon.png">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #1e1b18 0%, #0d0c0b 100%);
+      color: #eedfc7;
+      user-select: none;
+      font-family: var(--font-serif);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .popup-card {
+      width: 100%;
+      max-width: 310px;
+      background: rgba(24, 24, 28, 0.96);
+      border: 1px solid rgba(198, 146, 20, 0.45);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(198, 146, 20, 0.06);
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .btn-preset {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #b5a48f;
+      border-radius: 6px;
+      padding: 3px 7px;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-preset:hover, .btn-preset.active {
+      border-color: #c69214;
+      background: rgba(198, 146, 20, 0.2);
+      color: #ffb300;
+      font-weight: bold;
+    }
+    .btn-step {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e5a93b;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .btn-step:hover {
+      background: rgba(198, 146, 20, 0.25);
+      border-color: #c69214;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="popup-card">
+    
+    <!-- Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <img src="./icons/logo.png" alt="Aura Sacra" style="width: 22px; height: 22px; border-radius: 6px; border: 1px solid #c69214;">
+        <span style="font-family: var(--font-display); font-size: 13px; font-weight: bold; color: #c69214; letter-spacing: 1px;">AURA SACRA</span>
+      </div>
+      <span style="font-size: 10px; font-family: var(--font-sans); color: #c69214; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.3); padding: 2px 7px; border-radius: 10px; font-weight: 600;">Pop-up</span>
+    </div>
+
+    <!-- Animated Living Flame -->
+    <div style="padding: 12px 0 8px 0;">
+      <div class="candle-wrapper" style="transform: scale(1.15); margin-bottom: 8px;">
+        <div class="candle-flame"></div>
+        <div class="candle-wick"></div>
+        <div class="candle-body"></div>
+      </div>
+      <p style="font-size: 12px; font-style: italic; color: #b5a48f; margin: 6px 0 0 0;">
+        «I am the light of the world» • John 8:12
+      </p>
+    </div>
+
+    <!-- Timer Controls with Duration Modifiers -->
+    <div style="background: rgba(0,0,0,0.35); border-radius: 14px; padding: 12px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.08);">
+      
+      <!-- Modifier Row (-5m, Display, +5m) -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;">
+        <button id="btn-popup-sub5" class="btn-step" title="Subtract 5 minutes">-5</button>
+        
+        <div id="popup-timer-display" style="font-family: monospace; font-size: 34px; font-weight: bold; color: #ffb300; letter-spacing: 2px; min-width: 120px;">
+          25:00
+        </div>
+        
+        <button id="btn-popup-add5" class="btn-step" title="Add 5 minutes">+5</button>
+      </div>
+
+      <!-- Presets Row (5m, 15m, 25m, 45m, 60m) -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-bottom: 10px;">
+        <button class="btn-preset" data-min="5">5m</button>
+        <button class="btn-preset" data-min="15">15m</button>
+        <button class="btn-preset active" data-min="25">25m</button>
+        <button class="btn-preset" data-min="45">45m</button>
+        <button class="btn-preset" data-min="60">60m</button>
+      </div>
+
+      <!-- Action Buttons (Start / Pause, Reset) -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <button id="btn-popup-toggle" style="flex: 1; background: #b93b2c; color: white; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(185,59,44,0.4); transition: background 0.2s;">
+          Start
+        </button>
+        <button id="btn-popup-reset" style="background: #2a2a2e; color: #ccc; border: 1px solid #444; border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; transition: background 0.2s;">
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Procedural Rain Sound Controller -->
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <button id="btn-popup-rain" style="background: transparent; border: 1px solid #444; color: #ddd; border-radius: 8px; padding: 6px 10px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-family: var(--font-sans);">
+        🌧️ <span id="rain-text">Rain: Off</span>
+      </button>
+
+      <input type="range" id="popup-rain-vol" min="0" max="1" step="0.05" value="0.5" style="width: 80px; accent-color: #3b82f6; cursor: pointer;" title="Rain Volume">
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { toggleRain, isPlayingRain, setRainVolume, playMonasticBell } from './js/audio-engine.js';
+
+    let initialSeconds = 25 * 60;
+    let seconds = 25 * 60;
+    let timer = null;
+    let running = false;
+
+    const display = document.getElementById('popup-timer-display');
+    const toggleBtn = document.getElementById('btn-popup-toggle');
+    const resetBtn = document.getElementById('btn-popup-reset');
+    const sub5Btn = document.getElementById('btn-popup-sub5');
+    const add5Btn = document.getElementById('btn-popup-add5');
+    const presetBtns = document.querySelectorAll('.btn-preset');
+    const rainBtn = document.getElementById('btn-popup-rain');
+    const rainText = document.getElementById('rain-text');
+    const rainVol = document.getElementById('popup-rain-vol');
+
+    function update() {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      toggleBtn.textContent = running ? 'Pause' : 'Start';
+      toggleBtn.style.background = running ? '#d97706' : '#b93b2c';
+
+      presetBtns.forEach(btn => {
+        const min = parseInt(btn.getAttribute('data-min'));
+        if (min * 60 === initialSeconds) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (running) {
+        clearInterval(timer);
+        running = false;
+      } else {
+        running = true;
+        timer = setInterval(() => {
+          if (seconds > 0) {
+            seconds--;
+            update();
+          } else {
+            clearInterval(timer);
+            running = false;
+            playMonasticBell();
+            alert('Aura Sacra: Sacred contemplation / focus session completed! Take a gentle rest.');
+            seconds = initialSeconds;
+            update();
+          }
+        }, 1000);
+      }
+      update();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      clearInterval(timer);
+      running = false;
+      seconds = initialSeconds;
+      update();
+    });
+
+    sub5Btn.addEventListener('click', () => {
+      if (seconds > 5 * 60) {
+        seconds -= 5 * 60;
+      } else {
+        seconds = 60; // minimum 1 min
+      }
+      if (!running) {
+        initialSeconds = seconds;
+      }
+      update();
+    });
+
+    add5Btn.addEventListener('click', () => {
+      seconds += 5 * 60;
+      if (!running) {
+        initialSeconds = seconds;
+      }
+      update();
+    });
+
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const min = parseInt(btn.getAttribute('data-min'));
+        clearInterval(timer);
+        running = false;
+        initialSeconds = min * 60;
+        seconds = initialSeconds;
+        update();
+      });
+    });
+
+    rainBtn.addEventListener('click', () => {
+      const active = toggleRain();
+      rainText.textContent = active ? 'Rain: Active' : 'Rain: Off';
+      rainBtn.style.borderColor = active ? '#3b82f6' : '#444';
+      rainBtn.style.color = active ? '#60a5fa' : '#ddd';
+    });
+
+    rainVol.addEventListener('input', (e) => {
+      setRainVolume(parseFloat(e.target.value));
+    });
+
+    update();
+  </script>
+</body>
+</html>
