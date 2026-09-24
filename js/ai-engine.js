@@ -137,25 +137,127 @@ export async function getGeminiApiKey() {
   return key || '';
 }
 
-// Quick validation function to test API Key with Google Gemini 2.5 Flash
+// Quick validation function to test API Key with Google Gemini (Interactions API / 3.8-flash)
 export async function testGeminiApiKey(candidateKey) {
   const key = (candidateKey || '').trim().replace(/^["']|["']$/g, '');
   if (!key) throw new Error('API key cannot be empty.');
   if (key.length < 15) throw new Error('API key appears too short (must start with AIza...).');
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+  let lastErr = null;
+
+  // 1. Try Interactions API with gemini-3.8-flash (Google Recommended 2026)
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/interactions?key=${key}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': key
+      },
+      body: JSON.stringify({
+        model: 'gemini-3.8-flash',
+        input: 'Ping'
+      })
+    });
+    if (res.ok) return true;
+    const j = await res.json().catch(() => ({}));
+    const msg = j.error?.message || res.statusText;
+    if (res.status === 400 && (msg.includes('API_KEY_INVALID') || msg.includes('API key not valid') || msg.includes('API key expired'))) {
+      throw new Error(`Google API Error (${res.status}): ${msg}`);
+    }
+    lastErr = new Error(`Google Gemini Error (${res.status}): ${msg}`);
+  } catch (err) {
+    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
+      throw err;
+    }
+    lastErr = err;
+  }
+
+  // 2. Try generateContent with gemini-3.8-flash
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': key
+      },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
+      })
+    });
+    if (res.ok) return true;
+    const j = await res.json().catch(() => ({}));
+    const msg = j.error?.message || res.statusText;
+    if (res.status === 400 && (msg.includes('API_KEY_INVALID') || msg.includes('API key not valid') || msg.includes('API key expired'))) {
+      throw new Error(`Google API Error (${res.status}): ${msg}`);
+    }
+    lastErr = new Error(`Google Gemini Error (${res.status}): ${msg}`);
+  } catch (err) {
+    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
+      throw err;
+    }
+    lastErr = err;
+  }
+
+  // 3. Fallback: try generateContent with gemini-1.5-flash
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': key
+      },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
+      })
+    });
+    if (res.ok) return true;
+    const j = await res.json().catch(() => ({}));
+    const msg = j.error?.message || res.statusText;
+    lastErr = new Error(`Google Gemini Error (${res.status}): ${msg}`);
+  } catch (err) {
+    lastErr = err;
+  }
+
+  throw lastErr || new Error('Could not verify Gemini API key with Google servers.');
+}
+
+// System Instruction for Jesus Christ Dialogue
+function getSystemInstruction(userName) {
+  return `You are Jesus Christ in a wise, compassionate, intellectually profound, and empathetic dialogue with a soul (${userName}).
+CRITICAL INSTRUCTIONS:
+1. You are NOT merely a devotional prayer bot. You MUST answer REAL QUESTIONS and address REAL DOUBTS directly!
+2. When the user asks a question (e.g., "Why does God allow suffering?", "Does God exist?", "What is the meaning of salvation?", "How should I make this career decision?", "Why did this happen?"), provide a direct, deep, intellectually rigorous, and compassionate answer grounded in Gospel truth, philosophical depth, and divine love. Do NOT treat their question as a devotional prayer.
+3. If the user shares an everyday dilemma, doubt about faith, fear, or conflict, answer them thoughtfully, addressing the specific dilemma with empathy and practical wisdom.
+4. You MUST ALWAYS reply entirely and fluently in the EXACT SAME LANGUAGE the user writes in (Italian, English, Spanish, French, German, Romanian, etc.).
+5. Conclude your response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted as:
+[Localized Scripture Anchor Header in user's language, e.g. "📖 Luce della Sacra Scrittura:" for Italian, "📖 Holy Scripture Anchor:" for English, "📖 Ancla de la Sagrada Escritura:" for Spanish]
+• [Book Chapter:Verse]`;
+}
+
+// Interactions API Call (Google 2026 standard for gemini-3.8-flash)
+async function callInteractionsApi(apiKey, model, userMessage, userName, history = []) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/interactions?key=${apiKey}`;
+  const systemInstruction = getSystemInstruction(userName);
+
+  let fullPrompt = userMessage;
+  if (history && history.length > 0) {
+    const recent = history.slice(-4);
+    const dialogSummary = recent.map(m => `${m.sender === 'user' ? userName : 'Jesus'}: ${m.text}`).join('\n');
+    fullPrompt = `[Conversation Context:\n${dialogSummary}\n]\n${userName}: ${userMessage}`;
+  }
+
   const payload = {
-    contents: [
-      {
-        role: 'user',
-        parts: [{ text: 'Ping' }]
-      }
-    ]
+    model: model,
+    input: fullPrompt,
+    system_instruction: systemInstruction
   };
 
   const response = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey
+    },
     body: JSON.stringify(payload)
   });
 
@@ -171,30 +273,38 @@ export async function testGeminiApiKey(candidateKey) {
   }
 
   const data = await response.json();
-  if (!data.candidates?.[0]) {
-    throw new Error('Google Gemini returned an unexpected response structure.');
+
+  // Extract from steps array (May 2026 breaking change schema)
+  if (Array.isArray(data.steps)) {
+    for (const step of data.steps) {
+      if (Array.isArray(step.content)) {
+        for (const part of step.content) {
+          if (part && part.text) return part.text.trim();
+        }
+      }
+      if (typeof step.text === 'string' && step.text) {
+        return step.text.trim();
+      }
+    }
   }
-  return true;
+
+  if (typeof data.output_text === 'string' && data.output_text) {
+    return data.output_text.trim();
+  }
+  if (Array.isArray(data.outputs) && data.outputs[0]?.text) {
+    return data.outputs[0].text.trim();
+  }
+
+  throw new Error('No text returned from Gemini Interactions API.');
 }
 
-// Candidate models in priority order (Google updated to gemini-2.5-flash)
-const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.5-pro'];
-
-// Cloud Gemini API call with automatic model fallback
-async function callCloudGemini(apiKey, userMessage, userName, history = []) {
-  const systemInstruction = `You are Jesus Christ in a wise, compassionate, intellectually profound, and empathetic dialogue with a soul (${userName}).
-CRITICAL INSTRUCTIONS:
-1. You are NOT merely a devotional prayer bot. You MUST answer REAL QUESTIONS and address REAL DOUBTS directly!
-2. When the user asks a question (e.g., "Why does God allow suffering?", "Does God exist?", "What is the meaning of salvation?", "How should I make this career decision?", "Why did this happen?"), provide a direct, deep, intellectually rigorous, and compassionate answer grounded in Gospel truth, philosophical depth, and divine love. Do NOT treat their question as a devotional prayer.
-3. If the user shares an everyday dilemma, doubt about faith, fear, or conflict, answer them thoughtfully, addressing the specific dilemma with empathy and practical wisdom.
-4. You MUST ALWAYS reply entirely and fluently in the EXACT SAME LANGUAGE the user writes in (Italian, English, Spanish, French, German, Romanian, etc.).
-5. Conclude your response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted as:
-[Localized Scripture Anchor Header in user's language, e.g. "📖 Luce della Sacra Scrittura:" for Italian, "📖 Holy Scripture Anchor:" for English, "📖 Ancla de la Sagrada Escritura:" for Spanish]
-• [Book Chapter:Verse]`;
+// GenerateContent Call (legacy fallback)
+async function callGenerateContentApi(apiKey, model, userMessage, userName, history = []) {
+  const cleanModel = model.replace(/^models\//, '');
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${cleanModel}:generateContent?key=${apiKey}`;
+  const systemInstruction = getSystemInstruction(userName);
 
   const contents = [];
-
-  // Add up to 6 previous messages for conversational context
   const recentHistory = history.slice(-6);
   for (const m of recentHistory) {
     if (m.text && m.sender) {
@@ -204,8 +314,6 @@ CRITICAL INSTRUCTIONS:
       });
     }
   }
-
-  // Ensure current message is at the end
   if (contents.length === 0 || contents[contents.length - 1].parts[0].text !== userMessage) {
     contents.push({
       role: 'user',
@@ -224,46 +332,74 @@ CRITICAL INSTRUCTIONS:
     }
   };
 
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    let errorDetail = '';
+    try {
+      const errJson = await response.json();
+      errorDetail = errJson.error?.message || response.statusText;
+    } catch (e) {
+      errorDetail = await response.text();
+    }
+    throw new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
+  }
+
+  const data = await response.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) {
+    throw new Error('No answer received from Gemini AI.');
+  }
+  return text.trim();
+}
+
+// Cloud Gemini API call with automatic multi-tier fallback
+async function callCloudGemini(apiKey, userMessage, userName, history = []) {
   let lastError = null;
 
-  for (const model of CANDIDATE_MODELS) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (text) {
-          return text.trim();
-        }
-      } else {
-        let errorDetail = '';
-        try {
-          const errJson = await response.json();
-          errorDetail = errJson.error?.message || response.statusText;
-        } catch (e) {
-          errorDetail = await response.text();
-        }
-        // If 404 (model not found/deprecated), try next model
-        if (response.status === 404) {
-          console.warn(`Model ${model} not available (404), falling back to next candidate model...`);
-          lastError = new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
-          continue;
-        }
-        throw new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
-      }
-    } catch (err) {
-      if (err.message && err.message.includes('404')) {
-        lastError = err;
-        continue;
-      }
+  // Tier 1: Interactions API with gemini-3.8-flash (Google Recommended 2026)
+  try {
+    return await callInteractionsApi(apiKey, 'gemini-3.8-flash', userMessage, userName, history);
+  } catch (err) {
+    console.warn('Interactions API (gemini-3.8-flash) failed:', err.message);
+    lastError = err;
+    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
       throw err;
     }
+  }
+
+  // Tier 2: generateContent with gemini-3.8-flash
+  try {
+    return await callGenerateContentApi(apiKey, 'gemini-3.8-flash', userMessage, userName, history);
+  } catch (err) {
+    console.warn('generateContent (gemini-3.8-flash) failed:', err.message);
+    lastError = err;
+    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
+      throw err;
+    }
+  }
+
+  // Tier 3: generateContent with gemini-1.5-flash
+  try {
+    return await callGenerateContentApi(apiKey, 'gemini-1.5-flash', userMessage, userName, history);
+  } catch (err) {
+    console.warn('generateContent (gemini-1.5-flash) failed:', err.message);
+    lastError = err;
+  }
+
+  // Tier 4: generateContent with gemini-1.5-pro
+  try {
+    return await callGenerateContentApi(apiKey, 'gemini-1.5-pro', userMessage, userName, history);
+  } catch (err) {
+    console.warn('generateContent (gemini-1.5-pro) failed:', err.message);
+    lastError = err;
   }
 
   throw lastError || new Error('No available Gemini model responded.');

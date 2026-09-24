@@ -115,7 +115,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                 <span id="setting-key-feedback" class="text-[11px] font-sans"></span>
               </div>
               <p class="text-[10px] text-stone-400 italic">
-                Enables Google Gemini 2.5 Flash to answer questions and theological doubts. Stored safely on this device only.
+                Enables Google Gemini 3.8 Flash to answer questions and theological doubts. Stored safely on this device only.
               </p>
             </div>
 
@@ -199,7 +199,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
           return;
         }
         testKeyBtn.disabled = true;
-        feedbackSpan.textContent = 'Testing with Gemini 2.5 Flash...';
+        feedbackSpan.textContent = 'Testing with Gemini 3.8 Flash...';
         feedbackSpan.className = 'text-[11px] font-sans text-amber-600';
         try {
           await testGeminiApiKey(val);

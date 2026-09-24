@@ -80,7 +80,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
         statusBadge = `
           <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/10 text-amber-600 border border-amber-500/30 hover:bg-amber-500/20 transition cursor-pointer" title="Click to view or change Gemini API Key">
             ${icons.sparkles('w-3.5 h-3.5')}
-            <span>Gemini 2.5 Flash Active</span>
+            <span>Gemini 3.8 Flash Active</span>
             <span class="text-[9px] opacity-75 underline ml-0.5">change</span>
           </button>
         `;
