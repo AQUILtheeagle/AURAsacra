@@ -11,6 +11,7 @@ import {
   setGeminiApiKey 
 } from '../ai-engine.js';
 import { clearChatHistory, getSetting } from '../db.js';
+import { renderApiKeyModal } from './api-key-modal.js';
 
 export async function renderJesusChat(container, initialQuestion = null) {
   let messages = await loadConversationHistory();
@@ -21,6 +22,20 @@ export async function renderJesusChat(container, initialQuestion = null) {
 
   async function refreshStatus() {
     aiStatus = await checkAiStatus();
+  }
+
+  function openKeyModal() {
+    const modalRoot = document.getElementById('modals-container') || document.body;
+    renderApiKeyModal(
+      modalRoot,
+      async (newKey) => {
+        await refreshStatus();
+        renderView();
+      },
+      () => {
+        modalRoot.innerHTML = '';
+      }
+    );
   }
 
   // Listen to browser online/offline events
@@ -39,41 +54,42 @@ export async function renderJesusChat(container, initialQuestion = null) {
     if (!aiStatus.isOnline) {
       if (aiStatus.localGeminiStatus === 'ready') {
         statusBadge = `
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/30 hover:bg-emerald-500/20 transition cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>Gemini Nano (Offline On-Device)</span>
-          </span>
+          </button>
         `;
       } else {
         statusBadge = `
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-red-500/10 text-red-600 border border-red-500/30">
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-red-500/10 text-red-600 border border-red-500/30 hover:bg-red-500/20 transition cursor-pointer" title="Offline AI disabled. Click for options">
             ${icons.lock('w-3.5 h-3.5')}
             <span>Offline • Local Gemini Required</span>
-          </span>
+          </button>
         `;
       }
     } else {
       // Online
       if (aiStatus.localGeminiStatus === 'ready') {
         statusBadge = `
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/30 hover:bg-emerald-500/20 transition cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>Gemini Nano (On-Device)</span>
-          </span>
+          </button>
         `;
       } else if (aiStatus.hasApiKey) {
         statusBadge = `
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/10 text-amber-600 border border-amber-500/30">
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/10 text-amber-600 border border-amber-500/30 hover:bg-amber-500/20 transition cursor-pointer" title="Click to view or change Gemini API Key">
             ${icons.sparkles('w-3.5 h-3.5')}
-            <span>Gemini 2.0 Cloud Active</span>
-          </span>
+            <span>Gemini 2.5 Flash Active</span>
+            <span class="text-[9px] opacity-75 underline ml-0.5">change</span>
+          </button>
         `;
       } else {
         statusBadge = `
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-stone-500/10 text-stone-500 border border-stone-500/30">
-            ${icons.alert('w-3.5 h-3.5')}
-            <span>Setup Required</span>
-          </span>
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/25 transition cursor-pointer animate-pulse" title="Click to connect Gemini API Key">
+            ${icons.key('w-3.5 h-3.5')}
+            <span>Connect API Key</span>
+          </button>
         `;
       }
     }
@@ -102,6 +118,13 @@ export async function renderJesusChat(container, initialQuestion = null) {
 
           <div class="flex items-center gap-2">
             <div class="sm:hidden">${statusBadge}</div>
+
+            <!-- API Key Button (always visible so user can change/verify anytime) -->
+            <button id="btn-chat-api-key" class="text-xs px-2.5 py-1.5 rounded-xl border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 dark:text-amber-400 font-semibold transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Configure or Change Google Gemini API Key">
+              ${icons.key('w-3.5 h-3.5')}
+              <span class="font-sans">${aiStatus.hasApiKey ? 'Change Key' : 'API Key'}</span>
+            </button>
+
             <!-- Clear History Button -->
             <button id="btn-clear-chat" class="text-xs text-stone-400 hover:text-red-500 p-1.5 rounded-lg border border-stone-300/40 dark:border-stone-700/40 hover:border-red-500/40 transition flex items-center gap-1" title="Clear Chat History">
               ${icons.trash('w-3.5 h-3.5')}
@@ -174,28 +197,22 @@ export async function renderJesusChat(container, initialQuestion = null) {
               </div>
             ` : ''}
 
-            <!-- Quick API Key Input for Cloud Gemini -->
+            <!-- Quick Action to Connect API Key -->
             <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-xl p-3 space-y-2">
               <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-[var(--text-primary)]">Or connect with Google Gemini API Key:</span>
+                <span class="font-bold text-[var(--text-primary)]">Connect Google Gemini API Key:</span>
                 <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-amber-600 hover:underline flex items-center gap-0.5">
                   Get Free Key at Google AI Studio ↗
                 </a>
               </div>
-              <div class="flex items-center gap-2">
-                <input 
-                  type="password" 
-                  id="chat-quick-api-key" 
-                  placeholder="Paste your Gemini API key (AIza...)" 
-                  class="flex-1 bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs font-mono text-[var(--text-primary)] focus:outline-none focus:border-amber-600"
-                />
-                <button 
-                  id="btn-save-quick-api-key" 
-                  class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm transition"
-                >
-                  Connect
-                </button>
-              </div>
+              <button 
+                type="button" 
+                id="btn-open-key-modal-banner" 
+                class="w-full py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 cursor-pointer"
+              >
+                ${icons.key('w-4 h-4')}
+                <span>Configure & Verify Gemini API Key</span>
+              </button>
             </div>
 
           </div>
@@ -239,14 +256,32 @@ export async function renderJesusChat(container, initialQuestion = null) {
             </div>
           ` : messages.map((m) => {
             const isUser = m.sender === 'user';
+            const isErrorMessage = !isUser && (
+              m.text.includes('Google Gemini Error') || 
+              m.text.includes('API key') || 
+              m.text.includes('GEMINI_SETUP_REQUIRED') ||
+              m.text.includes('OFFLINE_GEMINI_REQUIRED') ||
+              m.text.includes('404') ||
+              m.text.includes('400')
+            );
             return `
               <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-fade-in">
                 <div class="max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-sm text-sm sm:text-base leading-relaxed ${
                   isUser 
                     ? 'bg-amber-700 text-white rounded-tr-none' 
-                    : 'bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-800 text-[var(--text-primary)] rounded-tl-none font-serif'
+                    : isErrorMessage
+                      ? 'bg-red-500/10 border-2 border-red-500/30 text-red-900 dark:text-red-200 rounded-tl-none font-sans'
+                      : 'bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-800 text-[var(--text-primary)] rounded-tl-none font-serif'
                 }">
                   <div class="whitespace-pre-wrap">${m.text}</div>
+                  ${isErrorMessage ? `
+                    <div class="pt-3 border-t border-red-500/20 mt-3 flex items-center gap-2">
+                      <button type="button" class="btn-bubble-change-key text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1.5 transition cursor-pointer">
+                        ${icons.key('w-3.5 h-3.5')}
+                        <span>Change / Verify API Key</span>
+                      </button>
+                    </div>
+                  ` : ''}
                 </div>
                 <span class="text-[10px] text-stone-400 mt-1 px-1 font-sans">
                   ${isUser ? (userName || 'You') : 'Jesus Christ'} • ${new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -316,7 +351,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
         if (!aiStatus.isOnline) {
           alert('Offline AI is disabled because the local Gemini model is not downloaded on this device. Please connect to the internet to download Gemini Nano or use online Gemini.');
         } else {
-          alert('Please enter your Google Gemini API key or download Gemini Nano in Chrome above to enable dialogue.');
+          openKeyModal();
         }
         return;
       }
@@ -330,6 +365,9 @@ export async function renderJesusChat(container, initialQuestion = null) {
         messages = await loadConversationHistory();
       } catch (err) {
         alert(err.message || 'Error communicating with Gemini AI.');
+        if (err.message && (err.message.includes('Google Gemini Error') || err.message.includes('API key') || err.message.includes('GEMINI_SETUP_REQUIRED') || err.message.includes('404') || err.message.includes('400'))) {
+          openKeyModal();
+        }
       } finally {
         isSubmitting = false;
         renderView();
@@ -344,6 +382,11 @@ export async function renderJesusChat(container, initialQuestion = null) {
         input.value = text;
         form.dispatchEvent(new Event('submit'));
       });
+    });
+
+    // API Key Modal open triggers
+    container.querySelectorAll('.btn-open-api-modal, .btn-bubble-change-key, #btn-chat-api-key, #btn-open-key-modal-banner').forEach(btn => {
+      btn.addEventListener('click', openKeyModal);
     });
 
     // Clear history handler

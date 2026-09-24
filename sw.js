@@ -30,6 +30,7 @@ const ASSETS_TO_CACHE = [
   './js/components/floating-candle.js',
   './js/components/share-card.js',
   './js/components/settings-modal.js',
+  './js/components/api-key-modal.js',
   './js/components/schedule-modal.js',
   './js/components/feedback-modal.js',
   './js/components/sos-temptation.js',

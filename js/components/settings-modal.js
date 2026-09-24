@@ -2,12 +2,13 @@
 import { getSetting, setSetting, exportAllData, importAllData } from '../db.js';
 import { setLiturgicalThemeOverride } from '../circadian.js';
 import { icons } from '../icons.js';
+import { getGeminiApiKey, setGeminiApiKey, testGeminiApiKey } from '../ai-engine.js';
 
 export async function renderSettingsModal(container, onClose, onRefresh) {
   const currentConfession = await getSetting('user_confession', 'ecumenical');
   const currentThemeOverride = await getSetting('theme_override', 'auto');
   const currentUserName = await getSetting('user_name', '');
-  const currentGeminiKey = (await getSetting('gemini_api_key', '')) || localStorage.getItem('aurasacra_gemini_api_key') || '';
+  const currentGeminiKey = await getGeminiApiKey();
 
   function render() {
     container.innerHTML = `
@@ -80,22 +81,41 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
             </div>
 
             <!-- API Key Input -->
-            <div class="space-y-1">
+            <div class="space-y-1.5">
               <div class="flex items-center justify-between text-xs">
                 <span class="text-[var(--text-secondary)] font-medium">Google Gemini API Key:</span>
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-amber-600 hover:underline flex items-center gap-0.5">
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-amber-600 hover:underline flex items-center gap-0.5 font-medium">
                   Get Free Key at Google AI Studio ↗
                 </a>
               </div>
-              <input 
-                type="password" 
-                id="setting-gemini-key" 
-                value="${currentGeminiKey}" 
-                placeholder="Paste your Gemini API key (starts with AIza...)" 
-                class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs font-mono text-[var(--text-primary)] focus:outline-none focus:border-amber-600"
-              />
+              <div class="relative flex items-center">
+                <input 
+                  type="password" 
+                  id="setting-gemini-key" 
+                  value="${currentGeminiKey}" 
+                  placeholder="Paste your Gemini API key (starts with AIza...)" 
+                  class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl pl-3 pr-20 py-2.5 text-xs font-mono text-[var(--text-primary)] focus:outline-none focus:border-amber-600"
+                />
+                <div class="absolute right-2 flex items-center gap-1">
+                  <button type="button" id="btn-toggle-setting-key-vis" class="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition" title="Show/Hide Key">
+                    ${icons.eye('w-4 h-4')}
+                  </button>
+                  <button type="button" id="btn-clear-setting-key" class="p-1 text-stone-400 hover:text-red-500 transition" title="Clear key">
+                    ${icons.close('w-3.5 h-3.5')}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Test Key & Status Row -->
+              <div class="flex items-center justify-between text-[11px] pt-0.5">
+                <button type="button" id="btn-test-setting-key" class="px-2.5 py-1 rounded-lg bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 border border-amber-600/30 flex items-center gap-1 font-semibold transition cursor-pointer">
+                  ${icons.sparkles('w-3 h-3')}
+                  <span>Test Connection</span>
+                </button>
+                <span id="setting-key-feedback" class="text-[11px] font-sans"></span>
+              </div>
               <p class="text-[10px] text-stone-400 italic">
-                Enables Gemini 2.0 to answer your questions, doubts, and life dilemmas. Stored safely on this device only.
+                Enables Google Gemini 2.5 Flash to answer questions and theological doubts. Stored safely on this device only.
               </p>
             </div>
 
@@ -135,7 +155,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
           </div>
 
           <!-- Save Button -->
-          <button id="btn-save-settings" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition transform active:scale-95">
+          <button id="btn-save-settings" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition transform active:scale-95 cursor-pointer">
             Save Settings
           </button>
 
@@ -146,6 +166,54 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
     // Handlers
     container.querySelector('#btn-close-settings').addEventListener('click', onClose);
 
+    // Toggle key visibility in settings
+    let isKeyHidden = true;
+    const keyInput = container.querySelector('#setting-gemini-key');
+    const toggleKeyBtn = container.querySelector('#btn-toggle-setting-key-vis');
+    if (toggleKeyBtn && keyInput) {
+      toggleKeyBtn.addEventListener('click', () => {
+        isKeyHidden = !isKeyHidden;
+        keyInput.type = isKeyHidden ? 'password' : 'text';
+        toggleKeyBtn.innerHTML = isKeyHidden ? icons.eye('w-4 h-4') : icons.eyeOff('w-4 h-4');
+      });
+    }
+
+    // Clear key input in settings
+    const clearKeyBtn = container.querySelector('#btn-clear-setting-key');
+    if (clearKeyBtn && keyInput) {
+      clearKeyBtn.addEventListener('click', () => {
+        keyInput.value = '';
+        keyInput.focus();
+      });
+    }
+
+    // Test key in settings
+    const testKeyBtn = container.querySelector('#btn-test-setting-key');
+    const feedbackSpan = container.querySelector('#setting-key-feedback');
+    if (testKeyBtn && keyInput && feedbackSpan) {
+      testKeyBtn.addEventListener('click', async () => {
+        const val = keyInput.value.trim().replace(/^["']|["']$/g, '');
+        if (!val) {
+          feedbackSpan.textContent = 'Please paste a key first.';
+          feedbackSpan.className = 'text-[11px] font-sans text-red-500 font-semibold';
+          return;
+        }
+        testKeyBtn.disabled = true;
+        feedbackSpan.textContent = 'Testing with Gemini 2.5 Flash...';
+        feedbackSpan.className = 'text-[11px] font-sans text-amber-600';
+        try {
+          await testGeminiApiKey(val);
+          feedbackSpan.textContent = '✓ Valid API Key!';
+          feedbackSpan.className = 'text-[11px] font-sans text-emerald-600 font-bold';
+        } catch (err) {
+          feedbackSpan.textContent = `✕ Error: ${err.message}`;
+          feedbackSpan.className = 'text-[11px] font-sans text-red-500 font-semibold';
+        } finally {
+          testKeyBtn.disabled = false;
+        }
+      });
+    }
+
     container.querySelector('#btn-save-settings').addEventListener('click', async () => {
       const confession = container.querySelector('#setting-confession').value;
       const theme = container.querySelector('#setting-theme').value;
@@ -154,10 +222,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
 
       await setSetting('user_confession', confession);
       await setSetting('user_name', userName);
-      await setSetting('gemini_api_key', geminiKey);
-      try {
-        localStorage.setItem('aurasacra_gemini_api_key', geminiKey);
-      } catch (e) {}
+      await setGeminiApiKey(geminiKey);
       await setLiturgicalThemeOverride(theme);
 
       onClose();

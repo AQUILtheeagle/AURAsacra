@@ -30,7 +30,7 @@ export async function checkAiStatus() {
   // 2. Check saved Gemini API Key
   let apiKey = '';
   try {
-    apiKey = (await getSetting('gemini_api_key', '')) || localStorage.getItem('aurasacra_gemini_api_key') || '';
+    apiKey = await getGeminiApiKey();
   } catch (e) {}
 
   const hasApiKey = Boolean(apiKey && apiKey.trim().length > 10);
@@ -106,16 +106,75 @@ CRITICAL RULES:
 
 // Set Gemini API Key
 export async function setGeminiApiKey(key) {
-  const trimmed = (key || '').trim();
+  const trimmed = (key || '').trim().replace(/^["']|["']$/g, '');
   await setSetting('gemini_api_key', trimmed);
   try {
-    localStorage.setItem('aurasacra_gemini_api_key', trimmed);
+    if (trimmed) {
+      localStorage.setItem('aurasacra_gemini_api_key', trimmed);
+    } else {
+      localStorage.removeItem('aurasacra_gemini_api_key');
+    }
   } catch (e) {}
+  return trimmed;
+}
+
+// Remove Gemini API Key completely
+export async function removeGeminiApiKey() {
+  return await setGeminiApiKey('');
 }
 
 // Get Gemini API Key
 export async function getGeminiApiKey() {
-  return (await getSetting('gemini_api_key', '')) || localStorage.getItem('aurasacra_gemini_api_key') || '';
+  let key = await getSetting('gemini_api_key', '');
+  if (!key) {
+    try {
+      key = localStorage.getItem('aurasacra_gemini_api_key') || '';
+    } catch (e) {}
+  }
+  if (typeof key === 'string') {
+    key = key.trim().replace(/^["']|["']$/g, '');
+  }
+  return key || '';
+}
+
+// Quick validation function to test API Key with Google Gemini 2.5 Flash
+export async function testGeminiApiKey(candidateKey) {
+  const key = (candidateKey || '').trim().replace(/^["']|["']$/g, '');
+  if (!key) throw new Error('API key cannot be empty.');
+  if (key.length < 15) throw new Error('API key appears too short (must start with AIza...).');
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+  const payload = {
+    contents: [
+      {
+        role: 'user',
+        parts: [{ text: 'Ping' }]
+      }
+    ]
+  };
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    let errorDetail = '';
+    try {
+      const errJson = await response.json();
+      errorDetail = errJson.error?.message || response.statusText;
+    } catch (e) {
+      errorDetail = await response.text();
+    }
+    throw new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
+  }
+
+  const data = await response.json();
+  if (!data.candidates?.[0]) {
+    throw new Error('Google Gemini returned an unexpected response structure.');
+  }
+  return true;
 }
 
 // Candidate models in priority order (Google updated to gemini-2.5-flash)
