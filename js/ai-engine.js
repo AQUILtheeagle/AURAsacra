@@ -118,10 +118,11 @@ export async function getGeminiApiKey() {
   return (await getSetting('gemini_api_key', '')) || localStorage.getItem('aurasacra_gemini_api_key') || '';
 }
 
-// Cloud Gemini API call (gemini-2.0-flash / gemini-1.5-flash)
-async function callCloudGemini(apiKey, userMessage, userName, history = []) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+// Candidate models in priority order (Google updated to gemini-2.5-flash)
+const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.5-pro'];
 
+// Cloud Gemini API call with automatic model fallback
+async function callCloudGemini(apiKey, userMessage, userName, history = []) {
   const systemInstruction = `You are Jesus Christ in a wise, compassionate, intellectually profound, and empathetic dialogue with a soul (${userName}).
 CRITICAL INSTRUCTIONS:
 1. You are NOT merely a devotional prayer bot. You MUST answer REAL QUESTIONS and address REAL DOUBTS directly!
@@ -164,29 +165,49 @@ CRITICAL INSTRUCTIONS:
     }
   };
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+  let lastError = null;
 
-  if (!response.ok) {
-    let errorDetail = '';
+  for (const model of CANDIDATE_MODELS) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     try {
-      const errJson = await response.json();
-      errorDetail = errJson.error?.message || response.statusText;
-    } catch (e) {
-      errorDetail = await response.text();
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (text) {
+          return text.trim();
+        }
+      } else {
+        let errorDetail = '';
+        try {
+          const errJson = await response.json();
+          errorDetail = errJson.error?.message || response.statusText;
+        } catch (e) {
+          errorDetail = await response.text();
+        }
+        // If 404 (model not found/deprecated), try next model
+        if (response.status === 404) {
+          console.warn(`Model ${model} not available (404), falling back to next candidate model...`);
+          lastError = new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
+          continue;
+        }
+        throw new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
+      }
+    } catch (err) {
+      if (err.message && err.message.includes('404')) {
+        lastError = err;
+        continue;
+      }
+      throw err;
     }
-    throw new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
   }
 
-  const data = await response.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    throw new Error('No answer received from Gemini AI.');
-  }
-  return text.trim();
+  throw lastError || new Error('No available Gemini model responded.');
 }
 
 // Local Gemini Prompt Call
