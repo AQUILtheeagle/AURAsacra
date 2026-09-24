@@ -232,25 +232,25 @@ export async function renderJesusChat(container, initialQuestion = null) {
                 Ask deep theological questions, explore personal doubts, discuss moral dilemmas, or share your daily life struggles. Powered by Gemini with direct scripture citations.
               </p>
 
-              <!-- Quick Questions & Doubts Prompt Chips -->
+              <!-- Quick Questions & Doubts Prompt Chips (English Only) -->
               <div class="flex flex-wrap justify-center gap-2 pt-3">
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  Perché Dio permette la sofferenza e le cose brutte?
+                  Why does God allow suffering and pain in the world?
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  Ho molti dubbi sulla mia fede ultimamente
+                  I have been struggling with doubts about my faith lately
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  Come posso sapere qual è la scelta giusta per la mia vita?
+                  How can I discern God's will for my life decisions?
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  Come superare il rancore verso chi mi ha fatto del male?
+                  How can I truly forgive someone who hurt me deeply?
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  Why does God allow pain and injustice in the world?
+                  How can I find inner peace and overcome anxiety?
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  How can I find inner peace amid severe anxiety?
+                  How do I pray when God seems completely silent?
                 </button>
               </div>
             </div>
