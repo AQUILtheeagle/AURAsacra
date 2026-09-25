@@ -11,14 +11,14 @@ export function renderBottomNav(container, activeTab, onNavigate, onOpenModal) {
   ];
 
   container.innerHTML = `
-    <div class="border-t border-stone-300 dark:border-stone-800 bg-[var(--bg-card)]/95 backdrop-blur-md px-2 py-2 flex items-center justify-around shadow-lg">
+    <div class="rounded-2xl sm:rounded-3xl border-2 border-stone-300/80 dark:border-stone-800 bg-[var(--bg-card)]/95 backdrop-blur-xl px-2 py-1.5 flex items-center justify-around shadow-2xl parchment-border">
       ${tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         return `
-          <button data-tab="${tab.id}" data-type="${tab.isModal ? 'modal' : 'tab'}" class="flex flex-col items-center justify-center flex-1 py-1 transition-colors cursor-pointer ${
+          <button data-tab="${tab.id}" data-type="${tab.isModal ? 'modal' : 'tab'}" class="flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all duration-200 cursor-pointer ${
             isActive 
-              ? 'text-[var(--accent-vermilion)] font-bold' 
-              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+              ? 'text-[var(--accent-vermilion)] font-bold bg-amber-500/10 scale-105 shadow-xs' 
+              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-stone-500/5'
           }">
             <div class="mb-0.5">${icons[tab.icon] ? icons[tab.icon]('w-5 h-5') : icons.sun('w-5 h-5')}</div>
             <span class="text-[10px] font-sans tracking-wide uppercase font-semibold">${tab.label}</span>
