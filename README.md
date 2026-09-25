@@ -66,16 +66,6 @@ Aura Sacra shifts its atmosphere based on your device clock:
 - 🌇 **18:00 – 21:59 (Sunset / Vespers)**: Amber candlelight peace.
 - 🕯️ **22:00 – 05:59 (Night / Compline)**: Deep cathedral slate and warm candlelight.
 
----
-
-
-## 🌐 Deploy to GitHub Pages (Free Hosting)
-
-1. Push this repository to GitHub.
-2. In your repository on GitHub, navigate to **Settings** > **Pages**.
-3. Under **Build and deployment**, select **Source: Deploy from a branch**.
-4. Choose the `main` branch and `/ (root)` folder, then click **Save**.
-5. Your PWA is live globally with automated HTTPS and Service Worker caching!
 
 ---
 
