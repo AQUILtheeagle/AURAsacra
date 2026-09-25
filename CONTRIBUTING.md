@@ -29,28 +29,6 @@ Ogni contributo al codice e ai contenuti deve rispettare i seguenti principi:
 
 ---
 
-## 🛠️ Configurazione dell'Ambiente di Sviluppo
-
-1. **Clona o scarica il repository**:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/aura-sacra.git
-   cd aura-sacra
-   ```
-
-2. **Avvia il server di sviluppo locale**:
-   Qualsiasi server statico leggero è sufficiente. Nel progetto è incluso un comodo script Python senza dipendenze:
-   ```bash
-   python3 serve.py 8080
-   ```
-   Apri `http://localhost:8080` nel browser.
-
-3. **Convenzioni di Codice**:
-   - Utilizza i moduli JavaScript standard (`import` / `export`).
-   - Mantieni l'interfaccia coerente utilizzando le classi utility di Tailwind CSS già configurate.
-   - Per le icone grafiche, utilizza le funzioni SVG semantiche definite in `js/icons.js`.
-
----
-
 ## 🤝 Inviare un Contributo
 
 1. Esegui il Fork del repository su GitHub.
