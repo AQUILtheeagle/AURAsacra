@@ -1,61 +1,77 @@
-# Contributing to Aura Sacra 🕊️
+# Come Contribuire ad Aura Sacra 🕊️
 
-Thank you for your interest in contributing to **Aura Sacra**! This project is an ecumenical, universal, and 100% offline-first Christian Progressive Web App (PWA).
-
-## 🌿 Core Guiding Principles
-
-1. **Zero Build Steps & Pure Vanilla Architecture**:
-   - The application is written in standard modern JavaScript (ES Modules).
-   - There are **no Node.js/npm build tools, bundlers, or transpilers** required.
-   - Any browser can run the app directly, ensuring extreme longevity, transparency, and independence from complex toolchains.
-
-2. **100% Data Sovereignty & User Privacy**:
-   - No user data, notes, prayers, highlights, or journal entries ever leave the device.
-   - All state is stored locally in client-side **IndexedDB** with localStorage fallback mirroring.
-   - Full JSON import/export is provided for users to own their data.
-
-3. **Ecumenical & Universal Respect**:
-   - Aura Sacra embraces Christians across traditions: Catholic, Eastern Orthodox, Protestant / Evangelical, and seekers of faith.
-   - Biblical and theological content should remain ecumenical, respectful of canonical heritage, and deeply grounded in the Gospel.
-
-4. **Honest & Safe AI Policy**:
-   - The dialogue assistant connects to Google Gemini (either via Chrome's on-device Gemini Nano Prompt API or online Gemini API).
-   - If the local Gemini model is not downloaded on device and the user is offline, offline dialogue is strictly disabled to prevent misleading or canned responses.
+Grazie per il tuo interesse a contribuire ad **Aura Sacra**!  
+Questo progetto è un'applicazione web progressiva (PWA) cristiana, ecumenica, contemplativa e orientata al funzionamento 100% offline e alla massima sovranità dei dati personali.
 
 ---
 
-## 🛠️ Development Setup
+## 🌿 Principi Guida Fondamentali
 
-1. **Clone the repository**:
+Ogni contributo al codice e ai contenuti deve rispettare i seguenti principi:
+
+### 1. Architettura Pura & Zero Strumenti di Build
+- L'applicazione è sviluppata in **JavaScript moderno standard (ES Modules)**.
+- Non vengono utilizzati bundler, transpiler o toolchain complesse (nessun bisogno di Node.js, npm, Webpack o Vite).
+- Qualsiasi browser moderno può eseguire direttamente il progetto aprendo i file, garantendo la massima longevità nel tempo, trasparenza e indipendenza tecnologica.
+
+### 2. Sovranità dei Dati & Privacy al 100%
+- Nessun dato dell'utente (note personali, preghiere, evidenziazioni bibliche o riflessioni del diario) lascia mai il dispositivo.
+- Lo stato viene archiviato unicamente sul browser dell'utente tramite **IndexedDB** (con fallback/mirror in `localStorage`).
+- È sempre garantita la funzione di esportazione e importazione completa del proprio archivio in formato aperto JSON.
+
+### 3. Rispetto Ecumenico & Fedeltà Evangelica
+- Aura Sacra accoglie cristiani di ogni tradizione storica: cattolici, ortodossi, protestanti / evangelici e chiunque sia in cammino di ricerca spirituale.
+- I contenuti biblici e le riflessioni devono preservare un tono accogliente, rispettoso dell'eredità canonica e saldamente radicato nel Vangelo.
+
+### 4. Politica Trasparente sull'Intelligenza Artificiale
+- L'assistente spirituale per il dialogo si interfaccia con la serie **Google Gemini 3** (tramite chiave API personale) oppure con il modello on-device integrato nel browser (Chrome Gemini Nano).
+- Se il modello locale non è installato e l'utente è offline, la chat viene disattivata con chiarezza per prevenire risposte allucinate o finte risposte predefinite.
+
+---
+
+## 🛠️ Configurazione dell'Ambiente di Sviluppo
+
+1. **Clona o scarica il repository**:
    ```bash
    git clone https://github.com/YOUR_USERNAME/aura-sacra.git
    cd aura-sacra
    ```
 
-2. **Run the local development server**:
-   Any lightweight static server will do. We include a zero-dependency Python script:
+2. **Avvia il server di sviluppo locale**:
+   Qualsiasi server statico leggero è sufficiente. Nel progetto è incluso un comodo script Python senza dipendenze:
    ```bash
    python3 serve.py 8080
    ```
-   Open `http://localhost:8080` in any modern browser.
+   Apri `http://localhost:8080` nel browser.
 
-3. **Code Style**:
-   - Use standard ES Modules (`import` / `export`).
-   - Style with Tailwind CSS utility classes.
-   - Use semantic SVG icons located in `js/icons.js`.
-
----
-
-## 🤝 Submitting Contributions
-
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/my-new-feature`.
-3. Test your changes thoroughly across themes (Dawn, Midday, Sunset, Night) and in offline mode.
-4. Commit with clear, descriptive messages: `git commit -m "Add feature X"`.
-5. Push to your fork and submit a Pull Request.
+3. **Convenzioni di Codice**:
+   - Utilizza i moduli JavaScript standard (`import` / `export`).
+   - Mantieni l'interfaccia coerente utilizzando le classi utility di Tailwind CSS già configurate.
+   - Per le icone grafiche, utilizza le funzioni SVG semantiche definite in `js/icons.js`.
 
 ---
 
-## 📜 License
+## 🤝 Inviare un Contributo
 
-By contributing to Aura Sacra, you agree that your contributions will be licensed under the project's [MIT License](LICENSE).
+1. Esegui il Fork del repository su GitHub.
+2. Crea un branch dedicato alla tua modifica:
+   ```bash
+   git checkout -b feature/nome-funzionalita
+   ```
+3. Verifica con cura le modifiche:
+   - Assicurati che l'interfaccia funzioni armoniosamente in tutti e 4 i temi liturgici (*Aurora, Mezzogiorno, Tramonto, Notte*).
+   - Verifica il corretto funzionamento in modalità offline disattivando la rete nei DevTools del browser.
+4. Esegui il commit con messaggi descrittivi e ordinati:
+   ```bash
+   git commit -m "Descrizione chiara del contributo"
+   ```
+5. Invia il branch al tuo fork e apri una **Pull Request**.
+
+---
+
+## 📜 Licenza
+
+Contribuendo ad Aura Sacra, accetti che il tuo codice e i tuoi contributi siano rilasciati e distribuiti secondo i termini della licenza **GNU General Public License v3 (GNU GPL v3)**.  
+Consulta il file [LICENSE](LICENSE) per tutti i termini e le condizioni legali.
+
+*Aura Sacra • Soli Deo Gloria*
