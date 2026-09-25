@@ -287,13 +287,33 @@ p, span, div, .font-serif {
   transition: padding-top 0.3s ease, background-color 0.5s ease;
 }
 
+/* ==========================================================================
+   Mobile Floating Bottom Navigation Dock (Detached from bottom / Non attaccata al fondo)
+   ========================================================================== */
+#bottom-nav-container {
+  position: fixed;
+  left: 14px;
+  right: 14px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  z-index: 40;
+  pointer-events: none;
+  transition: bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#bottom-nav-container > * {
+  pointer-events: auto;
+}
+
 @media all and (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
   #navbar-container {
     padding-top: max(28px, env(safe-area-inset-top, 0px));
   }
 
   #bottom-nav-container {
-    padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
   }
 }
 
@@ -302,7 +322,7 @@ html.is-standalone-app #navbar-container {
 }
 
 html.is-standalone-app #bottom-nav-container {
-  padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
 }
 
 /* Sacred Scripture Shield: Guarantees browser translation engines do not alter sacred Word */

@@ -297,7 +297,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
         ${
           selectedCount > 0
             ? `
-          <div class="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 shadow-2xl rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 max-w-xl w-[92%] animate-fade-in parchment-border">
+          <div class="fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 shadow-2xl rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 max-w-xl w-[92%] animate-fade-in parchment-border">
             
             <div class="flex items-center gap-2">
               <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
