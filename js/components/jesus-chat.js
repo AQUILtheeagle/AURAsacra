@@ -15,6 +15,24 @@ import {
 import { clearChatHistory, getSetting } from '../db.js';
 import { renderApiKeyModal } from './api-key-modal.js';
 
+// Format dialogue messages and shield Holy Scripture citations from browser translation
+function formatChatMessage(text) {
+  if (!text) return '';
+  const lines = text.split('\n');
+  return lines.map((line) => {
+    const trimmed = line.trim();
+    if (
+      trimmed.includes('📖') ||
+      trimmed.includes('Scripture Anchor') ||
+      (trimmed.startsWith('•') && /\d+:\d+/.test(trimmed)) ||
+      /^[1-3]?\s?[A-Za-z]+ \d+:\d+/.test(trimmed)
+    ) {
+      return `<div class="notranslate font-semibold text-amber-700 dark:text-amber-400 py-0.5" translate="no">${line}</div>`;
+    }
+    return `<div>${line || '&nbsp;'}</div>`;
+  }).join('');
+}
+
 export async function renderJesusChat(container, initialQuestion = null) {
   let messages = await loadConversationHistory();
   const userName = (await getSetting('user_name', '')) || 'Child of God';
@@ -277,7 +295,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
                       ? 'bg-red-500/10 border-2 border-red-500/30 text-red-900 dark:text-red-200 rounded-tl-none font-sans'
                       : 'bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-800 text-[var(--text-primary)] rounded-tl-none font-serif'
                 }">
-                  <div class="whitespace-pre-wrap">${m.text}</div>
+                  <div class="space-y-1">${formatChatMessage(m.text)}</div>
                   ${isErrorMessage ? `
                     <div class="pt-3 border-t border-red-500/20 mt-3 flex items-center gap-2">
                       <button type="button" class="btn-bubble-change-key text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1.5 transition cursor-pointer">

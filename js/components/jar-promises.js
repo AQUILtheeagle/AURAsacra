@@ -42,16 +42,16 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
             </div>
           ` : `
             <!-- Revealed Promise Parchment Scroll -->
-            <div class="space-y-4 animate-scale-up">
+            <div class="space-y-4 animate-scale-up notranslate" translate="no">
               
-              <div class="bg-[var(--bg-parchment)] border-2 border-amber-600/50 rounded-xl p-5 shadow-inner">
+              <div class="bg-[var(--bg-parchment)] border-2 border-amber-600/50 rounded-xl p-5 shadow-inner notranslate" translate="no">
                 <div class="text-center border-b border-stone-300 dark:border-stone-800 pb-2 mb-3">
-                  <span class="text-xs font-display font-bold text-amber-600 uppercase tracking-widest">
+                  <span class="text-xs font-display font-bold text-amber-600 uppercase tracking-widest notranslate" translate="no">
                     ${drawnPromise.ref.split('/')[0].trim()}
                   </span>
                 </div>
 
-                <blockquote class="text-base sm:text-lg font-serif italic text-[var(--text-primary)] text-center leading-relaxed mb-4">
+                <blockquote class="text-base sm:text-lg font-serif italic text-[var(--text-primary)] text-center leading-relaxed mb-4 notranslate" translate="no">
                   «${drawnPromise.verse || drawnPromise.verse_en}»
                 </blockquote>
 

@@ -157,10 +157,10 @@ export async function getGeminiApiKey() {
 
 // Available Cloud Gemini Models (2026 Gemini 3 Active Generation)
 export const AVAILABLE_MODELS = [
-  { id: 'gemini-3.7-flash', name: 'Gemini 3.7 Flash', badge: 'Gemini 3.7 Flash Active', desc: 'Consigliato (Massima stabilità, velocità elevata e zero 503)' },
-  { id: 'gemini-3.8-flash', name: 'Gemini 3.8 Flash', badge: 'Gemini 3.8 Flash Active', desc: 'Nuovo (Ragionamento avanzato, soggetto a picchi di carico 503)' },
-  { id: 'gemini-3.5-flash', name: 'Gemini 3.5 Flash', badge: 'Gemini 3.5 Flash Active', desc: 'Veloce & Affidabile (Fallback rapido)' },
-  { id: 'gemini-3.5-flash-lite', name: 'Gemini 3.5 Flash-Lite', badge: 'Gemini 3.5 Flash-Lite Active', desc: 'Leggero & Immediato' }
+  { id: 'gemini-3.7-flash', name: 'Gemini 3.7 Flash', badge: 'Gemini 3.7 Flash Active', desc: 'Recommended (Maximum stability, high speed, and zero 503s)' },
+  { id: 'gemini-3.8-flash', name: 'Gemini 3.8 Flash', badge: 'Gemini 3.8 Flash Active', desc: 'New (Advanced reasoning, subject to 503 load spikes)' },
+  { id: 'gemini-3.5-flash', name: 'Gemini 3.5 Flash', badge: 'Gemini 3.5 Flash Active', desc: 'Fast & Reliable (Rapid fallback)' },
+  { id: 'gemini-3.5-flash-lite', name: 'Gemini 3.5 Flash-Lite', badge: 'Gemini 3.5 Flash-Lite Active', desc: 'Lightweight & Immediate' }
 ];
 
 // Model preference storage (Default to stable gemini-3.7-flash)
@@ -241,9 +241,9 @@ CRITICAL INSTRUCTIONS:
 1. You are NOT merely a devotional prayer bot. You MUST answer REAL QUESTIONS and address REAL DOUBTS directly!
 2. When the user asks a question (e.g., "Why does God allow suffering?", "Does God exist?", "What is the meaning of salvation?", "How should I make this career decision?", "Why did this happen?"), provide a direct, deep, intellectually rigorous, and compassionate answer grounded in Gospel truth, philosophical depth, and divine love. Do NOT treat their question as a devotional prayer.
 3. If the user shares an everyday dilemma, doubt about faith, fear, or conflict, answer them thoughtfully, addressing the specific dilemma with empathy and practical wisdom.
-4. You MUST ALWAYS reply entirely and fluently in the EXACT SAME LANGUAGE the user writes in (Italian, English, Spanish, French, German, Romanian, etc.).
-5. Conclude your response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted as:
-[Localized Scripture Anchor Header in user's language, e.g. "📖 Luce della Sacra Scrittura:" for Italian, "📖 Holy Scripture Anchor:" for English, "📖 Ancla de la Sagrada Escritura:" for Spanish]
+4. You MUST reply clearly and articulately in English (or match the user's language if they ask in another tongue).
+5. Conclude your response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted strictly as:
+📖 Holy Scripture Anchor:
 • [Book Chapter:Verse]`;
 }
 

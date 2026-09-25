@@ -43,7 +43,7 @@ export async function renderSaintsView(container, onOpenShareCard) {
                 </div>
 
                 <!-- Quote -->
-                <blockquote class="my-4 text-base italic font-serif text-[var(--text-primary)] border-l-4 border-amber-600/60 pl-3 py-1">
+                <blockquote class="my-4 text-base italic font-serif text-[var(--text-primary)] border-l-4 border-amber-600/60 pl-3 py-1 notranslate" translate="no">
                   ${saint.quote || saint.quote_en}
                 </blockquote>
 
@@ -54,7 +54,7 @@ export async function renderSaintsView(container, onOpenShareCard) {
 
               <!-- Card Footer: Scripture Ref & Share -->
               <div class="pt-3 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between">
-                <span class="text-xs font-mono font-semibold text-amber-600">
+                <span class="text-xs font-mono font-semibold text-amber-600 notranslate" translate="no">
                   📖 ${saint.scriptureRef}
                 </span>
 

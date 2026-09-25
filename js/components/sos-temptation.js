@@ -42,19 +42,19 @@ export function renderSOSTemptationModal(container, onClose) {
           </div>
 
           <!-- Scripture Shield of Victory -->
-          <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-800 rounded-xl p-4 text-left space-y-2">
-            <div class="flex items-center gap-2 text-xs font-bold text-red-500 uppercase tracking-wider">
+          <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-800 rounded-xl p-4 text-left space-y-2 notranslate" translate="no">
+            <div class="flex items-center gap-2 text-xs font-bold text-red-500 uppercase tracking-wider notranslate" translate="no">
               ${icons.cross('w-4 h-4')}
-              <span>Shield Scripture • 1 Corinthians 10:13</span>
+              <span class="notranslate" translate="no">Shield Scripture • 1 Corinthians 10:13</span>
             </div>
-            <p class="text-sm font-serif italic text-[var(--text-primary)] leading-relaxed">
+            <p class="text-sm font-serif italic text-[var(--text-primary)] leading-relaxed notranslate" translate="no">
               «God is faithful, and he will not let you be tempted beyond what you can bear; but when you are tempted, he will also provide a way out so that you can endure it.»
             </p>
           </div>
 
           <!-- Instant Prayer of Victory -->
-          <div class="border-l-4 border-red-600 bg-red-500/10 rounded-r-xl p-3 text-left text-xs sm:text-sm font-serif italic text-[var(--text-primary)]">
-            <span class="font-bold not-italic text-red-600 block mb-1">Instant Heart Prayer:</span>
+          <div class="border-l-4 border-red-600 bg-red-500/10 rounded-r-xl p-3 text-left text-xs sm:text-sm font-serif italic text-[var(--text-primary)] notranslate" translate="no">
+            <span class="font-bold not-italic text-red-600 block mb-1 notranslate" translate="no">Instant Heart Prayer:</span>
             «Lord Jesus Christ, Son of the Living God, have mercy on me. Break this chain of temptation, guard my eyes, my mind, and my hands. Grant me Your holy victory and peace. Amen!»
           </div>
 

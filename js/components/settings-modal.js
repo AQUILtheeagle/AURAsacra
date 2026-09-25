@@ -48,7 +48,8 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
             </label>
             <select id="setting-confession" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm text-[var(--text-primary)]">
               <option value="catholic" ${currentConfession === 'catholic' ? 'selected' : ''}>Catholic (Roman)</option>
-              <option value="orthodox" ${currentConfession === 'orthodox' ? 'selected' : ''}>Orthodox (Eastern)</option>
+              <option value="traditional" ${currentConfession === 'traditional' ? 'selected' : ''}>Traditional Catholic (Latin 1962 / Ember Days)</option>
+              <option value="orthodox" ${currentConfession === 'orthodox' ? 'selected' : ''}>Orthodox (Eastern Byzantine)</option>
               <option value="protestant" ${currentConfession === 'protestant' ? 'selected' : ''}>Protestant / Evangelical</option>
               <option value="ecumenical" ${currentConfession === 'ecumenical' ? 'selected' : ''}>Ecumenical / Spiritual Seeker</option>
             </select>
@@ -126,7 +127,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
               <!-- Gemini Model Selection -->
               <div class="space-y-1.5 pt-2">
                 <label for="setting-gemini-model" class="block text-[11px] font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
-                  Gemini AI Model / Versione:
+                  Gemini AI Model / Version:
                 </label>
                 <select id="setting-gemini-model" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer">
                   ${AVAILABLE_MODELS.map(m => `
@@ -136,7 +137,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                   `).join('')}
                 </select>
                 <p class="text-[10px] text-stone-400 italic">
-                  Raccomandato: <strong>Gemini 3.7 Flash</strong> per la massima stabilità e risposte immediate senza errori 503. Se scegli 3.8 Flash e il server è sovraccarico, scala automaticamente a 3.7 Flash.
+                  Recommended: <strong>Gemini 3.7 Flash</strong> for maximum stability and instant responses without 503 errors. If you choose 3.8 Flash and the server is busy, it automatically falls back to 3.7 Flash.
                 </p>
               </div>
             </div>
@@ -244,6 +245,11 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
       const geminiModel = container.querySelector('#setting-gemini-model').value;
 
       await setSetting('user_confession', confession);
+      await setSetting('confession', confession);
+      await setSetting('penance_tradition', confession);
+      try {
+        localStorage.setItem('aurasacra_user_confession', confession);
+      } catch (e) {}
       await setSetting('user_name', userName);
       await setGeminiApiKey(geminiKey);
       setSelectedGeminiModel(geminiModel);
