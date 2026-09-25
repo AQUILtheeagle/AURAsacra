@@ -87,22 +87,6 @@ Aura Sacra è una **Progressive Web App (PWA)** e può essere installata come un
 
 ---
 
-## 💻 Come Avviare l'App in Locale
-
-Se utilizzi l'applicazione in locale sul tuo computer:
-
-1. Apri il terminale nella cartella di Aura Sacra.
-2. Avvia il server locale con Python:
-   ```bash
-   python3 serve.py 8080
-   ```
-3. Apri il browser all'indirizzo:
-   ```
-   http://localhost:8080
-   ```
-
----
-
 ## 📜 Licenza
 
 Questo progetto è software libero distribuito sotto i termini della licenza **GNU General Public License v3 (GNU GPL v3)**.  
