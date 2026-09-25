@@ -27,7 +27,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
               Google Gemini API Key
             </h2>
             <p class="text-xs text-[var(--text-muted)] italic font-serif">
-              Answers real questions, doubts, and dilemmas with Google Gemini 3.8 Flash
+              Answers real questions, doubts, and dilemmas with Google Gemini (2.5 & 3.8 Flash)
             </p>
           </div>
 
@@ -234,7 +234,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
         isTesting = true;
         statusMessage = {
           type: 'loading',
-          text: 'Contacting Google Gemini 3.8 Flash to verify key...'
+          text: 'Verifying API Key with Google Gemini...'
         };
         render();
 

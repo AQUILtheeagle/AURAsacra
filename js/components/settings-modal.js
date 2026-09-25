@@ -2,13 +2,21 @@
 import { getSetting, setSetting, exportAllData, importAllData } from '../db.js';
 import { setLiturgicalThemeOverride } from '../circadian.js';
 import { icons } from '../icons.js';
-import { getGeminiApiKey, setGeminiApiKey, testGeminiApiKey } from '../ai-engine.js';
+import { 
+  getGeminiApiKey, 
+  setGeminiApiKey, 
+  testGeminiApiKey,
+  getSelectedGeminiModel,
+  setSelectedGeminiModel,
+  AVAILABLE_MODELS
+} from '../ai-engine.js';
 
 export async function renderSettingsModal(container, onClose, onRefresh) {
   const currentConfession = await getSetting('user_confession', 'ecumenical');
   const currentThemeOverride = await getSetting('theme_override', 'auto');
   const currentUserName = await getSetting('user_name', '');
   const currentGeminiKey = await getGeminiApiKey();
+  const currentGeminiModel = getSelectedGeminiModel();
 
   function render() {
     container.innerHTML = `
@@ -114,9 +122,23 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                 </button>
                 <span id="setting-key-feedback" class="text-[11px] font-sans"></span>
               </div>
-              <p class="text-[10px] text-stone-400 italic">
-                Enables Google Gemini 3.8 Flash to answer questions and theological doubts. Stored safely on this device only.
-              </p>
+
+              <!-- Gemini Model Selection -->
+              <div class="space-y-1.5 pt-2">
+                <label for="setting-gemini-model" class="block text-[11px] font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
+                  Gemini AI Model / Versione:
+                </label>
+                <select id="setting-gemini-model" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer">
+                  ${AVAILABLE_MODELS.map(m => `
+                    <option value="${m.id}" ${currentGeminiModel === m.id ? 'selected' : ''}>
+                      ${m.name} - ${m.desc}
+                    </option>
+                  `).join('')}
+                </select>
+                <p class="text-[10px] text-stone-400 italic">
+                  Raccomandato: <strong>Gemini 2.5 Flash</strong> per la massima stabilità e zero errori 503. Se scegli 3.8 Flash e il server è saturo, scala automaticamente a 2.5 Flash.
+                </p>
+              </div>
             </div>
 
             <!-- Offline Policy Notice -->
@@ -199,7 +221,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
           return;
         }
         testKeyBtn.disabled = true;
-        feedbackSpan.textContent = 'Testing with Gemini 3.8 Flash...';
+        feedbackSpan.textContent = 'Testing Gemini API Key...';
         feedbackSpan.className = 'text-[11px] font-sans text-amber-600';
         try {
           await testGeminiApiKey(val);
@@ -219,10 +241,12 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
       const theme = container.querySelector('#setting-theme').value;
       const userName = container.querySelector('#setting-username').value.trim();
       const geminiKey = container.querySelector('#setting-gemini-key').value.trim();
+      const geminiModel = container.querySelector('#setting-gemini-model').value;
 
       await setSetting('user_confession', confession);
       await setSetting('user_name', userName);
       await setGeminiApiKey(geminiKey);
+      setSelectedGeminiModel(geminiModel);
       await setLiturgicalThemeOverride(theme);
 
       onClose();
