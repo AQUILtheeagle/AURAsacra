@@ -17,6 +17,13 @@
   <meta name="apple-mobile-web-app-title" content="Aura Sacra">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
   
+  <!-- Instant Web App Standalone Detection (lowers top bar immediately without layout flash) -->
+  <script>
+    if (window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: fullscreen)').matches) {
+      document.documentElement.classList.add('is-standalone-app');
+    }
+  </script>
+
   <!-- Tailwind CSS CDN for rapid utility classes -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>

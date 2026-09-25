@@ -276,9 +276,39 @@ p, span, div, .font-serif {
   }
 }
 
+/* ==========================================================================
+   Web App (PWA) Standalone Mobile Display Mode
+   When running as an installed Web App on iOS or Android, lower the top bar
+   so it clears the status bar, notch, and Dynamic Island.
+   ========================================================================== */
+#navbar-container {
+  width: 100%;
+  background-color: var(--bg-secondary);
+  transition: padding-top 0.3s ease, background-color 0.5s ease;
+}
+
+@media all and (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
+  #navbar-container {
+    padding-top: max(28px, env(safe-area-inset-top, 0px));
+  }
+
+  #bottom-nav-container {
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+html.is-standalone-app #navbar-container {
+  padding-top: max(28px, env(safe-area-inset-top, 0px));
+}
+
+html.is-standalone-app #bottom-nav-container {
+  padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+}
+
 /* Sacred Scripture Shield: Guarantees browser translation engines do not alter sacred Word */
 .notranslate,
 [translate="no"] {
   /* W3C & Google Translate marker to protect canonical biblical verses from machine corruption */
 }
+
 

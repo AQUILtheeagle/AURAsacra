@@ -30,7 +30,31 @@ import { renderToolsModal } from './components/tools-modal.js';
 let activeTab = 'bible';
 let pendingPrayerForJesus = null;
 
+// Standalone Web App (PWA) Mode Detection
+function setupStandaloneDetection() {
+  const check = () => {
+    const isStandalone = (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia('(display-mode: fullscreen)').matches ||
+      window.matchMedia('(display-mode: minimal-ui)').matches ||
+      window.navigator.standalone === true ||
+      document.referrer.includes('android-app://')
+    );
+    if (isStandalone) {
+      document.documentElement.classList.add('is-standalone-app');
+    } else {
+      document.documentElement.classList.remove('is-standalone-app');
+    }
+  };
+
+  check();
+  try {
+    window.matchMedia('(display-mode: standalone)').addEventListener('change', check);
+  } catch (e) {}
+}
+
 async function bootstrap() {
+  setupStandaloneDetection();
   try { await initDB(); } catch (e) { console.warn('IndexedDB init:', e); }
   try { await initCircadianTheme(); } catch (e) { console.warn('Circadian init:', e); }
   try { await initSchedule(); } catch (e) { console.warn('Schedule init:', e); }
