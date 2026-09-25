@@ -94,6 +94,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
     // Group books by testament for clean categorized dropdown
     const testamentGroups = {
       'Old Testament': [],
+      'Deuterocanon & Apocrypha': [],
       'Wisdom & Poetry': [],
       'Prophets': [],
       'Gospels': [],

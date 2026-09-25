@@ -1204,6 +1204,286 @@ export const BIBLE_BOOKS = [
     ]
   },
   {
+    "id": "1esd",
+    "title": "1 Esdras",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "id": "2esd",
+    "title": "2 Esdras",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  {
+    "id": "tob",
+    "title": "Tobit",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  {
+    "id": "jdt",
+    "title": "Judith",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  {
+    "id": "aesth",
+    "title": "Additions to Esther",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  {
+    "id": "wis",
+    "title": "Wisdom of Solomon",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ]
+  },
+  {
+    "id": "sir",
+    "title": "Sirach (Ecclesiasticus)",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  {
+    "id": "bar",
+    "title": "Baruch",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  {
+    "id": "prazar",
+    "title": "Prayer of Azariah",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1
+    ]
+  },
+  {
+    "id": "sus",
+    "title": "Susanna",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1
+    ]
+  },
+  {
+    "id": "bel",
+    "title": "Bel and the Dragon",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1
+    ]
+  },
+  {
+    "id": "man",
+    "title": "Prayer of Manasseh",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1
+    ]
+  },
+  {
+    "id": "1macc",
+    "title": "1 Maccabees",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  {
+    "id": "2macc",
+    "title": "2 Maccabees",
+    "testament": "Deuterocanon & Apocrypha",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  {
     "id": "matt",
     "title": "Matthew",
     "testament": "Gospels",
@@ -3412,12 +3692,54 @@ export let SCRIPTURE_TEXTS = {
       ]
     }
   },
+
+  "sir": {
+    2: {
+      title: "Sirach (Ecclesiasticus) Chapter 2",
+      verses: [
+        { v: 1, text: "My son, if thou come to serve the Lord, prepare thy soul for temptation.", en: "My son, if thou come to serve the Lord, prepare thy soul for temptation." },
+        { v: 2, text: "Set thy heart aright, and constantly endure, and make not haste in time of trouble.", en: "Set thy heart aright, and constantly endure, and make not haste in time of trouble." },
+        { v: 3, text: "Cleave unto him, and depart not away, that thou mayest be increased at thy last end.", en: "Cleave unto him, and depart not away, that thou mayest be increased at thy last end." },
+        { v: 4, text: "Whatsoever is brought upon thee take cheerfully, and be patient when thou art changed to a low estate.", en: "Whatsoever is brought upon thee take cheerfully, and be patient when thou art changed to a low estate." },
+        { v: 5, text: "For gold is tried in the fire, and acceptable men in the furnace of adversity.", en: "For gold is tried in the fire, and acceptable men in the furnace of adversity." },
+        { v: 6, text: "Believe in him, and he will help thee; order thy way aright, and trust in him.", en: "Believe in him, and he will help thee; order thy way aright, and trust in him." },
+        { v: 7, text: "Ye that fear the Lord, wait for his mercy; and go not aside, lest ye fall.", en: "Ye that fear the Lord, wait for his mercy; and go not aside, lest ye fall." },
+        { v: 8, text: "Ye that fear the Lord, believe him; and your reward shall not fail.", en: "Ye that fear the Lord, believe him; and your reward shall not fail." },
+        { v: 9, text: "Ye that fear the Lord, hope for good, and for everlasting joy and mercy.", en: "Ye that fear the Lord, hope for good, and for everlasting joy and mercy." },
+        { v: 10, text: "Look at the generations of old, and see; did ever any trust in the Lord, and was confounded? or did any abide in his fear, and was forsaken? or whom did he ever despise, that called upon him?", en: "Look at the generations of old, and see; did ever any trust in the Lord, and was confounded? or did any abide in his fear, and was forsaken? or whom did he ever despise, that called upon him?" },
+        { v: 11, text: "For the Lord is full of compassion and mercy, longsuffering, and very pitiful, and forgiveth sins, and saveth in time of affliction.", en: "For the Lord is full of compassion and mercy, longsuffering, and very pitiful, and forgiveth sins, and saveth in time of affliction." },
+        { v: 12, text: "Woe be to fearful hearts, and faint hands, and the sinner that goeth two ways!", en: "Woe be to fearful hearts, and faint hands, and the sinner that goeth two ways!" },
+        { v: 13, text: "Woe unto him that is fainthearted! for he believeth not; therefore shall he not be defended.", en: "Woe unto him that is fainthearted! for he believeth not; therefore shall he not be defended." },
+        { v: 14, text: "Woe unto you that have lost patience! and what will ye do when the Lord shall visit you?", en: "Woe unto you that have lost patience! and what will ye do when the Lord shall visit you?" },
+        { v: 15, text: "They that fear the Lord will not disobey his Word; and they that love him will keep his ways.", en: "They that fear the Lord will not disobey his Word; and they that love him will keep his ways." },
+        { v: 16, text: "They that fear the Lord will seek that which is well, pleasing unto him; and they that love him shall be filled with the law.", en: "They that fear the Lord will seek that which is well, pleasing unto him; and they that love him shall be filled with the law." },
+        { v: 17, text: "They that fear the Lord will prepare their hearts, and humble their souls in his sight,", en: "They that fear the Lord will prepare their hearts, and humble their souls in his sight," },
+        { v: 18, text: "Saying, We will fall into the hands of the Lord, and not into the hands of men: for as his majesty is, so is his mercy.", en: "Saying, We will fall into the hands of the Lord, and not into the hands of men: for as his majesty is, so is his mercy." }
+      ]
+    }
+  },
+  "wis": {
+    3: {
+      title: "Wisdom of Solomon Chapter 3",
+      verses: [
+        { v: 1, text: "But the souls of the righteous are in the hand of God, and there shall no torment touch them.", en: "But the souls of the righteous are in the hand of God, and there shall no torment touch them." },
+        { v: 2, text: "In the sight of the unwise they seemed to die: and their departure is taken for misery,", en: "In the sight of the unwise they seemed to die: and their departure is taken for misery," },
+        { v: 3, text: "And their going from us to be utter destruction: but they are in peace.", en: "And their going from us to be utter destruction: but they are in peace." },
+        { v: 4, text: "For though they be punished in the sight of men, yet is their hope full of immortality.", en: "For though they be punished in the sight of men, yet is their hope full of immortality." },
+        { v: 5, text: "And having been a little chastised, they shall be greatly rewarded: for God proved them, and found them worthy for himself.", en: "And having been a little chastised, they shall be greatly rewarded: for God proved them, and found them worthy for himself." },
+        { v: 6, text: "As gold in the furnace hath he tried them, and received them as a burnt offering.", en: "As gold in the furnace hath he tried them, and received them as a burnt offering." },
+        { v: 7, text: "And in the time of their visitation they shall shine, and run to and fro like sparks among the stubble.", en: "And in the time of their visitation they shall shine, and run to and fro like sparks among the stubble." },
+        { v: 8, text: "They shall judge the nations, and have dominion over the people, and their Lord shall reign for ever.", en: "They shall judge the nations, and have dominion over the people, and their Lord shall reign for ever." },
+        { v: 9, text: "They that put their trust in him shall understand the truth: and such as be faithful in love shall abide with him: for grace and mercy is to his saints, and he hath care for his elect.", en: "They that put their trust in him shall understand the truth: and such as be faithful in love shall abide with him: for grace and mercy is to his saints, and he hath care for his elect." }
+      ]
+    }
+  },
 };
 
 let bibleLoaded = false;
 let bibleLoadPromise = null;
 
-// Asynchronously loads all 66 canonical books (31,102 verses) from data/bible-kjv.json
+// Asynchronously loads all 80 canonical and deuterocanonical books (36,819 verses) from data/bible-kjv.json
 export async function ensureFullBibleLoaded() {
   if (bibleLoaded) return SCRIPTURE_TEXTS;
   if (bibleLoadPromise) return bibleLoadPromise;

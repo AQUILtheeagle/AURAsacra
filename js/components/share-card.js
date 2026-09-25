@@ -52,6 +52,7 @@ export async function renderShareCardModal(container, initialQuote = '', initial
 
     const testamentGroups = {
       'Old Testament': [],
+      'Deuterocanon & Apocrypha': [],
       'Wisdom & Poetry': [],
       'Prophets': [],
       'Gospels': [],
