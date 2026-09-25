@@ -14,17 +14,35 @@ export async function checkAiStatus() {
   // 1. Check Chrome on-device Gemini Nano (Prompt API)
   let localGeminiStatus = 'unsupported'; // 'ready' | 'needs_download' | 'unsupported'
   try {
-    const aiObj = (typeof window !== 'undefined') ? (window.ai || window.model) : null;
-    if (aiObj && aiObj.languageModel) {
-      const caps = await aiObj.languageModel.capabilities();
-      if (caps && caps.available === 'readily') {
-        localGeminiStatus = 'ready';
-      } else if (caps && caps.available === 'after-download') {
-        localGeminiStatus = 'needs_download';
+    if (typeof window !== 'undefined' && window.LanguageModel) {
+      if (typeof window.LanguageModel.availability === 'function') {
+        const avail = await window.LanguageModel.availability();
+        if (avail === 'available' || avail === 'readily') {
+          localGeminiStatus = 'ready';
+        } else if (avail === 'downloadable' || avail === 'after-download' || avail === 'downloading') {
+          localGeminiStatus = 'needs_download';
+        }
+      } else if (typeof window.LanguageModel.capabilities === 'function') {
+        const caps = await window.LanguageModel.capabilities();
+        if (caps && (caps.available === 'readily' || caps.available === 'available')) {
+          localGeminiStatus = 'ready';
+        } else if (caps && (caps.available === 'after-download' || caps.available === 'downloadable')) {
+          localGeminiStatus = 'needs_download';
+        }
+      }
+    } else {
+      const aiObj = (typeof window !== 'undefined') ? (window.ai || window.model) : null;
+      if (aiObj && aiObj.languageModel) {
+        const caps = await aiObj.languageModel.capabilities();
+        if (caps && (caps.available === 'readily' || caps.available === 'available')) {
+          localGeminiStatus = 'ready';
+        } else if (caps && (caps.available === 'after-download' || caps.available === 'downloadable')) {
+          localGeminiStatus = 'needs_download';
+        }
       }
     }
   } catch (e) {
-    // Window.ai not supported on this browser
+    // Unsupported or error checking capabilities
   }
 
   // 2. Check saved Gemini API Key
@@ -74,9 +92,9 @@ export async function checkAiStatus() {
 
 // Download Chrome Gemini Nano model to device
 export async function downloadLocalGemini(onProgress) {
-  const aiObj = (typeof window !== 'undefined') ? (window.ai || window.model) : null;
-  if (!aiObj || !aiObj.languageModel) {
-    throw new Error('Local Gemini Nano is not supported in this browser. Please use Chrome 128+ with Prompt API enabled.');
+  const lmFactory = (typeof window !== 'undefined') ? (window.LanguageModel || (window.ai && window.ai.languageModel) || (window.model && window.model.languageModel)) : null;
+  if (!lmFactory || typeof lmFactory.create !== 'function') {
+    throw new Error('Local Gemini Nano is not supported in this browser. Please use Chrome with Prompt API enabled.');
   }
 
   const systemPrompt = `You are Jesus Christ engaging in a wise, compassionate, intellectually deep, and empathetic spiritual dialogue.
@@ -88,7 +106,7 @@ CRITICAL RULES:
 [Localized Scripture Anchor Header]
 • [Book Chapter:Verse]`;
 
-  const session = await aiObj.languageModel.create({
+  const session = await lmFactory.create({
     systemPrompt: systemPrompt,
     monitor(m) {
       m.addEventListener('downloadprogress', (e) => {
@@ -137,85 +155,76 @@ export async function getGeminiApiKey() {
   return key || '';
 }
 
-// Quick validation function to test API Key with Google Gemini (Interactions API / 3.8-flash)
+// Available Cloud Gemini Models (2026 Active Standards)
+export const AVAILABLE_MODELS = [
+  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', badge: 'Gemini 2.5 Flash Active', desc: 'Consigliato (Alta stabilità, velocità elevata)' },
+  { id: 'gemini-3.8-flash', name: 'Gemini 3.8 Flash', badge: 'Gemini 3.8 Flash Active', desc: 'Nuovo (Ragionamento avanzato, soggetto a picchi di carico 503)' },
+  { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', badge: 'Gemini 2.5 Pro Active', desc: 'Profondo (Riflessione teologica e complessa)' }
+];
+
+// Model preference storage
+export function getSelectedGeminiModel() {
+  try {
+    return localStorage.getItem('aurasacra_gemini_model') || 'gemini-2.5-flash';
+  } catch (e) {
+    return 'gemini-2.5-flash';
+  }
+}
+
+export function setSelectedGeminiModel(model) {
+  try {
+    localStorage.setItem('aurasacra_gemini_model', model);
+  } catch (e) {}
+}
+
+// Quick validation function to test API Key with Google Gemini
 export async function testGeminiApiKey(candidateKey) {
   const key = (candidateKey || '').trim().replace(/^["']|["']$/g, '');
   if (!key) throw new Error('API key cannot be empty.');
   if (key.length < 15) throw new Error('API key appears too short (must start with AIza...).');
 
   let lastErr = null;
+  // Test with stable gemini-2.5-flash first, fallback to 3.8 and 2.5-pro (1.5 models are deprecated)
+  const testModels = ['gemini-2.5-flash', 'gemini-3.8-flash', 'gemini-2.5-pro'];
 
-  // 1. Try Interactions API with gemini-3.8-flash (Google Recommended 2026)
-  try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/interactions?key=${key}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': key
-      },
-      body: JSON.stringify({
-        model: 'gemini-3.8-flash',
-        input: 'Ping'
-      })
-    });
-    if (res.ok) return true;
-    const j = await res.json().catch(() => ({}));
-    const msg = j.error?.message || res.statusText;
-    if (res.status === 400 && (msg.includes('API_KEY_INVALID') || msg.includes('API key not valid') || msg.includes('API key expired'))) {
-      throw new Error(`Google API Error (${res.status}): ${msg}`);
-    }
-    lastErr = new Error(`Google Gemini Error (${res.status}): ${msg}`);
-  } catch (err) {
-    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
-      throw err;
-    }
-    lastErr = err;
-  }
+  for (const model of testModels) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-  // 2. Try generateContent with gemini-3.8-flash
-  try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${key}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': key
-      },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
-      })
-    });
-    if (res.ok) return true;
-    const j = await res.json().catch(() => ({}));
-    const msg = j.error?.message || res.statusText;
-    if (res.status === 400 && (msg.includes('API_KEY_INVALID') || msg.includes('API key not valid') || msg.includes('API key expired'))) {
-      throw new Error(`Google API Error (${res.status}): ${msg}`);
-    }
-    lastErr = new Error(`Google Gemini Error (${res.status}): ${msg}`);
-  } catch (err) {
-    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
-      throw err;
-    }
-    lastErr = err;
-  }
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': key
+        },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
 
-  // 3. Fallback: try generateContent with gemini-1.5-flash
-  try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': key
-      },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
-      })
-    });
-    if (res.ok) return true;
-    const j = await res.json().catch(() => ({}));
-    const msg = j.error?.message || res.statusText;
-    lastErr = new Error(`Google Gemini Error (${res.status}): ${msg}`);
-  } catch (err) {
-    lastErr = err;
+      if (res.ok) return true;
+
+      const j = await res.json().catch(() => ({}));
+      const msg = j.error?.message || res.statusText;
+
+      // Definite authentication/key invalid error
+      if (res.status === 400 && (msg.includes('API_KEY_INVALID') || msg.includes('API key not valid') || msg.includes('API key expired') || msg.includes('PERMISSION_DENIED'))) {
+        throw new Error(`Google API Error (${res.status}): ${msg}`);
+      }
+      lastErr = new Error(`Google Gemini Error (${res.status}): ${msg}`);
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        lastErr = new Error(`Timeout testing ${model}. Google server slow or overloaded.`);
+        continue;
+      }
+      if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired') || err.message.includes('PERMISSION_DENIED'))) {
+        throw err;
+      }
+      lastErr = err;
+    }
   }
 
   throw lastErr || new Error('Could not verify Gemini API key with Google servers.');
@@ -234,72 +243,8 @@ CRITICAL INSTRUCTIONS:
 • [Book Chapter:Verse]`;
 }
 
-// Interactions API Call (Google 2026 standard for gemini-3.8-flash)
-async function callInteractionsApi(apiKey, model, userMessage, userName, history = []) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/interactions?key=${apiKey}`;
-  const systemInstruction = getSystemInstruction(userName);
-
-  let fullPrompt = userMessage;
-  if (history && history.length > 0) {
-    const recent = history.slice(-4);
-    const dialogSummary = recent.map(m => `${m.sender === 'user' ? userName : 'Jesus'}: ${m.text}`).join('\n');
-    fullPrompt = `[Conversation Context:\n${dialogSummary}\n]\n${userName}: ${userMessage}`;
-  }
-
-  const payload = {
-    model: model,
-    input: fullPrompt,
-    system_instruction: systemInstruction
-  };
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': apiKey
-    },
-    body: JSON.stringify(payload)
-  });
-
-  if (!response.ok) {
-    let errorDetail = '';
-    try {
-      const errJson = await response.json();
-      errorDetail = errJson.error?.message || response.statusText;
-    } catch (e) {
-      errorDetail = await response.text();
-    }
-    throw new Error(`Google Gemini Error (${response.status}): ${errorDetail}`);
-  }
-
-  const data = await response.json();
-
-  // Extract from steps array (May 2026 breaking change schema)
-  if (Array.isArray(data.steps)) {
-    for (const step of data.steps) {
-      if (Array.isArray(step.content)) {
-        for (const part of step.content) {
-          if (part && part.text) return part.text.trim();
-        }
-      }
-      if (typeof step.text === 'string' && step.text) {
-        return step.text.trim();
-      }
-    }
-  }
-
-  if (typeof data.output_text === 'string' && data.output_text) {
-    return data.output_text.trim();
-  }
-  if (Array.isArray(data.outputs) && data.outputs[0]?.text) {
-    return data.outputs[0].text.trim();
-  }
-
-  throw new Error('No text returned from Gemini Interactions API.');
-}
-
-// GenerateContent Call (legacy fallback)
-async function callGenerateContentApi(apiKey, model, userMessage, userName, history = []) {
+// GenerateContent Call with Timeout and Resilient Parsing
+async function callGenerateContentApi(apiKey, model, userMessage, userName, history = [], timeoutMs = 12000) {
   const cleanModel = model.replace(/^models\//, '');
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${cleanModel}:generateContent?key=${apiKey}`;
   const systemInstruction = getSystemInstruction(userName);
@@ -332,14 +277,28 @@ async function callGenerateContentApi(apiKey, model, userMessage, userName, hist
     }
   };
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': apiKey
-    },
-    body: JSON.stringify(payload)
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  let response;
+  try {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+  } catch (err) {
+    clearTimeout(timeoutId);
+    if (err.name === 'AbortError') {
+      throw new Error(`Timeout (${timeoutMs / 1000}s) waiting for ${model}. Google server slow or overloaded.`);
+    }
+    throw err;
+  }
+  clearTimeout(timeoutId);
 
   if (!response.ok) {
     let errorDetail = '';
@@ -355,51 +314,43 @@ async function callGenerateContentApi(apiKey, model, userMessage, userName, hist
   const data = await response.json();
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) {
-    throw new Error('No answer received from Gemini AI.');
+    throw new Error(`No answer received from Gemini AI (${model}).`);
   }
   return text.trim();
 }
 
-// Cloud Gemini API call with automatic multi-tier fallback
+// Cloud Gemini API call with automatic multi-tier fallback (No deprecated models)
 async function callCloudGemini(apiKey, userMessage, userName, history = []) {
+  const selectedModel = getSelectedGeminiModel();
+
+  // Modern active model fallback pipeline:
+  // Discontinued/deprecated models (gemini-1.5-flash, gemini-1.5-pro) are removed.
+  let candidateModels;
+  if (selectedModel === 'gemini-3.8-flash') {
+    candidateModels = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.5-pro'];
+  } else if (selectedModel === 'gemini-2.5-pro') {
+    candidateModels = ['gemini-2.5-pro', 'gemini-2.5-flash', 'gemini-3.8-flash'];
+  } else {
+    // Default: gemini-2.5-flash (fastest and most stable)
+    candidateModels = ['gemini-2.5-flash', 'gemini-3.8-flash', 'gemini-2.5-pro'];
+  }
+
   let lastError = null;
 
-  // Tier 1: Interactions API with gemini-3.8-flash (Google Recommended 2026)
-  try {
-    return await callInteractionsApi(apiKey, 'gemini-3.8-flash', userMessage, userName, history);
-  } catch (err) {
-    console.warn('Interactions API (gemini-3.8-flash) failed:', err.message);
-    lastError = err;
-    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
-      throw err;
+  for (const model of candidateModels) {
+    try {
+      // 10-second timeout per attempt to avoid hanging on unstable servers
+      return await callGenerateContentApi(apiKey, model, userMessage, userName, history, 10000);
+    } catch (err) {
+      console.warn(`Model ${model} failed, attempting next model in pipeline:`, err.message);
+      lastError = err;
+
+      // Fail fast on definitely invalid API key
+      if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired') || err.message.includes('PERMISSION_DENIED'))) {
+        throw err;
+      }
+      // Continue to next model for 503, 500, 429, 404, or timeouts
     }
-  }
-
-  // Tier 2: generateContent with gemini-3.8-flash
-  try {
-    return await callGenerateContentApi(apiKey, 'gemini-3.8-flash', userMessage, userName, history);
-  } catch (err) {
-    console.warn('generateContent (gemini-3.8-flash) failed:', err.message);
-    lastError = err;
-    if (err.message && (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid') || err.message.includes('API key expired'))) {
-      throw err;
-    }
-  }
-
-  // Tier 3: generateContent with gemini-1.5-flash
-  try {
-    return await callGenerateContentApi(apiKey, 'gemini-1.5-flash', userMessage, userName, history);
-  } catch (err) {
-    console.warn('generateContent (gemini-1.5-flash) failed:', err.message);
-    lastError = err;
-  }
-
-  // Tier 4: generateContent with gemini-1.5-pro
-  try {
-    return await callGenerateContentApi(apiKey, 'gemini-1.5-pro', userMessage, userName, history);
-  } catch (err) {
-    console.warn('generateContent (gemini-1.5-pro) failed:', err.message);
-    lastError = err;
   }
 
   throw lastError || new Error('No available Gemini model responded.');
