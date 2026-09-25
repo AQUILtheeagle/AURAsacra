@@ -77,11 +77,6 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
           <button id="btn-nav-settings" class="p-2 rounded-lg border border-stone-300 dark:border-stone-700 bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-amber-600 transition shadow-sm" title="Settings & Confession">
             ${icons.settings('w-5 h-5')}
           </button>
-
-          <!-- Mobile Tools Trigger Button -->
-          <button id="btn-nav-mobile-tools" class="p-2 rounded-lg border border-amber-600/40 bg-[var(--bg-card)] text-amber-600 hover:border-amber-600 transition shadow-sm md:hidden flex items-center justify-center cursor-pointer" title="Sacred Tools Hub">
-            ${icons.grid('w-5 h-5')}
-          </button>
         </div>
 
       </div>
@@ -103,10 +98,5 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
   const penanceBtn = container.querySelector('#btn-nav-penance');
   if (penanceBtn) {
     penanceBtn.addEventListener('click', () => onNavigate('penance'));
-  }
-
-  const mobileToolsBtn = container.querySelector('#btn-nav-mobile-tools');
-  if (mobileToolsBtn) {
-    mobileToolsBtn.addEventListener('click', () => onOpenModal('tools'));
   }
 }
