@@ -103,6 +103,12 @@ Se utilizzi l'applicazione in locale sul tuo computer:
 
 ---
 
+## 🤝 Contribuire
+
+I contributi di sviluppatori, teologi e credenti di ogni tradizione sono i benvenuti! Per scoprire i principi guida del progetto e come proporre migliorie, consulta la nostra guida [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
 ## 📜 Licenza
 
 Questo progetto è software libero distribuito sotto i termini della licenza **GNU General Public License v3 (GNU GPL v3)**.  
