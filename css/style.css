@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Default: Dawn / Aurora (06:00 - 11:59) */
+  --bg-primary: #fcf9f2;
+  --bg-secondary: #f4eee1;
+  --bg-card: #f9f5ec;
+  --bg-parchment: #fdfbf7;
+  --text-primary: #2a241e;
+  --text-secondary: #6e6255;
+  --text-muted: #9c8e80;
+  --border-color: #e5dac9;
+  --accent-gold: #c69214;
+  --accent-gold-glow: rgba(198, 146, 20, 0.25);
+  --accent-vermilion: #b93b2c;
+  --accent-blue: #235789;
+  --candle-flame: #ffb833;
+  --card-shadow: 0 4px 20px -2px rgba(90, 70, 40, 0.08);
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="midday"] {
+  /* Midday / Scriptorium (12:00 - 17:59) */
+  --bg-primary: #f6efe2;
+  --bg-secondary: #ede1ce;
+  --bg-card: #f0e6d5;
+  --bg-parchment: #f7f1e6;
+  --text-primary: #1f1a14;
+  --text-secondary: #5e5243;
+  --text-muted: #8d7e6c;
+  --border-color: #d8c7af;
+  --accent-gold: #b37d0e;
+  --accent-gold-glow: rgba(179, 125, 14, 0.25);
+  --accent-vermilion: #aa2f20;
+  --accent-blue: #1c4b78;
+  --candle-flame: #ffa726;
+  --card-shadow: 0 6px 24px -4px rgba(80, 60, 30, 0.12);
+}
+
+[data-theme="sunset"] {
+  /* Sunset / Vespers (18:00 - 21:59) */
+  --bg-primary: #241b16;
+  --bg-secondary: #1d1510;
+  --bg-card: #2e231c;
+  --bg-parchment: #291f19;
+  --text-primary: #f5ebe1;
+  --text-secondary: #d4c2b2;
+  --text-muted: #9e8976;
+  --border-color: #4a3a2e;
+  --accent-gold: #e5a93b;
+  --accent-gold-glow: rgba(229, 169, 59, 0.3);
+  --accent-vermilion: #d9534f;
+  --accent-blue: #4a90e2;
+  --candle-flame: #ff9800;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="night"] {
+  /* Night / Compline (22:00 - 05:59) */
+  --bg-primary: #121214;
+  --bg-secondary: #0c0c0e;
+  --bg-card: #18181c;
+  --bg-parchment: #151519;
+  --text-primary: #eedfc7;
+  --text-secondary: #baaa93;
+  --text-muted: #7d705e;
+  --border-color: #2e2c34;
+  --accent-gold: #d4a34b;
+  --accent-gold-glow: rgba(212, 163, 75, 0.28);
+  --accent-vermilion: #c94a3e;
+  --accent-blue: #5b92e5;
+  --candle-flame: #ffb300;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-serif);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background-color 0.8s ease, color 0.8s ease;
+  line-height: 1.6;
+  overflow-x: hidden;
+  user-select: text;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+p, span, div, .font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-gold);
+}
+
+/* Sacred Texture & Watermark */
+.parchment-border {
+  border: 1px solid var(--border-color);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.02), var(--card-shadow);
+}
+
+.sacred-cross-watermark {
+  background-image: radial-gradient(var(--accent-gold-glow) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Illuminated Initial Capital */
+.illuminated-initial {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  line-height: 0.85;
+  padding-top: 4px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  color: var(--accent-vermilion);
+  font-weight: 700;
+  text-shadow: 1px 1px 0px rgba(198, 146, 20, 0.3);
+}
+
+/* Candle Flame Animation */
+.candle-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.candle-body {
+  width: 14px;
+  height: 38px;
+  background: linear-gradient(to right, #e8dfcf, #fffef9, #dcd2bf);
+  border-radius: 3px 3px 1px 1px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+  position: relative;
+  margin: 0 auto;
+}
+
+.candle-wick {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 8px;
+  background: #3a2c1a;
+  border-radius: 1px;
+}
+
+.candle-flame {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 20px;
+  background: radial-gradient(ellipse at bottom, #fff 0%, #ffdf73 30%, var(--candle-flame) 70%, rgba(255, 100, 0, 0.2) 100%);
+  border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+  box-shadow: 0 0 16px 4px var(--accent-gold-glow), 0 0 35px 8px rgba(255, 180, 40, 0.2);
+  animation: flame-flicker 1.8s infinite ease-in-out alternate;
+  transform-origin: center bottom;
+}
+
+@keyframes flame-flicker {
+  0% {
+    transform: translateX(-50%) rotate(-1deg) scale(1, 1);
+    opacity: 0.95;
+  }
+  25% {
+    transform: translateX(-50%) rotate(2deg) scale(1.05, 0.96);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) rotate(-2deg) scale(0.96, 1.04);
+    opacity: 0.92;
+  }
+  75% {
+    transform: translateX(-50%) rotate(1.5deg) scale(1.02, 1);
+    opacity: 0.98;
+  }
+  100% {
+    transform: translateX(-50%) rotate(-0.5deg) scale(0.98, 1.02);
+    opacity: 0.96;
+  }
+}
+
+/* Subtle Breathing Animation for SOS */
+@keyframes heart-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(185, 59, 44, 0.4); }
+  50% { transform: scale(1.08); box-shadow: 0 0 0 14px rgba(185, 59, 44, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(185, 59, 44, 0); }
+}
+
+.sos-breathing {
+  animation: heart-pulse 4s infinite ease-in-out;
+}
+
+/* Verse Highlight Colors */
+.hl-gold {
+  background-color: rgba(234, 179, 8, 0.28);
+  border-bottom: 2px solid #eab308;
+}
+.hl-blue {
+  background-color: rgba(59, 130, 246, 0.28);
+  border-bottom: 2px solid #3b82f6;
+}
+.hl-red {
+  background-color: rgba(239, 68, 68, 0.28);
+  border-bottom: 2px solid #ef4444;
+}
+.hl-green {
+  background-color: rgba(34, 197, 94, 0.28);
+  border-bottom: 2px solid #22c55e;
+}
+.hl-purple {
+  background-color: rgba(168, 85, 247, 0.28);
+  border-bottom: 2px solid #a855f7;
+}
+
+/* Desktop Floating Always-on-top Widget */
+.floating-candle-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-candle-widget.minimized {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Safe Areas */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 4rem);
+  }
+}
