@@ -68,23 +68,6 @@ Aura Sacra shifts its atmosphere based on your device clock:
 
 ---
 
-## 🚀 Running Locally
-
-Aura Sacra requires **no build tools, bundlers, or npm dependencies**.
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/aura-sacra.git
-   cd aura-sacra
-   ```
-
-2. **Start the local server**:
-   ```bash
-   python3 serve.py 8080
-   ```
-   Open `http://localhost:8080` in your browser.
-
----
 
 ## 🌐 Deploy to GitHub Pages (Free Hosting)
 
