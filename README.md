@@ -85,6 +85,6 @@ Contributions from all Christian traditions and developers are welcome. Please r
 
 ## 📜 License
 
-This project is open-source software licensed under the [MIT License](LICENSE).
+This project is open-source software licensed under the [GNU GPL V3 License](LICENSE).
 
 *Aura Sacra • Soli Deo Gloria*
