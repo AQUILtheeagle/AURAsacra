@@ -1,5 +1,5 @@
 // Sacred Scripture Bible Reader for Aura Sacra
-import { BIBLE_BOOKS, SCRIPTURE_TEXTS } from '../data/scriptures.js';
+import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded } from '../data/scriptures.js';
 import { icons } from '../icons.js';
 import { getHighlights, saveHighlight, removeHighlight } from '../db.js';
 
@@ -31,6 +31,8 @@ function normalizeBookAndChapter(bookId, chapter) {
 }
 
 export async function renderBibleReader(container, onOpenShareCard) {
+  await ensureFullBibleLoaded();
+
   const norm = normalizeBookAndChapter(activeBookId, activeChapter);
   activeBookId = norm.book;
   activeChapter = norm.chapter;
@@ -65,7 +67,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
       .join('\n\n');
   }
 
-  function updateView() {
+  async function updateView() {
     const currentBookIndex = BIBLE_BOOKS.findIndex((b) => b.id === activeBookId);
     const book = currentBookIndex >= 0 ? BIBLE_BOOKS[currentBookIndex] : BIBLE_BOOKS[2]; // Default to Matthew
     activeBookId = book.id;
@@ -73,6 +75,10 @@ export async function renderBibleReader(container, onOpenShareCard) {
     const availableChapters = book.chapters || [1];
     if (!availableChapters.includes(activeChapter)) {
       activeChapter = availableChapters[0];
+    }
+
+    if (!SCRIPTURE_TEXTS[activeBookId]?.[activeChapter]) {
+      await ensureFullBibleLoaded();
     }
 
     const currentChapterIndex = availableChapters.indexOf(activeChapter);
@@ -340,7 +346,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
       activeChapter = targetBook?.chapters?.[0] || 1;
       selectedVerses.clear();
       activeHighlights = await getHighlights(activeBookId, activeChapter);
-      updateView();
+      await updateView();
     });
 
     // 2. Chapter Selector Change
@@ -348,7 +354,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
       activeChapter = parseInt(e.target.value, 10);
       selectedVerses.clear();
       activeHighlights = await getHighlights(activeBookId, activeChapter);
-      updateView();
+      await updateView();
     });
 
     // 3. Previous Chapter
@@ -364,7 +370,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
         }
         selectedVerses.clear();
         activeHighlights = await getHighlights(activeBookId, activeChapter);
-        updateView();
+        await updateView();
       });
     }
 
@@ -381,26 +387,26 @@ export async function renderBibleReader(container, onOpenShareCard) {
         }
         selectedVerses.clear();
         activeHighlights = await getHighlights(activeBookId, activeChapter);
-        updateView();
+        await updateView();
       });
     }
 
     // 5. Select All / Deselect All
     const selectAllBtn = container.querySelector('#btn-toggle-select-all');
     if (selectAllBtn) {
-      selectAllBtn.addEventListener('click', () => {
+      selectAllBtn.addEventListener('click', async () => {
         if (selectedVerses.size === chapterData.verses.length) {
           selectedVerses.clear();
         } else {
           chapterData.verses.forEach((v) => selectedVerses.add(v.v));
         }
-        updateView();
+        await updateView();
       });
     }
 
     // 6. Checkbox Click and Verse Text Click
     container.querySelectorAll('.verse-checkbox-btn').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const vNum = parseInt(btn.getAttribute('data-verse'), 10);
         if (selectedVerses.has(vNum)) {
@@ -408,19 +414,19 @@ export async function renderBibleReader(container, onOpenShareCard) {
         } else {
           selectedVerses.add(vNum);
         }
-        updateView();
+        await updateView();
       });
     });
 
     container.querySelectorAll('.verse-text-body').forEach((el) => {
-      el.addEventListener('click', () => {
+      el.addEventListener('click', async () => {
         const vNum = parseInt(el.getAttribute('data-verse'), 10);
         if (selectedVerses.has(vNum)) {
           selectedVerses.delete(vNum);
         } else {
           selectedVerses.add(vNum);
         }
-        updateView();
+        await updateView();
       });
     });
 
@@ -433,7 +439,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
         const color = btn.getAttribute('data-color');
         await saveHighlight(activeBookId, activeChapter, verseNum, color);
         activeHighlights = await getHighlights(activeBookId, activeChapter);
-        updateView();
+        await updateView();
       });
     });
 
@@ -443,7 +449,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
         const verseNum = parseInt(btn.getAttribute('data-verse'), 10);
         await removeHighlight(activeBookId, activeChapter, verseNum);
         activeHighlights = await getHighlights(activeBookId, activeChapter);
-        updateView();
+        await updateView();
       });
     });
 
@@ -491,9 +497,9 @@ export async function renderBibleReader(container, onOpenShareCard) {
 
     const clearSelectionBtn = container.querySelector('#btn-clear-selection');
     if (clearSelectionBtn) {
-      clearSelectionBtn.addEventListener('click', () => {
+      clearSelectionBtn.addEventListener('click', async () => {
         selectedVerses.clear();
-        updateView();
+        await updateView();
       });
     }
 
@@ -507,10 +513,10 @@ export async function renderBibleReader(container, onOpenShareCard) {
         );
         await Promise.all(promises);
         activeHighlights = await getHighlights(activeBookId, activeChapter);
-        updateView();
+        await updateView();
       });
     });
   }
 
-  updateView();
+  await updateView();
 }

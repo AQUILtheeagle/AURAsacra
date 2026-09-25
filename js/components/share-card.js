@@ -1,9 +1,11 @@
 // Shareable Parchment Card Modal for WhatsApp, Telegram, iMessage, and Socials
 import { generateParchmentCard, shareOrDownloadCard } from '../card-generator.js';
-import { BIBLE_BOOKS, SCRIPTURE_TEXTS } from '../data/scriptures.js';
+import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded } from '../data/scriptures.js';
 import { icons } from '../icons.js';
 
 export async function renderShareCardModal(container, initialQuote = '', initialCitation = '', onClose) {
+  await ensureFullBibleLoaded();
+
   let quote = initialQuote || 'Blessed are the poor in spirit: for theirs is the kingdom of heaven.';
   let citation = initialCitation || 'Matthew 5:3';
   let previewDataUrl = null;

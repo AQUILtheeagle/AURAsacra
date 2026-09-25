@@ -1,4 +1,5 @@
-// Complete Canonical Ecumenical Holy Scriptures for Aura Sacra (King James Version - English)
+// Complete Canonical Holy Scriptures for Aura Sacra (King James Version - English)
+// All 66 Canonical Books • 1,189 Chapters • 31,102 Verses • 100% Offline
 export const BIBLE_BOOKS = [
   {
     "id": "gen",
@@ -6,7 +7,55 @@ export const BIBLE_BOOKS = [
     "testament": "Old Testament",
     "chapters": [
       1,
-      2
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
     ]
   },
   {
@@ -14,7 +63,546 @@ export const BIBLE_BOOKS = [
     "title": "Exodus",
     "testament": "Old Testament",
     "chapters": [
-      20
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ]
+  },
+  {
+    "id": "lev",
+    "title": "Leviticus",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ]
+  },
+  {
+    "id": "num",
+    "title": "Numbers",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+    ]
+  },
+  {
+    "id": "deut",
+    "title": "Deuteronomy",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ]
+  },
+  {
+    "id": "josh",
+    "title": "Joshua",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ]
+  },
+  {
+    "id": "judg",
+    "title": "Judges",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  {
+    "id": "ruth",
+    "title": "Ruth",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "id": "1sam",
+    "title": "1 Samuel",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ]
+  },
+  {
+    "id": "2sam",
+    "title": "2 Samuel",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ]
+  },
+  {
+    "id": "1kgs",
+    "title": "1 Kings",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ]
+  },
+  {
+    "id": "2kgs",
+    "title": "2 Kings",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ]
+  },
+  {
+    "id": "1chr",
+    "title": "1 Chronicles",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ]
+  },
+  {
+    "id": "2chr",
+    "title": "2 Chronicles",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+    ]
+  },
+  {
+    "id": "ezra",
+    "title": "Ezra",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  {
+    "id": "neh",
+    "title": "Nehemiah",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  },
+  {
+    "id": "esth",
+    "title": "Esther",
+    "testament": "Old Testament",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  {
+    "id": "job",
+    "title": "Job",
+    "testament": "Wisdom & Poetry",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42
     ]
   },
   {
@@ -23,13 +611,155 @@ export const BIBLE_BOOKS = [
     "testament": "Wisdom & Poetry",
     "chapters": [
       1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
       23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
       46,
+      47,
+      48,
+      49,
+      50,
       51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
       91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
       103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
       121,
-      139
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150
     ]
   },
   {
@@ -37,7 +767,37 @@ export const BIBLE_BOOKS = [
     "title": "Proverbs",
     "testament": "Wisdom & Poetry",
     "chapters": [
-      3
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
     ]
   },
   {
@@ -45,7 +805,33 @@ export const BIBLE_BOOKS = [
     "title": "Ecclesiastes",
     "testament": "Wisdom & Poetry",
     "chapters": [
-      3
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  },
+  {
+    "id": "song",
+    "title": "Song of Solomon",
+    "testament": "Wisdom & Poetry",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
     ]
   },
   {
@@ -53,8 +839,368 @@ export const BIBLE_BOOKS = [
     "title": "Isaiah",
     "testament": "Prophets",
     "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
       40,
-      53
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66
+    ]
+  },
+  {
+    "id": "jer",
+    "title": "Jeremiah",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52
+    ]
+  },
+  {
+    "id": "lam",
+    "title": "Lamentations",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "id": "ezek",
+    "title": "Ezekiel",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ]
+  },
+  {
+    "id": "dan",
+    "title": "Daniel",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  },
+  {
+    "id": "hos",
+    "title": "Hosea",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  {
+    "id": "joel",
+    "title": "Joel",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "amos",
+    "title": "Amos",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "id": "obad",
+    "title": "Obadiah",
+    "testament": "Prophets",
+    "chapters": [
+      1
+    ]
+  },
+  {
+    "id": "jonah",
+    "title": "Jonah",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "id": "mic",
+    "title": "Micah",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  {
+    "id": "nah",
+    "title": "Nahum",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "hab",
+    "title": "Habakkuk",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "zeph",
+    "title": "Zephaniah",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "hag",
+    "title": "Haggai",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2
+    ]
+  },
+  {
+    "id": "zech",
+    "title": "Zechariah",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  {
+    "id": "mal",
+    "title": "Malachi",
+    "testament": "Prophets",
+    "chapters": [
+      1,
+      2,
+      3,
+      4
     ]
   },
   {
@@ -62,11 +1208,57 @@ export const BIBLE_BOOKS = [
     "title": "Matthew",
     "testament": "Gospels",
     "chapters": [
+      1,
+      2,
+      3,
+      4,
       5,
       6,
       7,
+      8,
+      9,
+      10,
       11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
       28
+    ]
+  },
+  {
+    "id": "mark",
+    "title": "Mark",
+    "testament": "Gospels",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
     ]
   },
   {
@@ -74,8 +1266,30 @@ export const BIBLE_BOOKS = [
     "title": "Luke",
     "testament": "Gospels",
     "chapters": [
+      1,
       2,
-      15
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
     ]
   },
   {
@@ -84,10 +1298,26 @@ export const BIBLE_BOOKS = [
     "testament": "Gospels",
     "chapters": [
       1,
+      2,
       3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
       10,
+      11,
+      12,
+      13,
       14,
-      15
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
     ]
   },
   {
@@ -95,7 +1325,34 @@ export const BIBLE_BOOKS = [
     "title": "Acts",
     "testament": "Apostolic & Epistles",
     "chapters": [
-      2
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
     ]
   },
   {
@@ -103,8 +1360,22 @@ export const BIBLE_BOOKS = [
     "title": "Romans",
     "testament": "Apostolic & Epistles",
     "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
       8,
-      12
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
     ]
   },
   {
@@ -112,7 +1383,55 @@ export const BIBLE_BOOKS = [
     "title": "1 Corinthians",
     "testament": "Apostolic & Epistles",
     "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  {
+    "id": "2cor",
+    "title": "2 Corinthians",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
       13
+    ]
+  },
+  {
+    "id": "gal",
+    "title": "Galatians",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
     ]
   },
   {
@@ -120,6 +1439,11 @@ export const BIBLE_BOOKS = [
     "title": "Ephesians",
     "testament": "Apostolic & Epistles",
     "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
       6
     ]
   },
@@ -128,6 +1452,9 @@ export const BIBLE_BOOKS = [
     "title": "Philippians",
     "testament": "Apostolic & Epistles",
     "chapters": [
+      1,
+      2,
+      3,
       4
     ]
   },
@@ -136,7 +1463,74 @@ export const BIBLE_BOOKS = [
     "title": "Colossians",
     "testament": "Apostolic & Epistles",
     "chapters": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "id": "1thess",
+    "title": "1 Thessalonians",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "id": "2thess",
+    "title": "2 Thessalonians",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
       3
+    ]
+  },
+  {
+    "id": "1tim",
+    "title": "1 Timothy",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  {
+    "id": "2tim",
+    "title": "2 Timothy",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "id": "titus",
+    "title": "Titus",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "phlm",
+    "title": "Philemon",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1
     ]
   },
   {
@@ -144,24 +1538,89 @@ export const BIBLE_BOOKS = [
     "title": "Hebrews",
     "testament": "Apostolic & Epistles",
     "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
       11,
-      12
+      12,
+      13
     ]
   },
   {
-    "id": "james",
+    "id": "jas",
     "title": "James",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "id": "1pet",
+    "title": "1 Peter",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "id": "2pet",
+    "title": "2 Peter",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "1jn",
+    "title": "1 John",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "id": "2jn",
+    "title": "2 John",
     "testament": "Apostolic & Epistles",
     "chapters": [
       1
     ]
   },
   {
-    "id": "1john",
-    "title": "1 John",
+    "id": "3jn",
+    "title": "3 John",
     "testament": "Apostolic & Epistles",
     "chapters": [
-      4
+      1
+    ]
+  },
+  {
+    "id": "jude",
+    "title": "Jude",
+    "testament": "Apostolic & Epistles",
+    "chapters": [
+      1
     ]
   },
   {
@@ -169,13 +1628,34 @@ export const BIBLE_BOOKS = [
     "title": "Revelation",
     "testament": "Apocalypse",
     "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
       21,
       22
     ]
   }
 ];
 
-export const SCRIPTURE_TEXTS = {
+// Core pre-loaded chapters for instant 0ms first paint
+export let SCRIPTURE_TEXTS = {
   "gen": {
     1: {
       title: "The Creation of the Heavens and the Earth",
@@ -1933,3 +3413,40 @@ export const SCRIPTURE_TEXTS = {
     }
   },
 };
+
+let bibleLoaded = false;
+let bibleLoadPromise = null;
+
+// Asynchronously loads all 66 canonical books (31,102 verses) from data/bible-kjv.json
+export async function ensureFullBibleLoaded() {
+  if (bibleLoaded) return SCRIPTURE_TEXTS;
+  if (bibleLoadPromise) return bibleLoadPromise;
+
+  bibleLoadPromise = (async () => {
+    try {
+      const response = await fetch('./data/bible-kjv.json');
+      if (response.ok) {
+        const fullData = await response.json();
+        if (fullData.texts) {
+          for (const bookId in fullData.texts) {
+            if (!SCRIPTURE_TEXTS[bookId]) {
+              SCRIPTURE_TEXTS[bookId] = {};
+            }
+            Object.assign(SCRIPTURE_TEXTS[bookId], fullData.texts[bookId]);
+          }
+          bibleLoaded = true;
+        }
+      }
+    } catch (e) {
+      console.warn('Could not load full bible-kjv.json:', e);
+    }
+    return SCRIPTURE_TEXTS;
+  })();
+
+  return bibleLoadPromise;
+}
+
+// Automatically start background loading on initial script execution
+if (typeof window !== 'undefined') {
+  ensureFullBibleLoaded();
+}

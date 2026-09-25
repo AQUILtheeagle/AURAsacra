@@ -15,6 +15,7 @@ const ASSETS_TO_CACHE = [
   './js/card-generator.js',
   './js/github-feedback.js',
   './js/icons.js',
+  './data/bible-kjv.json',
   './js/data/scriptures.js',
   './js/data/promises.js',
   './js/data/doubts.js',
