@@ -213,6 +213,30 @@ export const icons = {
       <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
       <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
       <line x1="2" y1="2" x2="22" y2="22"/>
+    </svg>`,
+
+  calendar: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>`,
+
+  fish: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 7 2.54 7 6s-3.44 6-7 6c-3.56 0-7.56-2.54-8.5-6Z"/>
+      <path d="M18 12h.01"/>
+      <path d="M2 16l4.5-4L2 8"/>
+    </svg>`,
+
+  bread: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 11V8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z"/>
+      <path d="M7 8v2"/>
+      <path d="M12 7v3"/>
+      <path d="M17 8v2"/>
+      <path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/>
     </svg>`
 };
 
