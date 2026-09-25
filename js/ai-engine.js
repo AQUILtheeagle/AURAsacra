@@ -195,11 +195,10 @@ export async function testGeminiApiKey(candidateKey) {
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': key
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
+          contents: [{ role: 'user', parts: [{ text: 'Hello' }] }]
         }),
         signal: controller.signal
       });
@@ -243,28 +242,63 @@ CRITICAL INSTRUCTIONS:
 • [Book Chapter:Verse]`;
 }
 
+// Build Valid Gemini Contents guaranteeing strict user/model alternation and clean history
+function buildGeminiContents(history, userMessage) {
+  const cleanTurns = [];
+
+  for (const m of (history || [])) {
+    const text = (m && m.text) ? m.text.trim() : '';
+    if (!text) continue;
+    // Exclude system errors or API keys from dialogue context
+    if (text.includes('Google Gemini Error') || text.includes('GEMINI_SETUP_REQUIRED') || text.includes('OFFLINE_GEMINI_REQUIRED')) {
+      continue;
+    }
+    const role = (m.sender === 'user') ? 'user' : 'model';
+
+    // Merge consecutive turns with the same role
+    if (cleanTurns.length > 0 && cleanTurns[cleanTurns.length - 1].role === role) {
+      cleanTurns[cleanTurns.length - 1].parts[0].text += '\n' + text;
+    } else {
+      cleanTurns.push({
+        role: role,
+        parts: [{ text: text }]
+      });
+    }
+  }
+
+  // Ensure current message is the final user turn
+  if (cleanTurns.length === 0 || cleanTurns[cleanTurns.length - 1].role !== 'user') {
+    cleanTurns.push({
+      role: 'user',
+      parts: [{ text: userMessage }]
+    });
+  } else {
+    // Last turn was user; ensure it includes current userMessage
+    if (!cleanTurns[cleanTurns.length - 1].parts[0].text.includes(userMessage)) {
+      cleanTurns[cleanTurns.length - 1].parts[0].text = userMessage;
+    }
+  }
+
+  // Ensure first turn is from user
+  while (cleanTurns.length > 0 && cleanTurns[0].role !== 'user') {
+    cleanTurns.shift();
+  }
+
+  // Take recent turns (up to 6), ensuring it still starts with user
+  let sliced = cleanTurns.slice(-6);
+  while (sliced.length > 0 && sliced[0].role !== 'user') {
+    sliced.shift();
+  }
+
+  return sliced.length > 0 ? sliced : [{ role: 'user', parts: [{ text: userMessage }] }];
+}
+
 // GenerateContent Call with Timeout and Resilient Parsing
 async function callGenerateContentApi(apiKey, model, userMessage, userName, history = [], timeoutMs = 12000) {
   const cleanModel = model.replace(/^models\//, '');
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${cleanModel}:generateContent?key=${apiKey}`;
   const systemInstruction = getSystemInstruction(userName);
-
-  const contents = [];
-  const recentHistory = history.slice(-6);
-  for (const m of recentHistory) {
-    if (m.text && m.sender) {
-      contents.push({
-        role: m.sender === 'user' ? 'user' : 'model',
-        parts: [{ text: m.text }]
-      });
-    }
-  }
-  if (contents.length === 0 || contents[contents.length - 1].parts[0].text !== userMessage) {
-    contents.push({
-      role: 'user',
-      parts: [{ text: userMessage }]
-    });
-  }
+  const contents = buildGeminiContents(history, userMessage);
 
   const payload = {
     system_instruction: {
@@ -285,8 +319,7 @@ async function callGenerateContentApi(apiKey, model, userMessage, userName, hist
     response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': apiKey
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload),
       signal: controller.signal
