@@ -4,6 +4,7 @@ import { icons } from '../icons.js';
 export function renderSidebar(container, activeTab, onNavigate, onOpenModal) {
   const navItems = [
     { id: 'bible', label: 'Sacred Scripture', icon: 'book', isTab: true },
+    { id: 'penance', label: 'Penance & Fasting Calendar', icon: 'calendar', isTab: true },
     { id: 'chat', label: 'Dialogue with Jesus', icon: 'message', isTab: true },
     { id: 'journal', label: 'Prayer Journal', icon: 'heart', isTab: true },
     { id: 'saints', label: 'Saints & Fathers', icon: 'cross', isTab: true },

@@ -13,6 +13,7 @@ import { renderJesusChat } from './components/jesus-chat.js';
 import { renderPrayerJournal } from './components/prayer-journal.js';
 import { renderSaintsView } from './components/saints-view.js';
 import { renderFocusMode } from './components/focus-mode.js';
+import { renderPenanceCalendar } from './components/penance-calendar.js';
 
 // Modals
 import { renderOnboardingModal } from './components/onboarding-modal.js';
@@ -128,6 +129,9 @@ async function bootstrap() {
         break;
       case 'focus':
         renderFocusMode(mainContent);
+        break;
+      case 'penance':
+        renderPenanceCalendar(mainContent);
         break;
       default:
         renderBibleReader(mainContent, (quote, ref) => openModal('share', { quote, citation: ref }));

@@ -2,10 +2,12 @@
 import { icons } from '../icons.js';
 import { getPhaseDetails, getCurrentPhase } from '../circadian.js';
 import { getCurrentScheduleStatus } from '../schedule.js';
+import { getDayPenanceStatus } from '../data/penance.js';
 
 export function renderNavbar(container, state, onNavigate, onOpenModal) {
   const phase = getPhaseDetails(getCurrentPhase());
   const scheduleStatus = getCurrentScheduleStatus();
+  const todayPenance = getDayPenanceStatus(new Date());
 
   container.innerHTML = `
     <div class="border-b border-stone-300/60 dark:border-stone-800 bg-[var(--bg-secondary)] px-4 sm:px-6 lg:px-8 py-3 transition-colors duration-500">
@@ -20,7 +22,7 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
           </div>
         </div>
 
-        <!-- Center: Liturgical Phase & Schedule Status Pill -->
+        <!-- Center: Liturgical Phase, Schedule & Penance Status Pill -->
         <div class="hidden lg:flex items-center gap-2">
           <!-- Circadian Badge -->
           <div class="flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-[var(--bg-card)] text-xs text-[var(--text-secondary)] shadow-sm">
@@ -37,6 +39,17 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
           }">
             ${icons.clock('w-3.5 h-3.5')}
             <span class="font-medium">${scheduleStatus.label}</span>
+          </button>
+
+          <!-- Today Penance & Fasting Pill -->
+          <button id="btn-nav-penance" class="flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs shadow-sm transition hover:opacity-85 cursor-pointer ${
+            todayPenance.badge.color === 'vermilion' ? 'border-red-500/40 bg-red-950/20 text-red-600 dark:text-red-400' :
+            todayPenance.badge.color === 'purple' ? 'border-purple-500/40 bg-purple-950/20 text-purple-600 dark:text-purple-400' :
+            todayPenance.badge.color === 'gold' ? 'border-amber-500/40 bg-amber-950/20 text-amber-500 dark:text-amber-400' :
+            'border-stone-300 dark:border-stone-700 bg-[var(--bg-card)] text-[var(--text-secondary)]'
+          }" title="View Fasting & Penance Calendar">
+            ${icons[todayPenance.badge.icon]('w-3.5 h-3.5')}
+            <span class="font-medium">${todayPenance.badge.label}</span>
           </button>
         </div>
 
@@ -80,5 +93,10 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
   const scheduleBtn = container.querySelector('#btn-nav-schedule');
   if (scheduleBtn) {
     scheduleBtn.addEventListener('click', () => onOpenModal('schedule'));
+  }
+
+  const penanceBtn = container.querySelector('#btn-nav-penance');
+  if (penanceBtn) {
+    penanceBtn.addEventListener('click', () => onNavigate('penance'));
   }
 }

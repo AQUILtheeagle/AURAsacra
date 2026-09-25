@@ -1,55 +1,83 @@
-# Come Contribuire ad Aura Sacra 🕊️
+# How to Contribute to Aura Sacra 🕊️
 
-Grazie per il tuo interesse a contribuire ad **Aura Sacra**!  
-Questo progetto è un'applicazione web progressiva (PWA) cristiana, ecumenica, contemplativa e orientata al funzionamento 100% offline e alla massima sovranità dei dati personali.
-
----
-
-## 🌿 Principi Guida Fondamentali
-
-Ogni contributo al codice e ai contenuti deve rispettare i seguenti principi:
-
-### 1. Architettura Pura & Zero Strumenti di Build
-- L'applicazione è sviluppata in **JavaScript moderno standard (ES Modules)**.
-- Non vengono utilizzati bundler, transpiler o toolchain complesse (nessun bisogno di Node.js, npm, Webpack o Vite).
-- Qualsiasi browser moderno può eseguire direttamente il progetto aprendo i file, garantendo la massima longevità nel tempo, trasparenza e indipendenza tecnologica.
-
-### 2. Sovranità dei Dati & Privacy al 100%
-- Nessun dato dell'utente (note personali, preghiere, evidenziazioni bibliche o riflessioni del diario) lascia mai il dispositivo.
-- Lo stato viene archiviato unicamente sul browser dell'utente tramite **IndexedDB** (con fallback/mirror in `localStorage`).
-- È sempre garantita la funzione di esportazione e importazione completa del proprio archivio in formato aperto JSON.
-
-### 3. Rispetto Ecumenico & Fedeltà Evangelica
-- Aura Sacra accoglie cristiani di ogni tradizione storica: cattolici, ortodossi, protestanti / evangelici e chiunque sia in cammino di ricerca spirituale.
-- I contenuti biblici e le riflessioni devono preservare un tono accogliente, rispettoso dell'eredità canonica e saldamente radicato nel Vangelo.
-
-### 4. Politica Trasparente sull'Intelligenza Artificiale
-- L'assistente spirituale per il dialogo si interfaccia con la serie **Google Gemini 3** (tramite chiave API personale) oppure con il modello on-device integrato nel browser (Chrome Gemini Nano).
-- Se il modello locale non è installato e l'utente è offline, la chat viene disattivata con chiarezza per prevenire risposte allucinate o finte risposte predefinite.
+Thank you for your interest in contributing to **Aura Sacra**!  
+Aura Sacra is an ecumenical, contemplative, 100% offline-first Christian Progressive Web App (PWA) built for deep spiritual reflection, prayer, Bible study, and absolute personal data sovereignty.
 
 ---
 
-## 🤝 Inviare un Contributo
+## 🌿 Core Guiding Principles
 
-1. Esegui il Fork del repository su GitHub.
-2. Crea un branch dedicato alla tua modifica:
+Every code and content contribution should adhere to these core principles:
+
+### 1. Pure Web Architecture & Zero Build Toolchains
+- The entire application is built using standard, modern **JavaScript (ES Modules)**, HTML5, and CSS3.
+- No bundlers, transpilers, or complex build toolchains are required (no mandatory Node.js, Webpack, Vite, or Babel).
+- Any modern web browser can execute the application directly by serving the static files, ensuring maximum transparency, longevity, and technological independence.
+
+### 2. Complete Data Sovereignty & 100% Offline Privacy
+- No user data (personal journal entries, prayers, Bible highlights, or reflections) ever leaves the user's device.
+- State and archives are stored exclusively on the user's local device using **IndexedDB** (with a mirror in `localStorage`).
+- Full backup and restore capability via standard, open JSON files is guaranteed at all times.
+
+### 3. Ecumenical Respect & Canonical Faithfulness
+- Aura Sacra embraces Christians across historical traditions: Catholic, Orthodox, Protestant / Evangelical, and all sincere spiritual seekers.
+- The platform includes the full **80-Book Canonical & Deuterocanonical library** (including Sirach / Ecclesiasticus, Wisdom of Solomon, Tobit, Judith, Baruch, and Maccabees).
+- All Biblical content, liturgical calendars, and spiritual reflections must preserve a welcoming, reverent tone faithful to the Holy Scriptures and the Gospel of Jesus Christ.
+
+### 4. Transparent AI Architecture
+- The spiritual dialogue assistant interfaces with **Google Gemini 3** (via personal API key) or on-device local models (such as Chrome Gemini Nano).
+- When offline or when no model is available, the AI assistant gracefully disables itself with clear feedback, preventing fabricated or unvetted responses.
+
+---
+
+## 🛠️ Development Environment Setup
+
+1. **Clone or download the repository**:
    ```bash
-   git checkout -b feature/nome-funzionalita
+   git clone https://github.com/YOUR_USERNAME/aura-sacra.git
+   cd aura-sacra
    ```
-3. Verifica con cura le modifiche:
-   - Assicurati che l'interfaccia funzioni armoniosamente in tutti e 4 i temi liturgici (*Aurora, Mezzogiorno, Tramonto, Notte*).
-   - Verifica il corretto funzionamento in modalità offline disattivando la rete nei DevTools del browser.
-4. Esegui il commit con messaggi descrittivi e ordinati:
+
+2. **Serve the application locally**:
+   Any lightweight static web server can serve Aura Sacra with proper MIME types. You can use any static server of your preference, for example:
    ```bash
-   git commit -m "Descrizione chiara del contributo"
+   # Using npx (Node.js)
+   npx serve . -p 8080
+
+   # Or using VS Code Live Server extension
+   # Right-click index.html -> "Open with Live Server"
    ```
-5. Invia il branch al tuo fork e apri una **Pull Request**.
+   Open `http://localhost:8080` in your web browser.
+
+3. **Code Conventions**:
+   - Use standard ES Modules (`import` / `export`).
+   - Maintain UI consistency using the pre-configured Tailwind CSS utility classes and semantic variables (`var(--accent-vermilion)`, `var(--bg-parchment)`).
+   - Use the centralized, accessible SVG icons defined in `js/icons.js`.
 
 ---
 
-## 📜 Licenza
+## 🤝 Submitting a Contribution
 
-Contribuendo ad Aura Sacra, accetti che il tuo codice e i tuoi contributi siano rilasciati e distribuiti secondo i termini della licenza **GNU General Public License v3 (GNU GPL v3)**.  
-Consulta il file [LICENSE](LICENSE) per tutti i termini e le condizioni legali.
+1. **Fork** the repository on GitHub.
+2. Create a dedicated branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Test your changes thoroughly:
+   - Ensure the user interface renders seamlessly across all 4 circadian liturgical themes (*Dawn / Lauds, Midday / Scriptorium, Sunset / Vespers, Night / Compline*).
+   - Test offline functionality by toggling "Offline" mode in your browser DevTools.
+   - Verify that the 80-book Bible reader and the Penance Calendar function smoothly.
+4. Commit your changes with clear, descriptive commit messages:
+   ```bash
+   git commit -m "Add descriptive summary of changes"
+   ```
+5. Push the branch to your fork and submit a **Pull Request**.
+
+---
+
+## 📜 License
+
+By contributing to Aura Sacra, you agree that your contributions will be licensed and distributed under the terms of the **GNU General Public License v3 (GNU GPL v3)**.  
+See the [LICENSE](LICENSE) file for the full legal text and conditions.
 
 *Aura Sacra • Soli Deo Gloria*
