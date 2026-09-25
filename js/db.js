@@ -124,6 +124,8 @@ export async function setSetting(key, value) {
   }
 }
 
+export const saveSetting = setSetting;
+
 // Prayer Journal Helpers
 export async function getJournalEntries() {
   const db = await getDB();

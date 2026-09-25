@@ -25,6 +25,7 @@ import { renderShareCardModal } from './components/share-card.js';
 import { renderScheduleModal } from './components/schedule-modal.js';
 import { renderFeedbackModal } from './components/feedback-modal.js';
 import { renderSettingsModal } from './components/settings-modal.js';
+import { renderToolsModal } from './components/tools-modal.js';
 
 let activeTab = 'bible';
 let pendingPrayerForJesus = null;
@@ -85,6 +86,9 @@ async function bootstrap() {
           renderActiveView();
         });
         break;
+      case 'tools':
+        renderToolsModal(modalsContainer, close, navigate, openModal);
+        break;
       default:
         break;
     }
@@ -101,7 +105,7 @@ async function bootstrap() {
   function renderAllNavigation() {
     renderNavbar(navbarContainer, {}, navigate, openModal);
     renderSidebar(sidebarContainer, activeTab, navigate, openModal);
-    renderBottomNav(bottomNavContainer, activeTab, navigate);
+    renderBottomNav(bottomNavContainer, activeTab, navigate, openModal);
   }
 
   function renderActiveView() {

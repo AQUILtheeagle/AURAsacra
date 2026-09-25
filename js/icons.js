@@ -237,6 +237,14 @@ export const icons = {
       <path d="M12 7v3"/>
       <path d="M17 8v2"/>
       <path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/>
+    </svg>`,
+
+  grid: (cls = "w-5 h-5") => `
+    <svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"/>
     </svg>`
 };
 
