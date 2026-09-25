@@ -25,6 +25,7 @@ const ASSETS_TO_CACHE = [
   './js/components/sidebar.js',
   './js/components/bottom-nav.js',
   './js/components/penance-calendar.js',
+  './js/components/tools-modal.js',
   './js/components/bible-reader.js',
   './js/components/jesus-chat.js',
   './js/components/prayer-journal.js',
