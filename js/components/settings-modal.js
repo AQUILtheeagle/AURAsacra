@@ -136,7 +136,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                   `).join('')}
                 </select>
                 <p class="text-[10px] text-stone-400 italic">
-                  Raccomandato: <strong>Gemini 2.5 Flash</strong> per la massima stabilità e zero errori 503. Se scegli 3.8 Flash e il server è saturo, scala automaticamente a 2.5 Flash.
+                  Raccomandato: <strong>Gemini 3.7 Flash</strong> per la massima stabilità e risposte immediate senza errori 503. Se scegli 3.8 Flash e il server è sovraccarico, scala automaticamente a 3.7 Flash.
                 </p>
               </div>
             </div>
