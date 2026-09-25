@@ -66,6 +66,33 @@ Aura Sacra shifts its atmosphere based on your device clock:
 - 🌇 **18:00 – 21:59 (Sunset / Vespers)**: Amber candlelight peace.
 - 🕯️ **22:00 – 05:59 (Night / Compline)**: Deep cathedral slate and warm candlelight.
 
+---
+
+## 🚀 Running Locally
+
+Aura Sacra requires **no build tools, bundlers, or npm dependencies**.
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/aura-sacra.git
+   cd aura-sacra
+   ```
+
+2. **Start the local server**:
+   ```bash
+   python3 serve.py 8080
+   ```
+   Open `http://localhost:8080` in your browser.
+
+---
+
+## 🌐 Deploy to GitHub Pages (Free Hosting)
+
+1. Push this repository to GitHub.
+2. In your repository on GitHub, navigate to **Settings** > **Pages**.
+3. Under **Build and deployment**, select **Source: Deploy from a branch**.
+4. Choose the `main` branch and `/ (root)` folder, then click **Save**.
+5. Your PWA is live globally with automated HTTPS and Service Worker caching!
 
 ---
 
@@ -85,6 +112,6 @@ Contributions from all Christian traditions and developers are welcome. Please r
 
 ## 📜 License
 
-This project is open-source software licensed under the [GNU GPL V3 License](LICENSE).
+This project is open-source software licensed under the [MIT License](LICENSE).
 
 *Aura Sacra • Soli Deo Gloria*

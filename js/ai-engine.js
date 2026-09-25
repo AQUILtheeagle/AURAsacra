@@ -155,19 +155,24 @@ export async function getGeminiApiKey() {
   return key || '';
 }
 
-// Available Cloud Gemini Models (2026 Active Standards)
+// Available Cloud Gemini Models (2026 Gemini 3 Active Generation)
 export const AVAILABLE_MODELS = [
-  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', badge: 'Gemini 2.5 Flash Active', desc: 'Consigliato (Alta stabilità, velocità elevata)' },
+  { id: 'gemini-3.7-flash', name: 'Gemini 3.7 Flash', badge: 'Gemini 3.7 Flash Active', desc: 'Consigliato (Massima stabilità, velocità elevata e zero 503)' },
   { id: 'gemini-3.8-flash', name: 'Gemini 3.8 Flash', badge: 'Gemini 3.8 Flash Active', desc: 'Nuovo (Ragionamento avanzato, soggetto a picchi di carico 503)' },
-  { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', badge: 'Gemini 2.5 Pro Active', desc: 'Profondo (Riflessione teologica e complessa)' }
+  { id: 'gemini-3.5-flash', name: 'Gemini 3.5 Flash', badge: 'Gemini 3.5 Flash Active', desc: 'Veloce & Affidabile (Fallback rapido)' },
+  { id: 'gemini-3.5-flash-lite', name: 'Gemini 3.5 Flash-Lite', badge: 'Gemini 3.5 Flash-Lite Active', desc: 'Leggero & Immediato' }
 ];
 
-// Model preference storage
+// Model preference storage (Default to stable gemini-3.7-flash)
 export function getSelectedGeminiModel() {
   try {
-    return localStorage.getItem('aurasacra_gemini_model') || 'gemini-2.5-flash';
+    const saved = localStorage.getItem('aurasacra_gemini_model');
+    if (saved && !saved.includes('2.5') && !saved.includes('1.5')) {
+      return saved;
+    }
+    return 'gemini-3.7-flash';
   } catch (e) {
-    return 'gemini-2.5-flash';
+    return 'gemini-3.7-flash';
   }
 }
 
@@ -184,8 +189,8 @@ export async function testGeminiApiKey(candidateKey) {
   if (key.length < 15) throw new Error('API key appears too short (must start with AIza...).');
 
   let lastErr = null;
-  // Test with stable gemini-2.5-flash first, fallback to 3.8 and 2.5-pro (1.5 models are deprecated)
-  const testModels = ['gemini-2.5-flash', 'gemini-3.8-flash', 'gemini-2.5-pro'];
+  // Test with stable gemini-3.7-flash first, fallback to 3.8 and 3.5-flash
+  const testModels = ['gemini-3.7-flash', 'gemini-3.8-flash', 'gemini-3.5-flash'];
 
   for (const model of testModels) {
     try {
@@ -195,11 +200,10 @@ export async function testGeminiApiKey(candidateKey) {
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': key
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
+          contents: [{ role: 'user', parts: [{ text: 'Hello' }] }]
         }),
         signal: controller.signal
       });
@@ -243,28 +247,63 @@ CRITICAL INSTRUCTIONS:
 • [Book Chapter:Verse]`;
 }
 
+// Build Valid Gemini Contents guaranteeing strict user/model alternation and clean history
+function buildGeminiContents(history, userMessage) {
+  const cleanTurns = [];
+
+  for (const m of (history || [])) {
+    const text = (m && m.text) ? m.text.trim() : '';
+    if (!text) continue;
+    // Exclude system errors or API keys from dialogue context
+    if (text.includes('Google Gemini Error') || text.includes('GEMINI_SETUP_REQUIRED') || text.includes('OFFLINE_GEMINI_REQUIRED')) {
+      continue;
+    }
+    const role = (m.sender === 'user') ? 'user' : 'model';
+
+    // Merge consecutive turns with the same role
+    if (cleanTurns.length > 0 && cleanTurns[cleanTurns.length - 1].role === role) {
+      cleanTurns[cleanTurns.length - 1].parts[0].text += '\n' + text;
+    } else {
+      cleanTurns.push({
+        role: role,
+        parts: [{ text: text }]
+      });
+    }
+  }
+
+  // Ensure current message is the final user turn
+  if (cleanTurns.length === 0 || cleanTurns[cleanTurns.length - 1].role !== 'user') {
+    cleanTurns.push({
+      role: 'user',
+      parts: [{ text: userMessage }]
+    });
+  } else {
+    // Last turn was user; ensure it includes current userMessage
+    if (!cleanTurns[cleanTurns.length - 1].parts[0].text.includes(userMessage)) {
+      cleanTurns[cleanTurns.length - 1].parts[0].text = userMessage;
+    }
+  }
+
+  // Ensure first turn is from user
+  while (cleanTurns.length > 0 && cleanTurns[0].role !== 'user') {
+    cleanTurns.shift();
+  }
+
+  // Take recent turns (up to 6), ensuring it still starts with user
+  let sliced = cleanTurns.slice(-6);
+  while (sliced.length > 0 && sliced[0].role !== 'user') {
+    sliced.shift();
+  }
+
+  return sliced.length > 0 ? sliced : [{ role: 'user', parts: [{ text: userMessage }] }];
+}
+
 // GenerateContent Call with Timeout and Resilient Parsing
 async function callGenerateContentApi(apiKey, model, userMessage, userName, history = [], timeoutMs = 12000) {
   const cleanModel = model.replace(/^models\//, '');
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${cleanModel}:generateContent?key=${apiKey}`;
   const systemInstruction = getSystemInstruction(userName);
-
-  const contents = [];
-  const recentHistory = history.slice(-6);
-  for (const m of recentHistory) {
-    if (m.text && m.sender) {
-      contents.push({
-        role: m.sender === 'user' ? 'user' : 'model',
-        parts: [{ text: m.text }]
-      });
-    }
-  }
-  if (contents.length === 0 || contents[contents.length - 1].parts[0].text !== userMessage) {
-    contents.push({
-      role: 'user',
-      parts: [{ text: userMessage }]
-    });
-  }
+  const contents = buildGeminiContents(history, userMessage);
 
   const payload = {
     system_instruction: {
@@ -285,8 +324,7 @@ async function callGenerateContentApi(apiKey, model, userMessage, userName, hist
     response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': apiKey
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload),
       signal: controller.signal
@@ -319,20 +357,21 @@ async function callGenerateContentApi(apiKey, model, userMessage, userName, hist
   return text.trim();
 }
 
-// Cloud Gemini API call with automatic multi-tier fallback (No deprecated models)
+// Cloud Gemini API call with automatic multi-tier fallback (Active Gemini 3 generation)
 async function callCloudGemini(apiKey, userMessage, userName, history = []) {
   const selectedModel = getSelectedGeminiModel();
 
-  // Modern active model fallback pipeline:
-  // Discontinued/deprecated models (gemini-1.5-flash, gemini-1.5-pro) are removed.
+  // Active Gemini 3 series pipeline:
   let candidateModels;
   if (selectedModel === 'gemini-3.8-flash') {
-    candidateModels = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.5-pro'];
-  } else if (selectedModel === 'gemini-2.5-pro') {
-    candidateModels = ['gemini-2.5-pro', 'gemini-2.5-flash', 'gemini-3.8-flash'];
+    candidateModels = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite'];
+  } else if (selectedModel === 'gemini-3.5-flash') {
+    candidateModels = ['gemini-3.5-flash', 'gemini-3.7-flash', 'gemini-3.8-flash', 'gemini-3.5-flash-lite'];
+  } else if (selectedModel === 'gemini-3.5-flash-lite') {
+    candidateModels = ['gemini-3.5-flash-lite', 'gemini-3.7-flash', 'gemini-3.8-flash', 'gemini-3.5-flash'];
   } else {
-    // Default: gemini-2.5-flash (fastest and most stable)
-    candidateModels = ['gemini-2.5-flash', 'gemini-3.8-flash', 'gemini-2.5-pro'];
+    // Default: gemini-3.7-flash (the proven stable Flash workhorse)
+    candidateModels = ['gemini-3.7-flash', 'gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite'];
   }
 
   let lastError = null;
