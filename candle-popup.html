@@ -82,7 +82,11 @@
         <img src="./icons/logo.png" alt="Aura Sacra" style="width: 22px; height: 22px; border-radius: 6px; border: 1px solid #c69214;">
         <span style="font-family: var(--font-display); font-size: 13px; font-weight: bold; color: #c69214; letter-spacing: 1px;">AURA SACRA</span>
       </div>
-      <span style="font-size: 10px; font-family: var(--font-sans); color: #c69214; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.3); padding: 2px 7px; border-radius: 10px; font-weight: 600;">Pop-up</span>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button id="btn-popup-pip" style="font-size: 10px; font-family: var(--font-sans); color: #c69214; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.4); padding: 3px 8px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" title="Blocca sempre in primo piano su tutte le finestre e app (Picture-in-Picture)">
+          📌 <span id="pip-btn-text">Primo Piano (PiP)</span>
+        </button>
+      </div>
     </div>
 
     <!-- Animated Living Flame -->
@@ -248,6 +252,68 @@
     rainVol.addEventListener('input', (e) => {
       setRainVolume(parseFloat(e.target.value));
     });
+
+    // Document Picture-in-Picture for Always-on-top foreground pinning
+    const pipBtn = document.getElementById('btn-popup-pip');
+    if (pipBtn) {
+      if ('documentPictureInPicture' in window) {
+        pipBtn.addEventListener('click', async () => {
+          try {
+            const pipWin = await window.documentPictureInPicture.requestWindow({
+              width: 330,
+              height: 520
+            });
+
+            // Copy stylesheets
+            [...document.styleSheets].forEach((sheet) => {
+              try {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWin.document.head.appendChild(link);
+                } else if (sheet.cssRules) {
+                  const style = document.createElement('style');
+                  style.textContent = [...sheet.cssRules].map(r => r.cssText).join('\n');
+                  pipWin.document.head.appendChild(style);
+                }
+              } catch (e) {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWin.document.head.appendChild(link);
+                }
+              }
+            });
+
+            const card = document.querySelector('.popup-card');
+            pipWin.document.body.appendChild(card);
+            pipWin.document.body.style.margin = '0';
+            pipWin.document.body.style.padding = '14px';
+            pipWin.document.body.style.minHeight = '100vh';
+            pipWin.document.body.style.display = 'flex';
+            pipWin.document.body.style.alignItems = 'center';
+            pipWin.document.body.style.justifyContent = 'center';
+            pipWin.document.body.style.background = 'radial-gradient(circle at center, #1e1b18 0%, #0d0c0b 100%)';
+            pipWin.document.body.style.color = '#eedfc7';
+            pipWin.document.body.style.boxSizing = 'border-box';
+            pipWin.document.body.style.overflow = 'hidden';
+
+            pipBtn.style.display = 'none';
+
+            pipWin.addEventListener('pagehide', () => {
+              document.body.appendChild(card);
+              pipBtn.style.display = 'inline-flex';
+            });
+          } catch (err) {
+            console.warn('PiP error in popup:', err);
+          }
+        });
+      } else {
+        pipBtn.title = 'In questo browser il PiP Always-on-top non è supportato. Usa Chrome o Edge.';
+      }
+    }
 
     update();
   </script>

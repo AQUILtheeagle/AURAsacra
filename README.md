@@ -1,117 +1,111 @@
-# 🕊️ Aura Sacra — Universal Christian Platform
+# 🕊️ Aura Sacra — Piattaforma Cristiana Universale
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](LICENSE)
-[![PWA Ready](https://img.shields.io/badge/PWA-100%25_Offline-emerald.svg)](sw.js)
-[![Architecture](https://img.shields.io/badge/Architecture-Vanilla_ES_Modules-blue.svg)](index.html)
-[![AI Engine](https://img.shields.io/badge/AI-Google_Gemini-orange.svg)](js/ai-engine.js)
+[![Licenza: GNU GPL v3](https://img.shields.io/badge/Licenza-GNU_GPLv3-blue.svg)](LICENSE)
+[![PWA](https://img.shields.io/badge/PWA-100%25_Offline-emerald.svg)](index.html)
+[![Intelligenza Artificiale](https://img.shields.io/badge/AI-Google_Gemini-orange.svg)](index.html)
 
-> **«In lumine tuo videbimus lumen»** • *In your light we see light.*
+> **«In lumine tuo videbimus lumen»** • *Nella tua luce vedremo la luce.*
 
-**Aura Sacra** is an open-source, ecumenical, and 100% offline-first Christian Progressive Web App (PWA) designed to accompany students, workers, and families in their spiritual journey. Crafted with an illuminated sacred manuscript aesthetic, an automatic circadian liturgical theme, and client-side data sovereignty.
+**Aura Sacra** è un'applicazione web e mobile (PWA) ecumenica, contemplativa e orientata alla massima riservatezza. Nata per accompagnare studenti, lavoratori e famiglie nel proprio cammino spirituale quotidiano, unisce l'estetica sacra dei manoscritti miniati medievali alle più moderne tecnologie per la preghiera, lo studio biblico e la meditazione.
 
----
-
-## 🌟 Key Features
-
-### 1. 📖 Canonical Holy Scriptures Reader
-- **19 Canonical Books & 40 Complete Chapters** (1,083 full verses in King James Version English).
-- Grouped into 6 biblical testaments: *Old Testament, Wisdom & Poetry, Prophets, Gospels, Apostolic & Epistles, Apocalypse*.
-- **5-Color Spiritual Highlighting Palette** (Gold, Blue, Red, Green, Purple) persisted in IndexedDB.
-- **Click-to-Select Scripture Card**: Click any `[Book Chapter:Verse]` badge to immediately open the shareable manuscript card with zero typing needed.
-
-### 2. 🕊️ Dialogue with Jesus (Powered by Google Gemini)
-- Dedicated dialogue interface for questions, spiritual doubts, biblical inquiries, and everyday life dilemmas.
-- **Not a generic prayer bot**: It directly and thoughtfully answers questions, clarifies theological doubts, explains parables, and offers compassionate Gospel wisdom.
-- **Multilingual Understanding**: Reads and replies fluently in the user's language (Italian, English, Spanish, French, German, Romanian).
-- **Strict Offline Policy**: Powered by on-device **Chrome Gemini Nano** (Prompt API) for 100% offline reasoning, or **Cloud Gemini 2.0 Flash** when online with an API key. If local Gemini is not downloaded in the browser, offline dialogue is strictly disabled to prevent inaccurate or canned responses.
-
-### 3. 📜 Shareable Parchment Scripture Cards
-- HTML5 Canvas engine rendering illuminated medieval manuscript cards.
-- Interactive multi-verse selection chips (`5:1`, `5:2`, `5:3`...) inside the modal.
-- Native sharing via Web Share API to **WhatsApp, Telegram, iMessage, Instagram Stories**, or direct PNG download.
-- Dynamic auto-scaling font algorithm for long multi-verse quotations.
-
-### 4. 🕯️ Focus with God, Candle & Rain
-- Spiritual Pomodoro timer (15m, 25m, 45m, 60m).
-- Procedural gentle rainfall synthesized live via the **Web Audio API** (zero audio file downloads).
-- Standalone floating candle popup window (`candle-popup.html`) that hovers while working.
-
-### 5. 🏺 The Jar of Promises
-- Filter by emotional state (*Anxiety, Fear, Loneliness, Grief, Guilt & Forgiveness, Difficult Decisions, Exhaustion, Gratitude*).
-- Draws biblical promises with personal reflection and a 30-second micro-prayer.
-
-### 6. 📔 Prayer Journal
-- Personal spiritual journal stored locally in IndexedDB.
-- 1-click **"Bring to Jesus"** button on each prayer entry to transition directly into dialogue in the chat.
-
-### 7. 🛡️ SOS Temptation & Peace Shield
-- Emergency tool with 30-second guided breathing circle, scripture shield (1 Cor 10:13), and protection prayer.
-
-### 8. 🧭 Faith Compass & Evening Examen
-- Rational and scriptural answers to existential dilemmas (problem of evil, science and faith).
-- Compline examination of conscience with the **Night Protection of Christ** invocation against insomnia and anxiety.
-
-### 9. 🔒 100% Privacy & Data Sovereignty
-- No accounts, no cloud database, zero telemetry.
-- All notes, prayers, and highlights stay on your device in **IndexedDB**.
-- One-click JSON backup export and import.
+Funziona al **100% offline**, non richiede alcuna registrazione e protegge la totale sovranità dei tuoi dati personali.
 
 ---
 
-## 🎨 Circadian Liturgical Theme
+## ✨ Funzionalità Principali
 
-Aura Sacra shifts its atmosphere based on your device clock:
-- 🌅 **06:00 – 11:59 (Dawn / Lauds)**: Golden sunrise tones and illuminated parchment.
-- ☀️ **12:00 – 17:59 (Midday / Scriptorium)**: Warm classic vellum and vermilion accents.
-- 🌇 **18:00 – 21:59 (Sunset / Vespers)**: Amber candlelight peace.
-- 🕯️ **22:00 – 05:59 (Night / Compline)**: Deep cathedral slate and warm candlelight.
+### 📖 Lettore Completo delle Sacre Scritture
+- **80 Libri Sacri e oltre 36.800 versetti**: Antico Testamento, Libri Sapienziali, Profeti, Deuterocanonici / Apocrifi, Vangeli, Lettere Apostoliche e Apocalisse.
+- **Evidenziatore Spirituale a 5 Colori**: Evidenzia i tuoi passaggi preferiti in Oro, Blu, Rosso, Verde o Viola; le evidenziazioni restano salvate sul tuo dispositivo.
+- **Navigazione & Ricerca Rapida**: Trova all'istante libri, capitoli e versetti.
+- **Creazione Pergamene al Volo**: Clicca su qualsiasi versetto per aprire direttamente la pergamena miniata da condividere.
+
+### 🕊️ Dialogo Spirituale con Gesù (Google Gemini)
+- Uno spazio sereno e accogliente per porre domande bibliche, chiarire dubbi di fede, approfondire le parabole o cercare conforto nei momenti di difficoltà.
+- **Comprensione Naturale**: Risponde con cura, profondità e amorevolezza evangelica direttamente nella tua lingua (Italiano, Inglese, Spagnolo, Francese, Tedesco, Rumeno).
+- **Controllo e Privacy**: Alimentato dal motore Gemini 3 (con supporto per la tua chiave API personale o per l'IA locale on-device). Le tue conversazioni non vengono inviate a database esterni.
+
+### 🕯️ Candela, Pioggia & Sempre in Primo Piano
+- **Timer di Meditazione e Preghiera**: Sessioni di raccoglimento spirituale (15, 25, 45 o 60 minuti) o personalizzabili.
+- **Suono Rilassante della Pioggia**: Pioggia generata in tempo reale con l'audio sintetico del browser (nessun download pesante e nessun consumo di traffico dati).
+- **📌 Modalità "Sempre in Primo Piano" (Picture-in-Picture)**: Puoi staccare la fiamma della candela in una finestrella fluttuante che resta visibile sopra tutte le applicazioni aperte sul tuo computer (Word, browser, programmi di lavoro).
+
+### 📜 Pergamene Miniate Condivisibili
+- Genera splendide immagini in stile manoscritto medievale illuminato con i tuoi versetti preferiti.
+- Selezione multi-versetto con adattamento automatico del testo e del carattere.
+- Condivisione istantanea con un tocco su **WhatsApp, Telegram, Instagram Stories, iMessage** o salvataggio diretto dell'immagine PNG.
+
+### 🏺 Il Vaso delle Promesse
+- Pesca una promessa biblica in base al tuo stato d'animo interiore: *Ansia, Paura, Solitudine, Lutto, Stanchezza, Senso di Colpa & Perdono, Decisioni Difficili, Gratitudine*.
+- Ogni promessa include una meditazione personale e una breve micro-preghiera di 30 secondi.
+
+### 📔 Diario di Preghiera Personale
+- Custodisci le tue intenzioni, preghiere, riflessioni e grazie ricevute.
+- Funzione **"Porta a Gesù"**: con un semplice click, trasforma una preghiera del tuo diario in un argomento di dialogo e meditazione con l'assistente spirituale.
+
+### 🛡️ SOS Tentazioni & Scudo della Pace
+- Strumento di pronto soccorso per i momenti di forte agitazione o tentazione:
+  - 30 secondi di respirazione guidata ritmica per ritrovare la calma.
+  - Versetto scudo di forza spirituale (1 Corinzi 10:13).
+  - Preghiera di pace e protezione.
+
+### 🧭 Bussola della Fede & Compieta Serale
+- Risposte riflessive ai grandi interrogativi esistenziali (il problema del male, fede e scienza, la sofferenza).
+- Esame di coscienza serale (Compieta) con la speciale invocazione di protezione notturna per donare pace e vincere insonnia e ansia.
+
+### 🔒 Privacy Assoluta & Dati Sovrani
+- **Nessun account richiesto**: non ci sono registrazioni, email o password.
+- **Nessun database nel cloud**: note, preghiere ed evidenziazioni risiedono esclusivamente sul tuo dispositivo nel database locale del browser (IndexedDB).
+- **Backup & Ripristino con 1 Click**: esporta e importa in qualsiasi momento l'intero archivio in un file JSON sicuro.
 
 ---
 
-## 🚀 Running Locally
+## 🎨 Atmosfera Liturgica Circadiana
 
-Aura Sacra requires **no build tools, bundlers, or npm dependencies**.
+L'aspetto visivo di Aura Sacra segue l'armonia della giornata adattandosi all'orologio del tuo dispositivo:
+- 🌅 **06:00 – 11:59 (Aurora / Lodi)**: Toni dorati solari e pergamena luminosa.
+- ☀️ **12:00 – 17:59 (Mezzogiorno / Scriptorium)**: Calda pergamena classica con accenti vermiglio.
+- 🌇 **18:00 – 21:59 (Tramonto / Vespro)**: Calde tonalità ambrate al lume di candela.
+- 🕯️ **22:00 – 05:59 (Notte / Compieta)**: Ardesia cattedrale e fiamma viva, per riposare la vista prima del sonno.
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/aura-sacra.git
-   cd aura-sacra
-   ```
+---
 
-2. **Start the local server**:
+## 📱 Come Installare Aura Sacra sui tuoi Dispositivi
+
+Aura Sacra è una **Progressive Web App (PWA)** e può essere installata come un'app nativa:
+
+- **iPhone & iPad (Safari)**:
+  1. Apri il sito in Safari.
+  2. Tocca l'icona **Condividi** (il quadrato con la freccia verso l'alto).
+  3. Scorri e tocca **"Aggiungi alla schermata Home"**.
+- **Android (Chrome / Edge / Brave)**:
+  1. Apri il sito nel browser.
+  2. Tocca il menu con i tre puntini in alto a destra.
+  3. Seleziona **"Installa app"** oppure **"Aggiungi a schermata Home"**.
+- **Computer Mac, Windows o Linux (Chrome / Edge / Brave)**:
+  1. Clicca sull'icona **Installa** presente a destra nella barra degli indirizzi del browser.
+
+---
+
+## 💻 Come Avviare l'App in Locale
+
+Se utilizzi l'applicazione in locale sul tuo computer:
+
+1. Apri il terminale nella cartella di Aura Sacra.
+2. Avvia il server locale con Python:
    ```bash
    python3 serve.py 8080
    ```
-   Open `http://localhost:8080` in your browser.
+3. Apri il browser all'indirizzo:
+   ```
+   http://localhost:8080
+   ```
 
 ---
 
-## 🌐 Deploy to GitHub Pages (Free Hosting)
+## 📜 Licenza
 
-1. Push this repository to GitHub.
-2. In your repository on GitHub, navigate to **Settings** > **Pages**.
-3. Under **Build and deployment**, select **Source: Deploy from a branch**.
-4. Choose the `main` branch and `/ (root)` folder, then click **Save**.
-5. Your PWA is live globally with automated HTTPS and Service Worker caching!
-
----
-
-## 📱 PWA Installation
-
-- **iOS (Safari)**: Tap the Share button > **Add to Home Screen**.
-- **Android (Chrome)**: Tap the three-dot menu > **Install app** or **Add to Home screen**.
-- **Desktop (Chrome/Edge)**: Click the Install icon in the address bar.
-
----
-
-## 🤝 Contributing
-
-Contributions from all Christian traditions and developers are welcome. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) guide before submitting pull requests.
-
----
-
-## 📜 License
-
-This project is open-source software licensed under the [MIT License](LICENSE).
+Questo progetto è software libero distribuito sotto i termini della licenza **GNU General Public License v3 (GNU GPL v3)**.  
+Consulta il file [LICENSE](LICENSE) per tutti i termini e le condizioni ufficiali.
 
 *Aura Sacra • Soli Deo Gloria*

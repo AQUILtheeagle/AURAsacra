@@ -8,9 +8,9 @@ let timerInterval = null;
 let isTimerRunning = false;
 let isMinimized = false;
 
-export function renderFloatingCandle(container) {
+export function renderFloatingCandle(container, pipWin = null) {
   function updateUI() {
-    if (isMinimized) {
+    if (isMinimized && !pipWin) {
       container.innerHTML = `
         <div class="floating-candle-widget minimized cursor-pointer hover:scale-105 transition" id="btn-maximize-candle" title="Open Sacred Candle & Rain Focus">
           <div class="candle-wrapper scale-90">
@@ -36,20 +36,27 @@ export function renderFloatingCandle(container) {
     container.innerHTML = `
       <div class="floating-candle-widget w-72 p-4 border border-amber-600/30 bg-[var(--bg-card)]/95 backdrop-blur-md shadow-2xl rounded-2xl select-none">
         
-        <!-- Header: Controls & Pop-up Window -->
+        <!-- Header: Controls & Always-on-top Detach -->
         <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-800">
           <div class="flex items-center gap-1.5">
             <span class="text-amber-500">${icons.flame('w-4 h-4')}</span>
             <span class="text-xs font-bold uppercase tracking-wider font-display text-[var(--accent-vermilion)]">Candle</span>
           </div>
           <div class="flex items-center gap-1.5">
-            <button id="btn-open-external-popup" class="text-[11px] text-amber-500 hover:text-amber-400 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/30 flex items-center gap-1 font-sans cursor-pointer transition hover:bg-amber-500/20" title="Open as detached standalone Pop-up window">
-              ${icons.share('w-3 h-3')}
-              <span>Pop-up Window</span>
-            </button>
-            <button id="btn-minimize-candle" class="text-stone-400 hover:text-stone-200 p-1 cursor-pointer" title="Minimize">
-              ${icons.minimize('w-4 h-4')}
-            </button>
+            ${pipWin ? `
+              <span class="text-[10px] text-amber-500 font-sans font-semibold bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                <span>📌</span>
+                <span>In Primo Piano</span>
+              </span>
+            ` : `
+              <button id="btn-open-external-popup" class="text-[11px] text-amber-500 hover:text-amber-400 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 flex items-center gap-1 font-sans font-semibold cursor-pointer transition hover:bg-amber-500/20" title="Detach as Always-on-Top floating window (Picture-in-Picture)">
+                <span>📌</span>
+                <span>Primo Piano</span>
+              </button>
+              <button id="btn-minimize-candle" class="text-stone-400 hover:text-stone-200 p-1 cursor-pointer" title="Minimize">
+                ${icons.minimize('w-4 h-4')}
+              </button>
+            `}
           </div>
         </div>
 
@@ -122,7 +129,75 @@ export function renderFloatingCandle(container) {
     // Event handlers
     const extPopupBtn = container.querySelector('#btn-open-external-popup');
     if (extPopupBtn) {
-      extPopupBtn.addEventListener('click', () => {
+      extPopupBtn.addEventListener('click', async () => {
+        // 1. Try Document Picture-in-Picture API (OS-level Always-on-Top)
+        if ('documentPictureInPicture' in window) {
+          try {
+            const pipWindow = await window.documentPictureInPicture.requestWindow({
+              width: 320,
+              height: 480
+            });
+
+            // Propagate theme
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'night';
+            pipWindow.document.documentElement.setAttribute('data-theme', currentTheme);
+            pipWindow.document.title = 'Aura Sacra — Living Candle';
+
+            // Copy stylesheets
+            [...document.styleSheets].forEach((sheet) => {
+              try {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWindow.document.head.appendChild(link);
+                } else if (sheet.cssRules) {
+                  const style = document.createElement('style');
+                  style.textContent = [...sheet.cssRules].map(r => r.cssText).join('\n');
+                  pipWindow.document.head.appendChild(style);
+                }
+              } catch (e) {
+                if (sheet.href) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = sheet.href;
+                  pipWindow.document.head.appendChild(link);
+                }
+              }
+            });
+
+            // PiP body styling
+            pipWindow.document.body.style.margin = '0';
+            pipWindow.document.body.style.padding = '12px';
+            pipWindow.document.body.style.background = 'radial-gradient(circle at center, #1e1b18 0%, #0d0c0b 100%)';
+            pipWindow.document.body.style.display = 'flex';
+            pipWindow.document.body.style.alignItems = 'center';
+            pipWindow.document.body.style.justifyContent = 'center';
+            pipWindow.document.body.style.minHeight = '100vh';
+            pipWindow.document.body.style.boxSizing = 'border-box';
+            pipWindow.document.body.style.overflow = 'hidden';
+
+            const pipContent = pipWindow.document.createElement('div');
+            pipContent.style.width = '100%';
+            pipContent.style.maxWidth = '290px';
+            pipWindow.document.body.appendChild(pipContent);
+
+            isMinimized = true;
+            updateUI();
+
+            renderFloatingCandle(pipContent, pipWindow);
+
+            pipWindow.addEventListener('pagehide', () => {
+              isMinimized = false;
+              updateUI();
+            });
+            return;
+          } catch (err) {
+            console.warn('Document Picture-in-Picture error, falling back to window.open:', err);
+          }
+        }
+
+        // Fallback for browsers without Document PiP (Safari, Firefox)
         const w = 340;
         const h = 500;
         const left = Math.max(0, (window.screen?.width || 1200) - w - 40);
@@ -135,10 +210,13 @@ export function renderFloatingCandle(container) {
       });
     }
 
-    container.querySelector('#btn-minimize-candle').addEventListener('click', () => {
-      isMinimized = true;
-      updateUI();
-    });
+    const minBtn = container.querySelector('#btn-minimize-candle');
+    if (minBtn) {
+      minBtn.addEventListener('click', () => {
+        isMinimized = true;
+        updateUI();
+      });
+    }
 
     container.querySelector('#btn-toggle-timer').addEventListener('click', () => {
       if (isTimerRunning) {
