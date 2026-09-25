@@ -33,6 +33,11 @@ export function renderOnboardingModal(container, onComplete) {
               <span class="text-[10px] text-stone-400">Full biblical canon, saints, and Roman liturgy</span>
             </button>
 
+            <button type="button" class="conf-btn p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="traditional">
+              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">Traditional Catholic (1962)</span>
+              <span class="text-[10px] text-stone-400">Latin Mass, Ember Days, Vigils & traditional fasts</span>
+            </button>
+
             <button type="button" class="conf-btn p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="orthodox">
               <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">Orthodox (Eastern)</span>
               <span class="text-[10px] text-stone-400">Eastern tradition, Church Fathers, and Hesychasm</span>
@@ -100,6 +105,8 @@ export function renderOnboardingModal(container, onComplete) {
       try {
         const nameInput = (container.querySelector('#ob-username')?.value || '').trim();
         await setSetting('user_confession', selectedConfession || 'ecumenical');
+        await setSetting('confession', selectedConfession || 'ecumenical');
+        await setSetting('penance_tradition', selectedConfession || 'ecumenical');
         await setSetting('user_name', nameInput || 'Disciple');
         await setSetting('onboarding_completed', true);
         localStorage.setItem('aurasacra_onboarding_completed', 'true');

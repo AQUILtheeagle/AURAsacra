@@ -61,15 +61,15 @@ export function renderFaithCompassModal(container, onClose, onAskJesus) {
             </div>
 
             <!-- Quote -->
-            <div class="p-3 bg-[var(--bg-secondary)] rounded-xl border border-stone-200 dark:border-stone-800 text-xs italic text-[var(--text-secondary)]">
+            <div class="p-3 bg-[var(--bg-secondary)] rounded-xl border border-stone-200 dark:border-stone-800 text-xs italic text-[var(--text-secondary)] notranslate" translate="no">
               ${activeDoubt.quote}
             </div>
 
             <!-- Scriptural Anchors -->
-            <div class="pt-2 flex flex-wrap items-center gap-2">
-              <span class="text-xs font-mono font-bold text-amber-600">📖 Key Scripture Passages:</span>
+            <div class="pt-2 flex flex-wrap items-center gap-2 notranslate" translate="no">
+              <span class="text-xs font-mono font-bold text-amber-600 notranslate" translate="no">📖 Key Scripture Passages:</span>
               ${activeDoubt.verses.map((v) => `
-                <span class="px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-600/30 text-xs font-mono text-amber-700 dark:text-amber-400">
+                <span class="px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-600/30 text-xs font-mono text-amber-700 dark:text-amber-400 notranslate" translate="no">
                   ${v}
                 </span>
               `).join('')}

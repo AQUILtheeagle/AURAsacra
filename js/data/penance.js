@@ -4,22 +4,34 @@
 
 export const TRADITIONS = [
   {
-    id: 'universal',
-    name: 'Universal Roman Rite',
-    subtitle: 'Current Canon Law (Can. 1249–1253 & Paenitemini)',
-    description: 'Ash Wednesday, Good Friday, and every Friday of the year (with solemnity dispensations).'
+    id: 'catholic',
+    name: 'Catholic (Roman Rite)',
+    subtitle: 'Code of Canon Law (Can. 1249–1253 & Paenitemini)',
+    description: 'Ash Wednesday, Good Friday, and all Fridays of the year (with solemnity dispensations).'
   },
   {
     id: 'traditional',
-    name: 'Traditional Latin (1962)',
+    name: 'Traditional Catholic (1962)',
     subtitle: 'Historic Missal & 1917 Canon Law',
-    description: 'Includes Ember Days (Quattro Tempora), traditional Vigils, and full Lenten weekday fasting.'
+    description: 'Includes Ember Days (Quatuor Tempora), traditional Vigils, and full Lenten daily fasts.'
   },
   {
-    id: 'eastern',
-    name: 'Eastern Christian / Byzantine',
+    id: 'orthodox',
+    name: 'Orthodox (Eastern Byzantine)',
     subtitle: 'Great Lent, Fasting Seasons & Weekly Fasts',
     description: 'Great Lent, Apostles Fast, Dormition Fast, Nativity Fast, and Wednesdays & Fridays.'
+  },
+  {
+    id: 'protestant',
+    name: 'Protestant / Evangelical',
+    subtitle: 'Biblical Grace & Voluntary Devotion',
+    description: 'Ash Wednesday & Good Friday solemnity, Jesus & Daniel fasts, prayerful voluntary discipline.'
+  },
+  {
+    id: 'ecumenical',
+    name: 'Ecumenical / Spiritual Seeker',
+    subtitle: 'Shared Heritage of Prayer & Fasting',
+    description: 'Universal Christian asceticism: fasting from malice, silence before God, and charity to the poor.'
   }
 ];
 
@@ -135,7 +147,12 @@ function getEmberDays(year) {
 }
 
 // Evaluates penitential status of any given day
-export function getDayPenanceStatus(dateInput, tradition = 'universal') {
+export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
+  const normTrad =
+    tradition === 'universal' ? 'catholic' :
+    tradition === 'eastern' ? 'orthodox' :
+    tradition;
+
   const date = new Date(dateInput.getFullYear(), dateInput.getMonth(), dateInput.getDate());
   const year = date.getFullYear();
   const dayOfWeek = date.getDay(); // 0 = Sun, 5 = Fri, 3 = Wed
@@ -159,14 +176,14 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
   const solemnityName = isSolemnity(date);
 
   // -------------------------------------------------------------
-  // 1. UNIVERSAL ROMAN RITE (Current Canon Law: Can. 1249-1253)
+  // 1. CATHOLIC / UNIVERSAL ROMAN RITE (Can. 1249-1253)
   // -------------------------------------------------------------
-  if (tradition === 'universal') {
+  if (normTrad === 'catholic') {
     if (isAshWednesday) {
       return {
         isPenitential: true,
         type: 'strict_fast',
-        title: 'Ash Wednesday (Mercoledì delle Ceneri)',
+        title: 'Ash Wednesday',
         subtitle: 'Universal Day of Strict Fasting and Abstinence from Meat',
         badge: { label: 'Strict Fast & Abstinence', color: 'vermilion', icon: 'bread' },
         rules: {
@@ -189,7 +206,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
       return {
         isPenitential: true,
         type: 'strict_fast',
-        title: 'Good Friday (Venerdì Santo)',
+        title: 'Good Friday',
         subtitle: 'The Crucifixion and Passion of our Lord Jesus Christ',
         badge: { label: 'Strict Fast & Abstinence', color: 'vermilion', icon: 'bread' },
         rules: {
@@ -237,7 +254,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
       return {
         isPenitential: true,
         type: 'abstinence',
-        title: isLent ? 'Lenten Friday of Penance' : 'Friday of Penance (Venerdì di Penitenza)',
+        title: isLent ? 'Lenten Friday of Penance' : 'Friday of Penance',
         subtitle: 'Weekly Memorial of the Passion of our Lord (Can. 1250)',
         badge: { label: 'Abstinence from Meat', color: 'purple', icon: 'fish' },
         rules: {
@@ -261,7 +278,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
       return {
         isPenitential: true,
         type: 'lenten_feria',
-        title: 'Lenten Season (Tempo di Quaresima)',
+        title: 'Lenten Season',
         subtitle: 'Daily Discipline of Prayer, Fasting, and Almsgiving',
         badge: { label: 'Lenten Season', color: 'purple', icon: 'flame' },
         rules: {
@@ -284,7 +301,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
     return {
       isPenitential: false,
       type: 'ordinary',
-      title: 'Ordinary Day (Giorno Ordinario)',
+      title: 'Ordinary Day',
       subtitle: 'Living in Christian Virtue and Gratitude',
       badge: { label: 'No Fast Required', color: 'stone', icon: 'sun' },
       rules: {
@@ -306,7 +323,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
   // -------------------------------------------------------------
   // 2. TRADITIONAL LATIN RITE (1962 / 1917 Code of Canon Law)
   // -------------------------------------------------------------
-  if (tradition === 'traditional') {
+  if (normTrad === 'traditional') {
     // Ember Days Check
     const emberDays = getEmberDays(year);
     const matchedEmber = emberDays.find((ed) => isSameDay(date, ed.date));
@@ -327,7 +344,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
           avoid: 'Meat (except partial on Saturday) and decadent sweets.'
         },
         obligation: 'Traditional Latin discipline observed by the faithful worldwide.',
-        theology: 'Ember Days (Quattro Tempora) sanctify the four seasons of nature, thanking God for the harvest, praying for holy priests, and renewing spiritual discipline.',
+        theology: 'Ember Days (Quatuor Tempora) sanctify the four seasons of nature, thanking God for the harvest, praying for holy priests, and renewing spiritual discipline.',
         scripture: {
           ref: 'Acts 13:3',
           text: 'And when they had fasted and prayed, and laid their hands on them, they sent them away.'
@@ -441,7 +458,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
       return {
         isPenitential: true,
         type: 'abstinence',
-        title: 'Friday of Abstinence (Venerdì di Astinenza)',
+        title: 'Friday of Abstinence',
         subtitle: 'Universal Memorial of the Crucifixion',
         badge: { label: 'Abstinence from Meat', color: 'purple', icon: 'fish' },
         rules: {
@@ -466,7 +483,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
   // -------------------------------------------------------------
   // 3. EASTERN CHRISTIAN / BYZANTINE TRADITION
   // -------------------------------------------------------------
-  if (tradition === 'eastern') {
+  if (normTrad === 'orthodox') {
     const orthodoxEaster = calculateOrthodoxEaster(year);
     const cleanMonday = addDays(orthodoxEaster, -48);
     const lazarusSaturday = addDays(orthodoxEaster, -8);
@@ -599,14 +616,173 @@ export function getDayPenanceStatus(dateInput, tradition = 'universal') {
       };
     }
 
-    return getDayPenanceStatus(dateInput, 'universal');
+    return getDayPenanceStatus(dateInput, 'catholic');
   }
 
-  return getDayPenanceStatus(dateInput, 'universal');
+  // -------------------------------------------------------------
+  // 4. PROTESTANT / EVANGELICAL TRADITION
+  // -------------------------------------------------------------
+  if (normTrad === 'protestant') {
+    if (isAshWednesday) {
+      return {
+        isPenitential: true,
+        type: 'protestant_fast',
+        title: 'Ash Wednesday (Biblical Day of Repentance)',
+        subtitle: 'Historic Day of Humility & Seeking the Lord',
+        badge: { label: 'Prayer & Fasting', color: 'purple', icon: 'bread' },
+        rules: {
+          fasting: 'Voluntary fasting: dedicate meal times to prayer and Scripture meditation.',
+          abstinence: 'Practice voluntary simplicity; avoid luxury and worldly distractions.',
+          allowed: 'Simple wholesome foods, fruits, grains, water, tea.',
+          avoid: 'Lavish meals, noisy entertainment, spiritual pride.'
+        },
+        obligation: 'Observed in Gospel liberty (Col 2:16), in humility before the Father in secret (Mt 6:17-18).',
+        theology: 'Fasting does not earn salvation, for we are justified by grace alone through faith in Jesus Christ (Eph 2:8-9). It humbles the soul (Ps 35:13) and sharpens spiritual hunger for God.',
+        scripture: {
+          ref: 'Matthew 6:17-18',
+          text: 'But thou, when thou fastest, anoint thine head, and wash thy face; that thou appear not unto men to fast, but unto thy Father which is in secret.'
+        },
+        prayer: 'Heavenly Father, we humble our souls before Thee. Cleanse our hearts, revive our spirits, and let Thy Word be our daily bread. In Jesus\' name, Amen.'
+      };
+    }
+
+    if (isGoodFriday) {
+      return {
+        isPenitential: true,
+        type: 'strict_fast',
+        title: 'Good Friday (The Cross of Christ)',
+        subtitle: 'Remembering Christ\'s Finished Work at Calvary',
+        badge: { label: 'Solemn Fast & Meditation', color: 'vermilion', icon: 'bread' },
+        rules: {
+          fasting: 'Sincere fasting and reverent quietude throughout the hours of the Passion.',
+          abstinence: 'Simple bread and water or modest fasting meals.',
+          allowed: 'Simple sustenance taken with prayerful thanksgiving.',
+          avoid: 'Feasting, festive events, self-centered distractions.'
+        },
+        obligation: 'Observed with deep gratitude across Protestant and Evangelical churches worldwide.',
+        theology: 'We stand in awe before the Cross, where the Lamb of God bore our sins in His own body on the tree (1 Peter 2:24).',
+        scripture: {
+          ref: 'Galatians 6:14',
+          text: 'God forbid that I should glory, save in the cross of our Lord Jesus Christ, by whom the world is crucified unto me, and I unto the world.'
+        },
+        prayer: 'Lord Jesus, worthy is the Lamb that was slain to receive power, riches, wisdom, strength, honor, glory, and blessing. We thank Thee for Thy redeeming sacrifice.'
+      };
+    }
+
+    if (dayOfWeek === 5) {
+      return {
+        isPenitential: true,
+        type: 'protestant_friday',
+        title: 'Friday Cross Memorial',
+        subtitle: 'Weekly Self-Denial and Intercession',
+        badge: { label: 'Voluntary Self-Denial', color: 'purple', icon: 'heart' },
+        rules: {
+          fasting: 'Voluntary fasting (skip a meal or fast until afternoon for personal prayer).',
+          abstinence: 'Voluntary self-denial; save funds from avoided luxuries to give to the poor.',
+          allowed: 'Modest foods eaten in gratitude and moderation.',
+          avoid: 'Excess and unmindful consumption.'
+        },
+        obligation: 'Personal spiritual discipline (practiced by reformers such as John Wesley).',
+        theology: 'Friday is consecrated to remember that Christ gave His life on a Friday. Self-denial trains the soul to yield to the Holy Spirit.',
+        scripture: {
+          ref: 'Romans 12:1',
+          text: 'I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service.'
+        },
+        prayer: 'Lord, teach me to deny myself daily, to take up my cross, and to follow Thee with a willing and joy-filled spirit.'
+      };
+    }
+
+    if (isLent && dayOfWeek !== 0) {
+      return {
+        isPenitential: true,
+        type: 'lenten_feria',
+        title: 'Season of Spiritual Renewal',
+        subtitle: '40 Days Following Christ\'s Wilderness Fast',
+        badge: { label: 'Wilderness Season', color: 'purple', icon: 'flame' },
+        rules: {
+          fasting: 'Personal devotion: consider a Daniel Fast (vegetables and water) or media fast.',
+          abstinence: 'Disciplined moderation in speech, diet, and entertainment.',
+          allowed: 'Clean, healthy foods; generous giving to those in distress.',
+          avoid: 'Passivity and distractions that choke the Word of God.'
+        },
+        obligation: 'Voluntary season of deepening personal prayer and discipleship.',
+        theology: 'Jesus overcame the devil\'s temptations in the wilderness through fasting and the Word of God: "Man shall not live by bread alone, but by every word of God" (Luke 4:4).',
+        scripture: {
+          ref: 'Daniel 10:3',
+          text: 'I ate no pleasant bread, neither came flesh nor wine in my mouth, till three whole weeks were fulfilled.'
+        },
+        prayer: 'Lord, draw me closer to Thyself during this season. Give me hunger for Thy Word and power against all temptation.'
+      };
+    }
+
+    return {
+      isPenitential: false,
+      type: 'ordinary',
+      title: 'Day of Christian Liberty & Gratitude',
+      subtitle: 'Walking in the Freedom of the Gospel (Romans 14:5)',
+      badge: { label: 'Free in Grace', color: 'stone', icon: 'sun' },
+      rules: {
+        fasting: 'None prescribed; fast voluntarily whenever led by the Holy Spirit.',
+        abstinence: 'All foods received with thanksgiving (1 Tim 4:4).',
+        allowed: 'Enjoy meals to the glory of God (1 Cor 10:31).',
+        avoid: 'Judgmentalism of others\' dietary choices.'
+      },
+      obligation: 'Walk in grace, love, and honesty before God.',
+      theology: 'One person esteems one day above another; another esteems every day alike. Let every person be fully convinced in their own mind, for he who eats, eats to the Lord and gives God thanks.',
+      scripture: {
+        ref: 'Romans 14:6',
+        text: 'He that regardeth the day, regardeth it unto the Lord; and he that regardeth not the day, to the Lord he doth not regard it. He that eateth, eateth to the Lord, for he giveth God thanks.'
+      },
+      prayer: 'Father, we thank Thee for the freedom we possess in Christ Jesus. Guide our steps today in love, truth, and righteousness. Amen.'
+    };
+  }
+
+  // -------------------------------------------------------------
+  // 5. ECUMENICAL / SPIRITUAL SEEKER TRADITION
+  // -------------------------------------------------------------
+  if (normTrad === 'ecumenical') {
+    if (isAshWednesday || isGoodFriday) {
+      return getDayPenanceStatus(dateInput, 'catholic');
+    }
+
+    if (dayOfWeek === 5) {
+      if (solemnityName) {
+        return getDayPenanceStatus(dateInput, 'catholic');
+      }
+      return {
+        isPenitential: true,
+        type: 'abstinence',
+        title: 'Universal Friday of Contemplation',
+        subtitle: 'Memorial of the Cross & Solidarity with the Hungry',
+        badge: { label: 'Friday Abstinence & Peace', color: 'purple', icon: 'heart' },
+        rules: {
+          fasting: 'Simplicity and moderation in all things.',
+          abstinence: 'Abstinence from meat; choose plant-based foods in solidarity with creation and the poor.',
+          allowed: 'Grains, legumes, fruits, vegetables, fish, water.',
+          avoid: 'Excess, anger, and gossip.'
+        },
+        obligation: 'Universal Christian discipline shared across East and West.',
+        theology: 'Fasting is an ancient medicine for the soul, uniting Christians of every communion in self-emptying love and compassionate service.',
+        scripture: {
+          ref: 'Isaiah 58:6-7',
+          text: 'Is not this the fast that I have chosen? to loose the bands of wickedness, to undo the heavy burdens, and to let the oppressed go free... to deal thy bread to the hungry?'
+        },
+        prayer: 'O God of all creation, unite all who seek Thy face in peace and charity. May our self-denial bring comfort to those in need.'
+      };
+    }
+
+    if (isLent && dayOfWeek !== 0) {
+      return getDayPenanceStatus(dateInput, 'catholic');
+    }
+
+    return getDayPenanceStatus(dateInput, 'catholic');
+  }
+
+  return getDayPenanceStatus(dateInput, 'catholic');
 }
 
 // Generates an array of day statuses for an entire month
-export function getMonthPenanceDays(year, monthIndex, tradition = 'universal') {
+export function getMonthPenanceDays(year, monthIndex, tradition = 'catholic') {
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const days = [];
 
@@ -627,34 +803,34 @@ export function getMonthPenanceDays(year, monthIndex, tradition = 'universal') {
 export const PENANCE_GUIDE = {
   pillars: [
     {
-      title: 'Prayer (Preghiera)',
+      title: 'Prayer',
       icon: 'heart',
       desc: 'Opens our interior dwelling to God\'s transforming grace. Fasting without prayer is mere diet; with prayer, it is spiritual elevation.'
     },
     {
-      title: 'Fasting (Digiuno)',
+      title: 'Fasting',
       icon: 'bread',
       desc: 'Mastery over bodily appetites. Re-orders our desires toward heavenly nourishment and purifies the spiritual eye.'
     },
     {
-      title: 'Almsgiving (Elemosina)',
+      title: 'Almsgiving',
       icon: 'share',
       desc: 'Shares the fruits of our sacrifice with the hungry and afflicted. What we withhold from ourselves belongs by justice to the poor.'
     }
   ],
   definitions: [
     {
-      term: 'Fasting (Digiuno)',
+      term: 'Fasting',
       summary: 'Quantity of Food • Limit to One Full Meal',
       details: 'Prescribes eating only one full meal a day, with two smaller collations that together do not equal another full meal. Snacking between meals is prohibited. Pure liquids (water, coffee, tea) are permitted at all times. Obligatory for healthy Catholics from age 18 to 59 on Ash Wednesday and Good Friday.'
     },
     {
-      term: 'Abstinence (Astinenza)',
+      term: 'Abstinence',
       summary: 'Quality of Food • Refraining from Meat',
       details: 'Requires refraining from eating the flesh meat of warm-blooded land animals and birds (beef, chicken, pork, lamb). Fish, shellfish, amphibians, eggs, dairy products, and seasonings made from animal fat are permitted. Obligatory for all Catholics from age 14 onwards on Ash Wednesday, Good Friday, and all Fridays of the year (unless a Solemnity falls on that Friday).'
     },
     {
-      term: 'Strict Fast (Digiuno Stretto)',
+      term: 'Strict Fast',
       summary: 'Fasting & Abstinence Combined',
       details: 'Both rules apply simultaneously: only one full meal and two small snacks, with total abstinence from all meat. Prescribed canonically on Ash Wednesday and Good Friday, and traditionally on sacred Vigils.'
     },

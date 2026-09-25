@@ -93,12 +93,12 @@ export async function renderShareCardModal(container, initialQuote = '', initial
           </div>
 
           <!-- Selected Verse Badge (Read-Only, No Writing Required) -->
-          <div class="bg-[var(--bg-secondary)] border border-amber-600/30 rounded-2xl p-3 text-center shadow-xs">
-            <div class="text-[10px] uppercase font-sans font-bold tracking-widest text-amber-600">Selected Scripture to Send</div>
-            <div class="text-base sm:text-lg font-display font-bold text-[var(--accent-vermilion)] mt-0.5">
+          <div class="bg-[var(--bg-secondary)] border border-amber-600/30 rounded-2xl p-3 text-center shadow-xs notranslate" translate="no">
+            <div class="text-[10px] uppercase font-sans font-bold tracking-widest text-amber-600 notranslate" translate="no">Selected Scripture to Send</div>
+            <div class="text-base sm:text-lg font-display font-bold text-[var(--accent-vermilion)] mt-0.5 notranslate" translate="no">
               — ${citation} —
             </div>
-            <div class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] mt-1 max-h-20 overflow-y-auto px-2 leading-relaxed">
+            <div class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] mt-1 max-h-20 overflow-y-auto px-2 leading-relaxed notranslate" translate="no">
               "${quote}"
             </div>
           </div>
@@ -115,8 +115,8 @@ export async function renderShareCardModal(container, initialQuote = '', initial
             </div>
 
             <!-- Book and Chapter Pickers -->
-            <div class="grid grid-cols-2 gap-2">
-              <select id="modal-select-book" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-1.5 text-xs font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer">
+            <div class="grid grid-cols-2 gap-2 notranslate" translate="no">
+              <select id="modal-select-book" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-1.5 text-xs font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer notranslate" translate="no">
                 ${Object.entries(testamentGroups)
                   .filter(([_, books]) => books.length > 0)
                   .map(
@@ -137,7 +137,7 @@ export async function renderShareCardModal(container, initialQuote = '', initial
                   .join('')}
               </select>
 
-              <select id="modal-select-chapter" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-1.5 text-xs font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer">
+              <select id="modal-select-chapter" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-1.5 text-xs font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer notranslate" translate="no">
                 ${availableChapters.map((ch) => `
                   <option value="${ch}" ${ch === activeChapter ? 'selected' : ''}>
                     ${isPsalm ? 'Psalm' : 'Chapter'} ${ch}
@@ -147,12 +147,12 @@ export async function renderShareCardModal(container, initialQuote = '', initial
             </div>
 
             <!-- Clickable Verse Pills (numero:numero) -->
-            <div class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-2 bg-[var(--bg-card)] rounded-xl border border-stone-300 dark:border-stone-800/80">
+            <div class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-2 bg-[var(--bg-card)] rounded-xl border border-stone-300 dark:border-stone-800/80 notranslate" translate="no">
               ${chapterData.verses.map((v) => {
                 const verseRef = `${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${v.v}`;
                 const isCurrent = citation.includes(`${activeChapter}:${v.v}`) || (activeVerseNum === v.v && citation.includes(book.title));
                 return `
-                  <button class="modal-verse-chip px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1 ${
+                  <button class="modal-verse-chip px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1 notranslate" translate="no" ${
                     isCurrent
                       ? 'bg-amber-600 text-white shadow-sm ring-1 ring-amber-500'
                       : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:bg-amber-600/20 hover:text-amber-600 border border-stone-300/60 dark:border-stone-700/60'

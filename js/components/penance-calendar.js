@@ -18,8 +18,16 @@ const MONTH_NAMES = [
 ];
 
 export async function renderPenanceCalendar(container) {
-  // Load saved tradition preference
-  activeTradition = await getSetting('penance_tradition', 'universal');
+  // Correlate calendar directly with the user's saved faith belief (confession)
+  const userConfession = (await getSetting('user_confession')) || (await getSetting('confession', 'catholic'));
+  const normalizedTradition =
+    userConfession === 'orthodox' || userConfession === 'eastern' ? 'orthodox' :
+    userConfession === 'protestant' ? 'protestant' :
+    userConfession === 'traditional' ? 'traditional' :
+    userConfession === 'ecumenical' ? 'ecumenical' :
+    'catholic';
+
+  activeTradition = await getSetting('penance_tradition', normalizedTradition);
   const today = new Date();
   currentDisplayDate = new Date(today.getFullYear(), today.getMonth(), 1);
   selectedDayData = getDayPenanceStatus(today, activeTradition);
@@ -372,20 +380,20 @@ export async function renderPenanceCalendar(container) {
               </p>
             </div>
 
-            <div class="border-t border-stone-300/60 dark:border-stone-700/60 pt-3">
-              <span class="text-xs font-mono font-bold text-amber-600">— ${selected.scripture.ref}</span>
-              <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] mt-0.5">
+            <div class="border-t border-stone-300/60 dark:border-stone-700/60 pt-3 notranslate" translate="no">
+              <span class="text-xs font-mono font-bold text-amber-600 notranslate" translate="no">— ${selected.scripture.ref}</span>
+              <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] mt-0.5 notranslate" translate="no">
                 "${selected.scripture.text}"
               </p>
             </div>
           </div>
 
           <!-- Prayer of Strength -->
-          <div class="bg-amber-600/10 border-l-4 border-amber-600 rounded-r-xl p-4 space-y-1">
+          <div class="bg-amber-600/10 border-l-4 border-amber-600 rounded-r-xl p-4 space-y-1 notranslate" translate="no">
             <span class="text-[11px] font-sans font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
               Penitential Prayer of the Day
             </span>
-            <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] leading-relaxed">
+            <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] leading-relaxed notranslate" translate="no">
               «${selected.prayer}»
             </p>
           </div>
@@ -494,6 +502,11 @@ export async function renderPenanceCalendar(container) {
       btn.addEventListener('click', async () => {
         activeTradition = btn.getAttribute('data-tradition');
         await saveSetting('penance_tradition', activeTradition);
+        await saveSetting('user_confession', activeTradition);
+        await saveSetting('confession', activeTradition); // Synchronize belief across entire app
+        try {
+          localStorage.setItem('aurasacra_user_confession', activeTradition);
+        } catch (e) {}
         selectedDayData = getDayPenanceStatus(selectedDayData?.date || new Date(), activeTradition);
         render();
       });

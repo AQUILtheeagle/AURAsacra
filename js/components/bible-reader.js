@@ -124,7 +124,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
             <span class="text-amber-600">${icons.book('w-5 h-5')}</span>
             
             <!-- Book Dropdown -->
-            <select id="select-bible-book" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm">
+            <select id="select-bible-book" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no">
               ${Object.entries(testamentGroups)
                 .filter(([_, books]) => books.length > 0)
                 .map(
@@ -146,7 +146,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
             </select>
 
             <!-- Chapter Dropdown -->
-            <select id="select-bible-chapter" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm">
+            <select id="select-bible-chapter" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no">
               ${availableChapters
                 .map(
                   (ch) => `
@@ -187,23 +187,23 @@ export async function renderBibleReader(container, onOpenShareCard) {
         </div>
 
         <!-- Sacred Manuscript Open-Codex View -->
-        <div class="bg-[var(--bg-parchment)] border-2 border-stone-300/80 dark:border-stone-800/80 rounded-2xl p-6 sm:p-10 shadow-lg relative parchment-border">
+        <div class="bg-[var(--bg-parchment)] border-2 border-stone-300/80 dark:border-stone-800/80 rounded-2xl p-6 sm:p-10 shadow-lg relative parchment-border notranslate" translate="no">
           
           <!-- Chapter Heading -->
-          <div class="text-center mb-8 border-b border-stone-300/60 dark:border-stone-800 pb-4">
-            <span class="text-xs uppercase tracking-widest text-amber-700 dark:text-amber-500 font-sans font-semibold">
+          <div class="text-center mb-8 border-b border-stone-300/60 dark:border-stone-800 pb-4 notranslate" translate="no">
+            <span class="text-xs uppercase tracking-widest text-amber-700 dark:text-amber-500 font-sans font-semibold notranslate" translate="no">
               ${book.testament} • ${book.title}
             </span>
-            <h2 class="text-2xl sm:text-3xl font-display font-bold text-[var(--accent-vermilion)] mt-1 mb-1">
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-[var(--accent-vermilion)] mt-1 mb-1 notranslate" translate="no">
               ${book.title} ${isPsalm ? '' : 'Chapter '}${activeChapter}
             </h2>
-            <p class="text-sm sm:text-base font-serif italic text-[var(--text-muted)]">
+            <p class="text-sm sm:text-base font-serif italic text-[var(--text-muted)] notranslate" translate="no">
               ${chapterData.title}
             </p>
           </div>
 
           <!-- Verses Feed -->
-          <div class="space-y-3 max-w-3xl mx-auto">
+          <div class="space-y-3 max-w-3xl mx-auto notranslate" translate="no">
             ${chapterData.verses
               .map((verse, idx) => {
                 const highlight = activeHighlights.find((h) => h.verse === verse.v);
@@ -235,17 +235,17 @@ export async function renderBibleReader(container, onOpenShareCard) {
                     </button>
 
                     <!-- Clickable Verse Reference Badge (Nome Numero:Numero) to send card directly -->
-                    <button class="verse-ref-click-btn font-mono text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg border border-amber-600/30 transition shadow-xs flex items-center gap-1 flex-shrink-0 mt-0.5 cursor-pointer" data-verse-num="${verse.v}" title="Click ${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v} to share card">
+                    <button class="verse-ref-click-btn font-mono text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg border border-amber-600/30 transition shadow-xs flex items-center gap-1 flex-shrink-0 mt-0.5 cursor-pointer notranslate" translate="no" data-verse-num="${verse.v}" title="Click ${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v} to share card">
                       <span>${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v}</span>
                     </button>
                     
                     <!-- Verse Body -->
-                    <div class="flex-1 text-base sm:text-lg leading-relaxed ${hlClass} rounded px-1.5 py-0.5 text-[var(--text-primary)] font-serif cursor-pointer verse-text-body" data-verse="${
+                    <div class="flex-1 text-base sm:text-lg leading-relaxed ${hlClass} rounded px-1.5 py-0.5 text-[var(--text-primary)] font-serif cursor-pointer verse-text-body notranslate" translate="no" data-verse="${
                   verse.v
                 }">
                       ${
                         isFirstVerse
-                          ? `<span class="illuminated-initial">${verseText[0]}</span>${verseText.slice(1)}`
+                          ? `<span class="illuminated-initial notranslate" translate="no">${verseText[0]}</span>${verseText.slice(1)}`
                           : verseText
                       }
                     </div>
@@ -313,15 +313,16 @@ export async function renderBibleReader(container, onOpenShareCard) {
               <!-- Batch Highlights -->
               <div class="hidden sm:flex items-center gap-1 border-r border-stone-300 dark:border-stone-700 pr-2">
                 <span class="text-[10px] text-[var(--text-muted)] mr-1">Highlight all:</span>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition" data-color="gold" title="Gold"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition" data-color="blue" title="Blue"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-red-400 border border-red-600 hover:scale-125 transition" data-color="red" title="Red"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-emerald-400 border border-emerald-600 hover:scale-125 transition" data-color="green" title="Green"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-purple-400 border border-purple-600 hover:scale-125 transition" data-color="purple" title="Purple"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition cursor-pointer" data-color="gold" title="Gold"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition cursor-pointer" data-color="blue" title="Blue"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-red-400 border border-red-600 hover:scale-125 transition cursor-pointer" data-color="red" title="Red"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-emerald-400 border border-emerald-600 hover:scale-125 transition cursor-pointer" data-color="green" title="Green"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-purple-400 border border-purple-600 hover:scale-125 transition cursor-pointer" data-color="purple" title="Purple"></button>
+                <button type="button" class="batch-remove-hl-btn text-[10px] text-red-500 hover:underline ml-1 font-sans cursor-pointer" title="Remove highlights from selected verses">Clear</button>
               </div>
 
               <!-- Share Selection as Card -->
-              <button id="btn-share-selection-card" class="bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-md active:scale-95">
+              <button id="btn-share-selection-card" class="bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-md active:scale-95 cursor-pointer">
                 ${icons.share('w-3.5 h-3.5')}
                 <span>Share Range Card</span>
               </button>
@@ -434,19 +435,30 @@ export async function renderBibleReader(container, onOpenShareCard) {
     // 7. Individual Verse Highlight Listeners
     container.querySelectorAll('.hl-btn').forEach((btn) => {
       btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         const verseEl = e.target.closest('[data-verse-num]');
         const verseNum = parseInt(verseEl.getAttribute('data-verse-num'), 10);
         const color = btn.getAttribute('data-color');
-        await saveHighlight(activeBookId, activeChapter, verseNum, color);
+        const existing = activeHighlights.find((h) => h.verse === verseNum);
+        if (existing && existing.color === color) {
+          await removeHighlight(activeBookId, activeChapter, verseNum);
+        } else {
+          await saveHighlight(activeBookId, activeChapter, verseNum, color);
+        }
         activeHighlights = await getHighlights(activeBookId, activeChapter);
         await updateView();
       });
     });
 
     container.querySelectorAll('.remove-hl-btn').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        e.stopPropagation();
+      btn.addEventListener('click', async (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         const verseNum = parseInt(btn.getAttribute('data-verse'), 10);
         await removeHighlight(activeBookId, activeChapter, verseNum);
         activeHighlights = await getHighlights(activeBookId, activeChapter);
@@ -507,10 +519,28 @@ export async function renderBibleReader(container, onOpenShareCard) {
     // 10. Batch Highlighting for Selected Verses
     container.querySelectorAll('.batch-hl-btn').forEach((btn) => {
       btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         const color = btn.getAttribute('data-color');
         const promises = [...selectedVerses].map((vNum) =>
           saveHighlight(activeBookId, activeChapter, vNum, color)
+        );
+        await Promise.all(promises);
+        activeHighlights = await getHighlights(activeBookId, activeChapter);
+        await updateView();
+      });
+    });
+
+    container.querySelectorAll('.batch-remove-hl-btn').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        const promises = [...selectedVerses].map((vNum) =>
+          removeHighlight(activeBookId, activeChapter, vNum)
         );
         await Promise.all(promises);
         activeHighlights = await getHighlights(activeBookId, activeChapter);

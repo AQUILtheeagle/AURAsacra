@@ -275,3 +275,10 @@ p, span, div, .font-serif {
     padding-bottom: calc(env(safe-area-inset-bottom) + 4rem);
   }
 }
+
+/* Sacred Scripture Shield: Guarantees browser translation engines do not alter sacred Word */
+.notranslate,
+[translate="no"] {
+  /* W3C & Google Translate marker to protect canonical biblical verses from machine corruption */
+}
+
