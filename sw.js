@@ -1,5 +1,5 @@
 // Aura Sacra Service Worker - 100% Offline Caching with Instant Network Updates
-const CACHE_NAME = 'aura-sacra-v1.0.4';
+const CACHE_NAME = 'aura-sacra-v1.0.5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
