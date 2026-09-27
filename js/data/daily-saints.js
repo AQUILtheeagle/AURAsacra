@@ -1,14 +1,22 @@
 // Comprehensive Liturgical Daily Saints & Feasts Calendar for Aura Sacra
-// Correlates feasts with liturgical colors:
-// - White (Bianco): Feasts of the Lord, Confessors, Doctors, Holy Virgins, Pastors
+// Correlates feasts with liturgical colors and Christian traditions:
+// - White (Bianco): Feasts of the Lord, Confessors, Doctors, Holy Virgins, Reformers & Pastors
 // - Blue (Blu): Marian Feasts & The Blessed Virgin Mary (Theotokos)
-// - Red (Rosso): Apostles, Evangelists & Holy Martyrs of Faith
+// - Red (Rosso): Apostles, Evangelists, Biblical Witnesses & Holy Martyrs of Faith
+//
+// Accurately differentiates commemorations across:
+// - catholic: General Roman Calendar & Martyrology
+// - traditional: 1962 Roman Missal & Tridentine Calendar
+// - orthodox: Byzantine Eastern Synaxarion & Church Fathers
+// - protestant: Cloud of Faithful Witnesses, Reformers, Bible Translators & Christian Martyrs
+// - ecumenical: Undivided Church Heritage & Shared Christian Saints
 
 export const LITURGICAL_COLORS = {
   white: {
     id: 'white',
     name: 'White',
     name_it: 'Bianco',
+    name_ro: 'Alb',
     name_la: 'Albus',
     dotClass: 'bg-stone-100 ring-1 ring-stone-300 dark:ring-stone-600',
     badgeClass: 'bg-stone-100/15 text-stone-100 border-stone-300/60 dark:border-stone-500/80',
@@ -21,6 +29,7 @@ export const LITURGICAL_COLORS = {
     id: 'blue',
     name: 'Blue',
     name_it: 'Blu',
+    name_ro: 'Albastru',
     name_la: 'Caeruleus',
     dotClass: 'bg-blue-500 ring-1 ring-blue-400',
     badgeClass: 'bg-blue-600/20 text-blue-400 border-blue-500/60',
@@ -33,6 +42,7 @@ export const LITURGICAL_COLORS = {
     id: 'red',
     name: 'Red',
     name_it: 'Rosso',
+    name_ro: 'Roșu',
     name_la: 'Ruber',
     dotClass: 'bg-red-600 ring-1 ring-red-400',
     badgeClass: 'bg-red-600/20 text-red-400 border-red-500/60',
@@ -43,15 +53,16 @@ export const LITURGICAL_COLORS = {
   }
 };
 
-// Fixed liturgical feasts mapping by Month (1-12) and Day (1-31)
 export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   // JANUARY (1)
   // ==========================================
   '1-1': [
     {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
       name: 'Solemnity of Mary, Mother of God',
       name_it: 'Solennità di Maria Santissima, Madre di Dio',
+      name_ro: 'Tăierea Împrejur & Sfântul Vasile cel Mare',
       title: 'Theotokos & Ark of the New Covenant',
       color: 'blue',
       rank: 'solemnity',
@@ -60,44 +71,78 @@ export const DAILY_SAINTS_CALENDAR = {
       scriptureRef: 'Luke 1:46-48'
     },
     {
-      name: 'St. Basil the Great & St. Gregory Nazianzen',
-      name_it: 'San Basilio Magno e San Gregorio Nazianzeno',
-      title: 'Cappadocian Fathers & Universal Doctors of the Church',
+      traditions: ['orthodox'],
+      name: 'St. Basil the Great & Circumcision of the Lord',
+      name_it: 'San Basilio Magno e Circoncisione del Signore',
+      name_ro: 'Praznicul Tăierii Împrejur & Sf. Vasile cel Mare',
+      title: 'Universal Teacher & Father of Eastern Monasticism',
+      color: 'white',
+      rank: 'solemnity',
+      quote: '«The bread which you hold back belongs to the hungry; the coat in your wardrobe belongs to the naked.»',
+      bio: 'Pillar of the Council of Nicaea, author of the Divine Liturgy of St. Basil, defender of the divinity of the Holy Spirit.',
+      scriptureRef: 'Matthew 25:35-40'
+    },
+    {
+      traditions: ['protestant'],
+      name: 'Holy Name of Jesus & Circumcision',
+      name_it: 'Santissimo Nome di Gesù',
+      name_ro: 'Numele Preasfânt al lui Iisus',
+      title: 'Celebration of the Saving Name of Christ',
       color: 'white',
       rank: 'feast',
-      quote: '«The bread which you hold back belongs to the hungry; the coat in your wardrobe belongs to the naked.»',
-      bio: 'Great architects of Eastern monasticism, champions of Orthodox Trinitarian theology, and founders of hospice care for the sick.',
-      scriptureRef: 'Matthew 25:35-40'
+      quote: '«Thou shalt call his name JESUS: for he shall save his people from their sins.»',
+      bio: 'Eight days after His birth in Bethlehem, the Savior was given the name Jesus, signifying that God is our salvation.',
+      scriptureRef: 'Matthew 1:21'
     }
   ],
   '1-2': [
     {
-      name: 'St. Macarius the Great of Egypt',
-      name_it: 'San Macario il Grande d\'Egitto',
-      title: 'Father of the Desert & Spiritual Guide',
+      traditions: ['catholic', 'traditional', 'orthodox', 'ecumenical'],
+      name: 'St. Basil the Great & St. Gregory Nazianzen',
+      name_it: 'Santi Basilio Magno e Gregorio Nazianzeno',
+      name_ro: 'Sf. Vasile cel Mare și Grigorie Teologul',
+      title: 'Cappadocian Fathers & Doctors of the Church',
       color: 'white',
       rank: 'memorial',
-      quote: '«There is no need to speak much in prayer; it is enough to stretch out one\'s hands and say: Lord, as Thou wilt, have mercy.»',
-      bio: 'Disciple of St. Anthony who fled worldly acclaim into the desert of Scetis to pray unceasingly for all humankind.',
-      scriptureRef: '1 Thessalonians 5:17'
+      quote: '«God became man so that man might become divine by grace.»',
+      bio: 'Close friends who defended Orthodox Trinitarian theology against Arianism and shaped Christian hymnody.',
+      scriptureRef: 'John 1:14'
     }
   ],
   '1-6': [
     {
-      name: 'The Epiphany of the Lord',
-      name_it: 'Epifania del Signore',
-      title: 'Manifestation of Christ to the Nations',
+      traditions: ['all'],
+      name: 'The Epiphany of the Lord (Theophany)',
+      name_it: 'Epifania del Signore (Teofania)',
+      name_ro: 'Botezul Domnului (Boboteaza - Dumnezeiasca Arătare)',
+      title: 'Manifestation of Christ to the Nations & Baptism in the Jordan',
       color: 'white',
       rank: 'solemnity',
-      quote: '«Arise, shine; for your light has come, and the glory of the Lord has risen upon you.»',
-      bio: 'The adoration of the Christ child by the Magi from the East, revealing the Light of the World to all gentiles.',
+      quote: '«This is my beloved Son, in whom I am well pleased. Arise, shine; for thy light is come!»',
+      bio: 'In the West, commemorates the adoration of the Christ child by the Magi; in the East, celebrates the Baptism of Christ in the Jordan revealing the Holy Trinity.',
       scriptureRef: 'Matthew 2:1-12'
+    }
+  ],
+  '1-8': [
+    {
+      traditions: ['protestant'],
+      name: 'Jim Elliot & The Auca Martyrs',
+      name_it: 'Jim Elliot e i Martiri dell\'Ecuador',
+      name_ro: 'Jim Elliot și Misionarii Martiri',
+      title: 'Missionary Martyrs in Ecuador',
+      color: 'red',
+      rank: 'memorial',
+      quote: '«He is no fool who gives what he cannot keep to gain what he cannot lose.»',
+      bio: 'Evangelical missionary who, with four companions, surrendered his life in the Amazon rainforest in 1956 to bring the Gospel to the unreached Waodani people.',
+      scriptureRef: 'Mark 8:35'
     }
   ],
   '1-15': [
     {
+      traditions: ['orthodox', 'ecumenical'],
       name: 'St. Seraphim of Sarov',
       name_it: 'San Serafino di Sarov',
+      name_ro: 'Sfântul Serafim de Sarov, Făcătorul de Minuni',
       title: 'Wonderworker of Sarov & Apostle of the Holy Spirit',
       color: 'white',
       rank: 'feast',
@@ -108,20 +153,24 @@ export const DAILY_SAINTS_CALENDAR = {
   ],
   '1-17': [
     {
+      traditions: ['catholic', 'traditional', 'orthodox', 'ecumenical'],
       name: 'St. Anthony the Great',
       name_it: 'Sant\'Antonio Abate',
-      title: 'Father of All Monks & Victor over Temptation',
+      name_ro: 'Sfântul Antonie cel Mare',
+      title: 'Father of All Monks & Desert Anchorite',
       color: 'white',
       rank: 'memorial',
-      quote: '«I saw the snares that the enemy spreads for all the world, and I said groaning, "Who can get through from among them?" Then I heard a voice: "Humility."»',
-      bio: 'Heard the Gospel call "Sell what you possess and give to the poor" and retreated into the wilderness to pioneer Christian monastic contemplation.',
+      quote: '«I saw the snares that the enemy spreads for all the world, and I said: "Who can get through them?" Then I heard a voice: "Humility."»',
+      bio: 'Heard the Gospel call "Sell what you possess and give to the poor" and retreated into the Egyptian wilderness to pioneer Christian monastic prayer.',
       scriptureRef: 'Matthew 19:21'
     }
   ],
   '1-21': [
     {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
       name: 'St. Agnes of Rome',
       name_it: 'Sant\'Agnese di Roma',
+      name_ro: 'Sfânta Muceniță Agnes',
       title: 'Virgin & Martyr of Roman Persecution',
       color: 'red',
       rank: 'memorial',
@@ -132,20 +181,24 @@ export const DAILY_SAINTS_CALENDAR = {
   ],
   '1-25': [
     {
+      traditions: ['all'],
       name: 'Conversion of St. Paul the Apostle',
       name_it: 'Conversione di San Paolo Apostolo',
+      name_ro: 'Întoarcerea Sfântului Apostol Pavel',
       title: 'Vessel of Election & Teacher of the Gentiles',
       color: 'white',
       rank: 'feast',
-      quote: '«I live, yet not I, but Christ liveth in me.»',
+      quote: '«I live, yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God.»',
       bio: 'Blinded by the blazing light of the Risen Lord on the road to Damascus, transformed from persecutor into the Church\'s greatest missionary.',
       scriptureRef: 'Galatians 2:20'
     }
   ],
   '1-28': [
     {
+      traditions: ['catholic', 'ecumenical'],
       name: 'St. Thomas Aquinas',
       name_it: 'San Tommaso d\'Aquino',
+      name_ro: 'Sfântul Toma de Aquino',
       title: 'Angelic Doctor & Common Doctor of the Church',
       color: 'white',
       rank: 'memorial',
@@ -154,26 +207,44 @@ export const DAILY_SAINTS_CALENDAR = {
       scriptureRef: '1 Corinthians 13:12'
     }
   ],
+  '1-30': [
+    {
+      traditions: ['orthodox'],
+      name: 'The Three Holy Hierarchs: Basil, Gregory & John Chrysostom',
+      name_it: 'I Tre Santi Gerarchi: Basilio, Gregorio e Crisostomo',
+      name_ro: 'Sfinții Trei Ierarhi: Vasile cel Mare, Grigorie Teologul și Ioan Gură de Aur',
+      title: 'Universal Teachers and Pillars of the Orthodox Faith',
+      color: 'white',
+      rank: 'solemnity',
+      quote: '«Let us praise the three great luminaries of the three-sunned Divinity who illumined the whole world with the rays of divine doctrines.»',
+      bio: 'Unified feast instituted in Constantinople to celebrate the harmonious balance of theological eloquence, monastic discipline, and pastoral charity.',
+      scriptureRef: 'Hebrews 13:7'
+    }
+  ],
 
   // ==========================================
   // FEBRUARY (2)
   // ==========================================
   '2-2': [
     {
-      name: 'Presentation of the Lord (Candlemas)',
+      traditions: ['all'],
+      name: 'The Presentation of the Lord (Candlemas / Meeting of the Lord)',
       name_it: 'Presentazione del Signore (Candelora)',
-      title: 'Encounter of the Lord & Light of the Gentiles',
+      name_ro: 'Întâmpinarea Domnului',
+      title: 'Meeting of the Messiah with Simeon & Light of the Gentiles',
       color: 'white',
       rank: 'feast',
       quote: '«Lord, now lettest thou thy servant depart in peace: for mine eyes have seen thy salvation, a light to lighten the Gentiles.»',
-      bio: 'Christ is brought into the temple forty days after birth, greeted by aged Simeon and Anna as the long-awaited Redeemer.',
+      bio: 'Christ is brought into the Temple forty days after birth, greeted by aged Simeon and prophetess Anna as the long-awaited Redeemer.',
       scriptureRef: 'Luke 2:29-32'
     }
   ],
   '2-11': [
     {
+      traditions: ['catholic', 'traditional'],
       name: 'Our Lady of Lourdes',
       name_it: 'Beata Vergine Maria di Lourdes',
+      name_ro: 'Fecioara Maria de la Lourdes',
       title: 'Health of the Sick & Immaculate Conception',
       color: 'blue',
       rank: 'memorial',
@@ -182,27 +253,45 @@ export const DAILY_SAINTS_CALENDAR = {
       scriptureRef: 'Luke 1:28'
     }
   ],
-  '2-14': [
+  '2-18': [
     {
-      name: 'Sts. Cyril and Methodius',
-      name_it: 'Santi Cirillo e Metodio',
-      title: 'Apostles to the Slavs & Patrons of Europe',
+      traditions: ['protestant'],
+      name: 'Martin Luther (Commemoration of Death)',
+      name_it: 'Martin Lutero (Commemorazione della Morte)',
+      name_ro: 'Martin Luther (Trecerea la Domnul)',
+      title: 'Reformer & Translator of the Scriptures',
       color: 'white',
-      rank: 'feast',
-      quote: '«Since the sun shines on all alike, every nation has the right to praise God in its own mother tongue.»',
-      bio: 'Holy brothers from Thessalonica who translated the Holy Scriptures and the Byzantine Divine Liturgy into Old Church Slavonic.',
-      scriptureRef: 'Psalm 117:1'
+      rank: 'memorial',
+      quote: '«We are beggars: this is true. The righteous shall live by faith.»',
+      bio: 'Passed into eternal rest in Eisleben on February 18, 1546, steadfast in the conviction that salvation is received by grace through faith alone in Jesus Christ.',
+      scriptureRef: 'Romans 1:17'
+    }
+  ],
+  '2-21': [
+    {
+      traditions: ['protestant'],
+      name: 'Eric Liddell',
+      name_it: 'Eric Liddell (Campione e Misionario)',
+      name_ro: 'Eric Liddell (Misionar în China)',
+      title: 'Olympic Champion & Missionary in China',
+      color: 'white',
+      rank: 'memorial',
+      quote: '«God made me fast, and when I run I feel His pleasure. But to give up everything for Christ is my true calling.»',
+      bio: 'Olympic gold medalist who refused to run on the Lord\'s Day, devoted his life as a teacher-missionary in war-torn China, and died in an internment camp in 1945.',
+      scriptureRef: 'Isaiah 40:31'
     }
   ],
   '2-22': [
     {
+      traditions: ['catholic', 'traditional'],
       name: 'Chair of St. Peter the Apostle',
       name_it: 'Cattedra di San Pietro Apostolo',
-      title: 'Sign of Apostolic Unity & Pastoral Shepherd',
+      name_ro: 'Catedra Sfântului Petru',
+      title: 'Sign of Petrine Pastoral Care & Apostolic Unity',
       color: 'white',
       rank: 'feast',
-      quote: '«Thou art the Christ, the Son of the living God. And I say also unto thee, That thou art Peter, and upon this rock I will build my church.»',
-      bio: 'Celebrates the pastoral ministry and petrine authority instituted by Christ to strengthen the brethren in apostolic faith.',
+      quote: '«Thou art Peter, and upon this rock I will build my church; and the gates of hell shall not prevail against it.»',
+      bio: 'Celebrates the pastoral ministry instituted by Christ in St. Peter to shepherd the flock and strengthen his brethren.',
       scriptureRef: 'Matthew 16:16-18'
     }
   ],
@@ -210,51 +299,87 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   // MARCH (3)
   // ==========================================
-  '3-17': [
+  '3-2': [
     {
-      name: 'St. Patrick of Ireland',
-      name_it: 'San Patrizio d\'Irlanda',
-      title: 'Apostle of Ireland & Humble Missionary Bishop',
+      traditions: ['protestant'],
+      name: 'John Wesley',
+      name_it: 'John Wesley',
+      name_ro: 'John Wesley (Tatăl Metodismului)',
+      title: 'Evangelist, Preacher & Father of Methodism',
+      color: 'white',
+      rank: 'memorial',
+      quote: '«The best of all is, God is with us! Do all the good you can, by all the means you can, in all the ways you can.»',
+      bio: 'English clergyman whose open-air preaching, hymns, and societies of holy living sparked spiritual renewal throughout Great Britain and America.',
+      scriptureRef: '2 Corinthians 5:14'
+    }
+  ],
+  '3-7': [
+    {
+      traditions: ['traditional'],
+      name: 'St. Thomas Aquinas (Historic Feast)',
+      name_it: 'San Tommaso d\'Aquino (Festa Tradizionale)',
+      name_ro: 'Sfântul Toma de Aquino',
+      title: 'Angelic Doctor & Confessor',
       color: 'white',
       rank: 'feast',
-      quote: '«Christ with me, Christ before me, Christ behind me, Christ in me, Christ beneath me, Christ above me.»',
-      bio: 'Enslaved as a youth, returned to Ireland with holy burning zeal to baptize thousands and plant the monastic faith across the Emerald Isle.',
-      scriptureRef: 'Colossians 3:11'
+      quote: '«Grant me, O Lord my God, a mind to know You, a heart to seek You, and wisdom to find You.»',
+      bio: 'Celebrated on his dies natalis (March 7, 1274) according to the 1962 Roman Missal.',
+      scriptureRef: 'Colossians 2:2-3'
+    }
+  ],
+  '3-10': [
+    {
+      traditions: ['protestant'],
+      name: 'George Müller of Bristol',
+      name_it: 'George Müller di Bristol',
+      name_ro: 'George Müller (Omul Rugăciunii)',
+      title: 'Champion of Orphanages & Man of Pure Faith',
+      color: 'white',
+      rank: 'memorial',
+      quote: '«The beginning of anxiety is the end of faith, and the beginning of true faith is the end of anxiety.»',
+      bio: 'Christian evangelist who cared for over 10,000 orphans without ever asking for money from human beings, relying exclusively on secret prayer to God.',
+      scriptureRef: 'Philippians 4:6'
     }
   ],
   '3-19': [
     {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
       name: 'Solemnity of St. Joseph, Spouse of the B.V.M.',
       name_it: 'Solennità di San Giuseppe, Sposo della B.V.M.',
+      name_ro: 'Sfântul Iosif, Ocrotitorul Sfintei Familii',
       title: 'Patron of the Universal Church & Silent Guardian',
       color: 'white',
       rank: 'solemnity',
-      quote: '«A just man who spoke no words recorded in Scripture, yet obeyed God in every silence of the night.»',
+      quote: '«A just man who spoke no recorded words in Scripture, yet obeyed God in every silence of the night.»',
       bio: 'Chaste guardian of the Holy Family, righteous workman of Nazareth who protected the Infant Savior from Herod\'s fury.',
       scriptureRef: 'Matthew 1:19-24'
     }
   ],
   '3-21': [
     {
+      traditions: ['catholic', 'traditional', 'orthodox', 'ecumenical'],
       name: 'St. Benedict of Nursia',
       name_it: 'San Benedetto da Norcia',
-      title: 'Father of Western Monasticism & Patron of Europe',
+      name_ro: 'Sfântul Benedict de Nursia',
+      title: 'Father of Western Monasticism & Patriarch of Monks',
       color: 'white',
       rank: 'feast',
-      quote: '«Listen, O my son, to the precepts of the master, and incline the ear of your heart. Prefer nothing to the love of Christ.»',
-      bio: 'Author of the Holy Rule of peace and moderation: "Ora et Labora" (Pray and Work), which laid the bedrock of Christian civilization.',
+      quote: '«Listen, O my son, to the precepts of the master. Prefer nothing whatsoever to the love of Christ.»',
+      bio: 'Author of the Holy Rule: "Ora et Labora" (Pray and Work), establishing peaceful monastic communities across Europe.',
       scriptureRef: '1 Peter 5:5-7'
     }
   ],
   '3-25': [
     {
-      name: 'The Annunciation of the Lord',
-      name_it: 'Annunciazione del Signore',
+      traditions: ['all'],
+      name: 'The Annunciation of the Lord (Incarnation of the Word)',
+      name_it: 'Annunciazione del Signore (Incarnazione)',
+      name_ro: 'Buna Vestire (Blagoveștenia)',
       title: 'The Incarnation of the Word & Marian Fiat',
       color: 'blue',
       rank: 'solemnity',
       quote: '«Behold the handmaid of the Lord; be it unto me according to thy word.»',
-      bio: 'The Archangel Gabriel announces the Conception of the Son of God in Mary\'s womb through the overshadowing power of the Holy Spirit.',
+      bio: 'The Archangel Gabriel announces to the Virgin Mary in Nazareth that she will bear the Son of the Most High by the power of the Holy Spirit.',
       scriptureRef: 'Luke 1:26-38'
     }
   ],
@@ -264,126 +389,130 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   '4-9': [
     {
+      traditions: ['protestant', 'ecumenical'],
       name: 'Dietrich Bonhoeffer',
       name_it: 'Dietrich Bonhoeffer',
+      name_ro: 'Dietrich Bonhoeffer (Martir al Harului Costisitor)',
       title: 'Martyr of Faith & Preacher of Costly Grace',
       color: 'red',
       rank: 'memorial',
       quote: '«Costly grace is the gospel which must be sought again and again, the gift which must be asked for, the door at which a man must knock.»',
-      bio: 'Lutheran pastor who opposed Nazi tyranny and totalitarian idolatry unto martyrdom, hanged in Flossenbürg on April 9, 1945.',
+      bio: 'Lutheran pastor who opposed Nazi totalitarian idolatry and racism unto martyrdom, hanged in Flossenbürg on April 9, 1945.',
       scriptureRef: 'Luke 9:23'
+    }
+  ],
+  '4-15': [
+    {
+      traditions: ['protestant'],
+      name: 'Corrie ten Boom',
+      name_it: 'Corrie ten Boom',
+      name_ro: 'Corrie ten Boom (Mărturia Iertării)',
+      title: 'Righteous Rescuer & Witness of Divine Forgiveness',
+      color: 'white',
+      rank: 'memorial',
+      quote: '«There is no pit so deep that God\'s love is not deeper still. Forgiveness is an act of the will, and the will can function regardless of the temperature of the heart.»',
+      bio: 'Dutch Christian who hid hundreds of Jewish people from the Gestapo; survived the horrors of Ravensbrück concentration camp and preached Christ\'s forgiveness worldwide.',
+      scriptureRef: 'Romans 8:38-39'
     }
   ],
   '4-23': [
     {
+      traditions: ['catholic', 'traditional', 'orthodox', 'ecumenical'],
       name: 'St. George the Great-Martyr',
       name_it: 'San Giorgio Megalomartire',
-      title: 'Trophy-Bearer & Defender of Faith',
+      name_ro: 'Sfântul Mare Mucenic Gheorghe, Purtătorul de Biruință',
+      title: 'Trophy-Bearer & Champion of the Crucified King',
       color: 'red',
-      rank: 'memorial',
+      rank: 'feast',
       quote: '«My Lord Jesus Christ is my strength; neither fire nor sword can separate me from His holy love.»',
-      bio: 'Roman military officer martyred under Diocletian for fearlessly proclaiming Christ and tearing down imperial pagan edicts.',
+      bio: 'Roman military officer martyred under Diocletian for fearlessly confessing Christ before the Emperor.',
       scriptureRef: 'Romans 8:35-39'
     }
   ],
   '4-25': [
     {
+      traditions: ['all'],
       name: 'St. Mark the Evangelist',
       name_it: 'San Marco Evangelista',
+      name_ro: 'Sfântul Apostol și Evanghelist Marcu',
       title: 'Disciple of Peter & Author of the Second Gospel',
       color: 'red',
       rank: 'feast',
       quote: '«The beginning of the gospel of Jesus Christ, the Son of God.»',
-      bio: 'Recorded St. Peter\'s apostolic preaching and founded the ancient Apostolic Church of Alexandria.',
+      bio: 'Recorded St. Peter\'s preaching in Rome and founded the ancient Apostolic Church of Alexandria.',
       scriptureRef: 'Mark 1:1'
     }
   ],
   '4-29': [
     {
+      traditions: ['catholic', 'ecumenical'],
       name: 'St. Catherine of Siena',
       name_it: 'Santa Caterina da Siena',
+      name_ro: 'Sfânta Ecaterina de Siena',
       title: 'Virgin, Doctor of the Church & Patroness of Europe',
       color: 'white',
       rank: 'feast',
       quote: '«Be who God meant you to be and you will set the whole world on fire.»',
-      bio: 'Dominican tertiary mystic whose Dialogues and courageous letters brought the Pope back from Avignon to Rome.',
+      bio: 'Dominican mystic whose letters and holiness brought the papacy back to Rome from Avignon.',
       scriptureRef: 'Romans 12:1-2'
+    },
+    {
+      traditions: ['traditional'],
+      name: 'St. Peter of Verona (Peter Martyr)',
+      name_it: 'San Pietro Martire da Verona',
+      name_ro: 'Sfântul Petru Martirul din Verona',
+      title: 'Dominican Preacher & Martyr of the Faith',
+      color: 'red',
+      rank: 'feast',
+      quote: '«Credo in Deum — I believe in God (written on the ground with his own blood as he was struck down).»',
+      bio: 'Dominican inquisitor and preacher martyred near Milan in 1252, writing the Creed with his dying breath.',
+      scriptureRef: 'Acts 7:59-60'
     }
   ],
 
   // ==========================================
   // MAY (5)
   // ==========================================
-  '5-1': [
-    {
-      name: 'St. Joseph the Worker',
-      name_it: 'San Giuseppe Lavoratore',
-      title: 'Exemplar of Dignity of Labor',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Whatever you do, work heartily, as for the Lord and not for men.»',
-      bio: 'Carpenter of Nazareth whose daily labor sanctified human work as a sacred participation in God\'s creative providence.',
-      scriptureRef: 'Colossians 3:23-24'
-    }
-  ],
   '5-2': [
     {
-      name: 'St. Athanasius of Alexandria',
-      name_it: 'Sant\'Atanasio di Alessandria',
-      title: 'Champion of Nicea & Pillar of Orthodoxy',
+      traditions: ['catholic', 'traditional', 'orthodox', 'ecumenical'],
+      name: 'St. Athanasius the Great',
+      name_it: 'Sant\'Atanasio il Grande',
+      name_ro: 'Sfântul Atanasie cel Mare, Patriarhul Alexandriei',
+      title: 'Pillar of Orthodoxy & Champion of Nicea',
       color: 'white',
       rank: 'memorial',
       quote: '«The Son of God became man that we might become divine by grace.»',
-      bio: 'Defended the consubstantial divinity of Jesus Christ against the Arian heresy through five harsh exiles.',
+      bio: 'Defended the consubstantial divinity of Jesus Christ against Arianism through five harsh exiles.',
       scriptureRef: 'John 1:1-14'
-    }
-  ],
-  '5-13': [
-    {
-      name: 'Our Lady of Fatima',
-      name_it: 'Beata Vergine Maria di Fatima',
-      title: 'Queen of the Rosary & Refuge of Sinners',
-      color: 'blue',
-      rank: 'memorial',
-      quote: '«Pray the Rosary every day to obtain peace for the world and the conversion of hearts.»',
-      bio: 'Appeared in 1917 to three shepherd children—Lucia, Francisco, and Jacinta—calling the world to prayer, penance, and consecration.',
-      scriptureRef: '1 Thessalonians 5:16-18'
     }
   ],
   '5-14': [
     {
+      traditions: ['all'],
       name: 'St. Matthias the Apostle',
       name_it: 'San Mattia Apostolo',
+      name_ro: 'Sfântul Apostol Matia',
       title: 'Chosen Witness of the Resurrection',
       color: 'red',
       rank: 'feast',
       quote: '«Chosen by prayer and the lot of the Apostles to complete the Twelve after the fall of Judas.»',
-      bio: 'Follower of Jesus from the baptism of John until the Ascension; martyred while proclaiming the Gospel in Ethiopia and Judea.',
+      bio: 'Witness of Christ from the baptism of John unto the Ascension; died a martyr proclaiming the Gospel.',
       scriptureRef: 'Acts 1:21-26'
     }
   ],
-  '5-26': [
+  '5-21': [
     {
-      name: 'St. Philip Neri',
-      name_it: 'San Filippo Neri',
-      title: 'Apostle of Rome & Prophet of Spiritual Joy',
+      traditions: ['orthodox'],
+      name: 'Saints Constantine and Helen, Equals-to-the-Apostles',
+      name_it: 'Santi Costantino ed Elena, Uguali agli Apostoli',
+      name_ro: 'Sfinții Împărați Constantin și Elena, cei Întocmai cu Apostolii',
+      title: 'Protectors of the Christian Faith & Discoverers of the Cross',
       color: 'white',
-      rank: 'memorial',
-      quote: '«A joyful heart is more easily made perfect than a downcast one. Cheerfulness strengthens the heart and makes us persevere.»',
-      bio: 'Founder of the Oratory, re-evangelized Renaissance Rome with divine love, gentle humor, and tireless confession.',
-      scriptureRef: 'Philippians 4:4'
-    }
-  ],
-  '5-31': [
-    {
-      name: 'The Visitation of the Blessed Virgin Mary',
-      name_it: 'Visitazione della Beata Vergine Maria',
-      title: 'Ark of the Covenant visiting Elizabeth',
-      color: 'blue',
       rank: 'feast',
-      quote: '«Blessed art thou among women, and blessed is the fruit of thy womb. And whence is this to me, that the mother of my Lord should come to me?»',
-      bio: 'Mary hastens to the hill country of Judah to serve her aged cousin Elizabeth, prompting John the Baptist to leap in the womb.',
-      scriptureRef: 'Luke 1:39-56'
+      quote: '«In this sign, conquer! Saint Helen found the precious Tree of the Cross on Golgotha.»',
+      bio: 'Emperor Constantine ended the persecutions with the Edict of Milan (313 AD); Empress Helen journeyed to Jerusalem and recovered the True Cross.',
+      scriptureRef: 'Galatians 6:14'
     }
   ],
 
@@ -392,57 +521,53 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   '6-1': [
     {
+      traditions: ['catholic', 'traditional', 'orthodox', 'ecumenical'],
       name: 'St. Justin Martyr',
       name_it: 'San Giustino Martire',
+      name_ro: 'Sfântul Iustin Martirul și Filosoful',
       title: 'Philosopher, Apologist & Martyr',
       color: 'red',
       rank: 'memorial',
-      quote: '«We desire nothing else than to suffer for the sake of our Lord Jesus Christ, for this will give us salvation and confidence before the awesome tribunal.»',
-      bio: 'One of the earliest Christian philosophers and apologists, beheaded in Rome in 165 AD for refusing to offer pagan sacrifice.',
+      quote: '«We desire nothing else than to suffer for our Lord Jesus Christ, for this will give us confidence before His awesome tribunal.»',
+      bio: 'Earliest Christian philosopher and apologist, beheaded in Rome in 165 AD for refusing pagan sacrifice.',
       scriptureRef: '1 Peter 3:15'
-    }
-  ],
-  '6-11': [
-    {
-      name: 'St. Barnabas the Apostle',
-      name_it: 'San Barnaba Apostolo',
-      title: 'Son of Encouragement & Missionary Companion',
-      color: 'red',
-      rank: 'feast',
-      quote: '«A good man, full of the Holy Spirit and of faith: and much people was added unto the Lord.»',
-      bio: 'Levite from Cyprus who sold his estate to lay the proceeds at the Apostles\' feet; introduced Paul to the Church and died a martyr in Salamis.',
-      scriptureRef: 'Acts 11:24'
     }
   ],
   '6-13': [
     {
+      traditions: ['catholic', 'traditional'],
       name: 'St. Anthony of Padua',
       name_it: 'Sant\'Antonio di Padova',
+      name_ro: 'Sfântul Anton de Padova',
       title: 'Evangelical Doctor & Wonderworker of the Poor',
       color: 'white',
       rank: 'feast',
       quote: '«Actions speak louder than words; let your words teach and your actions speak.»',
-      bio: 'Franciscan preacher whose sermons converted countless souls and whose miraculous care for the poor remains legendary.',
+      bio: 'Franciscan friar whose preaching converted thousands and whose miraculous charity for the poor remains world-renowned.',
       scriptureRef: 'James 1:22'
     }
   ],
   '6-24': [
     {
+      traditions: ['all'],
       name: 'The Nativity of St. John the Baptist',
       name_it: 'Natività di San Giovanni Battista',
+      name_ro: 'Nașterea Sfântului Ioan Botezătorul (Sânzienele)',
       title: 'Forerunner of the Lord & Voice in the Wilderness',
       color: 'white',
       rank: 'solemnity',
       quote: '«He must increase, but I must decrease.»',
-      bio: 'The greatest born of women, who sanctified by Christ while yet in Elizabeth\'s womb, prepared the way for the Lamb of God.',
+      bio: 'The greatest born of women, sanctified in Elizabeth\'s womb, who prepared the way for the Lamb of God.',
       scriptureRef: 'John 3:30'
     }
   ],
   '6-29': [
     {
+      traditions: ['all'],
       name: 'Saints Peter and Paul, Apostles',
       name_it: 'Santi Pietro e Paolo, Apostoli',
-      title: 'Princes of the Apostles & Pillars of the Church',
+      name_ro: 'Sfinții Apostoli Petru și Pavel',
+      title: 'Chief Apostles & Pillars of the Early Church',
       color: 'red',
       rank: 'solemnity',
       quote: '«Thou art Peter, and upon this rock I will build my Church... I have fought the good fight, I have finished my course, I have kept the faith.»',
@@ -454,47 +579,55 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   // JULY (7)
   // ==========================================
-  '7-3': [
+  '7-10': [
     {
-      name: 'St. Thomas the Apostle',
-      name_it: 'San Tommaso Apostolo',
-      title: 'Witness of the Wounds & Apostle of India',
-      color: 'red',
-      rank: 'feast',
-      quote: '«My Lord and my God!»',
-      bio: 'Touched the glorious wounds of the Risen Christ, then traveled as missionary to Persia and India, dying pierced with spears.',
-      scriptureRef: 'John 20:28'
+      traditions: ['protestant'],
+      name: 'John Calvin',
+      name_it: 'Giovanni Calvino',
+      name_ro: 'Jean Calvin (Pastorul Genevei)',
+      title: 'Reformer & Author of Institutes of the Christian Religion',
+      color: 'white',
+      rank: 'memorial',
+      quote: '«Cor meum tibi offero, Domine, prompte et sincere — My heart I offer to Thee, O Lord, promptly and sincerely.»',
+      bio: 'French theologian and pastor of Geneva who systematized Reformed theology and emphasized the absolute sovereignty of God\'s grace.',
+      scriptureRef: 'Romans 11:36'
     }
   ],
   '7-11': [
     {
-      name: 'St. Benedict of Nursia (Solemn Feast)',
-      name_it: 'San Benedetto Abate',
-      title: 'Patron of Europe & Patriarch of Monasticism',
+      traditions: ['catholic', 'traditional', 'ecumenical'],
+      name: 'St. Benedict of Nursia (Solemnity)',
+      name_it: 'San Benedetto Abate (Solennità)',
+      name_ro: 'Sfântul Benedict de Nursia',
+      title: 'Patron of Europe & Patriarch of Western Monks',
       color: 'white',
       rank: 'feast',
-      quote: '«Idleness is the enemy of the soul. Therefore, let the brethren be occupied at specified times in manual labor, and at other fixed hours in holy reading.»',
-      bio: 'Sanctified the West through monastic prayer, scripture copying, and spiritual fatherhood.',
-      scriptureRef: '1 Thessalonians 4:11-12'
+      quote: '«Idleness is the enemy of the soul. Therefore, let the brethren pray and labor faithfully.»',
+      bio: 'Sanctified the West through monastic community, liturgical prayer, and preserving sacred learning.',
+      scriptureRef: '1 Thessalonians 4:11'
     }
   ],
-  '7-16': [
+  '7-12': [
     {
-      name: 'Our Lady of Mount Carmel',
-      name_it: 'Beata Vergine Maria del Monte Carmelo',
-      title: 'Mother and Splendor of Carmel & Brown Scapular',
-      color: 'blue',
-      rank: 'memorial',
-      quote: '«Receive, my beloved son, this Scapular of your Order: whoever dies clothed in this garment shall not suffer eternal fire.»',
-      bio: 'Patroness of the Carmelite contemplative order, symbol of Marian protection and continuous interior prayer.',
-      scriptureRef: 'Isaiah 35:2'
+      traditions: ['orthodox'],
+      name: 'St. Paisios of Mount Athos',
+      name_it: 'San Paisio del Monte Athos',
+      name_ro: 'Sfântul Paisie Aghioritul de la Muntele Athos',
+      title: 'Holy Elder of Mount Athos & Vessel of Compassion',
+      color: 'white',
+      rank: 'feast',
+      quote: '«Love is above all else. When love is present, the heart burns with prayer for all creation.»',
+      bio: 'Athonite monastic elder who consoled hundreds of thousands of souls through spiritual discernment and unceasing prayer.',
+      scriptureRef: '1 Corinthians 13:8'
     }
   ],
   '7-22': [
     {
+      traditions: ['all'],
       name: 'St. Mary Magdalene',
       name_it: 'Santa Maria Maddalena',
-      title: 'Apostle to the Apostles & Herald of the Resurrection',
+      name_ro: 'Sfânta Maria Magdalena, cea Întocmai cu Apostolii',
+      title: 'Apostle to the Apostles & Witness of the Resurrection',
       color: 'white',
       rank: 'feast',
       quote: '«I have seen the Lord!»',
@@ -502,40 +635,18 @@ export const DAILY_SAINTS_CALENDAR = {
       scriptureRef: 'John 20:18'
     }
   ],
-  '7-25': [
+  '7-29': [
     {
-      name: 'St. James the Greater, Apostle',
-      name_it: 'San Giacomo il Maggiore, Apostolo',
-      title: 'First Apostle to Suffer Martyrdom & Patron of Pilgrims',
-      color: 'red',
-      rank: 'feast',
-      quote: '«Drank the chalice of the Lord and was slain with the sword by King Herod Agrippa.»',
-      bio: 'Son of Zebedee, witness of the Transfiguration and the Agony in Gethsemane; his tomb in Santiago de Compostela inspires millions.',
-      scriptureRef: 'Acts 12:1-2'
-    }
-  ],
-  '7-26': [
-    {
-      name: 'Sts. Joachim and Anne',
-      name_it: 'Santi Gioacchino e Anna',
-      title: 'Parents of the Blessed Virgin Mary & Grandparents of Jesus',
+      traditions: ['protestant'],
+      name: 'William Wilberforce',
+      name_it: 'William Wilberforce',
+      name_ro: 'William Wilberforce (Aboliționistul Creștin)',
+      title: 'Statesman, Abolitionist & Reformer of Society',
       color: 'white',
       rank: 'memorial',
-      quote: '«Blessed is the womb that bore her who bore the Savior of mankind.»',
-      bio: 'Pious, faithful couple of the lineage of David whose patient prayer and trust in God bore fruit in the birth of the Virgin Mary.',
-      scriptureRef: 'Psalm 128:1-4'
-    }
-  ],
-  '7-31': [
-    {
-      name: 'St. Ignatius of Loyola',
-      name_it: 'Sant\'Ignazio di Loyola',
-      title: 'Founder of the Society of Jesus & Spiritual Exercises',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Ad Majorem Dei Gloriam — For the greater glory of God.»',
-      bio: 'Spanish knight who converted while convalescing, author of the Spiritual Exercises and founder of the Jesuits.',
-      scriptureRef: '1 Corinthians 10:31'
+      quote: '«God Almighty has set before me two great objects: the suppression of the slave trade and the reformation of manners.»',
+      bio: 'British evangelical parliamentarian whose Christian conviction led to the abolition of the transatlantic slave trade across the British Empire.',
+      scriptureRef: 'Galatians 3:28'
     }
   ],
 
@@ -544,121 +655,109 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   '8-6': [
     {
-      name: 'The Transfiguration of the Lord',
+      traditions: ['all'],
+      name: 'The Holy Transfiguration of our Lord',
       name_it: 'Trasfigurazione del Signore',
-      title: 'The Uncreated Light of Mount Tabor',
+      name_ro: 'Schimbarea la Față a Domnului (Oprejania)',
+      title: 'The Uncreated Glory of Christ on Mount Tabor',
       color: 'white',
-      rank: 'feast',
-      quote: '«This is my beloved Son, in whom I am well pleased; hear ye him.»',
-      bio: 'Jesus reveals His uncreated divine glory on Mount Tabor to Peter, James, and John, with Moses and Elijah conversing with Him.',
+      rank: 'solemnity',
+      quote: '«This is my beloved Son, in whom I am well pleased; hear ye him!»',
+      bio: 'Jesus reveals His uncreated divine glory on Mount Tabor to Peter, James, and John, foreshadowing the glory of His Resurrection.',
       scriptureRef: 'Matthew 17:1-9'
-    }
-  ],
-  '8-8': [
-    {
-      name: 'St. Dominic de Guzmán',
-      name_it: 'San Domenico di Guzmán',
-      title: 'Founder of the Order of Preachers (Dominicans)',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Contemplare et contemplata aliis tradere — To contemplate and to share the fruits of contemplation with others.»',
-      bio: 'Spanish priest whose love for truth and holy preaching conquered heresy and fostered evangelical poverty and study.',
-      scriptureRef: '2 Timothy 4:2'
     }
   ],
   '8-10': [
     {
+      traditions: ['catholic', 'traditional', 'orthodox', 'ecumenical'],
       name: 'St. Lawrence, Deacon and Martyr',
       name_it: 'San Lorenzo, Diacono e Martire',
+      name_ro: 'Sfântul Mare Mucenic Laurențiu Arhidiaconul',
       title: 'Keeper of Church Treasures & Hero of Roman Charity',
       color: 'red',
       rank: 'feast',
-      quote: '«Behold the treasures of the Church: the poor, the crippled, the blind, and the sick in whom Christ lives.»',
-      bio: 'Deacon of Rome under Pope Sixtus II, roasted upon an iron gridiron during the Valerian persecution with serene joy and humor.',
+      quote: '«Behold the true treasures of the Church: the poor and the suffering in whom Christ lives.»',
+      bio: 'Deacon of Rome roasted upon an iron gridiron under Valerian with heroic fortitude and serene joy.',
       scriptureRef: '2 Corinthians 9:6-9'
     }
   ],
   '8-14': [
     {
+      traditions: ['catholic', 'ecumenical'],
       name: 'St. Maximilian Maria Kolbe',
       name_it: 'San Massimiliano Maria Kolbe',
+      name_ro: 'Sfântul Maximilian Kolbe',
       title: 'Knight of the Immaculata & Martyr of Auschwitz',
       color: 'red',
       rank: 'memorial',
       quote: '«Greater love hath no man than this, that a man lay down his life for his friends.»',
-      bio: 'Franciscan priest who volunteered to die in the starvation bunker of Auschwitz in place of a stranger with a wife and children.',
+      bio: 'Franciscan priest who stepped forward in Auschwitz to die in the starvation bunker in place of a married father.',
       scriptureRef: 'John 15:13'
     }
   ],
   '8-15': [
     {
-      name: 'The Assumption / Dormition of the B.V.M.',
+      traditions: ['catholic', 'traditional'],
+      name: 'The Assumption of the Blessed Virgin Mary',
       name_it: 'Assunzione della Beata Vergine Maria',
-      title: 'Queen Assumed into Heaven & Ark of Immortality',
+      name_ro: 'Adormirea Maicii Domnului (Sfânta Maria Mare)',
+      title: 'Queen Assumed into Heavenly Glory',
       color: 'blue',
       rank: 'solemnity',
-      quote: '«And there appeared a great wonder in heaven; a woman clothed with the sun, and the moon under her feet, and upon her head a crown of twelve stars.»',
-      bio: 'Having completed the course of her earthly life, the Mother of God was assumed body and soul into heavenly glory.',
+      quote: '«And there appeared a great wonder in heaven; a woman clothed with the sun, and the moon under her feet.»',
+      bio: 'The Mother of God, having completed her earthly life, was assumed body and soul into heavenly glory.',
       scriptureRef: 'Revelation 12:1'
-    }
-  ],
-  '8-20': [
+    },
     {
-      name: 'St. Bernard of Clairvaux',
-      name_it: 'San Bernardo di Chiaravalle',
-      title: 'Mellifluous Doctor & Cistercian Reformer',
+      traditions: ['orthodox'],
+      name: 'The Dormition of the Most Holy Theotokos',
+      name_it: 'Dormizione della Tutta Santa Madre di Dio',
+      name_ro: 'Adormirea Maicii Domnului (Uspenia)',
+      title: 'Summer Pascha & Falling Asleep of the Mother of God',
+      color: 'blue',
+      rank: 'solemnity',
+      quote: '«In giving birth you preserved your virginity; in falling asleep you did not forsake the world, O Theotokos!»',
+      bio: 'Surrounded by the Apostles, the Mother of God falls asleep in peace and is translated by her Divine Son into eternal life.',
+      scriptureRef: 'Psalm 45:9-11'
+    },
+    {
+      traditions: ['protestant'],
+      name: 'Mary, Mother of our Lord',
+      name_it: 'Maria, Madre del nostro Signore',
+      name_ro: 'Sfânta Maria, Maica Domnului nostru',
+      title: 'Blessed Handmaid of the Lord & Ark of the Incarnation',
       color: 'white',
-      rank: 'memorial',
-      quote: '«The measure of loving God is to love Him without measure.»',
-      bio: 'Reformer of monastic life, mystic of divine love, and ardent champion of devotion to the Mother of God.',
-      scriptureRef: 'Ephesians 3:17-19'
-    }
-  ],
-  '8-24': [
-    {
-      name: 'St. Bartholomew the Apostle (Nathanael)',
-      name_it: 'San Bartolomeo Apostolo',
-      title: 'Israelite without Guile & Missionary Martyr',
-      color: 'red',
       rank: 'feast',
-      quote: '«Behold an Israelite indeed, in whom is no guile! Rabbi, thou art the Son of God; thou art the King of Israel.»',
-      bio: 'Preached the Gospel in India, Mesopotamia, and Armenia, where he suffered martyrdom by being flayed alive for Christ.',
-      scriptureRef: 'John 1:47-49'
-    }
-  ],
-  '8-27': [
-    {
-      name: 'St. Monica of Tagaste',
-      name_it: 'Santa Monica',
-      title: 'Exemplar of Christian Mothers & Patient Prayer',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«It is impossible that the son of so many tears should perish.»',
-      bio: 'Mother of St. Augustine whose thirty years of tearful, persevering prayer won the conversion of both her pagan husband and wayward son.',
-      scriptureRef: 'Luke 18:1-8'
+      quote: '«My soul doth magnify the Lord, and my spirit hath rejoiced in God my Saviour.»',
+      bio: 'Celebrates the humble virgin of Nazareth chosen by God to bear the Savior of the world in divine humility.',
+      scriptureRef: 'Luke 1:46-55'
     }
   ],
   '8-28': [
     {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
       name: 'St. Augustine of Hippo',
       name_it: 'Sant\'Agostino d\'Ippona',
+      name_ro: 'Fericitul Augustin, Episcopul Hiponei',
       title: 'Doctor of Grace & Western Church Father',
       color: 'white',
       rank: 'feast',
-      quote: '«You have made us for yourself, O Lord, and our heart is restless until it rests in you. Late have I loved you, O Beauty ever ancient, ever new!»',
-      bio: 'Bishop of Hippo, philosophical theologian whose Confessions and City of God shaped the theological architecture of Western Christendom.',
+      quote: '«You have made us for yourself, O Lord, and our heart is restless until it rests in you.»',
+      bio: 'Bishop of Hippo whose Confessions and theology of grace shaped Christian intellectual history.',
       scriptureRef: 'Psalm 63:1'
     }
   ],
   '8-29': [
     {
+      traditions: ['all'],
       name: 'The Martyrdom of St. John the Baptist',
       name_it: 'Martirio di San Giovanni Battista (Decollazione)',
-      title: 'Hero of Moral Truth & Righteous Prophet',
+      name_ro: 'Tăierea Capului Sfântului Ioan Botezătorul',
+      title: 'Defender of Divine Moral Law & Righteous Prophet',
       color: 'red',
       rank: 'memorial',
       quote: '«It is not lawful for thee to have thy brother\'s wife.»',
-      bio: 'Beheaded in Machaerus dungeon by order of Herod Antipas for defending the sanctity of God\'s moral commandments without fear.',
+      bio: 'Beheaded by Herod Antipas for fearlessly defending the moral commandments of God without compromise.',
       scriptureRef: 'Mark 6:17-29'
     }
   ],
@@ -666,136 +765,154 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   // SEPTEMBER (9)
   // ==========================================
-  '9-3': [
-    {
-      name: 'St. Gregory the Great, Pope and Doctor',
-      name_it: 'San Gregorio Magno, Papa e Dottore',
-      title: 'Servant of the Servants of God (Servus Servorum Dei)',
-      color: 'white',
-      rank: 'feast',
-      quote: '«The proof of love is in the works. Where love exists, it works great things. But when it ceases to act, it ceases to exist.»',
-      bio: 'Benedictine monk who became Pope, reformed the sacred liturgy, sent St. Augustine to evangelize England, and authored the Dialogues.',
-      scriptureRef: '1 John 3:18'
-    }
-  ],
   '9-8': [
     {
+      traditions: ['all'],
       name: 'The Nativity of the Blessed Virgin Mary',
       name_it: 'Natività della Beata Vergine Maria',
-      title: 'Morning Star announcing the Sun of Justice',
+      name_ro: 'Nașterea Maicii Domnului (Sfânta Maria Mică)',
+      title: 'Dawn of Redemption & Ark of the New Covenant',
       color: 'blue',
       rank: 'feast',
-      quote: '«Thy Nativity, O Virgin Mother of God, has proclaimed joy to all the universe, for from thee arose the Sun of Justice, Christ our God.»',
-      bio: 'The dawn of human redemption begins with the holy birth of Mary, chosen from eternity to be the Mother of the Redeemer.',
+      quote: '«Thy Nativity, O Virgin Mother of God, has proclaimed joy to all the universe, for from thee arose the Sun of Justice!»',
+      bio: 'The birth of Mary heralds the coming of the Savior into human history.',
       scriptureRef: 'Micah 5:2'
     }
   ],
   '9-13': [
     {
+      traditions: ['all'],
       name: 'St. John Chrysostom',
       name_it: 'San Giovanni Crisostomo',
-      title: 'Golden-Mouthed Patriarch of Constantinople',
+      name_ro: 'Sfântul Ioan Gură de Aur, Arhiepiscopul Constantinopolului',
+      title: 'Golden-Mouthed Patriarch & Doctor of the Church',
       color: 'white',
       rank: 'feast',
       quote: '«Prayer is the root, the fountain, the mother of countless blessings. If you cannot find Christ in the beggar at the church door, you will not find Him in the chalice.»',
-      bio: 'Courageous preacher of righteousness, defender of the poor against imperial corruption, author of the Byzantine Divine Liturgy.',
+      bio: 'Courageous preacher of righteousness, author of the Divine Liturgy, defender of the poor against corrupt power.',
       scriptureRef: 'Ephesians 6:18'
     }
   ],
   '9-14': [
     {
+      traditions: ['all'],
       name: 'The Exaltation of the Holy Cross',
       name_it: 'Esaltazione della Santa Croce',
-      title: 'Trophy of Victory & Tree of Life',
+      name_ro: 'Înălțarea Sfintei Cruci',
+      title: 'Universal Sign of Redemption & Tree of Life',
       color: 'red',
       rank: 'feast',
-      quote: '«We adore Thee, O Christ, and we bless Thee, because by Thy Holy Cross Thou hast redeemed the world.»',
-      bio: 'Celebrates the recovery and exaltation of the True Cross of Christ, the divine sign of triumph over sin, death, and hell.',
+      quote: '«God forbid that I should glory, save in the cross of our Lord Jesus Christ, by whom the world is crucified unto me, and I unto the world.»',
+      bio: 'Celebrates the True Cross of Christ as the supreme trophy of victory over sin and death.',
       scriptureRef: 'Galatians 6:14'
-    }
-  ],
-  '9-15': [
-    {
-      name: 'Our Lady of Sorrows (Mater Dolorosa)',
-      name_it: 'Beata Vergine Maria Addolorata',
-      title: 'Queen of Martyrs & Mother standing by the Cross',
-      color: 'blue',
-      rank: 'memorial',
-      quote: '«Yea, a sword shall pierce through thy own soul also, that the thoughts of many hearts may be revealed.»',
-      bio: 'Commemorates the Seven Sorrows of Mary, who shared intimately in the Passion of her Divine Son at Calvary with boundless faith.',
-      scriptureRef: 'John 19:25-27'
     }
   ],
   '9-21': [
     {
+      traditions: ['all'],
       name: 'St. Matthew, Apostle and Evangelist',
       name_it: 'San Matteo, Apostolo ed Evangelista',
+      name_ro: 'Sfântul Apostol și Evanghelist Matei',
       title: 'Tax Collector Called by Grace & Gospel Writer',
       color: 'red',
       rank: 'feast',
-      quote: '«Jesus saw a man named Matthew sitting at the receipt of custom: and he saith unto him, Follow me. And he arose, and followed him.»',
-      bio: 'Left his wealth and toll collector\'s desk instantly at the Master\'s call; wrote the Gospel for the Jewish people and died a martyr.',
-      scriptureRef: 'Matthew 9:9-13'
+      quote: '«Jesus said unto him: Follow me. And he arose and followed him.»',
+      bio: 'Left his toll office immediately at Christ\'s call; recorded the Gospel and died a martyr.',
+      scriptureRef: 'Matthew 9:9'
     }
   ],
   '9-23': [
     {
+      traditions: ['catholic', 'traditional'],
       name: 'St. Pio of Pietrelcina (Padre Pio)',
       name_it: 'San Pio da Pietrelcina',
-      title: 'Capuchin Stigmatist & Apostle of Confession',
+      name_ro: 'Sfântul Padre Pio de Pietrelcina',
+      title: 'Capuchin Stigmatist & Apostle of the Confessional',
       color: 'white',
       rank: 'memorial',
       quote: '«Pray, hope, and don\'t worry. Worry is useless. God is merciful and will hear your prayer.»',
-      bio: 'Franciscan friar who bore the wounds of Christ (stigmata) for fifty years, spending up to eighteen hours a day reconciling sinners in confession.',
+      bio: 'Franciscan friar who bore the wounds of Christ for fifty years and reconciled countless sinners.',
       scriptureRef: 'Galatians 6:17'
+    }
+  ],
+  '9-24': [
+    {
+      traditions: ['orthodox'],
+      name: 'St. Silouan the Athonite',
+      name_it: 'San Silvano del Monte Athos',
+      name_ro: 'Sfântul Siluan Athonitul',
+      title: 'Elder of Mount Athos & Singer of Divine Love',
+      color: 'white',
+      rank: 'feast',
+      quote: '«Keep thy mind in hell, and despair not. The Lord loves all people, and desires that all be saved.»',
+      bio: 'Russian monk on Mount Athos who wept in prayer for the salvation of all humanity.',
+      scriptureRef: '1 Timothy 2:3-4'
     }
   ],
   '9-27': [
     {
+      traditions: ['catholic', 'ecumenical'],
       name: 'St. Vincent de Paul',
       name_it: 'San Vincenzo de\' Paoli',
+      name_ro: 'Sfântul Vincențiu de Paul',
       title: 'Apostle of Charity & Father of the Poor',
       color: 'white',
       rank: 'memorial',
-      quote: '«Charity is the cement which binds communities to God and persons to one another... You will find out that charity is a heavy burden, but Christ makes it sweet.»',
-      bio: 'French priest who devoted his life to serving galley slaves, orphans, and peasants, founding the Congregation of the Mission (Vincentians) and Daughters of Charity.',
+      quote: '«Charity is the cement which binds communities to God and persons to one another.»',
+      bio: 'Devoted his life to galley slaves, orphans, and peasants, founding the Daughters of Charity.',
       scriptureRef: 'James 2:14-17'
-    }
-  ],
-  '9-28': [
+    },
     {
-      name: 'St. Wenceslaus & St. Lawrence Ruiz and Companions',
-      name_it: 'San Venceslao e San Lorenzo Ruiz e Compagni',
-      title: 'Good King of Bohemia & First Filipino Martyr',
+      traditions: ['orthodox'],
+      name: 'St. Callistratus and His Companions, Martyrs',
+      name_it: 'San Callistrato e Compagni Martiri',
+      name_ro: 'Sfântul Mucenic Calistrat și cei 49 de Mucenici',
+      title: 'Courageous Martyrs of Rome',
       color: 'red',
       rank: 'memorial',
-      quote: '«If I had a thousand lives, I would offer all of them to God.»',
-      bio: 'St. Wenceslaus ruled in peace and charity before being murdered by his brother; St. Lawrence Ruiz was martyred in Nagasaki, refusing to recant his Catholic faith.',
-      scriptureRef: 'Matthew 10:32-33'
+      quote: '«We belong to Christ our Lord and King, and we will never offer sacrifice to idols.»',
+      bio: 'Roman soldier whose miraculous endurance led 49 fellow soldiers to confess Christ and receive the crown of martyrdom.',
+      scriptureRef: '2 Timothy 2:3'
+    },
+    {
+      traditions: ['protestant'],
+      name: 'George Whitefield (Commemoration of Gospel Preaching)',
+      name_it: 'George Whitefield (Apostolo del Risveglio)',
+      name_ro: 'George Whitefield (Predicatorul Marii Treziri)',
+      title: 'Voice of the Great Awakening & Open-Air Preacher',
+      color: 'white',
+      rank: 'memorial',
+      quote: '«I am content to be forgotten, if Christ be remembered! Let the name of Whitefield perish, so long as Christ is exalted.»',
+      bio: 'Preached the Gospel to over ten million people in Great Britain and America, pointing all to the necessity of the new birth in Christ.',
+      scriptureRef: 'John 3:3'
     }
   ],
   '9-29': [
     {
+      traditions: ['all'],
       name: 'Saints Michael, Gabriel, and Raphael, Archangels',
       name_it: 'Santi Michele, Gabriele e Raffaele, Arcangeli',
+      name_ro: 'Sfinții Arhangheli (Soborul Puterilor Cerești)',
       title: 'Captains of the Heavenly Host & Messengers of God',
       color: 'white',
       rank: 'feast',
-      quote: '«Quis ut Deus? — Who is like unto God! St. Michael defend us in battle; be our safeguard against the wickedness and snares of the devil.»',
-      bio: 'Michael vanquished Lucifer; Gabriel brought the tidings of the Incarnation; Raphael brings healing and guidance to the faithful.',
+      quote: '«Quis ut Deus? Who is like unto God! Michael defeated the dragon and his angels.»',
+      bio: 'Michael vanquished Lucifer; Gabriel brought the tidings of the Incarnation; Raphael brings healing to the faithful.',
       scriptureRef: 'Revelation 12:7-9'
     }
   ],
   '9-30': [
     {
-      name: 'St. Jerome, Priest and Doctor of the Church',
-      name_it: 'San Girolamo, Sacerdote e Dottore',
-      title: 'Translator of the Holy Scriptures (Vulgate)',
+      traditions: ['all'],
+      name: 'St. Jerome, Priest and Doctor',
+      name_it: 'San Girolamo, Dottore della Chiesa',
+      name_ro: 'Fericitul Ieronim, Tălmăcitorul Sfintelor Scripturi',
+      title: 'Translator of the Sacred Scriptures (Vulgate)',
       color: 'white',
       rank: 'memorial',
       quote: '«Ignorance of Scripture is ignorance of Christ.»',
-      bio: 'Hermit in the caves of Bethlehem who dedicated three decades to translating the Hebrew and Greek Scriptures into Latin (the Vulgate).',
-      scriptureRef: '2 Timothy 3:16-17'
+      bio: 'Dedicated decades in the cave of Bethlehem translating the Hebrew and Greek Scriptures into Latin.',
+      scriptureRef: '2 Timothy 3:16'
     }
   ],
 
@@ -804,110 +921,110 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   '10-1': [
     {
-      name: 'St. Thérèse of the Child Jesus',
+      traditions: ['catholic', 'traditional'],
+      name: 'St. Thérèse of Lisieux',
       name_it: 'Santa Teresa di Gesù Bambino (di Lisieux)',
-      title: 'The Little Flower & Doctor of Spiritual Childhood',
+      name_ro: 'Sfânta Tereza a Pruncului Isus',
+      title: 'Doctor of the Church & Little Way of Love',
       color: 'white',
       rank: 'memorial',
       quote: '«My vocation is love! In the heart of the Church, my Mother, I will be love.»',
-      bio: 'Carmelite nun who showed that sanctity is achieved not by grand exploits, but by doing the smallest actions with infinite love.',
+      bio: 'Carmelite nun who taught that sanctity is doing the smallest actions with infinite love.',
       scriptureRef: 'Matthew 18:3'
-    }
-  ],
-  '10-2': [
+    },
     {
-      name: 'The Holy Guardian Angels',
-      name_it: 'Santi Angeli Custodi',
-      title: 'Protectors and Companions of Human Souls',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Angel of God, my guardian dear, to whom God\'s love commits me here, ever this day be at my side, to light and guard, to rule and guide.»',
-      bio: 'Honors the loving providence of God who assigns to each human soul an angelic protector to lead us safely to eternal life.',
-      scriptureRef: 'Psalm 91:11-12'
+      traditions: ['orthodox'],
+      name: 'The Protection of the Most Holy Theotokos (Pokrov)',
+      name_it: 'La Protezione della Madre di Dio (Pokrov)',
+      name_ro: 'Acoperământul Maicii Domnului (Pocrovul)',
+      title: 'Maternal Protection over the Christian People',
+      color: 'blue',
+      rank: 'feast',
+      quote: '«Today the Virgin stands in the church and with choirs of saints invisibly prays to God for us!»',
+      bio: 'Vision seen in the Blachernae church of Constantinople by St. Andrew the Fool-for-Christ, showing Mary spreading her veil of protection over all believers.',
+      scriptureRef: 'Psalm 91:4'
     }
   ],
   '10-4': [
     {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
       name: 'St. Francis of Assisi',
       name_it: 'San Francesco d\'Assisi',
-      title: 'Poverello of Assisi & Herald of Universal Peace',
+      name_ro: 'Sfântul Francisc de Assisi',
+      title: 'Poverello of Assisi & Herald of Gospel Peace',
       color: 'white',
       rank: 'feast',
-      quote: '«Lord, make me an instrument of your peace: where there is hatred, let me sow love; where there is injury, pardon.»',
-      bio: 'Renounced his family fortune to marry "Lady Poverty", received the sacred stigmata on Mount La Verna, and renewed the universal Church.',
+      quote: '«Lord, make me an instrument of your peace: where there is hatred, let me sow love.»',
+      bio: 'Embraced Gospel poverty, received the stigmata on Mount La Verna, and renewed the Church.',
       scriptureRef: 'Galatians 6:14'
     }
   ],
-  '10-7': [
+  '10-6': [
     {
-      name: 'Our Lady of the Holy Rosary',
-      name_it: 'Beata Vergine Maria del Rosario',
-      title: 'Victress of Lepanto & Queen of Peace',
-      color: 'blue',
+      traditions: ['protestant'],
+      name: 'William Tyndale',
+      name_it: 'William Tyndale (Martire e Traduttore)',
+      name_ro: 'William Tyndale (Traducătorul Bibliei)',
+      title: 'Martyr of the English Bible & Biblical Scholar',
+      color: 'red',
       rank: 'memorial',
-      quote: '«Contemplate the face of Christ with Mary through the mysteries of the Holy Rosary.»',
-      bio: 'Instituted in thanksgiving for the historic deliverance of Christendom at the Battle of Lepanto (1571) through the recitation of the Rosary.',
-      scriptureRef: 'Luke 2:19'
+      quote: '«Lord! Open the King of England\'s eyes! If God spare my life, I will cause a boy that driveth the plough shall know more of the Scripture than thou dost.»',
+      bio: 'Pioneered the translation of the Bible from original Greek and Hebrew into English; betrayed and burned at the stake in Vilvoorde in 1536.',
+      scriptureRef: 'Psalm 119:105'
     }
   ],
-  '10-15': [
+  '10-16': [
     {
-      name: 'St. Teresa of Jesus (of Avila)',
-      name_it: 'Santa Teresa d\'Avila',
-      title: 'Reformer of Carmel & Doctor of Interior Prayer',
-      color: 'white',
+      traditions: ['protestant'],
+      name: 'Hugh Latimer & Nicholas Ridley (Oxford Martyrs)',
+      name_it: 'Hugh Latimer e Nicholas Ridley (Martiri di Oxford)',
+      name_ro: 'Hugh Latimer și Nicholas Ridley',
+      title: 'Martyrs of the English Reformation',
+      color: 'red',
       rank: 'memorial',
-      quote: '«Let nothing disturb you, let nothing frighten you. All things pass; God never changes. Patience obtains all things. Whoever has God lacks nothing: God alone suffices.»',
-      bio: 'Mystic and reformer of the Discalced Carmelites, author of The Interior Castle and The Way of Perfection.',
-      scriptureRef: 'Psalm 46:10'
+      quote: '«Be of good comfort, Master Ridley, and play the man; we shall this day light such a candle by God\'s grace in England as I trust shall never be put out.»',
+      bio: 'Burned at the stake together in Oxford in 1555, sealing their witness to the Gospel with heroic fortitude.',
+      scriptureRef: '2 Timothy 4:7'
     }
   ],
   '10-18': [
     {
+      traditions: ['all'],
       name: 'St. Luke the Evangelist',
       name_it: 'San Luca Evangelista',
+      name_ro: 'Sfântul Apostol și Evanghelist Luca',
       title: 'Physician, Companion of Paul & Scribe of Mercy',
       color: 'red',
       rank: 'feast',
       quote: '«For the Son of man is come to seek and to save that which was lost.»',
-      bio: 'Greek physician who authored the Third Gospel and the Acts of the Apostles, emphasizing Christ\'s compassion for outcasts and sinners.',
+      bio: 'Author of the Third Gospel and the Acts of the Apostles, emphasizing Christ\'s compassion for the lost and the work of the Holy Spirit.',
       scriptureRef: 'Luke 19:10'
-    }
-  ],
-  '10-22': [
-    {
-      name: 'St. John Paul II, Pope',
-      name_it: 'San Giovanni Paolo II, Papa',
-      title: 'Apostle of Divine Mercy & Youth',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Do not be afraid! Open wide the doors for Christ! Be not afraid of what is true, good and holy.»',
-      bio: 'Polish pope who defended human dignity, brought down totalitarian communism in Europe, and proclaimed the message of Divine Mercy.',
-      scriptureRef: 'John 14:27'
-    }
-  ],
-  '10-28': [
-    {
-      name: 'Saints Simon and Jude, Apostles',
-      name_it: 'Santi Simone e Giuda, Apostoli',
-      title: 'Zealot for God & Patron of Desperate Cases',
-      color: 'red',
-      rank: 'feast',
-      quote: '«Beloved, building up yourselves on your most holy faith, praying in the Holy Ghost, keep yourselves in the love of God.»',
-      bio: 'Preached the Gospel in Persia and Mesopotamia, where they suffered martyrdom together for confessing Christ.',
-      scriptureRef: 'Jude 1:20-21'
     }
   ],
   '10-31': [
     {
-      name: 'Martin Luther & Eve of All Saints',
-      name_it: 'Martin Lutero e Vigilia di Tutti i Santi',
-      title: 'Reformer & Translator of the Sacred Scriptures',
+      traditions: ['protestant'],
+      name: 'Reformation Day (Martin Luther at Wittenberg)',
+      name_it: 'Giorno della Riforma (Martin Lutero)',
+      name_ro: 'Ziua Reformei (Postarea celor 95 de Teze)',
+      title: 'Proclamation of Grace, Faith & Scripture Alone',
+      color: 'white',
+      rank: 'solemnity',
+      quote: '«A Mighty Fortress is our God, a bulwark never failing! The just shall live by faith.»',
+      bio: 'On October 31, 1517, Martin Luther posted the 95 Theses at Wittenberg, igniting the recovery of biblical salvation by grace through faith in Christ alone.',
+      scriptureRef: 'Ephesians 2:8-9'
+    },
+    {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
+      name: 'Vigil of All Saints',
+      name_it: 'Vigilia di Tutti i Santi',
+      name_ro: 'Ajunul Sărbătorii Tuturor Sfinților',
+      title: 'Preparation for the Heavenly Host',
       color: 'white',
       rank: 'memorial',
-      quote: '«My conscience is captive to the Word of God. Here I stand; I can do no other. God help me. The righteous shall live by faith.»',
-      bio: 'Restored the proclamation of justification by grace through faith alone; translated the Holy Bible into the vernacular German.',
-      scriptureRef: 'Romans 1:17'
+      quote: '«Blessed are the pure in heart, for they shall see God.»',
+      bio: 'Evening of prayer and vigilance honoring the countless souls crowned in glory before God.',
+      scriptureRef: 'Matthew 5:8'
     }
   ],
 
@@ -916,119 +1033,83 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   '11-1': [
     {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
       name: 'Solemnity of All Saints',
       name_it: 'Solennità di Tutti i Santi',
-      title: 'The Triumphant Heavenly Multitude',
+      name_ro: 'Sărbătoarea Tuturor Sfinților',
+      title: 'The Triumphant Cloud of Witnesses in Heaven',
       color: 'white',
       rank: 'solemnity',
-      quote: '«After this I beheld, and, lo, a great multitude, which no man could number, of all nations, and kindreds, and people, and tongues, stood before the throne, and before the Lamb.»',
-      bio: 'Celebrates all the holy men and women who dwell in the radiant glory of God, known and unknown, our heavenly intercessors.',
-      scriptureRef: 'Revelation 7:9-10'
+      quote: '«A great multitude, which no man could number, of all nations, and kindreds, and people, and tongues, stood before the throne.»',
+      bio: 'Celebrates all holy souls who dwell in the radiant light of God, our intercessors and heavenly companions.',
+      scriptureRef: 'Revelation 7:9'
     }
   ],
-  '11-2': [
+  '11-8': [
     {
-      name: 'The Commemoration of All the Faithful Departed (All Souls)',
-      name_it: 'Commemorazione di Tutti i Fedeli Defunti',
-      title: 'Suffrages and Prayers for Holy Souls',
+      traditions: ['orthodox'],
+      name: 'Synaxis of the Archangel Michael & All Bodiless Powers',
+      name_it: 'Sinassi dell\'Arcangelo Michele e di Tutte le Schiere Celesti',
+      name_ro: 'Soborul Sfinților Arhangheli Mihail și Gavriil',
+      title: 'Leaders of the Heavenly Armies of God',
       color: 'white',
-      rank: 'memorial',
-      quote: '«It is therefore a holy and wholesome thought to pray for the dead, that they may be loosed from sins.»',
-      bio: 'The Church Militant offers prayers, masses, and alms for the purification of souls awaiting the full vision of God in heaven.',
-      scriptureRef: '2 Maccabees 12:46'
-    }
-  ],
-  '11-4': [
-    {
-      name: 'St. Charles Borromeo',
-      name_it: 'San Carlo Borromeo',
-      title: 'Archbishop of Milan & Champion of Trent',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Be sure that you first preach by the way you live. If you do not, people will notice that you say one thing, but do another.»',
-      bio: 'Cardinall-archbishop of Milan who implemented the reforms of the Council of Trent and tirelessly nursed the sick during the plague.',
-      scriptureRef: 'Titus 2:7-8'
-    }
-  ],
-  '11-10': [
-    {
-      name: 'St. Leo the Great, Pope and Doctor',
-      name_it: 'San Leone Magno, Papa e Dottore',
-      title: 'Defender of the Two Natures of Christ',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Christian, recognize your dignity! You share in God\'s divine nature; do not return to your former degraded condition.»',
-      bio: 'Authored the Tome of Leo at the Council of Chalcedon; persuaded Attila the Hun to spare the city of Rome.',
-      scriptureRef: '2 Peter 1:4'
-    }
-  ],
-  '11-11': [
-    {
-      name: 'St. Martin of Tours',
-      name_it: 'San Martino di Tours',
-      title: 'Soldier of Christ & Bishop of Compassion',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«Martin, yet a catechumen, has clothed Me with this cloak.»',
-      bio: 'Roman cavalry officer who cut his warm military cloak in two to share with a freezing beggar, seeing Christ in him.',
-      scriptureRef: 'Matthew 25:40'
-    }
-  ],
-  '11-17': [
-    {
-      name: 'St. Elizabeth of Hungary',
-      name_it: 'Sant\'Elisabetta d\'Ungheria',
-      title: 'Princess of Charity & Patroness of Catholic Charities',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«We must make people happy, not sad. To serve the poor is to touch the wounds of Christ.»',
-      bio: 'Royal princess who built hospitals, cared for lepers with her own hands, and embraced Franciscan poverty after her husband\'s death.',
-      scriptureRef: 'Proverbs 31:20'
-    }
-  ],
-  '11-21': [
-    {
-      name: 'The Presentation of the Blessed Virgin Mary',
-      name_it: 'Presentazione della Beata Vergine Maria',
-      title: 'Consecration of the Ark of God in the Temple',
-      color: 'blue',
-      rank: 'memorial',
-      quote: '«Consecrated wholly to the Lord from childhood, a pure and spotless sanctuary for the Divine Son.»',
-      bio: 'According to holy tradition, Mary was dedicated by Joachim and Anne in the Jerusalem Temple to live solely in contemplation of God.',
-      scriptureRef: 'Psalm 45:10-11'
+      rank: 'solemnity',
+      quote: '«Commanders of the heavenly hosts, we entreat you: protect us under the shelter of your wings of immaterial glory!»',
+      bio: 'Major Eastern feast commemorating the holy angels who guard the faithful and ceaselessly praise the Holy Trinity.',
+      scriptureRef: 'Revelation 12:7'
     }
   ],
   '11-22': [
     {
+      traditions: ['catholic', 'traditional', 'ecumenical'],
       name: 'St. Cecilia, Virgin and Martyr',
       name_it: 'Santa Cecilia, Vergine e Martire',
-      title: 'Patroness of Musicians & Heavenly Melodies',
+      name_ro: 'Sfânta Mare Muceniță Cecilia',
+      title: 'Patroness of Sacred Musicians & Song of Faith',
       color: 'red',
       rank: 'memorial',
-      quote: '«While instruments played at her wedding, Cecilia sang in her heart unto God alone: Keep my heart and body spotless, that I be not put to shame.»',
-      bio: 'Roman noblewoman who converted her husband Valerian and surrendered her life under persecution, singing praise with her dying breath.',
+      quote: '«While the organ played, Cecilia sang in her heart unto God alone: Keep my heart and body spotless, that I be not confounded.»',
+      bio: 'Noble Roman maiden martyred for Christ, praising God with her dying breath.',
       scriptureRef: 'Colossians 3:16'
     },
     {
+      traditions: ['protestant'],
       name: 'C.S. Lewis',
       name_it: 'C.S. Lewis',
+      name_ro: 'C.S. Lewis (Marele Apologet Creștin)',
       title: 'Defender of Mere Christianity & Voice of Hope',
       color: 'white',
       rank: 'memorial',
       quote: '«I believe in Christianity as I believe that the sun has risen: not only because I see it, but because by it I see everything else.»',
-      bio: 'Oxford scholar whose Mere Christianity and Screwtape Letters brought millions of modern intellectuals to faith in Christ.',
+      bio: 'Oxford scholar whose Mere Christianity and Screwtape Letters brought millions of modern intellectuals to saving faith in Jesus Christ.',
       scriptureRef: 'John 1:9'
+    }
+  ],
+  '11-25': [
+    {
+      traditions: ['orthodox', 'catholic', 'traditional'],
+      name: 'St. Catherine of Alexandria',
+      name_it: 'Santa Caterina d\'Alessandria',
+      name_ro: 'Sfânta Mare Muceniță Ecaterina din Alexandria',
+      title: 'Great-Martyr & Victor over Pagan Philosophy',
+      color: 'red',
+      rank: 'feast',
+      quote: '«I have given myself as a bride to my Savior; neither promises of royalty nor threats of torture can tear me from Him.»',
+      bio: 'Brilliant maiden of Alexandria whose defense of Christ converted fifty imperial philosophers before her martyrdom.',
+      scriptureRef: '1 Corinthians 1:20-25'
     }
   ],
   '11-30': [
     {
-      name: 'St. Andrew the Apostle',
-      name_it: 'Sant\'Andrea Apostolo',
-      title: 'The First-Called (Protokletos) & Patron of the East',
+      traditions: ['all'],
+      name: 'St. Andrew the Apostle (The First-Called)',
+      name_it: 'Sant\'Andrea Apostolo (Il Primo Chiamato)',
+      name_ro: 'Sfântul Apostol Andrei, cel Întâi Chemat, Ocrotitorul României',
+      title: 'The First-Called Disciple & Apostle of the Nations',
       color: 'red',
       rank: 'feast',
-      quote: '«We have found the Messiah! O good cross, so long desired, receive the disciple of Him Who hung upon thee.»',
-      bio: 'Brother of Simon Peter, first disciple to follow Jesus; preached in Greece and was crucified on an X-shaped cross at Patras.',
+      quote: '«We have found the Messiah! O good Cross, long desired and now ready for my longing soul, receive the disciple of Him Who hung upon thee.»',
+      bio: 'Brother of Simon Peter, first disciple to follow Jesus; evangelized Greece and Romania (Scythia) and was crucified on an X-shaped cross.',
       scriptureRef: 'John 1:40-42'
     }
   ],
@@ -1036,174 +1117,149 @@ export const DAILY_SAINTS_CALENDAR = {
   // ==========================================
   // DECEMBER (12)
   // ==========================================
-  '12-3': [
-    {
-      name: 'St. Francis Xavier',
-      name_it: 'San Francesco Saverio',
-      title: 'Apostle of the Indies and Japan & Patron of Missions',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«What does it profit a man if he gain the whole world and lose his own soul?»',
-      bio: 'Jesuit missionary who baptized hundreds of thousands across India, the Moluccas, and Japan, dying within sight of China.',
-      scriptureRef: 'Mark 16:15'
-    }
-  ],
   '12-6': [
     {
-      name: 'St. Nicholas of Myra',
+      traditions: ['all'],
+      name: 'St. Nicholas of Myra (Wonderworker)',
       name_it: 'San Nicola di Myra (di Bari)',
-      title: 'Wonderworker of Myra & Defender of the Needy',
+      name_ro: 'Sfântul Ierarh Nicolae, Făcătorul de Minuni',
+      title: 'Father of the Poor & Defender of the Trinity',
       color: 'white',
-      rank: 'memorial',
-      quote: '«The best way to store up wealth is to give it to the hands of the poor for the love of Christ.»',
-      bio: 'Bishop of Myra who secretly gifted dowries to save poor maidens, defended the Trinity at Nicea, and rescued innocent condemned men.',
+      rank: 'feast',
+      quote: '«The best way to store up treasure in heaven is to distribute it into the hands of the poor for the love of Christ.»',
+      bio: 'Bishop of Myra who secretly delivered dowries to save poor maidens, defended Christ\'s divinity at Nicea, and rescued the innocent.',
       scriptureRef: 'Luke 6:38'
-    }
-  ],
-  '12-7': [
-    {
-      name: 'St. Ambrose, Bishop and Doctor',
-      name_it: 'Sant\'Ambrogio, Vescovo e Dottore',
-      title: 'Father of Milan & Baptizer of St. Augustine',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«The Emperor is within the Church, not above the Church. Where Peter is, there is the Church; where the Church is, there is no death.»',
-      bio: 'Acclaimed bishop while still a catechumen, courageous shepherd who held the Roman Emperor accountable to Christian penance.',
-      scriptureRef: 'Acts 4:19-20'
     }
   ],
   '12-8': [
     {
+      traditions: ['catholic', 'traditional'],
       name: 'The Immaculate Conception of the B.V.M.',
       name_it: 'Immacolata Concezione della Beata Vergine Maria',
-      title: 'Preserved from All Stain of Original Sin',
+      name_ro: 'Zămislirea Sfintei Fecioare Maria',
+      title: 'Preserved Free from All Stain of Sin',
       color: 'blue',
       rank: 'solemnity',
       quote: '«Hail, full of grace, the Lord is with thee: blessed art thou among women.»',
-      bio: 'By a singular grace and privilege of Almighty God, Mary was preserved free from all stain of original sin from the moment of her conception.',
+      bio: 'Mary was preserved free from original sin from the moment of her conception by the merits of Christ.',
       scriptureRef: 'Luke 1:28'
-    }
-  ],
-  '12-12': [
-    {
-      name: 'Our Lady of Guadalupe',
-      name_it: 'Nostra Signora di Guadalupe',
-      title: 'Empress of the Americas & Patroness of the Unborn',
-      color: 'blue',
-      rank: 'feast',
-      quote: '«Am I not here, who am your Mother? Are you not under my shadow and protection? Let nothing grieve nor disturb you.»',
-      bio: 'Appeared in 1531 on Tepeyac Hill to St. Juan Diego, leaving her miraculous image imprinted upon his cactus-fiber tilma.',
-      scriptureRef: 'Revelation 12:1'
-    }
-  ],
-  '12-13': [
-    {
-      name: 'St. Lucy of Syracuse, Virgin and Martyr',
-      name_it: 'Santa Lucia da Siracusa, Vergine e Martire',
-      title: 'Bringer of Light & Victor over Darkness',
-      color: 'red',
-      rank: 'memorial',
-      quote: '«Those who live chaste lives are the temples of the Holy Ghost. My soul is anchored in Christ.»',
-      bio: 'Sicilian maiden martyred under Diocletian for dedicating her virginity and goods to Christ and the poor.',
-      scriptureRef: 'John 8:12'
-    }
-  ],
-  '12-14': [
-    {
-      name: 'St. John of the Cross, Priest and Doctor',
-      name_it: 'San Giovanni della Croce',
-      title: 'Mystical Doctor & Singer of the Dark Night',
-      color: 'white',
-      rank: 'memorial',
-      quote: '«In the evening of life, we will be judged on love alone. Where there is no love, put love, and you will draw out love.»',
-      bio: 'Carmelite friar and reformer who endured harsh imprisonment and penned sublime mystical poetry on the soul\'s union with God.',
-      scriptureRef: 'Song of Solomon 2:16'
     }
   ],
   '12-25': [
     {
+      traditions: ['all'],
       name: 'The Nativity of our Lord Jesus Christ (Christmas)',
       name_it: 'Natale del Signore nostro Gesù Cristo',
+      name_ro: 'Nașterea Domnului nostru Iisus Hristos (Crăciunul)',
       title: 'The Incarnation of the Word & Light of the World',
       color: 'white',
       rank: 'solemnity',
-      quote: '«For unto you is born this day in the city of David a Saviour, which is Christ the Lord. Glory to God in the highest, and on earth peace, good will toward men.»',
-      bio: 'The Eternal Word of the Father takes upon Himself our mortal human flesh in Bethlehem, born of the Virgin Mary in a humble manger.',
+      quote: '«For unto you is born this day in the city of David a Saviour, which is Christ the Lord. Glory to God in the highest, and on earth peace, good will toward men!»',
+      bio: 'The Eternal Word of the Father assumes mortal flesh in Bethlehem, born of the Virgin Mary in a humble manger.',
       scriptureRef: 'Luke 2:10-14'
     }
   ],
   '12-26': [
     {
+      traditions: ['all'],
       name: 'St. Stephen, The Protomartyr',
       name_it: 'Santo Stefano, Protomartire',
+      name_ro: 'Sfântul Apostol, Întâiul Mucenic și Arhidiacon Ștefan',
       title: 'First Christian Martyr & Deacon of Jerusalem',
       color: 'red',
       rank: 'feast',
-      quote: '«Lord, lay not this sin to their charge. Lord Jesus, receive my spirit!»',
-      bio: 'Full of grace and fortitude, saw the heavens opened and the Son of Man standing at the right hand of God before being stoned outside Jerusalem.',
+      quote: '«Lord, lay not this sin to their charge! Lord Jesus, receive my spirit!»',
+      bio: 'Full of grace and fortitude, saw the heavens opened and the Son of Man standing at the right hand of God before being stoned.',
       scriptureRef: 'Acts 7:55-60'
     }
   ],
   '12-27': [
     {
+      traditions: ['all'],
       name: 'St. John, Apostle and Evangelist',
       name_it: 'San Giovanni, Apostolo ed Evangelista',
+      name_ro: 'Sfântul Apostol și Evanghelist Ioan Teologul',
       title: 'The Beloved Disciple & Theologian of Divine Love',
       color: 'white',
       rank: 'feast',
-      quote: '«In the beginning was the Word, and the Word was with God, and the Word was God... God is love; and he that dwelleth in love dwelleth in God, and God in him.»',
-      bio: 'Rested upon Jesus\' breast at the Last Supper, stood at the foot of the Cross, and was exiled to Patmos where he wrote the Apocalypse.',
+      quote: '«In the beginning was the Word... God is love; and he that dwelleth in love dwelleth in God, and God in him.»',
+      bio: 'Rested upon Jesus\' breast at the Last Supper, stood at the foot of the Cross, author of the Fourth Gospel and Revelation.',
       scriptureRef: '1 John 4:16'
     }
   ],
-  '12-28': [
+  '12-31': [
     {
-      name: 'The Holy Innocents, Martyrs',
-      name_it: 'Santi Innocenti Martiri',
-      title: 'The First Flowers of the Church\'s Martyrs',
-      color: 'red',
-      rank: 'feast',
-      quote: '«Not by words, but by the shedding of their blood, they proclaimed the glory of Christ the Newborn King.»',
-      bio: 'The male infant babes of Bethlehem slaughtered by King Herod in his desperate, futile attempt to extinguish the life of the newborn King of kings.',
-      scriptureRef: 'Matthew 2:16-18'
+      traditions: ['protestant'],
+      name: 'John Wycliffe',
+      name_it: 'John Wycliffe (La Stella del Mattino)',
+      name_ro: 'John Wycliffe (Luceafărul Reformei)',
+      title: 'Morning Star of the Reformation & First English Bible Translator',
+      color: 'white',
+      rank: 'memorial',
+      quote: '«Trust wholly in Christ; rely on his sufferings; beware of seeking to be justified in any other way than by his righteousness.»',
+      bio: 'Oxford theologian who first translated the entire Bible into English in the 14th century, insisting that all believers should possess the Word of God.',
+      scriptureRef: '2 Timothy 3:16'
     }
   ]
 };
 
-// Fallback spiritual commemorations for any day not explicitly listed in fixed feasts
-const MONTHLY_ORDINARY_PATRONS = [
-  { name: 'St. Ephrem the Syrian', title: 'Harp of the Holy Spirit & Deacon', color: 'white', rank: 'memorial', quote: '«Virtue is preserved by prayer and silence.»', scriptureRef: 'Psalm 141:3' },
-  { name: 'St. Polycarp of Smyrna', title: 'Disciple of John & Bishop-Martyr', color: 'red', rank: 'memorial', quote: '«Eighty and six years have I served Him, and He never once wronged me; how then can I blaspheme my King and Savior?»', scriptureRef: 'Revelation 2:10' },
-  { name: 'St. Irenaeus of Lyons', title: 'Doctor of Unity & Apostolic Witness', color: 'red', rank: 'memorial', quote: '«The glory of God is a living man, and the life of man is the vision of God.»', scriptureRef: 'John 17:3' },
-  { name: 'St. Anthony the Great', title: 'Abbot of the Desert & Master of Prayer', color: 'white', rank: 'memorial', quote: '«Do not trust in your own righteousness, do not sorrow over what is past, and restrain your tongue and belly.»', scriptureRef: 'Matthew 6:33' },
-  { name: 'St. Silouan the Athonite', title: 'Mount Athos Elder & Singer of Divine Love', color: 'white', rank: 'memorial', quote: '«Keep thy mind in hell, and despair not.»', scriptureRef: 'Psalm 139:8' },
-  { name: 'St. Bridget of Sweden', title: 'Mystic & Patroness of Europe', color: 'white', rank: 'memorial', quote: '«Lord, show me the way and make me ready to walk in it.»', scriptureRef: 'Psalm 25:4' },
-  { name: 'St. Columba of Iona', title: 'Apostle of Scotland & Abbot', color: 'white', rank: 'memorial', quote: '«Alone with none but Thee, my God, I journey on my way.»', scriptureRef: 'Genesis 28:15' }
-];
+// Tradition-specific fallback patrons for days without fixed entries
+const TRADITION_FALLBACK_PATRONS = {
+  catholic: [
+    { name: 'St. Philip Neri', name_it: 'San Filippo Neri', title: 'Apostle of Rome & Spiritual Joy', color: 'white', rank: 'memorial', quote: '«Cheerfulness strengthens the heart and makes us persevere.»', scriptureRef: 'Philippians 4:4' },
+    { name: 'St. Francis de Sales', name_it: 'San Francesco di Sales', title: 'Doctor of Divine Love', color: 'white', rank: 'memorial', quote: '«A spoonful of honey attracts more flies than a barrel of vinegar.»', scriptureRef: 'Colossians 4:6' },
+    { name: 'St. Teresa of Avila', name_it: 'Santa Teresa d\'Avila', title: 'Doctor of Interior Prayer', color: 'white', rank: 'memorial', quote: '«God alone suffices.»', scriptureRef: 'Psalm 46:10' }
+  ],
+  traditional: [
+    { name: 'St. Gregory the Great', name_it: 'San Gregorio Magno', title: 'Pope, Monk & Latin Doctor', color: 'white', rank: 'memorial', quote: '«The proof of love is in the works.»', scriptureRef: '1 John 3:18' },
+    { name: 'St. Charles Borromeo', name_it: 'San Carlo Borromeo', title: 'Archbishop & Reformer of Trent', color: 'white', rank: 'memorial', quote: '«Be sure that you first preach by the way you live.»', scriptureRef: 'Titus 2:7' }
+  ],
+  orthodox: [
+    { name: 'St. Isaac the Syrian', name_it: 'Sant\'Isacco il Siro', name_ro: 'Sfântul Isaac Sirul', title: 'Teacher of Silence & Merciful Heart', color: 'white', rank: 'memorial', quote: '«What is a merciful heart? It is a heart on fire for the whole of creation.»', scriptureRef: 'Luke 6:36' },
+    { name: 'St. John Climacus', name_it: 'San Giovanni Climaco', name_ro: 'Sfântul Ioan Scărarul', title: 'Author of the Ladder of Divine Ascent', color: 'white', rank: 'memorial', quote: '«Repentance is the renewal of baptism, a contract with God for a second life.»', scriptureRef: 'Matthew 4:17' }
+  ],
+  protestant: [
+    { name: 'John Bunyan', name_it: 'John Bunyan', name_ro: 'John Bunyan', title: 'Author of Pilgrim\'s Progress & Preacher', color: 'white', rank: 'memorial', quote: '«You have not lived today until you have done something for someone who can never repay you.»', scriptureRef: 'Hebrews 11:13' },
+    { name: 'George Müller', name_it: 'George Müller', name_ro: 'George Müller', title: 'Man of Prayer and Living Faith', color: 'white', rank: 'memorial', quote: '«Faith does not operate in the realm of the possible. There is no glory for God in that which is humanly possible.»', scriptureRef: 'Mark 11:24' }
+  ],
+  ecumenical: [
+    { name: 'St. Ignatius of Antioch', name_it: 'Sant\'Ignazio di Antiochia', name_ro: 'Sfântul Ignatie Teoforul', title: 'Disciple of John & Apostolic Martyr', color: 'red', rank: 'memorial', quote: '«I am God\'s wheat, and I shall be ground by the teeth of beasts that I may be found pure bread of Christ.»', scriptureRef: 'Philippians 1:21' },
+    { name: 'St. Polycarp of Smyrna', name_it: 'San Policarpo di Smirne', name_ro: 'Sfântul Policarp al Smirnei', title: 'Bishop & Martyr', color: 'red', rank: 'memorial', quote: '«Eighty and six years have I served Him, and He never did me wrong; how then can I blaspheme my King and Savior?»', scriptureRef: 'Revelation 2:10' }
+  ]
+};
 
 export function getSaintsForDate(date, confession = 'ecumenical') {
   if (!date) date = new Date();
   const m = date.getMonth() + 1;
   const d = date.getDate();
   const key = `${m}-${d}`;
+  const normConf = (confession || 'ecumenical').toLowerCase();
 
-  const feast = DAILY_SAINTS_CALENDAR[key];
-  if (feast && feast.length > 0) {
-    return feast.map(s => ({
+  const dayFeasts = DAILY_SAINTS_CALENDAR[key] || [];
+
+  // Filter feasts matching the active tradition
+  const matched = dayFeasts.filter(s => {
+    if (!s.traditions || s.traditions.includes('all')) return true;
+    return s.traditions.includes(normConf);
+  });
+
+  if (matched.length > 0) {
+    return matched.map(s => ({
       ...s,
       dateStr: `${m}/${d}`,
       colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
     }));
   }
 
-  // Provide an authentic monastic/patristic commemoration for ordinary days
-  const fallbackIndex = (m * 31 + d) % MONTHLY_ORDINARY_PATRONS.length;
-  const patron = MONTHLY_ORDINARY_PATRONS[fallbackIndex];
+  // Fallback tradition-specific patron for ordinary days
+  const fallbackList = TRADITION_FALLBACK_PATRONS[normConf] || TRADITION_FALLBACK_PATRONS.ecumenical;
+  const fallbackIndex = (m * 31 + d) % fallbackList.length;
+  const patron = fallbackList[fallbackIndex];
   return [
     {
       ...patron,
       dateStr: `${m}/${d}`,
-      bio: 'Commemoration of holy monastic fathers and desert hermits who dedicated their lives to constant unceasing prayer in Christ.',
+      bio: patron.bio || 'Commemoration of holy fathers and faithful witnesses who dedicated their lives to constant unceasing prayer in Christ.',
       colorMeta: LITURGICAL_COLORS[patron.color] || LITURGICAL_COLORS.white
     }
   ];

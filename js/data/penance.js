@@ -267,7 +267,14 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
         theology: 'Every Friday is a mini-Good Friday in the Christian tradition, consecrated to penance in commemoration of the Lord Jesus offering His life upon Mount Calvary.',
         scripture: {
           ref: 'Luke 9:23',
-          text: 'If any man will come after me, let him deny himself, and take up his cross daily, and follow me.'
+          text: 'If any man will come after me, let him deny himself, and take up his cross daily, and follow me.',
+          archives: {
+            it: 'Se qualcuno vuole venire dietro a me, rinneghi se stesso, prenda la sua croce ogni giorno e mi segua.',
+            ro: 'Dacă voieşte cineva să vină după Mine, să se lepede de sine, să-şi ia crucea în fiecare zi şi să-Mi urmeze Mie.',
+            la: 'Si quis vult post me venire, abneget semetipsum, et tollat crucem suam quotidie, et sequatur me.',
+            es: 'Si alguno quiere venir en pos de mí, niéguese á sí mismo, y tome su cruz cada día, y sígame.',
+            fr: 'Si quelqu\'un veut venir après moi, qu\'il renonce à lui-même, qu\'il se charge chaque jour de sa croix, et qu\'il me suive.'
+          }
         },
         prayer: 'Lord Jesus Christ, crucified for our salvation, accept our modest sacrifice of abstinence this day as an act of love, gratitude, and solidarity with the poor.'
       };
@@ -291,7 +298,14 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
         theology: 'Lent prepares the Church to celebrate the Paschal Mystery through interior renewal, prayer, Scripture contemplation, and self-denial.',
         scripture: {
           ref: 'Matthew 6:16',
-          text: 'Moreover when ye fast, be not, as the hypocrites, of a sad countenance... but thou, when thou fastest, anoint thine head, and wash thy face.'
+          text: 'Moreover when ye fast, be not, as the hypocrites, of a sad countenance... but thou, when thou fastest, anoint thine head, and wash thy face.',
+          archives: {
+            it: 'E quando digiunate, non diventate malinconici come gli ipocriti... Tu invece, quando digiuni, profumati la testa e lavati il volto.',
+            ro: 'Când postiţi, nu fiţi trişti ca făţarnicii... Tu însă, când posteşti, unge capul tău şi faţa ta o spală.',
+            la: 'Cum autem jejunatis, nolite fieri sicut hypocritæ, tristes... Tu autem, cum jejunas, unge caput tuum, et faciem tuam lava.',
+            es: 'Y cuando ayunáis, no seáis como los hipócritas, austeros... Mas tú, cuando ayunas, unge tu cabeza y lava tu rostro.',
+            fr: 'Lorsque vous jeûnez, ne prenez pas un air triste, comme les hypocrites... Mais quand tu jeûnes, parfume ta tête et lave ton visage.'
+          }
         },
         prayer: 'Create in me a clean heart, O God, and renew a right spirit within me. Strengthen my resolve to walk humbly in Thy paths this Lent.'
       };
@@ -314,7 +328,14 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
       theology: 'Every day is God\'s creation, to be received with thanksgiving and sanctified through prayer, honesty, and loving charity.',
       scripture: {
         ref: '1 Corinthians 10:31',
-        text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.'
+        text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.',
+        archives: {
+          it: 'Sia dunque che mangiate, sia che beviate, sia che facciate alcun\'altra cosa, fate tutto alla gloria di Dio.',
+          ro: 'Deci, fie că mâncaţi, fie că beţi, fie că altceva faceţi, toate spre slava lui Dumnezeu să le faceţi.',
+          la: 'Sive ergo manducatis, sive bibitis, sive aliud quid facitis: omnia in gloriam Dei facite.',
+          es: 'Si pues coméis, ó bebéis, ó hacéis otra cosa, haced lo todo á gloria de Dios.',
+          fr: 'Soit donc que vous mangiez, soit que vous buviez, soit que vous fassiez quelque autre chose, faites tout pour la gloire de Dieu.'
+        }
       },
       prayer: 'Lord, bless the food we eat and the work of our hands. May everything we do redound to Thy honor and eternal praise. Amen.'
     };

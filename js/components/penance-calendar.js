@@ -169,7 +169,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
           <!-- Bottom Action Buttons on Today's Banner -->
           <div class="mt-4 pt-3 border-t border-stone-300/60 dark:border-stone-700/60 flex flex-wrap items-center justify-between gap-3 text-xs">
             <span class="text-[var(--text-muted)] italic truncate max-w-md notranslate" translate="no">
-              «${todayStatus.scripture.ref}»: "${todayStatus.scripture.text.slice(0, 85)}..."
+              «${todayStatus.scripture.ref}»: "${((todayStatus.scripture.archives && todayStatus.scripture.archives[lang]) || todayStatus.scripture.text).slice(0, 85)}..."
             </span>
             <button id="btn-inspect-today" class="font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1 cursor-pointer">
               <span>${t('penance.viewDayGuide', 'View Full Day Guide & Prayer')}</span>
@@ -520,7 +520,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             <div class="border-t border-stone-300/60 dark:border-stone-700/60 pt-3 notranslate" translate="no">
               <span class="text-xs font-mono font-bold text-amber-600 notranslate" translate="no">— ${selected.scripture.ref}</span>
               <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] mt-0.5 notranslate" translate="no">
-                "${selected.scripture.text}"
+                "${(selected.scripture.archives && selected.scripture.archives[lang]) || selected.scripture.text}"
               </p>
             </div>
           </div>

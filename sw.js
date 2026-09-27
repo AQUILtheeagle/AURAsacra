@@ -1,5 +1,5 @@
-// Aura Sacra Service Worker - 100% Offline Caching with Instant Network Updates
-const CACHE_NAME = 'aura-sacra-v1.0.8';
+// Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
+const CACHE_NAME = 'aura-sacra-v1.1.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -18,6 +18,7 @@ const ASSETS_TO_CACHE = [
   './js/icons.js',
   './data/bible-kjv.json',
   './js/data/scriptures.js',
+  './js/data/scripture-archives.js',
   './js/data/penance.js',
   './js/data/promises.js',
   './js/data/doubts.js',
@@ -47,14 +48,22 @@ const ASSETS_TO_CACHE = [
   './icons/favicon.png',
   './icons/logo.png',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  'https://cdn.tailwindcss.com'
 ];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+      // Safe individual caching ensures that one failed asset never breaks entire offline install
+      return Promise.all(
+        ASSETS_TO_CACHE.map((url) => {
+          return cache.add(url).catch((err) => {
+            console.warn('Asset pre-cache deferred / offline:', url, err);
+          });
+        })
+      );
     })
   );
 });
@@ -79,30 +88,47 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // Never intercept external APIs (e.g. Google Gemini Generative Language API)
-  if (!url.origin.includes(self.location.origin)) {
+  // Never intercept Google Gemini generative language API (live model inference)
+  if (url.hostname.includes('generativelanguage.googleapis.com')) {
     return;
   }
 
-  // Network-First with Cache Fallback: guarantees users always get the newest code on reload
+  // Cache-First with Background Stale-While-Revalidate: Instant 0ms launch in Airplane Mode!
   event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
-          const cloned = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, cloned);
+    caches.match(event.request).then((cachedResponse) => {
+      // Revalidate in background when online
+      const fetchPromise = fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const cloned = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, cloned);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => null); // Silent offline fallback
+
+      // Return cached copy immediately (ideal for Airplane Mode)
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      // If not in cache, wait for network or return offline page
+      return fetchPromise.then((networkResponse) => {
+        if (networkResponse) return networkResponse;
+
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html').then((navResponse) => {
+            return navResponse || caches.match('./');
           });
         }
-        return networkResponse;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) return cachedResponse;
-          if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
-          }
+
+        return new Response('Offline Resource Unavailable', {
+          status: 503,
+          statusText: 'Service Unavailable'
         });
-      })
+      });
+    })
   );
 });

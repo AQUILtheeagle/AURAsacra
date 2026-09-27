@@ -27,31 +27,33 @@
   <!-- Tailwind CSS CDN for rapid utility classes -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      darkMode: ['class', '[data-theme="night"]'],
-      theme: {
-        extend: {
-          colors: {
-            parchment: {
-              light: '#fdfbf7',
-              base: '#f6efe2',
-              dark: '#241b16',
-              night: '#151519'
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        darkMode: ['class', '[data-theme="night"]'],
+        theme: {
+          extend: {
+            colors: {
+              parchment: {
+                light: '#fdfbf7',
+                base: '#f6efe2',
+                dark: '#241b16',
+                night: '#151519'
+              },
+              sacred: {
+                gold: '#c69214',
+                vermilion: '#b93b2c',
+                blue: '#235789',
+                amber: '#e5a93b'
+              }
             },
-            sacred: {
-              gold: '#c69214',
-              vermilion: '#b93b2c',
-              blue: '#235789',
-              amber: '#e5a93b'
+            fontFamily: {
+              serif: ['EB Garamond', 'Georgia', 'serif'],
+              display: ['Cinzel', 'serif'],
+              sans: ['Inter', 'system-ui', 'sans-serif']
             }
-          },
-          fontFamily: {
-            serif: ['EB Garamond', 'Georgia', 'serif'],
-            display: ['Cinzel', 'serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif']
           }
         }
-      }
+      };
     }
   </script>
 
@@ -94,7 +96,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').then((reg) => {
-          reg.update();
+          reg.update().catch(() => {});
         }).catch(err => {
           console.log('SW registration note:', err);
         });

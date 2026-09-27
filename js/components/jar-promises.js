@@ -1,12 +1,23 @@
 // The Jar of Promises Modal for Aura Sacra
 import { PROMISE_CATEGORIES, PROMISES_DATABASE } from '../data/promises.js';
 import { icons } from '../icons.js';
+import { t, getLanguage } from '../i18n.js';
 
 export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
   let selectedCategory = null;
   let drawnPromise = null;
 
   function render() {
+    const currentLang = getLanguage();
+    const archiveData = (drawnPromise && drawnPromise.archives && drawnPromise.archives[currentLang])
+      ? drawnPromise.archives[currentLang]
+      : (drawnPromise && drawnPromise.archives && drawnPromise.archives.en)
+        ? drawnPromise.archives.en
+        : null;
+
+    const displayVerse = archiveData ? archiveData.text : (drawnPromise ? (drawnPromise.verse || drawnPromise.verse_en) : '');
+    const displayVersion = archiveData ? archiveData.version : 'King James Version (KJV 1611)';
+
     container.innerHTML = `
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
         <div class="bg-[var(--bg-card)] border-2 border-amber-600/40 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative parchment-border">
@@ -22,10 +33,10 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
               ${icons.jar('w-6 h-6')}
             </div>
             <h2 class="text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              The Jar of Promises
+              ${t('nav.promises', 'The Jar of Promises')}
             </h2>
             <p class="text-xs sm:text-sm text-[var(--text-muted)] italic font-serif mt-1">
-              Select what your heart is experiencing. Draw a faithful promise from the Word of God.
+              ${t('promises.sub', 'Select what your heart is experiencing. Draw a faithful promise from authentic canonical Scripture archives.')}
             </p>
           </div>
 
@@ -33,7 +44,7 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
           ${!drawnPromise ? `
             <div class="grid grid-cols-2 gap-3">
               ${PROMISE_CATEGORIES.map((cat) => `
-                <button class="promise-cat-btn flex flex-col items-center justify-center text-center p-3 rounded-xl border border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] hover:border-amber-600 hover:scale-[1.02] transition shadow-sm" data-id="${cat.id}">
+                <button class="promise-cat-btn flex flex-col items-center justify-center text-center p-3 rounded-xl border border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] hover:border-amber-600 hover:scale-[1.02] transition shadow-sm cursor-pointer" data-id="${cat.id}">
                   <span class="text-amber-600 mb-1.5">${icons[cat.icon] ? icons[cat.icon]('w-5 h-5') : icons.heart('w-5 h-5')}</span>
                   <span class="text-xs font-bold font-display text-[var(--text-primary)]">${cat.label}</span>
                   <span class="text-[10px] text-stone-400 font-sans mt-0.5">${cat.description}</span>
@@ -49,10 +60,13 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
                   <span class="text-xs font-display font-bold text-amber-600 uppercase tracking-widest notranslate" translate="no">
                     ${drawnPromise.ref.split('/')[0].trim()}
                   </span>
+                  <span class="block text-[10px] font-mono text-[var(--text-muted)] mt-0.5 notranslate" translate="no">
+                    📖 ${displayVersion}
+                  </span>
                 </div>
 
                 <blockquote class="text-base sm:text-lg font-serif italic text-[var(--text-primary)] text-center leading-relaxed mb-4 notranslate" translate="no">
-                  «${drawnPromise.verse || drawnPromise.verse_en}»
+                  «${displayVerse}»
                 </blockquote>
 
                 <!-- Reflection -->
@@ -70,13 +84,13 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
 
               <!-- Action Buttons -->
               <div class="flex items-center justify-between gap-3 pt-2">
-                <button id="btn-draw-again" class="flex-1 py-2 px-3 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-medium text-[var(--text-secondary)] hover:border-amber-600 transition">
-                  ← Draw Another Promise
+                <button id="btn-draw-again" class="flex-1 py-2 px-3 rounded-xl border border-stone-300 dark:border-stone-700 text-xs font-medium text-[var(--text-secondary)] hover:border-amber-600 transition cursor-pointer">
+                  ← ${t('promises.drawAnother', 'Draw Another Promise')}
                 </button>
 
-                <button id="btn-share-drawn-card" class="flex-1 py-2 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5">
+                <button id="btn-share-drawn-card" class="flex-1 py-2 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer">
                   ${icons.share('w-4 h-4')}
-                  <span>Share Card</span>
+                  <span>${t('promises.shareCard', 'Share Card')}</span>
                 </button>
               </div>
 
@@ -112,7 +126,7 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
       shareCardBtn.addEventListener('click', () => {
         onClose();
         const cleanRef = drawnPromise.ref.split('/')[0].trim();
-        onOpenShareCard(drawnPromise.verse_en, cleanRef);
+        onOpenShareCard(displayVerse, `${cleanRef} • ${displayVersion}`);
       });
     }
   }
