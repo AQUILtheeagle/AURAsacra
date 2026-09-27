@@ -1,5 +1,5 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
-const CACHE_NAME = 'aura-sacra-v1.1.0';
+const CACHE_NAME = 'aura-sacra-v1.2.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -17,6 +17,14 @@ const ASSETS_TO_CACHE = [
   './js/github-feedback.js',
   './js/icons.js',
   './data/bible-kjv.json',
+  './data/bible-cei.json',
+  './data/bible-sinodala.json',
+  './data/bible-vulgata.json',
+  './data/bible-reina.json',
+  './data/bible-segond.json',
+  './data/bible-luther.json',
+  './data/bible-almeida.json',
+  './data/bible-synodal.json',
   './js/data/scriptures.js',
   './js/data/scripture-archives.js',
   './js/data/penance.js',

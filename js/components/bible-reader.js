@@ -1,5 +1,5 @@
 // Sacred Scripture Bible Reader for Aura Sacra
-import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded } from '../data/scriptures.js';
+import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded, getLoadedBibleBooks } from '../data/scriptures.js';
 import { SUPPORTED_BIBLES, getDefaultBibleForLanguage, getArchivalChapter } from '../data/scripture-archives.js';
 import { icons } from '../icons.js';
 import { getHighlights, saveHighlight, removeHighlight } from '../db.js';
@@ -12,9 +12,10 @@ let activeHighlights = [];
 const selectedVerses = new Set();
 let lastLoadedLang = null;
 
-onLanguageChange((newLang) => {
+onLanguageChange(async (newLang) => {
   activeBibleVersion = getDefaultBibleForLanguage(newLang);
   lastLoadedLang = newLang;
+  await ensureFullBibleLoaded(activeBibleVersion);
 });
 
 // Normalize legacy IDs
@@ -45,7 +46,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
     activeBibleVersion = getDefaultBibleForLanguage(currentLang);
     lastLoadedLang = currentLang;
   }
-  await ensureFullBibleLoaded();
+  await ensureFullBibleLoaded(activeBibleVersion);
 
   const norm = normalizeBookAndChapter(activeBookId, activeChapter);
   activeBookId = norm.book;
@@ -82,17 +83,16 @@ export async function renderBibleReader(container, onOpenShareCard) {
   }
 
   async function updateView() {
-    const currentBookIndex = BIBLE_BOOKS.findIndex((b) => b.id === activeBookId);
-    const book = currentBookIndex >= 0 ? BIBLE_BOOKS[currentBookIndex] : BIBLE_BOOKS[2]; // Default to Matthew
+    await ensureFullBibleLoaded(activeBibleVersion);
+
+    const activeBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+    const currentBookIndex = activeBooks.findIndex((b) => b.id === activeBookId);
+    const book = currentBookIndex >= 0 ? activeBooks[currentBookIndex] : (BIBLE_BOOKS.find((b) => b.id === activeBookId) || BIBLE_BOOKS[2]);
     activeBookId = book.id;
 
     const availableChapters = book.chapters || [1];
     if (!availableChapters.includes(activeChapter)) {
       activeChapter = availableChapters[0];
-    }
-
-    if (!SCRIPTURE_TEXTS[activeBookId]?.[activeChapter]) {
-      await ensureFullBibleLoaded();
     }
 
     const currentBibleObj = SUPPORTED_BIBLES.find((b) => b.id === activeBibleVersion) || SUPPORTED_BIBLES[0];
@@ -107,7 +107,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
 
     const hasPrevChapter = currentChapterIndex > 0 || currentBookIndex > 0;
     const hasNextChapter =
-      currentChapterIndex < availableChapters.length - 1 || currentBookIndex < BIBLE_BOOKS.length - 1;
+      currentChapterIndex < availableChapters.length - 1 || currentBookIndex < activeBooks.length - 1;
 
     // Group books by testament for clean categorized dropdown
     const testamentOld = t('reader.testamentOld', 'Old Testament');
@@ -136,9 +136,11 @@ export async function renderBibleReader(container, onOpenShareCard) {
       'Apostolic & Epistles': testamentEpistles,
       'Apocalypse': testamentApocalypse
     };
-    BIBLE_BOOKS.forEach((b) => {
+    activeBooks.forEach((b) => {
       const groupKey = testamentMap[b.testament] || testamentGospels;
-      testamentGroups[groupKey].push(b);
+      if (testamentGroups[groupKey]) {
+        testamentGroups[groupKey].push(b);
+      }
     });
 
     const isPsalm = book.id === 'ps';
@@ -390,6 +392,8 @@ export async function renderBibleReader(container, onOpenShareCard) {
     if (versionSelect) {
       versionSelect.addEventListener('change', async (e) => {
         activeBibleVersion = e.target.value;
+        await ensureFullBibleLoaded(activeBibleVersion);
+        selectedVerses.clear();
         await updateView();
       });
     }
@@ -397,7 +401,8 @@ export async function renderBibleReader(container, onOpenShareCard) {
     // 1. Book Selector Change
     container.querySelector('#select-bible-book').addEventListener('change', async (e) => {
       activeBookId = e.target.value;
-      const targetBook = BIBLE_BOOKS.find((b) => b.id === activeBookId);
+      const activeBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+      const targetBook = activeBooks.find((b) => b.id === activeBookId) || BIBLE_BOOKS.find((b) => b.id === activeBookId);
       activeChapter = targetBook?.chapters?.[0] || 1;
       selectedVerses.clear();
       activeHighlights = await getHighlights(activeBookId, activeChapter);

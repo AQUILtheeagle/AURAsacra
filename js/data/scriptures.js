@@ -3736,39 +3736,71 @@ export let SCRIPTURE_TEXTS = {
   },
 };
 
+export const LOADED_BIBLES = {
+  kjv: SCRIPTURE_TEXTS
+};
+export const LOADED_BIBLE_BOOKS = {};
+const BIBLE_LOAD_PROMISES = {};
 let bibleLoaded = false;
-let bibleLoadPromise = null;
 
-// Asynchronously loads all 80 canonical and deuterocanonical books (36,819 verses) from data/bible-kjv.json
-export async function ensureFullBibleLoaded() {
-  if (bibleLoaded) return SCRIPTURE_TEXTS;
-  if (bibleLoadPromise) return bibleLoadPromise;
+// Asynchronously loads all books from data/bible-${versionId}.json
+export async function ensureFullBibleLoaded(versionId = 'kjv') {
+  const version = versionId || 'kjv';
 
-  bibleLoadPromise = (async () => {
+  // If already loaded in memory, return it
+  if (LOADED_BIBLES[version] && (version !== 'kjv' || bibleLoaded)) {
+    return LOADED_BIBLES[version];
+  }
+
+  // If already loading, return existing promise
+  if (BIBLE_LOAD_PROMISES[version]) {
+    return BIBLE_LOAD_PROMISES[version];
+  }
+
+  BIBLE_LOAD_PROMISES[version] = (async () => {
     try {
-      const response = await fetch('./data/bible-kjv.json');
+      const response = await fetch(`./data/bible-${version}.json`);
       if (response.ok) {
         const fullData = await response.json();
         if (fullData.texts) {
-          for (const bookId in fullData.texts) {
-            if (!SCRIPTURE_TEXTS[bookId]) {
-              SCRIPTURE_TEXTS[bookId] = {};
-            }
-            Object.assign(SCRIPTURE_TEXTS[bookId], fullData.texts[bookId]);
+          LOADED_BIBLES[version] = fullData.texts;
+          if (fullData.books) {
+            LOADED_BIBLE_BOOKS[version] = fullData.books;
           }
-          bibleLoaded = true;
+          if (version === 'kjv') {
+            for (const bookId in fullData.texts) {
+              if (!SCRIPTURE_TEXTS[bookId]) {
+                SCRIPTURE_TEXTS[bookId] = {};
+              }
+              Object.assign(SCRIPTURE_TEXTS[bookId], fullData.texts[bookId]);
+            }
+            bibleLoaded = true;
+          }
         }
       }
     } catch (e) {
-      console.warn('Could not load full bible-kjv.json:', e);
+      console.warn(`Could not load full bible-${version}.json:`, e);
     }
-    return SCRIPTURE_TEXTS;
+    return LOADED_BIBLES[version] || SCRIPTURE_TEXTS;
   })();
 
-  return bibleLoadPromise;
+  return BIBLE_LOAD_PROMISES[version];
+}
+
+export function getChapterFromBible(versionId, bookId, chapterNum) {
+  const v = versionId || 'kjv';
+  if (LOADED_BIBLES[v]?.[bookId]?.[chapterNum]) {
+    return LOADED_BIBLES[v][bookId][chapterNum];
+  }
+  return SCRIPTURE_TEXTS[bookId]?.[chapterNum] || null;
+}
+
+export function getLoadedBibleBooks(versionId) {
+  const v = versionId || 'kjv';
+  return LOADED_BIBLE_BOOKS[v] || BIBLE_BOOKS;
 }
 
 // Automatically start background loading on initial script execution
 if (typeof window !== 'undefined') {
-  ensureFullBibleLoaded();
+  ensureFullBibleLoaded('kjv');
 }

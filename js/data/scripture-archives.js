@@ -1,14 +1,15 @@
 // Authentic Historic Holy Scripture Archives for Aura Sacra
 // Direct Ecclesiastical Texts: Never machine-translated. Sourced from authentic historical editions.
+import { getChapterFromBible } from './scriptures.js';
 
 export const SUPPORTED_BIBLES = [
   { id: 'kjv', name: 'King James Version (1611)', lang: 'en', code: 'EN', flag: '🇬🇧', label: 'KJV' },
-  { id: 'cei', name: 'Conferenza Episcopale Italiana (2008)', lang: 'it', code: 'IT', flag: '🇮🇹', label: 'CEI' },
-  { id: 'sinodala', name: 'Biblia Sinodală Ortodoxă Română', lang: 'ro', code: 'RO', flag: '🇷🇴', label: 'BOR' },
+  { id: 'cei', name: 'Bibbia Italiana (Conferenza Episcopale / Riveduta)', lang: 'it', code: 'IT', flag: '🇮🇹', label: 'CEI' },
+  { id: 'sinodala', name: 'Biblia Română (Sinodală / Cornilescu)', lang: 'ro', code: 'RO', flag: '🇷🇴', label: 'BOR' },
   { id: 'vulgata', name: 'Biblia Sacra Vulgata Clementina', lang: 'la', code: 'LA', flag: '🇻🇦', label: 'VUL' },
-  { id: 'reina', name: 'Reina-Valera (1909)', lang: 'es', code: 'ES', flag: '🇪🇸', label: 'RVR' },
+  { id: 'reina', name: 'Reina-Valera (1960)', lang: 'es', code: 'ES', flag: '🇪🇸', label: 'RVR' },
   { id: 'segond', name: 'Louis Segond (1910)', lang: 'fr', code: 'FR', flag: '🇫🇷', label: 'LSG' },
-  { id: 'luther', name: 'Lutherbibel (1912)', lang: 'de', code: 'DE', flag: '🇩🇪', label: 'LUT' },
+  { id: 'luther', name: 'Deutsche Bibel (Schlachter 1951)', lang: 'de', code: 'DE', flag: '🇩🇪', label: 'DE' },
   { id: 'almeida', name: 'Almeida Revista e Corrigida', lang: 'pt', code: 'PT', flag: '🇵🇹', label: 'ARC' },
   { id: 'synodal', name: 'Синодальный перевод (1876)', lang: 'ru', code: 'RU', flag: '🇷🇺', label: 'SYN' }
 ];
@@ -463,5 +464,10 @@ export const SCRIPTURE_ARCHIVES = {
 
 export function getArchivalChapter(versionId, bookId, chapterNum) {
   if (!versionId || versionId === 'kjv') return null;
-  return SCRIPTURE_ARCHIVES[versionId]?.[bookId]?.[chapterNum] || null;
+  // 1. High-fidelity liturgical passage override (e.g. CEI, BOR liturgical wording)
+  if (SCRIPTURE_ARCHIVES[versionId]?.[bookId]?.[chapterNum]) {
+    return SCRIPTURE_ARCHIVES[versionId][bookId][chapterNum];
+  }
+  // 2. Full official historic canonical archive from data/bible-${versionId}.json
+  return getChapterFromBible(versionId, bookId, chapterNum);
 }
