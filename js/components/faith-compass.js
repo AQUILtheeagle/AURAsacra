@@ -85,8 +85,8 @@ export function renderFaithCompassModal(container, onClose, onAskJesus) {
     }
 
     container.innerHTML = `
-      <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-        <div class="bg-[var(--bg-card)] border-2 border-stone-300 dark:border-stone-800 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative parchment-border space-y-6">
+      <div class="fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-black/70 backdrop-blur-sm p-3 sm:p-6 flex min-h-full items-center justify-center animate-fade-in">
+        <div class="bg-[var(--bg-card)] border-2 border-stone-300 dark:border-stone-800 rounded-2xl sm:rounded-3xl max-w-2xl w-full max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto overscroll-contain shadow-2xl p-5 sm:p-6 relative parchment-border space-y-6 my-auto custom-scrollbar">
           
           <!-- Close Button -->
           <button id="btn-close-compass" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1 cursor-pointer">

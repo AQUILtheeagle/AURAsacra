@@ -111,8 +111,8 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
   ];
 
   container.innerHTML = `
-    <div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div class="bg-[var(--bg-card)] border-t-2 sm:border-2 border-amber-600/60 rounded-t-3xl sm:rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-5 sm:p-7 shadow-2xl relative space-y-6 parchment-border">
+    <div class="fixed inset-0 z-50 overflow-y-auto overscroll-contain flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+      <div class="bg-[var(--bg-card)] border-t-2 sm:border-2 border-amber-600/60 rounded-t-3xl sm:rounded-3xl max-w-2xl w-full max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto overscroll-contain p-5 sm:p-7 pb-safe shadow-2xl relative space-y-6 parchment-border custom-scrollbar">
         
         <!-- Header -->
         <div class="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3">

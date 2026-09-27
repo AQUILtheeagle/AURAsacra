@@ -202,8 +202,8 @@ export function renderEveningExamModal(container, onClose) {
     const loc = EVENING_EXAM_LOCALIZATIONS[lang] || EVENING_EXAM_LOCALIZATIONS.en;
 
     container.innerHTML = `
-      <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-        <div class="bg-[var(--bg-card)] border-2 border-amber-600/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative space-y-6 parchment-border">
+      <div class="fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-black/80 backdrop-blur-md p-3 sm:p-6 flex min-h-full items-center justify-center animate-fade-in">
+        <div class="bg-[var(--bg-card)] border-2 border-amber-600/40 rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92dvh] sm:max-h-[88vh] overflow-y-auto overscroll-contain p-5 sm:p-8 shadow-2xl relative space-y-5 sm:space-y-6 parchment-border my-auto custom-scrollbar">
           
           <!-- Close Button -->
           <button id="btn-close-exam" class="absolute top-4 right-4 text-stone-400 hover:text-white p-1 cursor-pointer">

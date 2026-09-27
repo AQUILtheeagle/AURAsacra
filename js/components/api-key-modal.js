@@ -11,8 +11,8 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
 
   function render() {
     container.innerHTML = `
-      <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in" id="api-key-modal-overlay">
-        <div class="bg-[var(--bg-card)] border-2 border-stone-300 dark:border-stone-800 rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl relative space-y-5 parchment-border">
+      <div class="fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-black/75 backdrop-blur-sm p-3 sm:p-6 flex min-h-full items-center justify-center animate-fade-in" id="api-key-modal-overlay">
+        <div class="bg-[var(--bg-card)] border-2 border-stone-300 dark:border-stone-800 rounded-2xl sm:rounded-3xl max-w-md w-full max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto overscroll-contain p-5 sm:p-6 shadow-2xl relative space-y-5 parchment-border my-auto custom-scrollbar">
           
           <!-- Close Button -->
           <button id="btn-close-api-key-modal" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1.5 rounded-lg transition cursor-pointer" title="${t('common.close', 'Close')}">

@@ -73,8 +73,8 @@ export function renderSOSTemptationModal(container, onClose) {
     const heartPrayer = SOS_HEART_PRAYERS[lang] || SOS_HEART_PRAYERS.en;
 
     container.innerHTML = `
-      <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fade-in">
-        <div class="bg-[var(--bg-card)] border-2 border-red-600 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl relative space-y-6">
+      <div class="fixed inset-0 z-50 overflow-y-auto overscroll-contain bg-black/75 backdrop-blur-md p-3 sm:p-6 flex min-h-full items-center justify-center animate-fade-in">
+        <div class="bg-[var(--bg-card)] border-2 border-red-600 rounded-2xl sm:rounded-3xl max-w-md w-full max-h-[92dvh] sm:max-h-[88vh] overflow-y-auto overscroll-contain p-5 sm:p-6 text-center shadow-2xl relative space-y-5 sm:space-y-6 my-auto custom-scrollbar">
           
           <!-- Close Button -->
           <button id="btn-close-sos" class="absolute top-4 right-4 text-stone-400 hover:text-white p-1 cursor-pointer">

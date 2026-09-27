@@ -466,5 +466,32 @@ html.is-standalone-app #bottom-nav-container {
   .lg\:hidden { display: none; }
 }
 
+/* Custom scrollbar for modals & scrollable areas */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(180, 140, 60, 0.35);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(180, 140, 60, 0.65);
+}
+
+/* Safe area padding for mobile devices */
+.pb-safe {
+  padding-bottom: max(0.875rem, env(safe-area-inset-bottom, 0.875rem));
+}
+
+@supports not (max-height: 100dvh) {
+  .max-h-\[90dvh\], .max-h-\[92dvh\] {
+    max-height: 90vh !important;
+  }
+}
+
 
 
