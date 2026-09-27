@@ -14,11 +14,11 @@ export function renderSidebar(container, activeTab, onNavigate, onOpenModal) {
 
   const toolsItems = [
     { id: 'promises', label: t('nav.promises', 'The Jar of Promises'), icon: 'jar', isModal: true },
-    { id: 'doubts', label: 'Faith Compass', icon: 'compass', isModal: true },
-    { id: 'evening', label: 'Night Examination & Protection', icon: 'moon', isModal: true },
+    { id: 'doubts', label: t('tools.compassTitle', 'Faith Compass'), icon: 'compass', isModal: true },
+    { id: 'evening', label: t('tools.eveningTitle', 'Night Examination & Protection'), icon: 'moon', isModal: true },
     { id: 'schedule', label: t('nav.schedule', 'School & Work Planner'), icon: 'clock', isModal: true },
-    { id: 'share', label: 'Parchment Card Maker', icon: 'share', isModal: true },
-    { id: 'feedback', label: 'GitHub Feedback Issue', icon: 'github', isModal: true }
+    { id: 'share', label: t('tools.shareTitle', 'Parchment Card Maker'), icon: 'share', isModal: true },
+    { id: 'feedback', label: t('feedbackModal.title', 'Anonymous Community Feedback'), icon: 'github', isModal: true }
   ];
 
   container.innerHTML = `

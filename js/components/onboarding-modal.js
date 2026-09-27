@@ -1,6 +1,7 @@
 // First-run Ecumenical Onboarding Modal for Aura Sacra
 import { setSetting } from '../db.js';
 import { icons } from '../icons.js';
+import { t } from '../i18n.js';
 
 export function renderOnboardingModal(container, onComplete) {
   let selectedConfession = 'ecumenical';
@@ -14,43 +15,43 @@ export function renderOnboardingModal(container, onComplete) {
 
         <div>
           <h2 class="text-2xl sm:text-3xl font-bold font-display text-[var(--accent-vermilion)]">
-            Welcome to Aura Sacra
+            ${t('onboarding.welcome', 'Welcome to Aura Sacra')}
           </h2>
           <p class="text-xs sm:text-sm text-[var(--text-muted)] italic font-serif mt-1">
-            Universal, ecumenical, and 100% offline Christian spiritual platform.
+            ${t('onboarding.subtitle', 'Universal, ecumenical, and 100% offline Christian spiritual platform.')}
           </p>
         </div>
 
         <!-- Question 1: Confession / Tradition -->
         <div class="space-y-3 text-left">
           <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
-            1. What is your faith tradition or spiritual path?
+            ${t('onboarding.traditionQuestion', '1. What is your faith tradition or spiritual path?')}
           </label>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <button type="button" class="conf-btn p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="catholic">
-              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">Catholic (Roman)</span>
-              <span class="text-[10px] text-stone-400">Full biblical canon, saints, and Roman liturgy</span>
+              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">${t('onboarding.traditions.catholicTitle', 'Catholic (Roman)')}</span>
+              <span class="text-[10px] text-stone-400">${t('onboarding.traditions.catholicDesc', 'Full biblical canon, saints, and Roman liturgy')}</span>
             </button>
 
             <button type="button" class="conf-btn p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="traditional">
-              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">Traditional Catholic (1962)</span>
-              <span class="text-[10px] text-stone-400">Latin Mass, Ember Days, Vigils & traditional fasts</span>
+              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">${t('onboarding.traditions.traditionalTitle', 'Traditional Catholic (1962)')}</span>
+              <span class="text-[10px] text-stone-400">${t('onboarding.traditions.traditionalDesc', 'Latin Mass, Ember Days, Vigils & traditional fasts')}</span>
             </button>
 
             <button type="button" class="conf-btn p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="orthodox">
-              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">Orthodox (Eastern)</span>
-              <span class="text-[10px] text-stone-400">Eastern tradition, Church Fathers, and Hesychasm</span>
+              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">${t('onboarding.traditions.orthodoxTitle', 'Orthodox (Eastern)')}</span>
+              <span class="text-[10px] text-stone-400">${t('onboarding.traditions.orthodoxDesc', 'Eastern tradition, Church Fathers, and Hesychasm')}</span>
             </button>
 
             <button type="button" class="conf-btn p-3 rounded-xl border-2 border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] text-left hover:border-amber-600/50 transition cursor-pointer" data-conf="protestant">
-              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">Protestant / Evangelical</span>
-              <span class="text-[10px] text-stone-400">66-book canon and evangelical faith</span>
+              <span class="conf-title block text-xs font-bold font-display text-[var(--text-primary)]">${t('onboarding.traditions.protestantTitle', 'Protestant / Evangelical')}</span>
+              <span class="text-[10px] text-stone-400">${t('onboarding.traditions.protestantDesc', '66-book canon and evangelical faith')}</span>
             </button>
 
             <button type="button" class="conf-btn p-3 rounded-xl border-2 border-amber-600 bg-amber-600/10 text-left transition cursor-pointer shadow-sm" data-conf="ecumenical">
-              <span class="conf-title block text-xs font-bold font-display text-amber-500">Ecumenical / Seeker</span>
-              <span class="text-[10px] text-stone-400">Shared sacred ground for all seekers of God</span>
+              <span class="conf-title block text-xs font-bold font-display text-amber-500">${t('onboarding.traditions.ecumenicalTitle', 'Ecumenical / Seeker')}</span>
+              <span class="text-[10px] text-stone-400">${t('onboarding.traditions.ecumenicalDesc', 'Shared sacred ground for all seekers of God')}</span>
             </button>
           </div>
         </div>
@@ -58,14 +59,14 @@ export function renderOnboardingModal(container, onComplete) {
         <!-- Question 2: Name -->
         <div class="space-y-2 text-left">
           <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans">
-            2. How would you like to be addressed in spiritual dialogue?
+            ${t('onboarding.nameQuestion', '2. How would you like to be addressed in spiritual dialogue?')}
           </label>
-          <input type="text" id="ob-username" placeholder="Your name (or leave blank for 'Disciple')" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:border-amber-600" />
+          <input type="text" id="ob-username" placeholder="${t('onboarding.namePlaceholder', 'Your name (or leave blank for Disciple)')}" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:border-amber-600" />
         </div>
 
         <!-- Complete Button -->
         <button id="btn-complete-onboarding" class="w-full py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-lg transition transform active:scale-95 cursor-pointer">
-          Begin Journey with Aura Sacra →
+          ${t('onboarding.beginJourney', 'Begin Journey with Aura Sacra →')}
         </button>
 
       </div>
@@ -100,7 +101,7 @@ export function renderOnboardingModal(container, onComplete) {
       if (e) e.preventDefault();
       completeBtn.disabled = true;
       completeBtn.style.opacity = '0.7';
-      completeBtn.innerHTML = 'Loading...';
+      completeBtn.innerHTML = t('onboarding.loading', 'Saving...');
 
       try {
         const nameInput = (container.querySelector('#ob-username')?.value || '').trim();

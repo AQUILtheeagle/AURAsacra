@@ -1,6 +1,7 @@
 // School & Work Schedule & Breaks Planner Modal for Aura Sacra
 import { getSchedule, saveSchedule, getCurrentScheduleStatus } from '../schedule.js';
 import { icons } from '../icons.js';
+import { t } from '../i18n.js';
 
 export function renderScheduleModal(container, onClose) {
   const current = getSchedule();
@@ -21,10 +22,10 @@ export function renderScheduleModal(container, onClose) {
             ${icons.clock('w-6 h-6')}
           </div>
           <h2 class="text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-            School & Work Routine Planner
+            ${t('scheduleModal.title', 'School & Work Routine Planner')}
           </h2>
           <p class="text-xs text-[var(--text-muted)] italic font-serif">
-            Set your school or work routine and quiet hours so you stay undisturbed.
+            ${t('scheduleModal.subtitle', 'Set your school or work routine and quiet hours so you stay undisturbed.')}
           </p>
         </div>
 
@@ -36,7 +37,7 @@ export function renderScheduleModal(container, onClose) {
         }">
           <span class="p-2 rounded-full bg-black/20">${icons.clock('w-5 h-5')}</span>
           <div>
-            <p class="text-xs font-bold uppercase tracking-wider font-sans">Current Status: ${status.label}</p>
+            <p class="text-xs font-bold uppercase tracking-wider font-sans">${t('scheduleModal.currentStatus', 'Current Status:')} ${status.label}</p>
             <p class="text-xs opacity-90">${status.description}</p>
           </div>
         </div>
@@ -47,23 +48,23 @@ export function renderScheduleModal(container, onClose) {
           <!-- Enable Toggle -->
           <div class="flex items-center justify-between p-3 bg-[var(--bg-secondary)] rounded-xl border border-stone-200 dark:border-stone-800">
             <div>
-              <span class="text-sm font-bold text-[var(--text-primary)]">Enable School / Work Routine</span>
-              <p class="text-xs text-[var(--text-muted)]">Silences prayer chimes during class or work hours</p>
+              <span class="text-sm font-bold text-[var(--text-primary)]">${t('scheduleModal.enableRoutine', 'Enable School / Work Routine')}</span>
+              <p class="text-xs text-[var(--text-muted)]">${t('scheduleModal.enableRoutineDesc', 'Silences prayer chimes during class or work hours')}</p>
             </div>
             <input type="checkbox" id="sched-enabled" ${current.enabled ? 'checked' : ''} class="w-5 h-5 accent-amber-600 cursor-pointer">
           </div>
 
           <!-- Busy Hours (Start - End) -->
           <div class="p-4 bg-[var(--bg-secondary)] rounded-xl border border-stone-200 dark:border-stone-800 space-y-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-red-500 font-sans block">1. Busy Hours (Classes or Work Shift):</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-red-500 font-sans block">${t('scheduleModal.busyHoursTitle', '1. Busy Hours (Classes or Work Shift):')}</span>
             
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] text-[var(--text-muted)] mb-1">Start (e.g. 08:30):</label>
+                <label class="block text-[11px] text-[var(--text-muted)] mb-1">${t('scheduleModal.busyStart', 'Start (e.g. 08:30):')}</label>
                 <input type="time" id="sched-busy-start" value="${current.busyStart}" class="w-full bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-lg px-3 py-1.5 text-sm font-mono text-[var(--text-primary)]" />
               </div>
               <div>
-                <label class="block text-[11px] text-[var(--text-muted)] mb-1">End (e.g. 16:30):</label>
+                <label class="block text-[11px] text-[var(--text-muted)] mb-1">${t('scheduleModal.busyEnd', 'End (e.g. 16:30):')}</label>
                 <input type="time" id="sched-busy-end" value="${current.busyEnd}" class="w-full bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-lg px-3 py-1.5 text-sm font-mono text-[var(--text-primary)]" />
               </div>
             </div>
@@ -71,15 +72,15 @@ export function renderScheduleModal(container, onClose) {
 
           <!-- Break Times (Start - End) -->
           <div class="p-4 bg-[var(--bg-secondary)] rounded-xl border border-stone-200 dark:border-stone-800 space-y-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-500 font-sans block">2. Break Times (Recess or Lunch):</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-500 font-sans block">${t('scheduleModal.breakTimesTitle', '2. Break Times (Recess or Lunch):')}</span>
             
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] text-[var(--text-muted)] mb-1">Break Start (e.g. 12:30):</label>
+                <label class="block text-[11px] text-[var(--text-muted)] mb-1">${t('scheduleModal.breakStart', 'Break Start (e.g. 12:30):')}</label>
                 <input type="time" id="sched-break-start" value="${current.breakStart}" class="w-full bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-lg px-3 py-1.5 text-sm font-mono text-[var(--text-primary)]" />
               </div>
               <div>
-                <label class="block text-[11px] text-[var(--text-muted)] mb-1">Break End (e.g. 13:30):</label>
+                <label class="block text-[11px] text-[var(--text-muted)] mb-1">${t('scheduleModal.breakEnd', 'Break End (e.g. 13:30):')}</label>
                 <input type="time" id="sched-break-end" value="${current.breakEnd}" class="w-full bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-lg px-3 py-1.5 text-sm font-mono text-[var(--text-primary)]" />
               </div>
             </div>
@@ -88,18 +89,18 @@ export function renderScheduleModal(container, onClose) {
           <!-- Micro-pause duration -->
           <div class="p-3 bg-[var(--bg-secondary)] rounded-xl border border-stone-200 dark:border-stone-800 flex items-center justify-between">
             <div>
-              <span class="text-xs font-bold text-[var(--text-primary)]">Micro-Pause Contemplation Duration:</span>
-              <p class="text-[11px] text-[var(--text-muted)]">Short quiet reflection between classes or meetings</p>
+              <span class="text-xs font-bold text-[var(--text-primary)]">${t('scheduleModal.microPauseTitle', 'Micro-Pause Contemplation Duration:')}</span>
+              <p class="text-[11px] text-[var(--text-muted)]">${t('scheduleModal.microPauseDesc', 'Short quiet reflection between classes or meetings')}</p>
             </div>
             <select id="sched-micro" class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-lg px-2 py-1 text-xs font-sans text-[var(--text-primary)]">
-              <option value="30" ${current.microPauseDuration === 30 ? 'selected' : ''}>30 Seconds</option>
-              <option value="60" ${current.microPauseDuration === 60 ? 'selected' : ''}>60 Seconds</option>
+              <option value="30" ${current.microPauseDuration === 30 ? 'selected' : ''}>${t('scheduleModal.sec30', '30 Seconds')}</option>
+              <option value="60" ${current.microPauseDuration === 60 ? 'selected' : ''}>${t('scheduleModal.sec60', '60 Seconds')}</option>
             </select>
           </div>
 
           <!-- Submit Button -->
           <button type="submit" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition transform active:scale-95">
-            Save Routine Schedule
+            ${t('scheduleModal.save', 'Save Routine Schedule')}
           </button>
 
         </form>

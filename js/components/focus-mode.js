@@ -1,6 +1,7 @@
 // Focus & Work with God Component (Candle + Procedural Rain + Pomodoro)
 import { icons } from '../icons.js';
 import { toggleRain, isPlayingRain, setRainVolume, getRainVolume, playMonasticBell } from '../audio-engine.js';
+import { t } from '../i18n.js';
 
 let focusSeconds = 25 * 60;
 let initialSeconds = 25 * 60;
@@ -24,12 +25,12 @@ export function renderFocusMode(container) {
           <div class="flex items-center justify-center gap-2 mb-2">
             <span class="text-amber-500">${icons.flame('w-5 h-5')}</span>
             <h2 class="text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              Focus with God • Peaceful Study & Work
+              ${t('focus.title', 'Focus with God • Peaceful Study & Work')}
             </h2>
           </div>
           
           <p class="text-sm italic text-[var(--text-muted)] max-w-md mx-auto mb-6">
-            For students tackling exams and workers needing calm focus. Let the gentle rainfall wash away distractions as Christ's light illuminates your task.
+            ${t('focus.subtitle', "For students tackling exams and workers needing calm focus. Let the gentle rainfall wash away distractions as Christ's light illuminates your task.")}
           </p>
 
           <!-- Center Animated Candle -->
@@ -46,22 +47,22 @@ export function renderFocusMode(container) {
 
             <!-- Timer Action Buttons -->
             <div class="flex items-center justify-center gap-3">
-              <button id="btn-main-timer-toggle" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition transform active:scale-95 flex items-center gap-2">
+              <button id="btn-main-timer-toggle" class="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition transform active:scale-95 flex items-center gap-2 cursor-pointer">
                 ${isFocusRunning ? icons.pause('w-4 h-4') : icons.play('w-4 h-4')}
-                <span>${isFocusRunning ? 'Pause' : 'Start Focus Session'}</span>
+                <span>${isFocusRunning ? t('focus.pause', 'Pause') : t('focus.start', 'Start Focus Session')}</span>
               </button>
 
-              <button id="btn-main-timer-reset" class="px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)]">
-                Reset
+              <button id="btn-main-timer-reset" class="px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer">
+                ${t('focus.reset', 'Reset')}
               </button>
             </div>
 
             <!-- Preset Buttons -->
             <div class="flex items-center gap-2 mt-4 text-xs font-sans">
-              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600" data-min="15">15 min</button>
-              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 font-bold text-amber-600" data-min="25">25 min (Pomodoro)</button>
-              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600" data-min="45">45 min</button>
-              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600" data-min="60">60 min</button>
+              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 cursor-pointer" data-min="15">15 min</button>
+              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 font-bold text-amber-600 cursor-pointer" data-min="25">25 min (Pomodoro)</button>
+              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 cursor-pointer" data-min="45">45 min</button>
+              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 cursor-pointer" data-min="60">60 min</button>
             </div>
           </div>
 
@@ -69,7 +70,7 @@ export function renderFocusMode(container) {
           <div class="mt-6 pt-6 border-t border-stone-200 dark:border-stone-800 bg-[var(--bg-secondary)] rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
             
             <div class="flex items-center gap-3">
-              <button id="btn-toggle-rain-audio" class="p-3 rounded-full border transition ${
+              <button id="btn-toggle-rain-audio" class="p-3 rounded-full border transition cursor-pointer ${
                 rainActive 
                   ? 'border-blue-500 bg-blue-500 text-white shadow-md' 
                   : 'border-stone-300 dark:border-stone-700 bg-[var(--bg-card)] text-stone-400 hover:text-blue-500'
@@ -77,13 +78,13 @@ export function renderFocusMode(container) {
                 ${icons.rain('w-6 h-6')}
               </button>
               <div class="text-left">
-                <p class="text-sm font-bold text-[var(--text-primary)] font-display">Offline Gentle Rainfall</p>
-                <p class="text-xs text-[var(--text-muted)]">Pure procedural sound • zero downloads</p>
+                <p class="text-sm font-bold text-[var(--text-primary)] font-display">${t('focus.rainTitle', 'Offline Gentle Rainfall')}</p>
+                <p class="text-xs text-[var(--text-muted)]">${t('focus.rainSubtitle', 'Pure procedural sound • zero downloads')}</p>
               </div>
             </div>
 
             <div class="flex items-center gap-3 w-full sm:w-auto">
-              <span class="text-xs font-sans text-stone-400">Volume:</span>
+              <span class="text-xs font-sans text-stone-400">${t('focus.volume', 'Volume:')}</span>
               <input type="range" id="rain-vol-slider" min="0" max="1" step="0.05" value="${volume}" class="flex-1 sm:w-32 accent-blue-500 cursor-pointer">
             </div>
 
@@ -93,7 +94,7 @@ export function renderFocusMode(container) {
           <div class="mt-4 pt-3 border-t border-stone-200 dark:border-stone-800">
             <button id="btn-detach-focus-popup" class="w-full py-2.5 px-4 rounded-xl border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 text-xs font-bold font-sans flex items-center justify-center gap-2 transition cursor-pointer">
               ${icons.share('w-4 h-4')}
-              <span>Detach Candle to Standalone Pop-up Window</span>
+              <span>${t('focus.detach', 'Detach Candle to Standalone Pop-up Window')}</span>
             </button>
           </div>
 
@@ -117,7 +118,7 @@ export function renderFocusMode(container) {
             clearInterval(focusInterval);
             isFocusRunning = false;
             playMonasticBell();
-            alert('Aura Sacra: Session finished! Praise God for your labor and rest a moment.');
+            alert(t('focus.sessionFinished', 'Aura Sacra: Session finished! Praise God for your labor and rest a moment.'));
             focusSeconds = initialSeconds;
             updateView();
           }

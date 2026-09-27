@@ -23,7 +23,7 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
         <div class="flex items-center gap-2 sm:gap-2.5">
           
           <!-- 1. SOS Peace & Temptation Shield Button -->
-          <button id="btn-nav-sos" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-700 hover:bg-red-800 text-white font-medium text-xs sm:text-sm shadow-md transition transform active:scale-95 border border-red-600 cursor-pointer" title="Emergency Peace & Temptation Shield">
+          <button id="btn-nav-sos" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-700 hover:bg-red-800 text-white font-medium text-xs sm:text-sm shadow-md transition transform active:scale-95 border border-red-600 cursor-pointer" title="${t('tools.sosDesc', 'Emergency Peace & Temptation Shield')}">
             ${icons.shield('w-4 h-4')}
             <span class="hidden sm:inline font-sans">${t('nav.sos', 'SOS Peace')}</span>
             <span class="sm:hidden font-sans">SOS</span>

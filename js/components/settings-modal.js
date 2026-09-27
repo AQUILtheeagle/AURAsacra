@@ -50,7 +50,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                 <span>🌐</span>
                 <span>${t('settings.language', 'Interface Language:')}</span>
               </label>
-              <span class="text-[10px] text-[var(--text-muted)] font-mono">9 Native Languages</span>
+              <span class="text-[10px] text-[var(--text-muted)] font-mono">${SUPPORTED_LANGUAGES.length} ${t('settings.nativeLangs', 'Native Languages')}</span>
             </div>
             <select id="setting-language" class="w-full bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2.5 text-sm text-[var(--text-primary)] font-semibold cursor-pointer">
               ${SUPPORTED_LANGUAGES.map(lang => `
@@ -67,11 +67,11 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
               ${t('settings.confession', 'Christian Faith Tradition:')}
             </label>
             <select id="setting-confession" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm text-[var(--text-primary)] cursor-pointer">
-              <option value="catholic" ${currentConfession === 'catholic' ? 'selected' : ''}>Catholic (Roman)</option>
-              <option value="traditional" ${currentConfession === 'traditional' ? 'selected' : ''}>Traditional Catholic (Latin 1962 / Ember Days)</option>
-              <option value="orthodox" ${currentConfession === 'orthodox' ? 'selected' : ''}>Orthodox (Eastern Byzantine)</option>
-              <option value="protestant" ${currentConfession === 'protestant' ? 'selected' : ''}>Protestant / Evangelical</option>
-              <option value="ecumenical" ${currentConfession === 'ecumenical' ? 'selected' : ''}>Ecumenical / Spiritual Seeker</option>
+              <option value="catholic" ${currentConfession === 'catholic' ? 'selected' : ''}>${t('settings.confessions.catholic', 'Catholic (Roman)')}</option>
+              <option value="traditional" ${currentConfession === 'traditional' ? 'selected' : ''}>${t('settings.confessions.traditional', 'Traditional Catholic (Latin 1962 / Ember Days)')}</option>
+              <option value="orthodox" ${currentConfession === 'orthodox' ? 'selected' : ''}>${t('settings.confessions.orthodox', 'Orthodox (Eastern Byzantine)')}</option>
+              <option value="protestant" ${currentConfession === 'protestant' ? 'selected' : ''}>${t('settings.confessions.protestant', 'Protestant / Evangelical')}</option>
+              <option value="ecumenical" ${currentConfession === 'ecumenical' ? 'selected' : ''}>${t('settings.confessions.ecumenical', 'Ecumenical / Spiritual Seeker')}</option>
             </select>
           </div>
 
@@ -105,7 +105,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
               </label>
               <span class="text-[11px] font-sans font-semibold text-amber-600 flex items-center gap-1">
                 ${icons.sparkles('w-3.5 h-3.5')}
-                <span>AI Reasoning</span>
+                <span>${t('settings.aiReasoning', 'AI Reasoning')}</span>
               </span>
             </div>
 
@@ -122,14 +122,14 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                   type="password" 
                   id="setting-gemini-key" 
                   value="${currentGeminiKey}" 
-                  placeholder="Paste your Gemini API key (starts with AIza...)" 
+                  placeholder="${t('apiKeyModal.enterKey', 'Paste your Gemini API key (starts with AIza...)')}" 
                   class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl pl-3 pr-20 py-2.5 text-xs font-mono text-[var(--text-primary)] focus:outline-none focus:border-amber-600"
                 />
                 <div class="absolute right-2 flex items-center gap-1">
-                  <button type="button" id="btn-toggle-setting-key-vis" class="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition cursor-pointer" title="Show/Hide Key">
+                  <button type="button" id="btn-toggle-setting-key-vis" class="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition cursor-pointer" title="${t('apiKeyModal.showKey', 'Show Key')}">
                     ${icons.eye('w-4 h-4')}
                   </button>
-                  <button type="button" id="btn-clear-setting-key" class="p-1 text-stone-400 hover:text-red-500 transition cursor-pointer" title="Clear key">
+                  <button type="button" id="btn-clear-setting-key" class="p-1 text-stone-400 hover:text-red-500 transition cursor-pointer" title="${t('apiKeyModal.clearInput', 'Clear key')}">
                     ${icons.close('w-3.5 h-3.5')}
                   </button>
                 </div>
@@ -157,7 +157,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                   `).join('')}
                 </select>
                 <p class="text-[10px] text-stone-400 italic">
-                  Recommended: <strong>Gemini 3.7 Flash</strong> for maximum stability and instant responses without 503 errors.
+                  ${t('settings.modelRecommended', 'Recommended: <strong>Gemini 3.7 Flash</strong> for maximum stability and instant responses without 503 errors.')}
                 </p>
               </div>
             </div>
@@ -166,7 +166,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
             <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700/60 rounded-xl p-3 text-xs space-y-1">
               <div class="font-bold text-[var(--text-primary)] flex items-center gap-1.5">
                 ${icons.shield('w-3.5 h-3.5 text-amber-600')}
-                <span>Offline Dialogue Policy:</span>
+                <span>${t('settings.offlinePolicy', 'Offline Dialogue Policy:')}</span>
               </div>
               <p class="text-[10px] text-[var(--text-muted)] leading-relaxed">
                 ${t('settings.offlineNotice')}
@@ -218,6 +218,7 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
         isKeyHidden = !isKeyHidden;
         keyInput.type = isKeyHidden ? 'password' : 'text';
         toggleKeyBtn.innerHTML = isKeyHidden ? icons.eye('w-4 h-4') : icons.eyeOff('w-4 h-4');
+        toggleKeyBtn.title = isKeyHidden ? t('apiKeyModal.showKey', 'Show Key') : t('apiKeyModal.hideKey', 'Hide Key');
       });
     }
 
@@ -237,19 +238,19 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
       testKeyBtn.addEventListener('click', async () => {
         const val = keyInput.value.trim().replace(/^["']|["']$/g, '');
         if (!val) {
-          feedbackSpan.textContent = 'Please paste a key first.';
+          feedbackSpan.textContent = t('settings.pasteKeyFirst', 'Please paste a key first.');
           feedbackSpan.className = 'text-[11px] font-sans text-red-500 font-semibold';
           return;
         }
         testKeyBtn.disabled = true;
-        feedbackSpan.textContent = 'Testing Gemini API Key...';
+        feedbackSpan.textContent = t('settings.testingKey', 'Testing Gemini API Key...');
         feedbackSpan.className = 'text-[11px] font-sans text-amber-600';
         try {
           await testGeminiApiKey(val);
-          feedbackSpan.textContent = '✓ Valid API Key!';
+          feedbackSpan.textContent = t('settings.validKey', '✓ Valid API Key!');
           feedbackSpan.className = 'text-[11px] font-sans text-emerald-600 font-bold';
         } catch (err) {
-          feedbackSpan.textContent = `✕ Error: ${err.message}`;
+          feedbackSpan.textContent = `✕ ${t('apiKeyModal.verificationFailed', 'Error')}: ${err.message}`;
           feedbackSpan.className = 'text-[11px] font-sans text-red-500 font-semibold';
         } finally {
           testKeyBtn.disabled = false;
@@ -305,11 +306,11 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
       reader.onload = async (event) => {
         try {
           await importAllData(event.target.result);
-          alert('Backup restored successfully!');
+          alert(t('settings.backupRestored', 'Backup restored successfully!'));
           onClose();
           onRefresh();
         } catch (err) {
-          alert('Invalid backup file format.');
+          alert(t('settings.invalidBackup', 'Invalid backup file format.'));
         }
       };
       reader.readAsText(file);

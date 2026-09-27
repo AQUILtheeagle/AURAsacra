@@ -161,7 +161,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
             <span class="text-amber-600">${icons.book('w-5 h-5')}</span>
             
             <!-- Bible Version / Translation Archive Picker -->
-            <select id="select-bible-version" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no" title="Historic Canonical Scripture Archive">
+            <select id="select-bible-version" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no" title="${t('reader.canonicalArchive', 'Historic Canonical Scripture Archive')}">
               ${SUPPORTED_BIBLES.map((b) => `
                 <option value="${b.id}" ${b.id === activeBibleVersion ? 'selected' : ''}>
                   ${b.flag} ${b.label} — ${b.name}
@@ -304,11 +304,11 @@ export async function renderBibleReader(container, onOpenShareCard) {
                     <div class="flex items-center gap-1.5">
                       <span class="text-[10px] uppercase tracking-wider font-sans text-[var(--text-muted)] hidden sm:inline">${t('reader.highlight', 'Highlight:')}</span>
                       
-                      <button class="hl-btn w-4 h-4 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition" data-color="gold" title="Gold: Grace & Promises"></button>
-                      <button class="hl-btn w-4 h-4 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition" data-color="blue" title="Blue: Peace & Faith"></button>
-                      <button class="hl-btn w-4 h-4 rounded-full bg-red-400 border border-red-600 hover:scale-125 transition" data-color="red" title="Red: Sacrifice & Love"></button>
-                      <button class="hl-btn w-4 h-4 rounded-full bg-emerald-400 border border-emerald-600 hover:scale-125 transition" data-color="green" title="Green: Spiritual Growth"></button>
-                      <button class="hl-btn w-4 h-4 rounded-full bg-purple-400 border border-purple-600 hover:scale-125 transition" data-color="purple" title="Purple: Wisdom & Repentance"></button>
+                      <button class="hl-btn w-4 h-4 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition" data-color="gold" title="${t('reader.palette.goldDesc', 'Gold: Grace & Promises')}"></button>
+                      <button class="hl-btn w-4 h-4 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition" data-color="blue" title="${t('reader.palette.blueDesc', 'Blue: Peace & Faith')}"></button>
+                      <button class="hl-btn w-4 h-4 rounded-full bg-red-400 border border-red-600 hover:scale-125 transition" data-color="red" title="${t('reader.palette.redDesc', 'Red: Sacrifice & Love')}"></button>
+                      <button class="hl-btn w-4 h-4 rounded-full bg-emerald-400 border border-emerald-600 hover:scale-125 transition" data-color="green" title="${t('reader.palette.greenDesc', 'Green: Spiritual Growth')}"></button>
+                      <button class="hl-btn w-4 h-4 rounded-full bg-purple-400 border border-purple-600 hover:scale-125 transition" data-color="purple" title="${t('reader.palette.purpleDesc', 'Purple: Wisdom & Repentance')}"></button>
                       
                       ${
                         highlight
@@ -349,7 +349,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
               <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
                 ${selectedCount} ${selectedCount === 1 ? t('reader.verse', 'Verse') : t('reader.verses', 'Verses')}
               </span>
-              <button id="btn-click-range-ref" class="text-xs sm:text-sm font-display font-bold text-[var(--accent-vermilion)] hover:text-amber-600 cursor-pointer flex items-center gap-1" title="Click to share ${currentCitationRange}">
+              <button id="btn-click-range-ref" class="text-xs sm:text-sm font-display font-bold text-[var(--accent-vermilion)] hover:text-amber-600 cursor-pointer flex items-center gap-1" title="${t('reader.clickToShare', 'Click to share')} ${currentCitationRange}">
                 <span>${currentCitationRange}</span>
               </button>
             </div>
@@ -359,12 +359,12 @@ export async function renderBibleReader(container, onOpenShareCard) {
               <!-- Batch Highlights -->
               <div class="hidden sm:flex items-center gap-1 border-r border-stone-300 dark:border-stone-700 pr-2">
                 <span class="text-[10px] text-[var(--text-muted)] mr-1">${t('reader.highlightAll', 'Highlight all:')}</span>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition cursor-pointer" data-color="gold" title="Gold"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition cursor-pointer" data-color="blue" title="Blue"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-red-400 border border-red-600 hover:scale-125 transition cursor-pointer" data-color="red" title="Red"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-emerald-400 border border-emerald-600 hover:scale-125 transition cursor-pointer" data-color="green" title="Green"></button>
-                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-purple-400 border border-purple-600 hover:scale-125 transition cursor-pointer" data-color="purple" title="Purple"></button>
-                <button type="button" class="batch-remove-hl-btn text-[10px] text-red-500 hover:underline ml-1 font-sans cursor-pointer" title="Remove highlights from selected verses">${t('reader.clear', 'Clear')}</button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition cursor-pointer" data-color="gold" title="${t('reader.palette.gold', 'Gold')}"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition cursor-pointer" data-color="blue" title="${t('reader.palette.blue', 'Blue')}"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-red-400 border border-red-600 hover:scale-125 transition cursor-pointer" data-color="red" title="${t('reader.palette.red', 'Red')}"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-emerald-400 border border-emerald-600 hover:scale-125 transition cursor-pointer" data-color="green" title="${t('reader.palette.green', 'Green')}"></button>
+                <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-purple-400 border border-purple-600 hover:scale-125 transition cursor-pointer" data-color="purple" title="${t('reader.palette.purple', 'Purple')}"></button>
+                <button type="button" class="batch-remove-hl-btn text-[10px] text-red-500 hover:underline ml-1 font-sans cursor-pointer" title="${t('reader.removeHlTooltip', 'Remove highlights from selected verses')}">${t('reader.clear', 'Clear')}</button>
               </div>
 
               <!-- Share Selection as Card -->
@@ -374,7 +374,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
               </button>
 
               <!-- Clear Selection -->
-              <button id="btn-clear-selection" class="text-xs text-[var(--text-muted)] hover:text-red-500 px-2 py-1 transition" title="Clear selection">
+              <button id="btn-clear-selection" class="text-xs text-[var(--text-muted)] hover:text-red-500 px-2 py-1 transition" title="${t('reader.clearSelection', 'Clear selection')}">
                 ${icons.close('w-4 h-4')}
               </button>
             </div>

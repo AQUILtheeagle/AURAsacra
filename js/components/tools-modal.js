@@ -130,7 +130,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
             </div>
           </div>
 
-          <button id="btn-close-tools" class="p-2 text-stone-400 hover:text-[var(--text-primary)] rounded-lg transition cursor-pointer" title="Close">
+          <button id="btn-close-tools" class="p-2 text-stone-400 hover:text-[var(--text-primary)] rounded-lg transition cursor-pointer" title="${t('common.close', 'Close')}">
             ${icons.close('w-5 h-5')}
           </button>
         </div>

@@ -2,6 +2,7 @@
 // Each entry without a newline is an independent prayer container. Auto-scrolls to the bottom on opening.
 import { icons } from '../icons.js';
 import { getJournalEntries, addJournalEntry, deleteJournalEntry, markJournalEntrySentToJesus } from '../db.js';
+import { t } from '../i18n.js';
 
 export async function renderPrayerJournal(container, onBringPrayerToJesus) {
   let entries = await getJournalEntries();
@@ -18,16 +19,16 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
             </div>
             <div>
               <h2 class="text-base sm:text-lg font-bold font-display text-[var(--accent-vermilion)]">
-                Prayer Journal
+                ${t('journal.title', 'Prayer Journal')}
               </h2>
               <p class="text-xs text-[var(--text-muted)] italic font-serif">
-                Every line is a prayer to God. Tap "Bring to Jesus" to dialogue in the AI chat.
+                ${t('journal.subtitle', 'Every line is a prayer to God. Tap "Bring to Jesus" to dialogue in the AI chat.')}
               </p>
             </div>
           </div>
 
           <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 text-[var(--text-muted)]">
-            ${entries.length} Prayers
+            ${entries.length} ${t('journal.prayersCount', 'Prayers')}
           </span>
         </div>
 
@@ -39,10 +40,10 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
                 ${icons.plus('w-6 h-6')}
               </div>
               <h3 class="text-base font-bold font-display text-[var(--accent-vermilion)]">
-                The First Page of Your Soul
+                ${t('journal.emptyTitle', 'The First Page of Your Soul')}
               </h3>
               <p class="text-sm italic text-[var(--text-muted)] leading-relaxed">
-                Write a prayer, a sigh, a petition, or a word of gratitude in the box below. It will be preserved privately offline.
+                ${t('journal.emptyDesc', 'Write a prayer, a sigh, a petition, or a word of gratitude in the box below. It will be preserved privately offline.')}
               </p>
             </div>
           ` : entries.map((entry) => {
@@ -63,13 +64,13 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
 
                   <div class="flex items-center gap-2">
                     <!-- Bring to Jesus Button -->
-                    <button class="btn-bring-jesus flex items-center gap-1.5 px-3 py-1 rounded-lg border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 text-xs font-medium transition" data-text="${encodeURIComponent(entry.text)}" data-id="${entry.id}">
+                    <button class="btn-bring-jesus flex items-center gap-1.5 px-3 py-1 rounded-lg border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 text-xs font-medium transition cursor-pointer" data-text="${encodeURIComponent(entry.text)}" data-id="${entry.id}">
                       ${icons.message('w-3.5 h-3.5')}
-                      <span>Bring to Jesus</span>
+                      <span>${t('journal.bringToJesus', 'Bring to Jesus')}</span>
                     </button>
 
                     <!-- Delete Button -->
-                    <button class="btn-delete-entry text-stone-400 hover:text-red-500 p-1 transition" data-id="${entry.id}" title="Delete prayer">
+                    <button class="btn-delete-entry text-stone-400 hover:text-red-500 p-1 transition cursor-pointer" data-id="${entry.id}" title="${t('journal.deleteTooltip', 'Delete prayer')}">
                       ${icons.trash('w-3.5 h-3.5')}
                     </button>
                   </div>
@@ -86,16 +87,16 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
             <input 
               type="text" 
               id="journal-input" 
-              placeholder="Write a prayer to God (press Enter to place in your journal)..." 
+              placeholder="${t('journal.inputPlaceholder', 'Write a prayer to God (press Enter to place in your journal)...')}" 
               class="flex-1 bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-xl px-4 py-2.5 text-sm sm:text-base text-[var(--text-primary)] focus:outline-none focus:border-amber-600"
               autocomplete="off"
             />
             <button 
               type="submit" 
-              class="p-2.5 sm:px-4 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium shadow-md transition transform active:scale-95 flex items-center gap-1.5"
+              class="p-2.5 sm:px-4 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium shadow-md transition transform active:scale-95 flex items-center gap-1.5 cursor-pointer"
             >
               ${icons.plus('w-4 h-4')}
-              <span class="hidden sm:inline text-xs font-sans uppercase tracking-wider font-bold">Send to God</span>
+              <span class="hidden sm:inline text-xs font-sans uppercase tracking-wider font-bold">${t('journal.sendToGod', 'Send to God')}</span>
             </button>
           </form>
         </div>
@@ -140,7 +141,7 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
     container.querySelectorAll('.btn-delete-entry').forEach((btn) => {
       btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-id');
-        if (confirm('Delete this prayer?')) {
+        if (confirm(t('journal.deleteConfirm', 'Delete this prayer?'))) {
           await deleteJournalEntry(id);
           entries = await getJournalEntries();
           renderView();

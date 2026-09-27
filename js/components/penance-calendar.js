@@ -185,13 +185,13 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
           <!-- Month & Year Navigation Toolbar -->
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 dark:border-stone-800 pb-3">
             <div class="flex items-center gap-2">
-              <button id="btn-prev-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition cursor-pointer" title="Previous Month">
+              <button id="btn-prev-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition cursor-pointer" title="${t('penance.prevMonth', 'Previous Month')}">
                 ${icons.chevronLeft('w-4 h-4')}
               </button>
               <h3 class="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)] min-w-[160px] text-center">
                 ${monthName} ${curYear}
               </h3>
-              <button id="btn-next-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition cursor-pointer" title="Next Month">
+              <button id="btn-next-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition cursor-pointer" title="${t('penance.nextMonth', 'Next Month')}">
                 ${icons.chevronRight('w-4 h-4')}
               </button>
             </div>
@@ -575,13 +575,13 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
           <div class="bg-amber-500/5 border border-amber-600/30 rounded-xl p-4 space-y-2">
             <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
               <span>${icons.shield('w-4 h-4')}</span>
-              <span>Lawful Canonical Exemptions (Who is Excused?)</span>
+              <span>${t('penance.exemptionsTitle', 'Lawful Canonical Exemptions (Who is Excused?)')}</span>
             </div>
             <p class="text-xs text-[var(--text-secondary)]">
-              The Church exercises maternal care. God desires mercy and not sacrifice (Mt 9:13). Those who are sick, pregnant, elderly, or engaged in exhausting manual labor are excused from food fasts and invited to practice prayer and acts of charity.
+              ${t('penance.exemptionsDesc', 'The Church exercises maternal care. God desires mercy and not sacrifice (Mt 9:13). Those who are sick, pregnant, elderly, or engaged in exhausting manual labor are excused from food fasts and invited to practice prayer and acts of charity.')}
             </p>
             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[var(--text-primary)] list-disc list-inside">
-              ${PENANCE_GUIDE.exemptions.map((ex) => `<li>${ex}</li>`).join('')}
+              ${(Array.isArray(t('penance.exemptionsList')) ? t('penance.exemptionsList') : PENANCE_GUIDE.exemptions).map((ex) => `<li>${ex}</li>`).join('')}
             </ul>
           </div>
 

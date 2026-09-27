@@ -82,7 +82,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
         `;
       } else {
         statusBadge = `
-          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-red-500/10 text-red-600 border border-red-500/30 hover:bg-red-500/20 transition cursor-pointer" title="Offline AI disabled. Click for options">
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-red-500/10 text-red-600 border border-red-500/30 hover:bg-red-500/20 transition cursor-pointer" title="${t('jesus.offlineRequired', 'Offline • Local Gemini Required')}">
             ${icons.lock('w-3.5 h-3.5')}
             <span>${t('jesus.offlineRequired', 'Offline • Local Gemini Required')}</span>
           </button>
@@ -101,7 +101,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
         const curModelId = getSelectedGeminiModel();
         const curModel = AVAILABLE_MODELS.find(m => m.id === curModelId) || AVAILABLE_MODELS[0];
         statusBadge = `
-          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/10 text-amber-600 border border-amber-500/30 hover:bg-amber-500/20 transition cursor-pointer" title="Click to view or change Gemini API Key & Model">
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/10 text-amber-600 border border-amber-500/30 hover:bg-amber-500/20 transition cursor-pointer" title="${t('jesus.changeKey', 'Change Key')}">
             ${icons.sparkles('w-3.5 h-3.5')}
             <span>${curModel.name} ${t('jesus.active', 'Active')}</span>
             <span class="text-[9px] opacity-75 underline ml-0.5">${t('jesus.change', 'change')}</span>
@@ -109,7 +109,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
         `;
       } else {
         statusBadge = `
-          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/25 transition cursor-pointer animate-pulse" title="Click to connect Gemini API Key">
+          <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/25 transition cursor-pointer animate-pulse" title="${t('jesus.connectApiKey', 'Connect API Key')}">
             ${icons.key('w-3.5 h-3.5')}
             <span>${t('jesus.connectApiKey', 'Connect API Key')}</span>
           </button>
@@ -143,13 +143,13 @@ export async function renderJesusChat(container, initialQuestion = null) {
             <div class="sm:hidden">${statusBadge}</div>
 
             <!-- API Key Button (always visible so user can change/verify anytime) -->
-            <button id="btn-chat-api-key" class="text-xs px-2.5 py-1.5 rounded-xl border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 dark:text-amber-400 font-semibold transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Configure or Change Google Gemini API Key">
+            <button id="btn-chat-api-key" class="text-xs px-2.5 py-1.5 rounded-xl border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 dark:text-amber-400 font-semibold transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="${t('jesus.configureKeyBtn', 'Configure & Verify Gemini API Key')}">
               ${icons.key('w-3.5 h-3.5')}
               <span class="font-sans">${aiStatus.hasApiKey ? t('jesus.changeKey', 'Change Key') : t('jesus.apiKey', 'API Key')}</span>
             </button>
 
             <!-- Clear History Button -->
-            <button id="btn-clear-chat" class="text-xs text-stone-400 hover:text-red-500 p-1.5 rounded-lg border border-stone-300/40 dark:border-stone-700/40 hover:border-red-500/40 transition flex items-center gap-1 cursor-pointer" title="Clear Chat History">
+            <button id="btn-clear-chat" class="text-xs text-stone-400 hover:text-red-500 p-1.5 rounded-lg border border-stone-300/40 dark:border-stone-700/40 hover:border-red-500/40 transition flex items-center gap-1 cursor-pointer" title="${t('jesus.reset', 'Reset')}">
               ${icons.trash('w-3.5 h-3.5')}
               <span class="hidden sm:inline">${t('jesus.reset', 'Reset')}</span>
             </button>
@@ -433,12 +433,12 @@ export async function renderJesusChat(container, initialQuestion = null) {
             downloadProgress = pct;
             renderView();
           });
-          alert('Gemini Nano downloaded successfully! Offline dialogue is now active.');
+          alert(t('jesus.downloadSuccess', 'Gemini Nano downloaded successfully! Offline dialogue is now active.'));
           downloadProgress = null;
           await refreshStatus();
           renderView();
         } catch (err) {
-          alert(`Download failed: ${err.message}`);
+          alert(`${t('jesus.downloadFailed', 'Download failed')}: ${err.message}`);
           downloadProgress = null;
           renderView();
         }
@@ -452,11 +452,11 @@ export async function renderJesusChat(container, initialQuestion = null) {
         const keyInput = container.querySelector('#chat-quick-api-key');
         const key = keyInput.value.trim();
         if (!key || key.length < 10) {
-          alert('Please enter a valid Google Gemini API Key (starts with AIza...).');
+          alert(t('apiKeyModal.pasteBeforeSaving', 'Please enter a valid Google Gemini API Key.'));
           return;
         }
         await setGeminiApiKey(key);
-        alert('Gemini API Key connected successfully!');
+        alert(t('apiKeyModal.verifiedSuccess', 'Gemini API Key connected successfully!'));
         await refreshStatus();
         renderView();
       });

@@ -1,6 +1,7 @@
 // Dedicated Google Gemini API Key Modal for Aura Sacra
 import { icons } from '../icons.js';
 import { getGeminiApiKey, setGeminiApiKey, removeGeminiApiKey, testGeminiApiKey } from '../ai-engine.js';
+import { t } from '../i18n.js';
 
 export async function renderApiKeyModal(container, onSaved, onClose) {
   const currentKey = await getGeminiApiKey();
@@ -14,7 +15,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
         <div class="bg-[var(--bg-card)] border-2 border-stone-300 dark:border-stone-800 rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl relative space-y-5 parchment-border">
           
           <!-- Close Button -->
-          <button id="btn-close-api-key-modal" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1.5 rounded-lg transition" title="Close">
+          <button id="btn-close-api-key-modal" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1.5 rounded-lg transition cursor-pointer" title="${t('common.close', 'Close')}">
             ${icons.close('w-5 h-5')}
           </button>
 
@@ -24,23 +25,23 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
               ${icons.key('w-6 h-6')}
             </div>
             <h2 class="text-xl sm:text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              Google Gemini API Key
+              ${t('apiKeyModal.title', 'Google Gemini API Key')}
             </h2>
             <p class="text-xs text-[var(--text-muted)] italic font-serif">
-              Answers real questions, doubts, and dilemmas with Google Gemini (3.7 & 3.8 Flash)
+              ${t('apiKeyModal.subtitle', 'Answers real questions, doubts, and dilemmas with Google Gemini (3.7 & 3.8 Flash)')}
             </p>
           </div>
 
           <!-- Current Key Status Badge -->
           <div class="p-3 rounded-xl border ${currentKey ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-800 dark:text-emerald-300' : 'bg-stone-500/10 border-stone-400/30 text-stone-600 dark:text-stone-400'} text-xs flex items-center justify-between">
-            <span class="font-medium">Active Status:</span>
+            <span class="font-medium">${t('apiKeyModal.activeStatus', 'Active Status:')}</span>
             <span class="font-semibold flex items-center gap-1.5">
               ${currentKey ? `
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span>Configured (${currentKey.slice(0, 6)}...${currentKey.slice(-4)})</span>
+                <span>${t('apiKeyModal.configured', 'Configured')} (${currentKey.slice(0, 6)}...${currentKey.slice(-4)})</span>
               ` : `
                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                <span>No Key Configured</span>
+                <span>${t('apiKeyModal.noKey', 'No Key Configured')}</span>
               `}
             </span>
           </div>
@@ -49,10 +50,10 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
           <div class="space-y-2">
             <div class="flex items-center justify-between text-xs">
               <label for="input-gemini-key-val" class="font-bold text-[var(--text-secondary)] font-sans uppercase tracking-wider text-[11px]">
-                Enter Gemini API Key:
+                ${t('apiKeyModal.enterKey', 'Enter Gemini API Key:')}
               </label>
               <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-amber-600 hover:underline flex items-center gap-1 font-medium">
-                <span>Get Free Key</span>
+                <span>${t('apiKeyModal.getFreeKey', 'Get Free Key')}</span>
                 <span class="text-[10px]">↗</span>
               </a>
             </div>
@@ -74,8 +75,8 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
                 <button 
                   type="button" 
                   id="btn-toggle-key-visibility" 
-                  class="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition" 
-                  title="${isPasswordHidden ? 'Show Key' : 'Hide Key'}"
+                  class="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 transition cursor-pointer" 
+                  title="${isPasswordHidden ? t('apiKeyModal.showKey', 'Show Key') : t('apiKeyModal.hideKey', 'Hide Key')}"
                 >
                   ${isPasswordHidden ? icons.eye('w-4 h-4') : icons.eyeOff('w-4 h-4')}
                 </button>
@@ -84,8 +85,8 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
                 <button 
                   type="button" 
                   id="btn-clear-key-input" 
-                  class="p-1 text-stone-400 hover:text-red-500 transition" 
-                  title="Clear input"
+                  class="p-1 text-stone-400 hover:text-red-500 transition cursor-pointer" 
+                  title="${t('apiKeyModal.clearInput', 'Clear input')}"
                 >
                   ${icons.close('w-3.5 h-3.5')}
                 </button>
@@ -97,12 +98,12 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
               <button 
                 type="button" 
                 id="btn-paste-clipboard" 
-                class="text-[11px] text-stone-500 hover:text-amber-600 flex items-center gap-1 font-sans transition"
+                class="text-[11px] text-stone-500 hover:text-amber-600 flex items-center gap-1 font-sans transition cursor-pointer"
               >
                 ${icons.copy('w-3 h-3')}
-                <span>Paste from Clipboard</span>
+                <span>${t('apiKeyModal.pasteClipboard', 'Paste from Clipboard')}</span>
               </button>
-              <span class="text-[10px] text-stone-400 italic">Saved securely on this device only</span>
+              <span class="text-[10px] text-stone-400 italic">${t('apiKeyModal.savedSecurely', 'Saved securely on this device only')}</span>
             </div>
           </div>
 
@@ -127,14 +128,14 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
               type="button" 
               id="btn-test-and-save-key" 
               ${isTesting ? 'disabled' : ''}
-              class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               ${isTesting ? `
                 <span class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                <span>Verifying with Google Gemini...</span>
+                <span>${t('apiKeyModal.verifying', 'Verifying with Google Gemini...')}</span>
               ` : `
                 ${icons.sparkles('w-4 h-4')}
-                <span>Verify & Save Key</span>
+                <span>${t('apiKeyModal.verifyAndSave', 'Verify & Save Key')}</span>
               `}
             </button>
 
@@ -144,17 +145,17 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
                 type="button" 
                 id="btn-remove-key" 
                 ${isTesting ? 'disabled' : ''}
-                class="w-full py-2 rounded-xl border border-red-400/40 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-semibold text-xs transition flex items-center justify-center gap-1.5"
+                class="w-full py-2 rounded-xl border border-red-400/40 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-semibold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 ${icons.trash('w-3.5 h-3.5')}
-                <span>Disconnect & Remove Key</span>
+                <span>${t('apiKeyModal.disconnectKey', 'Disconnect & Remove Key')}</span>
               </button>
             ` : ''}
           </div>
 
           <!-- Explanatory note -->
           <p class="text-[11px] text-stone-400 text-center leading-relaxed">
-            A free Gemini API key allows unlimited spiritual dialogue, answers questions about biblical meaning, and explains faith dilemmas.
+            ${t('apiKeyModal.note', 'A free Gemini API key allows unlimited spiritual dialogue, answers questions about biblical meaning, and explains faith dilemmas.')}
           </p>
 
         </div>
@@ -180,7 +181,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
         const input = container.querySelector('#input-gemini-key-val');
         if (input) input.type = isPasswordHidden ? 'password' : 'text';
         toggleVisBtn.innerHTML = isPasswordHidden ? icons.eye('w-4 h-4') : icons.eyeOff('w-4 h-4');
-        toggleVisBtn.title = isPasswordHidden ? 'Show Key' : 'Hide Key';
+        toggleVisBtn.title = isPasswordHidden ? t('apiKeyModal.showKey', 'Show Key') : t('apiKeyModal.hideKey', 'Hide Key');
       });
     }
 
@@ -210,7 +211,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
             }
           }
         } catch (e) {
-          alert('Could not access clipboard. Please paste manually into the input box.');
+          alert(t('apiKeyModal.clipboardError', 'Could not access clipboard. Please paste manually into the input box.'));
         }
       });
     }
@@ -225,7 +226,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
         if (!key) {
           statusMessage = {
             type: 'error',
-            text: 'Please paste a Gemini API Key before saving.'
+            text: t('apiKeyModal.pasteBeforeSaving', 'Please paste a Gemini API Key before saving.')
           };
           render();
           return;
@@ -234,7 +235,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
         isTesting = true;
         statusMessage = {
           type: 'loading',
-          text: 'Verifying API Key with Google Gemini...'
+          text: t('apiKeyModal.verifyingWithGemini', 'Verifying API Key with Google Gemini...')
         };
         render();
 
@@ -244,7 +245,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
           isTesting = false;
           statusMessage = {
             type: 'success',
-            text: '✓ Key verified successfully with Google Gemini! Saved.'
+            text: t('apiKeyModal.verifiedSuccess', '✓ Key verified successfully with Google Gemini! Saved.')
           };
           render();
 
@@ -256,7 +257,7 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
           isTesting = false;
           statusMessage = {
             type: 'error',
-            text: `Verification failed: ${err.message || 'Invalid API Key'}`
+            text: `${t('apiKeyModal.verificationFailed', 'Verification failed')}: ${err.message || t('apiKeyModal.invalidKey', 'Invalid API Key')}`
           };
           render();
         }
@@ -267,11 +268,11 @@ export async function renderApiKeyModal(container, onSaved, onClose) {
     const removeKeyBtn = container.querySelector('#btn-remove-key');
     if (removeKeyBtn) {
       removeKeyBtn.addEventListener('click', async () => {
-        if (confirm('Disconnect and remove this Google Gemini API Key from this device?')) {
+        if (confirm(t('apiKeyModal.confirmDisconnect', 'Disconnect and remove this Google Gemini API Key from this device?'))) {
           await removeGeminiApiKey();
           statusMessage = {
             type: 'success',
-            text: 'API Key disconnected and removed.'
+            text: t('apiKeyModal.disconnectedSuccess', 'API Key disconnected and removed.')
           };
           render();
           setTimeout(() => {

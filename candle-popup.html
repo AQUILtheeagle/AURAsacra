@@ -83,8 +83,8 @@
         <span style="font-family: var(--font-display); font-size: 13px; font-weight: bold; color: #c69214; letter-spacing: 1px;">AURA SACRA</span>
       </div>
       <div style="display: flex; align-items: center; gap: 6px;">
-        <button id="btn-popup-pip" style="font-size: 10px; font-family: var(--font-sans); color: #c69214; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.4); padding: 3px 8px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" title="Blocca sempre in primo piano su tutte le finestre e app (Picture-in-Picture)">
-          📌 <span id="pip-btn-text">Primo Piano (PiP)</span>
+        <button id="btn-popup-pip" style="font-size: 10px; font-family: var(--font-sans); color: #c69214; background: rgba(198, 146, 20, 0.15); border: 1px solid rgba(198, 146, 20, 0.4); padding: 3px 8px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" title="Pin always on top of all windows and apps (Picture-in-Picture)">
+          📌 <span id="pip-btn-text">Always-on-Top (PiP)</span>
         </button>
       </div>
     </div>
@@ -148,6 +148,9 @@
 
   <script type="module">
     import { toggleRain, isPlayingRain, setRainVolume, playMonasticBell } from './js/audio-engine.js';
+    import { initI18n, t } from './js/i18n.js';
+
+    await initI18n();
 
     let initialSeconds = 25 * 60;
     let seconds = 25 * 60;
@@ -163,12 +166,22 @@
     const rainBtn = document.getElementById('btn-popup-rain');
     const rainText = document.getElementById('rain-text');
     const rainVol = document.getElementById('popup-rain-vol');
+    const pipBtn = document.getElementById('btn-popup-pip');
+    const pipBtnText = document.getElementById('pip-btn-text');
+
+    // Apply i18n initial texts
+    if (pipBtn) pipBtn.title = t('focus.pipTooltip', 'Pin always on top of all windows and apps (Picture-in-Picture)');
+    if (pipBtnText) pipBtnText.textContent = t('focus.pipBtn', 'Always-on-Top (PiP)');
+    if (sub5Btn) sub5Btn.title = t('focus.sub5Tooltip', 'Subtract 5 minutes');
+    if (add5Btn) add5Btn.title = t('focus.add5Tooltip', 'Add 5 minutes');
+    if (resetBtn) resetBtn.textContent = t('focus.reset', 'Reset');
+    if (rainVol) rainVol.title = t('focus.volume', 'Volume:');
 
     function update() {
       const m = Math.floor(seconds / 60);
       const s = seconds % 60;
       display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      toggleBtn.textContent = running ? 'Pause' : 'Start';
+      toggleBtn.textContent = running ? t('focus.pause', 'Pause') : t('focus.start', 'Start');
       toggleBtn.style.background = running ? '#d97706' : '#b93b2c';
 
       presetBtns.forEach(btn => {
@@ -195,7 +208,7 @@
             clearInterval(timer);
             running = false;
             playMonasticBell();
-            alert('Aura Sacra: Sacred contemplation / focus session completed! Take a gentle rest.');
+            alert(t('focus.sessionFinished', 'Aura Sacra: Session finished! Praise God for your labor and rest a moment.'));
             seconds = initialSeconds;
             update();
           }
@@ -244,7 +257,7 @@
 
     rainBtn.addEventListener('click', () => {
       const active = toggleRain();
-      rainText.textContent = active ? 'Rain: Active' : 'Rain: Off';
+      rainText.textContent = active ? t('focus.rainActive', 'Rain: Active') : t('focus.rainOff', 'Rain: Off');
       rainBtn.style.borderColor = active ? '#3b82f6' : '#444';
       rainBtn.style.color = active ? '#60a5fa' : '#ddd';
     });
@@ -311,7 +324,7 @@
           }
         });
       } else {
-        pipBtn.title = 'In questo browser il PiP Always-on-top non è supportato. Usa Chrome o Edge.';
+        pipBtn.title = t('focus.pipNotSupported', 'In this browser Always-on-top PiP is not supported. Use Chrome or Edge.');
       }
     }
 

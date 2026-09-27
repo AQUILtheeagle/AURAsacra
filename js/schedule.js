@@ -1,5 +1,6 @@
 // Granular School & Work Schedule Planner with Break Times for Aura Sacra
 import { getSetting, setSetting } from './db.js';
+import { t } from './i18n.js';
 
 const DEFAULT_SCHEDULE = {
   enabled: true,
@@ -38,8 +39,8 @@ export function getCurrentScheduleStatus() {
   if (!activeSchedule.enabled) {
     return {
       status: 'free',
-      label: 'Free Hours',
-      description: 'Full monastic bells and prayer reminders active.',
+      label: t('scheduleModal.statusFreeLabel', 'Free Hours'),
+      description: t('scheduleModal.statusFreeDesc', 'Full monastic bells and prayer reminders active.'),
       canPrayNow: true,
       color: 'emerald'
     };
@@ -52,8 +53,8 @@ export function getCurrentScheduleStatus() {
   if (!activeSchedule.days.includes(day)) {
     return {
       status: 'free',
-      label: 'Weekend / Off Day',
-      description: 'No quiet hours active today. Feel free to pray anytime.',
+      label: t('scheduleModal.statusWeekendLabel', 'Weekend / Off Day'),
+      description: t('scheduleModal.statusWeekendDesc', 'No quiet hours active today. Feel free to pray anytime.'),
       canPrayNow: true,
       color: 'emerald'
     };
@@ -74,8 +75,8 @@ export function getCurrentScheduleStatus() {
   if (currentMinutes >= breakStartMin && currentMinutes < breakEndMin) {
     return {
       status: 'break',
-      label: 'Recess / Break Time',
-      description: `Ideal moment for a ${activeSchedule.microPauseDuration}s micro-prayer before returning to tasks.`,
+      label: t('scheduleModal.statusBreakLabel', 'Recess / Break Time'),
+      description: t('scheduleModal.statusBreakDesc', `Ideal moment for a ${activeSchedule.microPauseDuration}s micro-prayer before returning to tasks.`),
       canPrayNow: true,
       color: 'amber'
     };
@@ -85,8 +86,8 @@ export function getCurrentScheduleStatus() {
   if (currentMinutes >= busyStartMin && currentMinutes < busyEndMin) {
     return {
       status: 'busy',
-      label: `${activeSchedule.label} (Quiet Mode)`,
-      description: 'Audio chimes silenced so you stay focused without disruption.',
+      label: `${activeSchedule.label || ''} (${t('scheduleModal.statusBusyLabel', 'Quiet Mode')})`.trim(),
+      description: t('scheduleModal.statusBusyDesc', 'Audio chimes silenced so you stay focused without disruption.'),
       canPrayNow: false,
       color: 'red'
     };
@@ -95,8 +96,8 @@ export function getCurrentScheduleStatus() {
   // Outside busy hours
   return {
     status: 'free',
-    label: 'Evening / Free Time',
-    description: 'Personal study, scripture reading, and peaceful dialogue.',
+    label: t('scheduleModal.statusEveningLabel', 'Evening / Free Time'),
+    description: t('scheduleModal.statusEveningDesc', 'Personal study, scripture reading, and peaceful dialogue.'),
     canPrayNow: true,
     color: 'emerald'
   };

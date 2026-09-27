@@ -2,6 +2,7 @@
 import { generateParchmentCard, shareOrDownloadCard } from '../card-generator.js';
 import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded } from '../data/scriptures.js';
 import { icons } from '../icons.js';
+import { t } from '../i18n.js';
 
 export async function renderShareCardModal(container, initialQuote = '', initialCitation = '', onClose) {
   await ensureFullBibleLoaded();
@@ -64,22 +65,32 @@ export async function renderShareCardModal(container, initialQuote = '', initial
       testamentGroups[groupKey].push(b);
     });
 
+    const testamentI18nMap = {
+      'Old Testament': t('reader.testamentOld', 'Old Testament'),
+      'Deuterocanon & Apocrypha': t('reader.testamentDeut', 'Deuterocanon & Apocrypha'),
+      'Wisdom & Poetry': t('reader.testamentWisdom', 'Wisdom & Poetry'),
+      'Prophets': t('reader.testamentProphets', 'Prophets'),
+      'Gospels': t('reader.testamentGospels', 'Gospels'),
+      'Apostolic & Epistles': t('reader.testamentEpistles', 'Apostolic & Epistles'),
+      'Apocalypse': t('reader.testamentApocalypse', 'Apocalypse')
+    };
+
     container.innerHTML = `
       <div class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
         <div class="bg-[var(--bg-card)] border-2 border-amber-600/50 rounded-3xl max-w-lg w-full max-h-[94vh] overflow-y-auto p-5 sm:p-6 shadow-2xl relative space-y-4 parchment-border">
           
           <!-- Close Button -->
-          <button id="btn-close-share" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1 transition" title="Close">
+          <button id="btn-close-share" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1 transition cursor-pointer" title="${t('common.close', 'Close')}">
             ${icons.close('w-5 h-5')}
           </button>
 
           <!-- Header -->
           <div class="text-center pr-6">
             <h2 class="text-xl sm:text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              Share Sacred Scripture Card
+              ${t('shareCardModal.title', 'Share Sacred Scripture Card')}
             </h2>
             <p class="text-xs text-[var(--text-muted)] italic font-serif mt-0.5">
-              Select any verse by clicking its reference below • Ready to send
+              ${t('shareCardModal.subtitle', 'Select any verse by clicking its reference below • Ready to send')}
             </p>
           </div>
 
@@ -88,13 +99,13 @@ export async function renderShareCardModal(container, initialQuote = '', initial
             ${previewDataUrl ? `
               <img src="${previewDataUrl}" alt="Aura Sacra Card" class="w-full h-full object-cover">
             ` : `
-              <div class="text-xs text-amber-500 font-serif animate-pulse">Generating manuscript card...</div>
+              <div class="text-xs text-amber-500 font-serif animate-pulse">${t('shareCardModal.generating', 'Generating manuscript card...')}</div>
             `}
           </div>
 
           <!-- Selected Verse Badge (Read-Only, No Writing Required) -->
           <div class="bg-[var(--bg-secondary)] border border-amber-600/30 rounded-2xl p-3 text-center shadow-xs notranslate" translate="no">
-            <div class="text-[10px] uppercase font-sans font-bold tracking-widest text-amber-600 notranslate" translate="no">Selected Scripture to Send</div>
+            <div class="text-[10px] uppercase font-sans font-bold tracking-widest text-amber-600 notranslate" translate="no">${t('shareCardModal.selectedScripture', 'Selected Scripture to Send')}</div>
             <div class="text-base sm:text-lg font-display font-bold text-[var(--accent-vermilion)] mt-0.5 notranslate" translate="no">
               — ${citation} —
             </div>
@@ -107,10 +118,10 @@ export async function renderShareCardModal(container, initialQuote = '', initial
           <div class="space-y-2 pt-1 border-t border-stone-200 dark:border-stone-800">
             <div class="flex items-center justify-between">
               <span class="text-[11px] font-sans font-bold uppercase tracking-wider text-[var(--text-muted)]">
-                Select Verse to Send:
+                ${t('shareCardModal.selectVerse', 'Select Verse to Send:')}
               </span>
               <span class="text-[11px] font-serif italic text-amber-600">
-                Click any number to update card
+                ${t('shareCardModal.clickNumber', 'Click any number to update card')}
               </span>
             </div>
 
@@ -121,7 +132,7 @@ export async function renderShareCardModal(container, initialQuote = '', initial
                   .filter(([_, books]) => books.length > 0)
                   .map(
                     ([group, books]) => `
-                  <optgroup label="${group}">
+                  <optgroup label="${testamentI18nMap[group] || group}">
                     ${books
                       .map(
                         (b) => `
@@ -140,7 +151,7 @@ export async function renderShareCardModal(container, initialQuote = '', initial
               <select id="modal-select-chapter" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-1.5 text-xs font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer notranslate" translate="no">
                 ${availableChapters.map((ch) => `
                   <option value="${ch}" ${ch === activeChapter ? 'selected' : ''}>
-                    ${isPsalm ? 'Psalm' : 'Chapter'} ${ch}
+                    ${isPsalm ? t('reader.psalm', 'Psalm') : t('reader.chapter', 'Chapter')} ${ch}
                   </option>
                 `).join('')}
               </select>
@@ -152,11 +163,11 @@ export async function renderShareCardModal(container, initialQuote = '', initial
                 const verseRef = `${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${v.v}`;
                 const isCurrent = citation.includes(`${activeChapter}:${v.v}`) || (activeVerseNum === v.v && citation.includes(book.title));
                 return `
-                  <button class="modal-verse-chip px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1 notranslate" translate="no" ${
+                  <button class="modal-verse-chip px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-1 notranslate cursor-pointer ${
                     isCurrent
                       ? 'bg-amber-600 text-white shadow-sm ring-1 ring-amber-500'
                       : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:bg-amber-600/20 hover:text-amber-600 border border-stone-300/60 dark:border-stone-700/60'
-                  }" data-verse-num="${v.v}" title="Select ${verseRef}">
+                  }" data-verse-num="${v.v}" title="${t('reader.selectVerse', 'Select Verse')} • ${verseRef}">
                     <span>${activeChapter}:${v.v}</span>
                   </button>
                 `;
@@ -166,14 +177,14 @@ export async function renderShareCardModal(container, initialQuote = '', initial
 
           <!-- Share Actions -->
           <div class="pt-2 flex flex-col sm:flex-row items-center gap-2">
-            <button id="btn-native-share" class="w-full flex-1 py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 transform active:scale-95">
+            <button id="btn-native-share" class="w-full flex-1 py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 transform active:scale-95 cursor-pointer">
               ${icons.share('w-4 h-4')}
-              <span>Share on WhatsApp / Telegram</span>
+              <span>${t('shareCardModal.shareBtn', 'Share on WhatsApp / Telegram')}</span>
             </button>
 
-            <button id="btn-download-image" class="w-full sm:w-auto py-3 px-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs sm:text-sm font-medium text-[var(--text-secondary)] flex items-center justify-center gap-1.5 transition">
+            <button id="btn-download-image" class="w-full sm:w-auto py-3 px-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs sm:text-sm font-medium text-[var(--text-secondary)] flex items-center justify-center gap-1.5 transition cursor-pointer">
               ${icons.download('w-4 h-4')}
-              <span>Save Image</span>
+              <span>${t('shareCardModal.saveImage', 'Save Image')}</span>
             </button>
           </div>
 

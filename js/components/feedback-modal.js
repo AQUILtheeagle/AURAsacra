@@ -1,6 +1,7 @@
 // Anonymous User Feedback to GitHub Issues Modal for Aura Sacra
 import { formatAnonymousGitHubIssue } from '../github-feedback.js';
 import { icons } from '../icons.js';
+import { t } from '../i18n.js';
 
 export function renderFeedbackModal(container, onClose) {
   let issueResult = null;
@@ -21,10 +22,10 @@ export function renderFeedbackModal(container, onClose) {
               ${icons.github('w-6 h-6')}
             </div>
             <h2 class="text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              Anonymous Community Feedback
+              ${t('feedbackModal.title', 'Anonymous Community Feedback')}
             </h2>
             <p class="text-xs text-[var(--text-muted)] italic font-serif">
-              Algorithm that anonymizes community feedback and formats GitHub Issues.
+              ${t('feedbackModal.subtitle', 'Algorithm that anonymizes community feedback and formats GitHub Issues.')}
             </p>
           </div>
 
@@ -33,31 +34,31 @@ export function renderFeedbackModal(container, onClose) {
               
               <!-- Category -->
               <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans mb-1">Category:</label>
+                <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans mb-1">${t('feedbackModal.category', 'Category:')}</label>
                 <select id="fb-category" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-[var(--text-primary)]">
-                  <option value="feature">💡 Feature Request</option>
-                  <option value="bug">🐛 Bug Report</option>
-                  <option value="spiritual">🕊️ Liturgical / Spiritual Suggestion</option>
-                  <option value="question">❓ Question / Inquiry</option>
+                  <option value="feature">${t('feedbackModal.feature', '💡 Feature Request')}</option>
+                  <option value="bug">${t('feedbackModal.bug', '🐛 Bug Report')}</option>
+                  <option value="spiritual">${t('feedbackModal.spiritual', '🕊️ Liturgical / Spiritual Suggestion')}</option>
+                  <option value="question">${t('feedbackModal.question', '❓ Question / Inquiry')}</option>
                 </select>
               </div>
 
               <!-- Title -->
               <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans mb-1">Title / Subject:</label>
-                <input type="text" id="fb-title" placeholder="e.g. Add Proverbs book, audio chime issue on Safari..." class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-[var(--text-primary)] focus:outline-none focus:border-amber-600 font-sans" required />
+                <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans mb-1">${t('feedbackModal.subject', 'Title / Subject:')}</label>
+                <input type="text" id="fb-title" placeholder="${t('feedbackModal.subjectPlaceholder', 'e.g. Add Proverbs book, audio chime issue on Safari...')}" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-[var(--text-primary)] focus:outline-none focus:border-amber-600 font-sans" required />
               </div>
 
               <!-- Details -->
               <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans mb-1">Description / Details:</label>
-                <textarea id="fb-details" rows="4" placeholder="Write your feedback openly. The algorithm automatically sanitizes personal data and formats technical device diagnostics..." class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs sm:text-sm text-[var(--text-primary)] focus:outline-none focus:border-amber-600 font-serif leading-relaxed" required></textarea>
+                <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] font-sans mb-1">${t('feedbackModal.details', 'Description / Details:')}</label>
+                <textarea id="fb-details" rows="4" placeholder="${t('feedbackModal.detailsPlaceholder', 'Write your feedback openly. The algorithm automatically sanitizes personal data and formats technical device diagnostics...')}" class="w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs sm:text-sm text-[var(--text-primary)] focus:outline-none focus:border-amber-600 font-serif leading-relaxed" required></textarea>
               </div>
 
               <!-- Submit -->
               <button type="submit" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
                 ${icons.github('w-4 h-4')}
-                <span>Process with GitHub Issues Algorithm</span>
+                <span>${t('feedbackModal.submitBtn', 'Process with GitHub Issues Algorithm')}</span>
               </button>
 
             </form>
@@ -67,7 +68,7 @@ export function renderFeedbackModal(container, onClose) {
               
               <div class="p-3 bg-emerald-950/20 border border-emerald-500/40 rounded-xl text-xs text-emerald-500 flex items-center gap-2">
                 ${icons.check('w-4 h-4')}
-                <span>Issue generated and anonymized successfully!</span>
+                <span>${t('feedbackModal.success', 'Issue generated and anonymized successfully!')}</span>
               </div>
 
               <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-800 rounded-xl p-3 max-h-48 overflow-y-auto">
@@ -77,17 +78,17 @@ export function renderFeedbackModal(container, onClose) {
               <div class="flex flex-col sm:flex-row items-center gap-2 pt-2">
                 <a href="${issueResult.url}" target="_blank" rel="noopener noreferrer" class="w-full flex-1 py-3 px-4 rounded-xl bg-stone-900 hover:bg-black text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center justify-center gap-2">
                   ${icons.github('w-4 h-4')}
-                  <span>Open on GitHub Issues</span>
+                  <span>${t('feedbackModal.openGitHub', 'Open on GitHub Issues')}</span>
                 </a>
 
                 <button id="btn-copy-payload" class="w-full sm:w-auto py-3 px-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs sm:text-sm font-medium text-[var(--text-primary)] flex items-center justify-center gap-1.5 transition">
                   ${icons.copy('w-4 h-4')}
-                  <span>Copy Markdown</span>
+                  <span>${t('feedbackModal.copyMarkdown', 'Copy Markdown')}</span>
                 </button>
               </div>
 
               <button id="btn-reset-feedback" class="text-xs text-[var(--text-muted)] hover:underline block mx-auto pt-2">
-                ← Submit another message
+                ${t('feedbackModal.submitAnother', '← Submit another message')}
               </button>
 
             </div>
@@ -117,7 +118,7 @@ export function renderFeedbackModal(container, onClose) {
     if (copyBtn && issueResult) {
       copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(issueResult.markdown);
-        alert('Markdown payload copied to clipboard!');
+        alert(t('feedbackModal.copiedAlert', 'Markdown payload copied to clipboard!'));
       });
     }
 

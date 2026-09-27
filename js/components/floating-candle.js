@@ -1,6 +1,7 @@
 // Desktop Always-on-top Floating Living Candle Widget for Aura Sacra
 import { icons } from '../icons.js';
 import { toggleRain, isPlayingRain, setRainVolume, getRainVolume, playMonasticBell } from '../audio-engine.js';
+import { t } from '../i18n.js';
 
 let initialSeconds = 25 * 60;
 let timerSeconds = 25 * 60;
@@ -12,7 +13,7 @@ export function renderFloatingCandle(container, pipWin = null) {
   function updateUI() {
     if (isMinimized && !pipWin) {
       container.innerHTML = `
-        <div class="floating-candle-widget minimized cursor-pointer hover:scale-105 transition" id="btn-maximize-candle" title="Open Sacred Candle & Rain Focus">
+        <div class="floating-candle-widget minimized cursor-pointer hover:scale-105 transition" id="btn-maximize-candle" title="${t('floatingCandle.openTooltip', 'Open Sacred Candle & Rain Focus')}">
           <div class="candle-wrapper scale-90">
             <div class="candle-flame"></div>
             <div class="candle-wick"></div>
@@ -40,20 +41,20 @@ export function renderFloatingCandle(container, pipWin = null) {
         <div class="flex items-center justify-between pb-2 border-b border-stone-200 dark:border-stone-800">
           <div class="flex items-center gap-1.5">
             <span class="text-amber-500">${icons.flame('w-4 h-4')}</span>
-            <span class="text-xs font-bold uppercase tracking-wider font-display text-[var(--accent-vermilion)]">Candle</span>
+            <span class="text-xs font-bold uppercase tracking-wider font-display text-[var(--accent-vermilion)]">${t('floatingCandle.candle', 'Candle')}</span>
           </div>
           <div class="flex items-center gap-1.5">
             ${pipWin ? `
               <span class="text-[10px] text-amber-500 font-sans font-semibold bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
                 <span>📌</span>
-                <span>In Primo Piano</span>
+                <span>${t('floatingCandle.pipActive', 'In Foreground')}</span>
               </span>
             ` : `
-              <button id="btn-open-external-popup" class="text-[11px] text-amber-500 hover:text-amber-400 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 flex items-center gap-1 font-sans font-semibold cursor-pointer transition hover:bg-amber-500/20" title="Detach as Always-on-Top floating window (Picture-in-Picture)">
+              <button id="btn-open-external-popup" class="text-[11px] text-amber-500 hover:text-amber-400 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 flex items-center gap-1 font-sans font-semibold cursor-pointer transition hover:bg-amber-500/20" title="${t('floatingCandle.detachTooltip', 'Detach as Always-on-Top floating window (Picture-in-Picture)')}">
                 <span>📌</span>
-                <span>Primo Piano</span>
+                <span>${t('floatingCandle.pip', 'Always-on-Top')}</span>
               </button>
-              <button id="btn-minimize-candle" class="text-stone-400 hover:text-stone-200 p-1 cursor-pointer" title="Minimize">
+              <button id="btn-minimize-candle" class="text-stone-400 hover:text-stone-200 p-1 cursor-pointer" title="${t('floatingCandle.minimize', 'Minimize')}">
                 ${icons.minimize('w-4 h-4')}
               </button>
             `}
@@ -76,7 +77,7 @@ export function renderFloatingCandle(container, pipWin = null) {
         <div class="bg-[var(--bg-secondary)] rounded-xl p-3 text-center border border-stone-200 dark:border-stone-800 space-y-2">
           
           <div class="flex items-center justify-center gap-3">
-            <button id="btn-timer-sub5" class="w-7 h-7 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs font-bold text-[var(--text-secondary)] flex items-center justify-center cursor-pointer transition active:scale-95" title="Subtract 5 minutes">
+            <button id="btn-timer-sub5" class="w-7 h-7 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs font-bold text-[var(--text-secondary)] flex items-center justify-center cursor-pointer transition active:scale-95" title="${t('floatingCandle.sub5', 'Subtract 5 minutes')}">
               -5
             </button>
 
@@ -84,7 +85,7 @@ export function renderFloatingCandle(container, pipWin = null) {
               ${formattedTime}
             </div>
 
-            <button id="btn-timer-add5" class="w-7 h-7 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs font-bold text-[var(--text-secondary)] flex items-center justify-center cursor-pointer transition active:scale-95" title="Add 5 minutes">
+            <button id="btn-timer-add5" class="w-7 h-7 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 text-xs font-bold text-[var(--text-secondary)] flex items-center justify-center cursor-pointer transition active:scale-95" title="${t('floatingCandle.add5', 'Add 5 minutes')}">
               +5
             </button>
           </div>
@@ -101,26 +102,26 @@ export function renderFloatingCandle(container, pipWin = null) {
           <div class="flex items-center justify-center gap-2 pt-1">
             <button id="btn-toggle-timer" class="flex-1 py-1 px-3 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center justify-center gap-1 shadow-sm cursor-pointer transition active:scale-95">
               ${isTimerRunning ? icons.pause('w-3.5 h-3.5') : icons.play('w-3.5 h-3.5')}
-              <span>${isTimerRunning ? 'Pause' : 'Start'}</span>
+              <span>${isTimerRunning ? t('floatingCandle.pause', 'Pause') : t('floatingCandle.start', 'Start')}</span>
             </button>
             <button id="btn-reset-timer" class="py-1 px-2.5 rounded-lg border border-stone-300 dark:border-stone-700 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer">
-              Reset
+              ${t('floatingCandle.reset', 'Reset')}
             </button>
           </div>
         </div>
 
         <!-- Offline Rain Sound Controller -->
         <div class="mt-3 pt-3 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between gap-2">
-          <button id="btn-toggle-rain" class="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border transition ${
+          <button id="btn-toggle-rain" class="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border transition cursor-pointer ${
             rainActive 
               ? 'border-blue-500 bg-blue-500/10 text-blue-500' 
               : 'border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:border-blue-400'
           }">
             ${icons.rain('w-4 h-4')}
-            <span>${rainActive ? 'Rain Playing' : 'Gentle Rain'}</span>
+            <span>${rainActive ? t('floatingCandle.rainPlaying', 'Rain Playing') : t('floatingCandle.gentleRain', 'Gentle Rain')}</span>
           </button>
 
-          <input type="range" id="slider-rain-volume" min="0" max="1" step="0.05" value="${volume}" class="w-20 accent-blue-500 cursor-pointer" title="Rain volume">
+          <input type="range" id="slider-rain-volume" min="0" max="1" step="0.05" value="${volume}" class="w-20 accent-blue-500 cursor-pointer" title="${t('floatingCandle.rainVolume', 'Rain volume')}">
         </div>
 
       </div>
@@ -232,7 +233,7 @@ export function renderFloatingCandle(container, pipWin = null) {
             clearInterval(timerInterval);
             isTimerRunning = false;
             playMonasticBell();
-            alert('Aura Sacra: Contemplation / Work session completed! Take a gentle rest.');
+            alert(t('floatingCandle.completeAlert', 'Aura Sacra: Contemplation / Work session completed! Take a gentle rest.'));
             timerSeconds = initialSeconds;
             updateUI();
           }

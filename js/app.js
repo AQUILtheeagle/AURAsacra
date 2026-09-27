@@ -110,6 +110,7 @@ async function bootstrap() {
         renderSettingsModal(modalsContainer, close, () => {
           renderAllNavigation();
           renderActiveView();
+          renderFloatingCandle(floatingCandleContainer);
         });
         break;
       case 'tools':
@@ -183,6 +184,7 @@ async function bootstrap() {
   onLanguageChange(() => {
     renderAllNavigation();
     renderActiveView();
+    renderFloatingCandle(floatingCandleContainer);
   });
 
   // Render initial static components
@@ -197,6 +199,7 @@ async function bootstrap() {
       modalsContainer.innerHTML = '';
       renderAllNavigation();
       renderActiveView();
+      renderFloatingCandle(floatingCandleContainer);
     });
   }
 

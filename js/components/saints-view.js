@@ -59,7 +59,7 @@ export async function renderSaintsView(container, onOpenShareCard) {
                   ${t('saints.title', 'Saints & Church Fathers')}
                 </h1>
                 <p class="text-xs sm:text-sm text-[var(--text-muted)] italic font-serif">
-                  ${t('saints.subtitle', 'Cloud of Witnesses across Church history')} • <span class="capitalize font-bold text-amber-600">${confession}</span>
+                  ${t('saints.subtitle', 'Cloud of Witnesses across Church history')} • <span class="capitalize font-bold text-amber-600">${t('settings.confessions.' + confession, confession)}</span>
                 </p>
               </div>
             </div>
