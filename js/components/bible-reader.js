@@ -3,13 +3,19 @@ import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded } from '../data/scr
 import { SUPPORTED_BIBLES, getDefaultBibleForLanguage, getArchivalChapter } from '../data/scripture-archives.js';
 import { icons } from '../icons.js';
 import { getHighlights, saveHighlight, removeHighlight } from '../db.js';
-import { getLanguage } from '../i18n.js';
+import { getLanguage, t, onLanguageChange } from '../i18n.js';
 
 let activeBookId = 'matt';
 let activeChapter = 5;
 let activeBibleVersion = null;
 let activeHighlights = [];
 const selectedVerses = new Set();
+let lastLoadedLang = null;
+
+onLanguageChange((newLang) => {
+  activeBibleVersion = getDefaultBibleForLanguage(newLang);
+  lastLoadedLang = newLang;
+});
 
 // Normalize legacy IDs
 function normalizeBookAndChapter(bookId, chapter) {
@@ -34,8 +40,10 @@ function normalizeBookAndChapter(bookId, chapter) {
 }
 
 export async function renderBibleReader(container, onOpenShareCard) {
-  if (!activeBibleVersion) {
-    activeBibleVersion = getDefaultBibleForLanguage(getLanguage());
+  const currentLang = getLanguage();
+  if (!activeBibleVersion || lastLoadedLang !== currentLang) {
+    activeBibleVersion = getDefaultBibleForLanguage(currentLang);
+    lastLoadedLang = currentLang;
   }
   await ensureFullBibleLoaded();
 
@@ -102,22 +110,39 @@ export async function renderBibleReader(container, onOpenShareCard) {
       currentChapterIndex < availableChapters.length - 1 || currentBookIndex < BIBLE_BOOKS.length - 1;
 
     // Group books by testament for clean categorized dropdown
+    const testamentOld = t('reader.testamentOld', 'Old Testament');
+    const testamentDeut = t('reader.testamentDeut', 'Deuterocanon & Apocrypha');
+    const testamentWisdom = t('reader.testamentWisdom', 'Wisdom & Poetry');
+    const testamentProphets = t('reader.testamentProphets', 'Prophets');
+    const testamentGospels = t('reader.testamentGospels', 'Gospels');
+    const testamentEpistles = t('reader.testamentEpistles', 'Apostolic & Epistles');
+    const testamentApocalypse = t('reader.testamentApocalypse', 'Apocalypse');
+
     const testamentGroups = {
-      'Old Testament': [],
-      'Deuterocanon & Apocrypha': [],
-      'Wisdom & Poetry': [],
-      'Prophets': [],
-      'Gospels': [],
-      'Apostolic & Epistles': [],
-      'Apocalypse': []
+      [testamentOld]: [],
+      [testamentDeut]: [],
+      [testamentWisdom]: [],
+      [testamentProphets]: [],
+      [testamentGospels]: [],
+      [testamentEpistles]: [],
+      [testamentApocalypse]: []
+    };
+    const testamentMap = {
+      'Old Testament': testamentOld,
+      'Deuterocanon & Apocrypha': testamentDeut,
+      'Wisdom & Poetry': testamentWisdom,
+      'Prophets': testamentProphets,
+      'Gospels': testamentGospels,
+      'Apostolic & Epistles': testamentEpistles,
+      'Apocalypse': testamentApocalypse
     };
     BIBLE_BOOKS.forEach((b) => {
-      const groupKey = testamentGroups[b.testament] !== undefined ? b.testament : 'Gospels';
+      const groupKey = testamentMap[b.testament] || testamentGospels;
       testamentGroups[groupKey].push(b);
     });
 
     const isPsalm = book.id === 'ps';
-    const chapterLabel = isPsalm ? 'Psalm' : 'Chapter';
+    const chapterLabel = isPsalm ? t('reader.psalm', 'Psalm') : t('reader.chapter', 'Chapter');
 
     const selectedCount = selectedVerses.size;
     const sortedSelected = [...selectedVerses].sort((a, b) => a - b);
@@ -179,14 +204,14 @@ export async function renderBibleReader(container, onOpenShareCard) {
 
             <!-- Chapter Stepper Buttons -->
             <div class="flex items-center gap-1">
-              <button id="btn-prev-chapter" class="p-2 rounded-lg border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition disabled:opacity-30 disabled:pointer-events-none" ${
+              <button id="btn-prev-chapter" class="p-2 rounded-lg border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition disabled:opacity-30 disabled:pointer-events-none cursor-pointer" ${
                 !hasPrevChapter ? 'disabled' : ''
-              } title="Previous Chapter">
+              } title="${t('reader.prevChapter', 'Previous Chapter')}">
                 ${icons.chevronLeft('w-4 h-4')}
               </button>
-              <button id="btn-next-chapter" class="p-2 rounded-lg border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition disabled:opacity-30 disabled:pointer-events-none" ${
+              <button id="btn-next-chapter" class="p-2 rounded-lg border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition disabled:opacity-30 disabled:pointer-events-none cursor-pointer" ${
                 !hasNextChapter ? 'disabled' : ''
-              } title="Next Chapter">
+              } title="${t('reader.nextChapter', 'Next Chapter')}">
                 ${icons.chevronRight('w-4 h-4')}
               </button>
             </div>
@@ -195,11 +220,11 @@ export async function renderBibleReader(container, onOpenShareCard) {
           <!-- Scripture Details Badge -->
           <div class="flex items-center gap-3">
             <button id="btn-toggle-select-all" class="text-xs font-sans font-medium text-amber-600 hover:text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-600/40 hover:bg-amber-600/10 transition cursor-pointer">
-              ${selectedCount === chapterData.verses.length ? 'Deselect All' : 'Select Chapter'}
+              ${selectedCount === chapterData.verses.length ? t('reader.deselectAll', 'Deselect All') : t('reader.selectChapter', 'Select Chapter')}
             </button>
             <div class="flex items-center gap-2 text-xs font-sans text-[var(--text-muted)] bg-[var(--bg-secondary)] px-3 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 notranslate" translate="no">
               <span class="w-2 h-2 rounded-full ${isArchivalCustom ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
-              <span>${isArchivalCustom ? `${currentBibleObj.label} Archive` : 'KJV Canonical Archive'}</span>
+              <span>${isArchivalCustom ? `${currentBibleObj.label} ${t('reader.canonicalArchive', 'Canonical Archive')}` : `KJV ${t('reader.canonicalArchive', 'Canonical Archive')}`}</span>
             </div>
           </div>
 
@@ -275,7 +300,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
                     
                     <!-- 5-Color Spiritual Highlighting Palette -->
                     <div class="flex items-center gap-1.5">
-                      <span class="text-[10px] uppercase tracking-wider font-sans text-[var(--text-muted)] hidden sm:inline">Highlight:</span>
+                      <span class="text-[10px] uppercase tracking-wider font-sans text-[var(--text-muted)] hidden sm:inline">${t('reader.highlight', 'Highlight:')}</span>
                       
                       <button class="hl-btn w-4 h-4 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition" data-color="gold" title="Gold: Grace & Promises"></button>
                       <button class="hl-btn w-4 h-4 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition" data-color="blue" title="Blue: Peace & Faith"></button>
@@ -286,8 +311,8 @@ export async function renderBibleReader(container, onOpenShareCard) {
                       ${
                         highlight
                           ? `
-                        <button class="remove-hl-btn text-[10px] text-red-500 hover:underline ml-1" data-verse="${verse.v}">
-                          Remove
+                        <button class="remove-hl-btn text-[10px] text-red-500 hover:underline ml-1 cursor-pointer" data-verse="${verse.v}">
+                          ${t('reader.remove', 'Remove')}
                         </button>
                       `
                           : ''
@@ -295,11 +320,11 @@ export async function renderBibleReader(container, onOpenShareCard) {
                     </div>
 
                     <!-- Single Verse Share Card Button -->
-                    <button class="share-single-verse-btn flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 font-sans font-medium" data-verse-text="${encodeURIComponent(
+                    <button class="share-single-verse-btn flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 font-sans font-medium cursor-pointer" data-verse-text="${encodeURIComponent(
                       verseText
                     )}" data-ref="${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v}">
                       ${icons.share('w-3.5 h-3.5')}
-                      <span>Share Card</span>
+                      <span>${t('reader.shareCard', 'Share Card')}</span>
                     </button>
 
                   </div>
@@ -320,7 +345,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
             
             <div class="flex items-center gap-2">
               <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
-                ${selectedCount} ${selectedCount === 1 ? 'Verse' : 'Verses'}
+                ${selectedCount} ${selectedCount === 1 ? t('reader.verse', 'Verse') : t('reader.verses', 'Verses')}
               </span>
               <button id="btn-click-range-ref" class="text-xs sm:text-sm font-display font-bold text-[var(--accent-vermilion)] hover:text-amber-600 cursor-pointer flex items-center gap-1" title="Click to share ${currentCitationRange}">
                 <span>${currentCitationRange}</span>
@@ -331,19 +356,19 @@ export async function renderBibleReader(container, onOpenShareCard) {
             <div class="flex items-center gap-2">
               <!-- Batch Highlights -->
               <div class="hidden sm:flex items-center gap-1 border-r border-stone-300 dark:border-stone-700 pr-2">
-                <span class="text-[10px] text-[var(--text-muted)] mr-1">Highlight all:</span>
+                <span class="text-[10px] text-[var(--text-muted)] mr-1">${t('reader.highlightAll', 'Highlight all:')}</span>
                 <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-amber-400 border border-amber-600 hover:scale-125 transition cursor-pointer" data-color="gold" title="Gold"></button>
                 <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-blue-400 border border-blue-600 hover:scale-125 transition cursor-pointer" data-color="blue" title="Blue"></button>
                 <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-red-400 border border-red-600 hover:scale-125 transition cursor-pointer" data-color="red" title="Red"></button>
                 <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-emerald-400 border border-emerald-600 hover:scale-125 transition cursor-pointer" data-color="green" title="Green"></button>
                 <button class="batch-hl-btn w-3.5 h-3.5 rounded-full bg-purple-400 border border-purple-600 hover:scale-125 transition cursor-pointer" data-color="purple" title="Purple"></button>
-                <button type="button" class="batch-remove-hl-btn text-[10px] text-red-500 hover:underline ml-1 font-sans cursor-pointer" title="Remove highlights from selected verses">Clear</button>
+                <button type="button" class="batch-remove-hl-btn text-[10px] text-red-500 hover:underline ml-1 font-sans cursor-pointer" title="Remove highlights from selected verses">${t('reader.clear', 'Clear')}</button>
               </div>
 
               <!-- Share Selection as Card -->
               <button id="btn-share-selection-card" class="bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-md active:scale-95 cursor-pointer">
                 ${icons.share('w-3.5 h-3.5')}
-                <span>Share Range Card</span>
+                <span>${t('reader.shareSelection', 'Share Range Card')}</span>
               </button>
 
               <!-- Clear Selection -->

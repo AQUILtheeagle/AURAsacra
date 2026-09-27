@@ -105,8 +105,8 @@ To run the application locally on your computer:
 
 1. Clone or download the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/aura-sacra.git
-   cd aura-sacra
+   git clone https://github.com/AQUILtheeagle/AURAsacra.git
+   cd AURAsacra
    ```
 
 2. Start any lightweight static web server:

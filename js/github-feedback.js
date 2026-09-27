@@ -2,7 +2,7 @@
 import { getSetting } from './db.js';
 import { getCurrentPhase } from './circadian.js';
 
-const GITHUB_REPO_URL = 'https://github.com/vasilecirnu/aura-sacra';
+const GITHUB_REPO_URL = 'https://github.com/AQUILtheeagle/AURAsacra';
 
 export async function formatAnonymousGitHubIssue(feedback) {
   const { category, title, details } = feedback;

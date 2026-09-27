@@ -1,5 +1,12 @@
 // The Jar of Promises Modal for Aura Sacra
-import { PROMISE_CATEGORIES, PROMISES_DATABASE } from '../data/promises.js';
+import {
+  PROMISE_CATEGORIES,
+  PROMISES_DATABASE,
+  getCategoryLabel,
+  getCategoryDescription,
+  getPromiseReflection,
+  getPromisePrayer
+} from '../data/promises.js';
 import { icons } from '../icons.js';
 import { t, getLanguage } from '../i18n.js';
 
@@ -17,13 +24,15 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
 
     const displayVerse = archiveData ? archiveData.text : (drawnPromise ? (drawnPromise.verse || drawnPromise.verse_en) : '');
     const displayVersion = archiveData ? archiveData.version : 'King James Version (KJV 1611)';
+    const displayReflection = getPromiseReflection(drawnPromise, currentLang);
+    const displayPrayer = getPromisePrayer(drawnPromise, currentLang);
 
     container.innerHTML = `
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
         <div class="bg-[var(--bg-card)] border-2 border-amber-600/40 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative parchment-border">
           
           <!-- Close Button -->
-          <button id="btn-close-promises" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1">
+          <button id="btn-close-promises" class="absolute top-4 right-4 text-stone-400 hover:text-[var(--text-primary)] p-1 cursor-pointer">
             ${icons.close('w-5 h-5')}
           </button>
 
@@ -46,8 +55,8 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
               ${PROMISE_CATEGORIES.map((cat) => `
                 <button class="promise-cat-btn flex flex-col items-center justify-center text-center p-3 rounded-xl border border-stone-300 dark:border-stone-800 bg-[var(--bg-secondary)] hover:border-amber-600 hover:scale-[1.02] transition shadow-sm cursor-pointer" data-id="${cat.id}">
                   <span class="text-amber-600 mb-1.5">${icons[cat.icon] ? icons[cat.icon]('w-5 h-5') : icons.heart('w-5 h-5')}</span>
-                  <span class="text-xs font-bold font-display text-[var(--text-primary)]">${cat.label}</span>
-                  <span class="text-[10px] text-stone-400 font-sans mt-0.5">${cat.description}</span>
+                  <span class="text-xs font-bold font-display text-[var(--text-primary)]">${getCategoryLabel(cat, currentLang)}</span>
+                  <span class="text-[10px] text-stone-400 font-sans mt-0.5">${getCategoryDescription(cat, currentLang)}</span>
                 </button>
               `).join('')}
             </div>
@@ -71,14 +80,14 @@ export function renderJarPromisesModal(container, onClose, onOpenShareCard) {
 
                 <!-- Reflection -->
                 <div class="bg-[var(--bg-secondary)] rounded-lg p-3 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-3">
-                  <span class="font-bold text-[var(--accent-vermilion)]">Word for You: </span>
-                  ${drawnPromise.reflection}
+                  <span class="font-bold text-[var(--accent-vermilion)]">${t('promises.wordForYou', 'Word for You:')} </span>
+                  ${displayReflection}
                 </div>
 
                 <!-- 30-Second Micro-Prayer -->
                 <div class="border-l-4 border-amber-600 bg-amber-500/10 rounded-r-lg p-3 text-xs sm:text-sm italic font-serif text-[var(--text-primary)]">
-                  <span class="font-bold not-italic text-amber-700 dark:text-amber-400 block mb-1">30-Second Prayer of Surrender:</span>
-                  ${drawnPromise.prayer}
+                  <span class="font-bold not-italic text-amber-700 dark:text-amber-400 block mb-1">${t('promises.prayerSurrender', '30-Second Prayer of Surrender:')}</span>
+                  ${displayPrayer}
                 </div>
               </div>
 

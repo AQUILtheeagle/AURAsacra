@@ -34,8 +34,8 @@ Every code and content contribution should adhere to these core principles:
 
 1. **Clone or download the repository**:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/aura-sacra.git
-   cd aura-sacra
+   git clone https://github.com/AQUILtheeagle/AURAsacra.git
+   cd AURAsacra
    ```
 
 2. **Serve the application locally**:

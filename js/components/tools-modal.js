@@ -10,7 +10,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         {
           id: 'penance',
           label: t('nav.penance', 'Penance & Fasting Calendar'),
-          desc: 'Daily fasts, meat abstinence, and liturgical rules with saints commemorations',
+          desc: t('tools.penanceDesc', 'Daily fasts, meat abstinence, and liturgical rules with saints commemorations'),
           icon: 'calendar',
           badge: 'Saints',
           color: 'border-amber-600/60 bg-amber-500/10 text-amber-700 dark:text-amber-400',
@@ -19,15 +19,15 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         {
           id: 'promises',
           label: t('nav.promises', 'The Jar of Promises'),
-          desc: 'Biblical promises for anxiety, sorrow, decisions & gratitude',
+          desc: t('tools.promisesDesc', 'Biblical promises for anxiety, sorrow, decisions & gratitude'),
           icon: 'jar',
           color: 'border-amber-600/40 bg-amber-500/5 text-amber-600',
           isModal: true
         },
         {
           id: 'evening',
-          label: 'Night Examination & Protection',
-          desc: 'Compline examen of conscience and peaceful sleep prayer',
+          label: t('tools.eveningTitle', 'Night Examination & Protection'),
+          desc: t('tools.eveningDesc', 'Compline examen of conscience and peaceful sleep prayer'),
           icon: 'moon',
           color: 'border-blue-600/40 bg-blue-500/5 text-blue-600',
           isModal: true
@@ -35,7 +35,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         {
           id: 'focus',
           label: t('nav.focus', 'Focus with Candle & Rain'),
-          desc: 'Living flame meditation and procedural soothing rain',
+          desc: t('tools.focusDesc', 'Living flame meditation and procedural soothing rain'),
           icon: 'flame',
           color: 'border-orange-600/40 bg-orange-500/5 text-orange-600',
           isTab: true
@@ -48,15 +48,15 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         {
           id: 'sos',
           label: t('nav.sos', 'SOS Temptation & Peace Shield'),
-          desc: '30-second rhythmic breathing and 1 Cor 10:13 shield verse',
+          desc: t('tools.sosDesc', '30-second rhythmic breathing and 1 Cor 10:13 shield verse'),
           icon: 'shield',
           color: 'border-red-600/60 bg-red-500/10 text-red-600',
           isModal: true
         },
         {
           id: 'doubts',
-          label: 'Faith Compass',
-          desc: 'Guidance on profound existential and theological questions',
+          label: t('tools.compassTitle', 'Faith Compass'),
+          desc: t('tools.compassDesc', 'Guidance on profound existential and theological questions'),
           icon: 'compass',
           color: 'border-emerald-600/40 bg-emerald-500/5 text-emerald-600',
           isModal: true
@@ -64,7 +64,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         {
           id: 'saints',
           label: t('nav.saints', 'Saints & Church Fathers'),
-          desc: 'Treasury of wisdom with liturgical colors and ranks',
+          desc: t('tools.saintsDesc', 'Treasury of wisdom with liturgical colors and ranks'),
           icon: 'cross',
           color: 'border-amber-600/40 bg-amber-500/5 text-amber-600',
           isTab: true
@@ -76,8 +76,8 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
       items: [
         {
           id: 'share',
-          label: 'Parchment Card Maker',
-          desc: 'Design and share illuminated Scripture cards to social apps',
+          label: t('tools.shareTitle', 'Parchment Card Maker'),
+          desc: t('tools.shareDesc', 'Design and share illuminated Scripture cards to social apps'),
           icon: 'share',
           color: 'border-amber-600/40 bg-amber-500/5 text-amber-600',
           isModal: true
@@ -85,7 +85,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         {
           id: 'schedule',
           label: t('nav.schedule', 'School & Work Planner'),
-          desc: 'Harmonize your study and labor with the monastic hours',
+          desc: t('tools.scheduleDesc', 'Harmonize your study and labor with the monastic hours'),
           icon: 'clock',
           color: 'border-blue-600/40 bg-blue-500/5 text-blue-600',
           isModal: true
@@ -93,15 +93,15 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         {
           id: 'settings',
           label: t('nav.settings', 'Settings & Confession'),
-          desc: 'Language selector, API key, backup & restore, circadian themes',
+          desc: t('tools.settingsDesc', 'Language selector, API key, backup & restore, circadian themes'),
           icon: 'settings',
           color: 'border-stone-400 dark:border-stone-700 bg-stone-500/5 text-stone-600 dark:text-stone-300',
           isModal: true
         },
         {
           id: 'feedback',
-          label: 'GitHub Feedback',
-          desc: 'Suggest improvements or report an issue on GitHub',
+          label: t('tools.feedbackTitle', 'Anonymous Community Feedback'),
+          desc: t('tools.feedbackDesc', 'Suggest improvements or report an issue on GitHub'),
           icon: 'github',
           color: 'border-stone-400 dark:border-stone-700 bg-stone-500/5 text-stone-600 dark:text-stone-300',
           isModal: true
