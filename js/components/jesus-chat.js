@@ -14,6 +14,7 @@ import {
 } from '../ai-engine.js';
 import { clearChatHistory, getSetting } from '../db.js';
 import { renderApiKeyModal } from './api-key-modal.js';
+import { t } from '../i18n.js';
 
 // Format dialogue messages and shield Holy Scripture citations from browser translation
 function formatChatMessage(text) {
@@ -76,14 +77,14 @@ export async function renderJesusChat(container, initialQuestion = null) {
         statusBadge = `
           <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/30 hover:bg-emerald-500/20 transition cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Gemini Nano (Offline On-Device)</span>
+            <span>${t('jesus.geminiNanoOffline', 'Gemini Nano (Offline On-Device)')}</span>
           </button>
         `;
       } else {
         statusBadge = `
           <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-red-500/10 text-red-600 border border-red-500/30 hover:bg-red-500/20 transition cursor-pointer" title="Offline AI disabled. Click for options">
             ${icons.lock('w-3.5 h-3.5')}
-            <span>Offline • Local Gemini Required</span>
+            <span>${t('jesus.offlineRequired', 'Offline • Local Gemini Required')}</span>
           </button>
         `;
       }
@@ -93,7 +94,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
         statusBadge = `
           <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/30 hover:bg-emerald-500/20 transition cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>Gemini Nano (On-Device)</span>
+            <span>${t('jesus.geminiNanoOnDevice', 'Gemini Nano (On-Device)')}</span>
           </button>
         `;
       } else if (aiStatus.hasApiKey) {
@@ -102,15 +103,15 @@ export async function renderJesusChat(container, initialQuestion = null) {
         statusBadge = `
           <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/10 text-amber-600 border border-amber-500/30 hover:bg-amber-500/20 transition cursor-pointer" title="Click to view or change Gemini API Key & Model">
             ${icons.sparkles('w-3.5 h-3.5')}
-            <span>${curModel.name} Active</span>
-            <span class="text-[9px] opacity-75 underline ml-0.5">change</span>
+            <span>${curModel.name} ${t('jesus.active', 'Active')}</span>
+            <span class="text-[9px] opacity-75 underline ml-0.5">${t('jesus.change', 'change')}</span>
           </button>
         `;
       } else {
         statusBadge = `
           <button type="button" class="btn-open-api-modal inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-sans font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/25 transition cursor-pointer animate-pulse" title="Click to connect Gemini API Key">
             ${icons.key('w-3.5 h-3.5')}
-            <span>Connect API Key</span>
+            <span>${t('jesus.connectApiKey', 'Connect API Key')}</span>
           </button>
         `;
       }
@@ -128,12 +129,12 @@ export async function renderJesusChat(container, initialQuestion = null) {
             <div>
               <div class="flex items-center gap-2">
                 <h2 class="text-base sm:text-lg font-bold font-display text-[var(--accent-vermilion)]">
-                  Dialogue with Jesus
+                  ${t('jesus.title', 'Dialogue with Jesus')}
                 </h2>
                 <div class="hidden sm:inline-block">${statusBadge}</div>
               </div>
               <p class="text-xs text-[var(--text-muted)] italic font-serif">
-                Answers questions, theological doubts, and life dilemmas with Gospel wisdom
+                ${t('jesus.subtitle', 'Answers questions, theological doubts, and life dilemmas with Gospel wisdom')}
               </p>
             </div>
           </div>
@@ -144,13 +145,13 @@ export async function renderJesusChat(container, initialQuestion = null) {
             <!-- API Key Button (always visible so user can change/verify anytime) -->
             <button id="btn-chat-api-key" class="text-xs px-2.5 py-1.5 rounded-xl border border-amber-600/40 bg-amber-600/10 hover:bg-amber-600/20 text-amber-600 dark:text-amber-400 font-semibold transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Configure or Change Google Gemini API Key">
               ${icons.key('w-3.5 h-3.5')}
-              <span class="font-sans">${aiStatus.hasApiKey ? 'Change Key' : 'API Key'}</span>
+              <span class="font-sans">${aiStatus.hasApiKey ? t('jesus.changeKey', 'Change Key') : t('jesus.apiKey', 'API Key')}</span>
             </button>
 
             <!-- Clear History Button -->
-            <button id="btn-clear-chat" class="text-xs text-stone-400 hover:text-red-500 p-1.5 rounded-lg border border-stone-300/40 dark:border-stone-700/40 hover:border-red-500/40 transition flex items-center gap-1" title="Clear Chat History">
+            <button id="btn-clear-chat" class="text-xs text-stone-400 hover:text-red-500 p-1.5 rounded-lg border border-stone-300/40 dark:border-stone-700/40 hover:border-red-500/40 transition flex items-center gap-1 cursor-pointer" title="Clear Chat History">
               ${icons.trash('w-3.5 h-3.5')}
-              <span class="hidden sm:inline">Reset</span>
+              <span class="hidden sm:inline">${t('jesus.reset', 'Reset')}</span>
             </button>
           </div>
         </div>
@@ -163,13 +164,13 @@ export async function renderJesusChat(container, initialQuestion = null) {
             </div>
             <div class="space-y-1 text-xs sm:text-sm">
               <div class="font-bold font-display text-base text-red-600 dark:text-red-400">
-                Offline AI Disabled • Local Gemini Model Required
+                ${t('jesus.offlineBannerTitle', 'Offline AI Disabled • Local Gemini Model Required')}
               </div>
               <p class="leading-relaxed">
-                The local Gemini Nano model is not downloaded on this device. To answer open questions, theological doubts, and life dilemmas without internet, the local Gemini Nano model must be downloaded in Chrome.
+                ${t('jesus.offlineBannerBody', 'The local Gemini Nano model is not downloaded on this device. To answer open questions, theological doubts, and life dilemmas without internet, the local Gemini Nano model must be downloaded in Chrome.')}
               </p>
               <p class="text-xs opacity-80 italic">
-                Without local Gemini, offline answers are strictly disabled to prevent inaccurate or canned responses. Connect to the internet to download Gemini Nano or use online Gemini AI.
+                ${t('jesus.offlineBannerNote', 'Without local Gemini, offline answers are strictly disabled to prevent inaccurate or canned responses. Connect to the internet to download Gemini Nano or use online Gemini AI.')}
               </p>
             </div>
           </div>
@@ -184,10 +185,10 @@ export async function renderJesusChat(container, initialQuestion = null) {
               </div>
               <div class="space-y-0.5 flex-1">
                 <div class="font-bold font-display text-sm sm:text-base text-[var(--accent-vermilion)]">
-                  Enable Gemini AI for Questions & Doubts
+                  ${t('jesus.enableGeminiTitle', 'Enable Gemini AI for Questions & Doubts')}
                 </div>
                 <p class="text-xs text-[var(--text-muted)] leading-relaxed">
-                  To provide deep, articulate, and intelligent answers to your doubts and inquiries in any language, Aura Sacra connects to Google Gemini.
+                  ${t('jesus.enableGeminiDesc', 'To provide deep, articulate, and intelligent answers to your doubts and inquiries in any language, Aura Sacra connects to Google Gemini.')}
                 </p>
               </div>
             </div>
@@ -196,12 +197,12 @@ export async function renderJesusChat(container, initialQuestion = null) {
             ${aiStatus.localGeminiStatus === 'needs_download' ? `
               <div class="bg-[var(--bg-card)] border border-amber-600/30 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div class="text-xs">
-                  <div class="font-bold text-[var(--text-primary)]">Chrome Built-in Gemini Nano Detected</div>
-                  <div class="text-[var(--text-muted)]">Download model (~1.5 GB) into your browser for 100% offline reasoning.</div>
+                  <div class="font-bold text-[var(--text-primary)]">${t('jesus.chromeNanoDetected', 'Chrome Built-in Gemini Nano Detected')}</div>
+                  <div class="text-[var(--text-muted)]">${t('jesus.chromeNanoDesc', 'Download model (~1.5 GB) into your browser for 100% offline reasoning.')}</div>
                 </div>
                 <button id="btn-download-gemini" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 transition">
                   ${icons.download('w-4 h-4')}
-                  <span>Download Local Gemini</span>
+                  <span>${t('jesus.downloadLocal', 'Download Local Gemini')}</span>
                 </button>
               </div>
             ` : ''}
@@ -210,7 +211,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
             ${downloadProgress !== null ? `
               <div class="bg-[var(--bg-card)] border border-amber-600/40 rounded-xl p-3 space-y-1.5">
                 <div class="flex items-center justify-between text-xs font-semibold text-amber-600">
-                  <span>Downloading Gemini Nano on device...</span>
+                  <span>${t('jesus.downloading', 'Downloading Gemini Nano on device...')}</span>
                   <span>${downloadProgress}%</span>
                 </div>
                 <div class="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-2 overflow-hidden">
@@ -222,9 +223,9 @@ export async function renderJesusChat(container, initialQuestion = null) {
             <!-- Quick Action to Connect API Key -->
             <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-xl p-3 space-y-2">
               <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-[var(--text-primary)]">Connect Google Gemini API Key:</span>
+                <span class="font-bold text-[var(--text-primary)]">${t('jesus.connectKeyPrompt', 'Connect Google Gemini API Key:')}</span>
                 <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-amber-600 hover:underline flex items-center gap-0.5">
-                  Get Free Key at Google AI Studio ↗
+                  ${t('jesus.getFreeKey', 'Get Free Key at Google AI Studio ↗')}
                 </a>
               </div>
               <button 
@@ -233,7 +234,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
                 class="w-full py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 ${icons.key('w-4 h-4')}
-                <span>Configure & Verify Gemini API Key</span>
+                <span>${t('jesus.configureKeyBtn', 'Configure & Verify Gemini API Key')}</span>
               </button>
             </div>
 
@@ -248,31 +249,31 @@ export async function renderJesusChat(container, initialQuestion = null) {
                 ${icons.sparkles('w-6 h-6')}
               </div>
               <h3 class="text-base sm:text-lg font-bold font-display text-[var(--accent-vermilion)]">
-                Ask Questions, Clarify Doubts & Seek Gospel Wisdom
+                ${t('jesus.welcomeTitle', 'Ask Questions, Clarify Doubts & Seek Gospel Wisdom')}
               </h3>
               <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed font-serif italic">
-                Ask deep theological questions, explore personal doubts, discuss moral dilemmas, or share your daily life struggles. Powered by Gemini with direct scripture citations.
+                ${t('jesus.welcomeDesc', 'Ask deep theological questions, explore personal doubts, discuss moral dilemmas, or share your daily life struggles. Powered by Gemini with direct scripture citations.')}
               </p>
 
-              <!-- Quick Questions & Doubts Prompt Chips (English Only) -->
+              <!-- Quick Questions & Doubts Prompt Chips (Localized) -->
               <div class="flex flex-wrap justify-center gap-2 pt-3">
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  Why does God allow suffering and pain in the world?
+                  ${t('jesus.prompt1', 'Why does God allow suffering and pain in the world?')}
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  I have been struggling with doubts about my faith lately
+                  ${t('jesus.prompt2', 'I have been struggling with doubts about my faith lately')}
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  How can I discern God's will for my life decisions?
+                  ${t('jesus.prompt3', "How can I discern God's will for my life decisions?")}
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  How can I truly forgive someone who hurt me deeply?
+                  ${t('jesus.prompt4', 'How can I truly forgive someone who hurt me deeply?')}
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  How can I find inner peace and overcome anxiety?
+                  ${t('jesus.prompt5', 'How can I find inner peace and overcome anxiety?')}
                 </button>
                 <button type="button" class="chat-prompt-chip text-xs bg-[var(--bg-secondary)] hover:bg-amber-600/20 text-[var(--text-secondary)] hover:text-amber-600 border border-stone-300 dark:border-stone-700 px-3 py-1.5 rounded-full transition cursor-pointer text-left">
-                  How do I pray when God seems completely silent?
+                  ${t('jesus.prompt6', 'How do I pray when God seems completely silent?')}
                 </button>
               </div>
             </div>
@@ -300,13 +301,13 @@ export async function renderJesusChat(container, initialQuestion = null) {
                     <div class="pt-3 border-t border-red-500/20 mt-3 flex items-center gap-2">
                       <button type="button" class="btn-bubble-change-key text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1.5 transition cursor-pointer">
                         ${icons.key('w-3.5 h-3.5')}
-                        <span>Change / Verify API Key</span>
+                        <span>${t('jesus.changeKey', 'Change / Verify API Key')}</span>
                       </button>
                     </div>
                   ` : ''}
                 </div>
                 <span class="text-[10px] text-stone-400 mt-1 px-1 font-sans">
-                  ${isUser ? (userName || 'You') : 'Jesus Christ'} • ${new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  ${isUser ? (userName || t('jesus.you', 'You')) : t('jesus.jesusChrist', 'Jesus Christ')} • ${new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
             `;
@@ -316,7 +317,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
             <div class="flex flex-col items-start animate-fade-in">
               <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-800 text-[var(--text-primary)] rounded-2xl rounded-tl-none p-4 font-serif text-sm flex items-center gap-2.5">
                 <span class="w-2 h-2 rounded-full bg-amber-600 animate-ping"></span>
-                <span class="italic text-[var(--text-muted)]">Jesus is reflecting on your question...</span>
+                <span class="italic text-[var(--text-muted)]">${t('jesus.reflecting', 'Jesus is reflecting on your question...')}</span>
               </div>
             </div>
           ` : ''}
@@ -331,9 +332,9 @@ export async function renderJesusChat(container, initialQuestion = null) {
               placeholder="${
                 !aiStatus.canChat
                   ? (!aiStatus.isOnline 
-                      ? 'Offline AI Disabled: Local Gemini model required...' 
-                      : 'Please connect Gemini AI above to ask questions...')
-                  : 'Ask a question, share a doubt, or speak to Jesus...'
+                      ? t('jesus.offlineInputDisabled', 'Offline AI Disabled: Local Gemini model required...') 
+                      : t('jesus.connectInputPrompt', 'Please connect Gemini AI above to ask questions...'))
+                  : t('jesus.inputPlaceholder', 'Ask a question, share a doubt, or speak to Jesus...')
               }"
               class="flex-1 bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-xl px-4 py-2.5 text-sm sm:text-base text-[var(--text-primary)] focus:outline-none focus:border-amber-600 disabled:opacity-50 disabled:cursor-not-allowed"
               autocomplete="off"
@@ -342,11 +343,11 @@ export async function renderJesusChat(container, initialQuestion = null) {
             <button 
               type="submit" 
               id="chat-submit-btn"
-              class="p-2.5 sm:px-4 rounded-xl bg-[var(--accent-vermilion)] hover:bg-red-800 text-white font-medium shadow-md transition transform active:scale-95 flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
+              class="p-2.5 sm:px-4 rounded-xl bg-[var(--accent-vermilion)] hover:bg-red-800 text-white font-medium shadow-md transition transform active:scale-95 flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none cursor-pointer"
               ${!aiStatus.canChat || isSubmitting ? 'disabled' : ''}
             >
               ${icons.send('w-4 h-4')}
-              <span class="hidden sm:inline text-xs font-sans uppercase tracking-wider font-bold">Ask</span>
+              <span class="hidden sm:inline text-xs font-sans uppercase tracking-wider font-bold">${t('jesus.ask', 'Ask')}</span>
             </button>
           </form>
         </div>
@@ -371,7 +372,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
 
       if (!aiStatus.canChat) {
         if (!aiStatus.isOnline) {
-          alert('Offline AI is disabled because the local Gemini model is not downloaded on this device. Please connect to the internet to download Gemini Nano or use online Gemini.');
+          alert(t('jesus.offlineBannerBody', 'Offline AI is disabled because the local Gemini model is not downloaded on this device. Please connect to the internet to download Gemini Nano or use online Gemini.'));
         } else {
           openKeyModal();
         }
@@ -413,7 +414,7 @@ export async function renderJesusChat(container, initialQuestion = null) {
 
     // Clear history handler
     container.querySelector('#btn-clear-chat').addEventListener('click', async () => {
-      if (confirm('Clear the entire conversation history with Jesus?')) {
+      if (confirm(t('jesus.confirmClear', 'Clear the entire conversation history with Jesus?'))) {
         await clearChatHistory();
         messages = [];
         renderView();

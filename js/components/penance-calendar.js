@@ -279,11 +279,6 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                           ? `<span class="w-2 h-2 rounded-full ${primarySaint.colorMeta.dotClass}" title="${primarySaint.name} (${primarySaint.colorMeta.name})"></span>`
                           : ''
                       }
-                      ${
-                        isToday
-                          ? `<span class="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" title="Today"></span>`
-                          : ''
-                      }
                     </div>
                   </div>
 

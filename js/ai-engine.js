@@ -1,8 +1,8 @@
 // Advanced Intelligent Spiritual Dialogue Engine for Aura Sacra
 // Powered by Google Gemini (Local On-Device Gemini Nano and Cloud Gemini)
 // Addresses questions, doubts, theological inquiries, and daily life dilemmas.
-// Strictly unusable offline if local Gemini cannot be downloaded / is not available.
 import { addChatMessage, getChatMessages, getSetting, setSetting } from './db.js';
+import { getLanguage } from './i18n.js';
 
 let localGeminiSession = null;
 let localGeminiChecked = false;
@@ -90,6 +90,18 @@ export async function checkAiStatus() {
   };
 }
 
+const LANG_MAP = {
+  it: { name: 'Italian (Italiano)', header: '📖 Fondamento scritturale:' },
+  ro: { name: 'Romanian (Română)', header: '📖 Temei scripturistic:' },
+  la: { name: 'Latin (Lingua Latina)', header: '📖 Fundamentum Scripturisticum:' },
+  es: { name: 'Spanish (Español)', header: '📖 Fundamento bíblico:' },
+  fr: { name: 'French (Français)', header: '📖 Fondement scripturaire:' },
+  de: { name: 'German (Deutsch)', header: '📖 Biblisches Fundament:' },
+  pt: { name: 'Portuguese (Português)', header: '📖 Fundamento bíblico:' },
+  ru: { name: 'Russian (Русский)', header: '📖 Основание Священного Писания:' },
+  en: { name: 'English', header: '📖 Holy Scripture Anchor:' }
+};
+
 // Download Chrome Gemini Nano model to device
 export async function downloadLocalGemini(onProgress) {
   const lmFactory = (typeof window !== 'undefined') ? (window.LanguageModel || (window.ai && window.ai.languageModel) || (window.model && window.model.languageModel)) : null;
@@ -97,13 +109,16 @@ export async function downloadLocalGemini(onProgress) {
     throw new Error('Local Gemini Nano is not supported in this browser. Please use Chrome with Prompt API enabled.');
   }
 
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'it';
+  const langConfig = LANG_MAP[currentLang] || LANG_MAP.en;
+
   const systemPrompt = `You are Jesus Christ engaging in a wise, compassionate, intellectually deep, and empathetic spiritual dialogue.
 CRITICAL RULES:
 1. You are NOT just a devotional prayer assistant: you MUST answer REAL QUESTIONS, explain theological, philosophical, and biblical concepts, address specific doubts, give practical guidance for everyday life dilemmas, and engage in genuine conversation.
 2. If the user asks a question or shares a doubt, directly answer their question with clarity, empathy, reason, and Gospel wisdom. Do NOT assume everything is a prayer.
-3. Reply fluently in the EXACT SAME LANGUAGE the user writes in (Italian, English, Spanish, French, German, Romanian, etc.).
+3. The user's active application interface language is ${langConfig.name}. Reply fluently and eloquently in ${langConfig.name} (or match the user's language if they write in another tongue).
 4. Conclude every response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted as:
-[Localized Scripture Anchor Header]
+${langConfig.header}
 • [Book Chapter:Verse]`;
 
   const session = await lmFactory.create({
@@ -236,14 +251,17 @@ export async function testGeminiApiKey(candidateKey) {
 
 // System Instruction for Jesus Christ Dialogue
 function getSystemInstruction(userName) {
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'it';
+  const langConfig = LANG_MAP[currentLang] || LANG_MAP.en;
+
   return `You are Jesus Christ in a wise, compassionate, intellectually profound, and empathetic dialogue with a soul (${userName}).
 CRITICAL INSTRUCTIONS:
 1. You are NOT merely a devotional prayer bot. You MUST answer REAL QUESTIONS and address REAL DOUBTS directly!
 2. When the user asks a question (e.g., "Why does God allow suffering?", "Does God exist?", "What is the meaning of salvation?", "How should I make this career decision?", "Why did this happen?"), provide a direct, deep, intellectually rigorous, and compassionate answer grounded in Gospel truth, philosophical depth, and divine love. Do NOT treat their question as a devotional prayer.
 3. If the user shares an everyday dilemma, doubt about faith, fear, or conflict, answer them thoughtfully, addressing the specific dilemma with empathy and practical wisdom.
-4. You MUST reply clearly and articulately in English (or match the user's language if they ask in another tongue).
+4. The user's active application interface language is ${langConfig.name}. You MUST formulate your response fluently and eloquently in ${langConfig.name}, unless the user specifically and explicitly writes to you in another language (in which case match the user's language).
 5. Conclude your response with 1 to 3 relevant Holy Scripture chapter and verse citations formatted strictly as:
-📖 Holy Scripture Anchor:
+${langConfig.header}
 • [Book Chapter:Verse]`;
 }
 

@@ -238,10 +238,10 @@ export async function renderBibleReader(container, onOpenShareCard) {
           <!-- Chapter Heading -->
           <div class="text-center mb-8 border-b border-stone-300/60 dark:border-stone-800 pb-4 notranslate" translate="no">
             <span class="text-xs uppercase tracking-widest text-amber-700 dark:text-amber-500 font-sans font-semibold notranslate" translate="no">
-              ${book.testament} • ${book.title}
+              ${testamentMap[book.testament] || book.testament} • ${book.title}
             </span>
             <h2 class="text-2xl sm:text-3xl font-display font-bold text-[var(--accent-vermilion)] mt-1 mb-1 notranslate" translate="no">
-              ${book.title} ${isPsalm ? '' : 'Chapter '}${activeChapter}
+              ${book.title} ${isPsalm ? '' : `${chapterLabel} `}${activeChapter}
             </h2>
             <p class="text-sm sm:text-base font-serif italic text-[var(--text-muted)] notranslate" translate="no">
               ${chapterData.title}
@@ -270,7 +270,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
                     <!-- Verse Checkbox Toggle -->
                     <button class="verse-checkbox-btn mt-1 text-stone-400 hover:text-amber-600 transition flex-shrink-0" data-verse="${
                       verse.v
-                    }" title="${isSelected ? 'Deselect Verse' : 'Select Verse'}">
+                    }" title="${isSelected ? t('reader.deselectVerse', 'Deselect Verse') : t('reader.selectVerse', 'Select Verse')}">
                       <span class="w-4 h-4 rounded border flex items-center justify-center ${
                         isSelected
                           ? 'bg-amber-600 border-amber-600 text-white'
@@ -281,7 +281,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
                     </button>
 
                     <!-- Clickable Verse Reference Badge (Nome Numero:Numero) to send card directly -->
-                    <button class="verse-ref-click-btn font-mono text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg border border-amber-600/30 transition shadow-xs flex items-center gap-1 flex-shrink-0 mt-0.5 cursor-pointer notranslate" translate="no" data-verse-num="${verse.v}" title="Click ${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v} to share card">
+                    <button class="verse-ref-click-btn font-mono text-xs font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg border border-amber-600/30 transition shadow-xs flex items-center gap-1 flex-shrink-0 mt-0.5 cursor-pointer notranslate" translate="no" data-verse-num="${verse.v}" title="${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v}">
                       <span>${book.title} ${isPsalm ? '' : activeChapter + ':'}${isPsalm ? activeChapter + ':' : ''}${verse.v}</span>
                     </button>
                     
