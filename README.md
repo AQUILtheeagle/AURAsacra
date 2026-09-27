@@ -3,136 +3,155 @@
 [![License: GNU GPL v3](https://img.shields.io/badge/License-GNU_GPLv3-blue.svg)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-100%25_Offline-emerald.svg)](index.html)
 [![AI Engine](https://img.shields.io/badge/AI-Google_Gemini_3-orange.svg)](index.html)
-[![Scriptures](https://img.shields.io/badge/Scriptures-80_Books_•_36.8k_Verses-amber.svg)](index.html)
+[![Languages](https://img.shields.io/badge/Languages-9_Supported-gold.svg)](index.html)
+[![Bibles](https://img.shields.io/badge/Scriptures-9_Historical_Bibles-amber.svg)](index.html)
 
-> **«In lumine tuo videbimus lumen»** • *In Thy light shall we see light.*
+> **«In lumine tuo videbimus lumen»** • *In Thy light shall we see light.* (Psalm 36:9)
 
-**Aura Sacra** is an ecumenical, contemplative, and privacy-first Christian web and mobile Progressive Web App (PWA). Designed to accompany students, workers, and families in their daily spiritual walk, it marries the sacred aesthetic of medieval illuminated manuscripts with modern tools for prayer, fasting, biblical study, and meditation.
+**Aura Sacra** is an ecumenical, contemplative, and privacy-first Christian Progressive Web App (PWA). Crafted to accompany students, workers, and families in their daily spiritual walk, it marries the sacred aesthetic of medieval illuminated manuscripts with modern tools for prayer, fasting, biblical study, and meditation.
 
-Operates **100% offline**, requires no account registration, and preserves complete sovereignty over your personal data.
+Operates **100% offline**, requires no account registration, contains zero advertising or telemetry, and guarantees total sovereignty over your personal spiritual archives.
 
 ---
 
-## ✨ Key Features
+## 🌍 Multilingual & Ecumenical Heritage
 
-### 📖 Complete Holy Scriptures Library (80 Books)
-- **80 Canonical & Deuterocanonical Books with 36,819 Verses**: The complete historic Christian canon, including Genesis through Revelation, plus the full Deuterocanon & Apocrypha (*Sirach / Ecclesiasticus, Wisdom of Solomon, Tobit, Judith, Baruch, 1 & 2 Maccabees, and more*).
-- **5-Color Spiritual Highlighting**: Mark your favorite passages in Gold (Grace & Promises), Blue (Peace & Faith), Red (Sacrifice & Love), Green (Spiritual Growth), or Purple (Wisdom & Repentance). Saved permanently on your device.
-- **Illuminated Codex Manuscript View**: Illuminated drop caps, parchment styling, and effortless chapter-by-chapter navigation.
-- **One-Click Verse Sharing**: Click any verse reference to generate a shareable illuminated parchment card.
+Aura Sacra is localized across **9 languages** with native translations for user interfaces, liturgical definitions, fasting rules, and theological reflections:
 
-### 📅 Sacred Penance & Fasting Calendar
-- **Interactive Liturgical Calendar**: Clear guidance on when to fast (*digiuno*) and when to practice abstinence from meat (*astinenza*).
-- **Today's Status Badge**: Instant banner showing today's obligation (e.g. *Friday Abstinence from Meat*, *Strict Fast & Abstinence*, or *Solemnity Dispensation*), with permitted foods and foods to avoid.
+| Language | Native Name | Code | Default Historical Bible |
+|---|---|---|---|
+| **English** | English | `en` | King James Version (KJV with Apocrypha) |
+| **Italian** | Italiano | `it` | Conferenza Episcopale Italiana (CEI 2008) |
+| **Romanian** | Română | `ro` | Biblia Sinodală Română |
+| **French** | Français | `fr` | Louis Segond (1910) |
+| **Spanish** | Español | `es` | Reina-Valera (1909) |
+| **Portuguese** | Português | `pt` | João Ferreira de Almeida |
+| **German** | Deutsch | `de` | Lutherbibel (1912) |
+| **Russian** | Русский | `ru` | Синодальный перевод |
+| **Latin** | Lingua Latina | `la` | Biblia Sacra Vulgata Clementina (1592) |
+
+---
+
+## ✨ Core Features
+
+### 📖 Complete Canonical Holy Scriptures (9 Historical Editions)
+- **All 66 Canonical & Deuterocanonical Books**: Complete Genesis through Revelation, including the full Deuterocanon / Apocrypha (*Sirach / Ecclesiasticus, Wisdom of Solomon, Tobit, Judith, Baruch, 1 & 2 Maccabees*).
+- **5-Color Spiritual Highlighting**: Mark your passages in Gold (Grace & Promises), Blue (Peace & Faith), Red (Sacrifice & Love), Green (Spiritual Growth), or Purple (Wisdom & Penance). Stored permanently in your local browser database.
+- **Illuminated Codex Manuscript Typography**: Drop caps, authentic parchment textures, and chapter-by-chapter reading with fast navigation.
+- **Multi-Verse Selection & Sharing**: Select single or multiple verses to generate high-resolution illuminated parchment cards.
+
+### 📅 Sacred Penance, Fasting & Abstinence Liturgical Engine
+- **Mathematical Computus Algorithm**: Dynamically computes Easter, Lent, Pentecost, and all moveable feasts for any year in both Western (Gregorian) and Eastern (Julian Computus converted to Gregorian) liturgical cycles.
 - **Multi-Tradition Support**:
-  - **Universal Roman Rite**: Ash Wednesday, Good Friday, and every Friday of the year (with automatic Solemnity dispensations under Can. 1251).
-  - **Traditional Latin (1962)**: Includes Ember Days (*Quattro Tempora*), traditional Vigils, and full Lenten weekday fasts.
-  - **Eastern Christian / Byzantine**: Great Lent, Apostles' Fast, Dormition Fast, Nativity Fast, and Wednesdays & Fridays.
-- **Mathematical Computus Algorithm**: Dynamically computes Easter and all moveable feasts for any year.
-- **Spiritual & Canonical Guide**: Canonical definitions, lawful health exemptions (sick, elderly, pregnant, heavy laborers), and patristic wisdom from St. John Chrysostom, St. Basil, and St. Augustine.
+  - **Catholic (Roman Rite)**: Ash Wednesday, Good Friday, all Fridays of the year, with canonical dispensations on Solemnities (Can. 1251 & *Paenitemini*).
+  - **Traditional Catholic (1962)**: Includes Ember Days (*Quatuor Tempora*), historic Vigils, Holy Saturday Great Silence, and daily Lenten fasts.
+  - **Eastern Orthodox (Byzantine)**: Great Lent (*Tessaracoste*), Apostles' Fast, Dormition Fast, Nativity Fast (*St. Philip's Fast*), and weekly Wednesday and Friday fasts (*Didache*).
+  - **Protestant / Evangelical**: Ash Wednesday and Good Friday solemnities, the biblical Daniel Fast, personal prayerful fasting, and liberty of conscience (*Romans 14:5*).
+  - **Ecumenical / Spiritual Seeker**: Shared Christian asceticism, fasting from sin and malice, silence before God, and solidarity with the poor.
+- **Day Inspector**: Localized breakdown of fasting rules (quantity of meals), meat abstinence (quality of foods), permitted tables, restricted foods, patristic theology, scripture verses, and daily penitential prayers.
+- **Liturgical Saints & Feasts Integration**: Correlated daily commemorations with liturgical colors (White, Blue, Red), liturgical ranks (*Solemnity, Feast, Memorial, Commemoration*), spiritual quotes, and biographies.
 
 ### 🕊️ Spiritual Dialogue with Jesus (Google Gemini)
-- A peaceful sanctuary to ask biblical questions, clarify doubts of faith, explore the parables, or seek comforting words in times of trial.
-- **Natural Understanding**: Responds with warmth, depth, and evangelical charity in your native language (*English, Italian, Spanish, French, German, Romanian*).
-- **Sovereign Privacy**: Powered by Google Gemini 3 (using your personal API key or on-device Chrome Gemini Nano). Your conversations are never sent to external servers or stored in third-party databases.
-- **Offline Lockout**: Clearly informs the user when offline if no local on-device model is present, preventing hallucinations.
+- A peaceful sanctuary to ask biblical questions, clarify doubts, explore the parables, and seek solace in times of trial.
+- **Personal Sovereign Privacy**: Interfaces directly with **Google Gemini 3** using your personal API key or on-device local models (*Chrome Gemini Nano*). No intermediary proxy servers or external analytics.
+- **Offline Guard**: Clearly displays offline state when no on-device model is available, preventing simulated answers or hallucinations.
 
 ### 🕯️ Contemplative Candle, Rain & Always-on-Top Floating Mode
-- **Prayer & Meditation Timer**: Timed contemplation sessions (15, 25, 45, or 60 minutes) or open meditation.
-- **Procedural Rain Audio**: Generates relaxing, organic rain audio entirely within the browser via the Web Audio API (zero heavy audio downloads or data bandwidth consumption).
-- **📌 Native "Always-on-Top" (Picture-in-Picture)**: Detach the living candle flame into a persistent floating window that stays visible above Word, PDF readers, IDEs, and other work applications.
+- **Prayer & Meditation Timer**: Timed contemplation sessions (15, 25, 45, or 60 minutes) or open-ended meditation.
+- **Web Audio Procedural Rain**: Generates organic, calming rain and white noise entirely in real-time using browser synthesis (zero audio file downloads or bandwidth consumption).
+- **Native Picture-in-Picture (PiP) Persistent Mode**: Detach the living candle flame into a floating window that stays persistently on top of Word, PDF readers, and IDEs during work or study.
 
 ### 📜 Illuminated Shareable Parchment Cards
-- Create museum-quality illuminated manuscript cards from any Scripture verse or quotation.
-- Multi-verse selection with automatic typography scaling.
-- Instant one-tap sharing to **WhatsApp, Telegram, iMessage, Instagram Stories**, or direct high-resolution PNG download.
+- Turn any Scripture passage, saint quote, or prayer into an illuminated manuscript card.
+- High-resolution rendering on parchment with liturgical borders and typography.
+- Direct sharing to **WhatsApp, Telegram, iMessage, Instagram Stories**, or instant PNG download.
 
 ### 🏺 The Jar of Promises
-- Draw a biblical promise tailored to your interior state: *Anxiety, Fear, Loneliness, Grief & Mourning, Weariness, Guilt & Forgiveness, Difficult Decisions, Gratitude*.
-- Each promise includes a contemplative reflection and a focused 30-second micro-prayer.
+- Draw biblical promises for specific emotional and spiritual needs: *Anxiety & Worry, Fear of the Future, Loneliness, Grief & Mourning, Weariness, Guilt & Forgiveness, Difficult Decisions, Gratitude*.
+- Each promise contains an insightful reflection and a focused micro-prayer.
 
 ### 📔 Personal Prayer Journal
-- Record your spiritual intentions, prayers, reflections, and graces received.
-- **"Bring to Jesus" Feature**: Transform any journal prayer into an ongoing topic of contemplation and spiritual dialogue with a single click.
+- Record prayers, spiritual intentions, and received graces.
+- **"Bring to Jesus" Action**: Transfer any prayer intention directly into the spiritual dialogue module with a single click.
 
 ### 🛡️ SOS Temptation & Peace Shield
-- First-aid spiritual support in moments of sudden temptation, panic, or distress:
-  - 30-second guided rhythmic breathing to restore mental and physiological calm.
-  - The Shield Verse (1 Corinthians 10:13).
+- Emergency spiritual support for moments of anxiety or temptation:
+  - 30-second guided rhythmic breathing circle for nervous system stabilization.
+  - The Shield Verse (*1 Corinthians 10:13*).
   - Prayer for divine deliverance and peace.
 
-### 🧭 Faith Compass & Night Examination (Compline)
-- Thoughtful answers to profound existential questions (*the problem of evil, faith and science, human suffering*).
-- Evening Examination of Conscience with the traditional invocation for nocturnal peace and protection against anxiety and sleeplessness.
+### 🧭 Faith Compass & Evening Examination (Compline)
+- Deep patristic and biblical answers to existential questions (*the problem of evil, faith and science, suffering, forgiveness*).
+- Traditional Evening Examination of Conscience for peace and restful sleep.
 
-### 🔒 Absolute Privacy & Data Sovereignty
-- **No accounts or logins**: Zero sign-ups, emails, or passwords.
-- **No cloud telemetry**: Personal notes, prayers, highlights, and journal entries live exclusively on your device inside the local browser database (IndexedDB).
-- **One-Click Backup & Restore**: Export and import your entire spiritual archive as an encrypted or plain JSON file at any time.
+### 🔒 Absolute Privacy & Offline Sovereignty
+- **Zero sign-up**: No email, passwords, phone numbers, or cookies.
+- **Local Storage**: All data resides strictly in your browser's IndexedDB.
+- **One-Click Backup & Restore**: Export and import your entire spiritual archive as plain or encrypted JSON at any time.
 
 ---
 
 ## 🎨 Circadian Liturgical Atmosphere
 
-The visual palette of Aura Sacra harmonizes with the monastic liturgical hours according to your local clock:
-- 🌅 **06:00 – 11:59 (Aurora / Lauds)**: Solar gold tones and radiant morning parchment.
-- ☀️ **12:00 – 17:59 (Midday / Scriptorium)**: Warm classical codex parchment with vermilion rubrics.
-- 🌇 **18:00 – 21:59 (Sunset / Vespers)**: Amber candlelight hues for evening contemplation.
-- 🕯️ **22:00 – 05:59 (Night / Compline)**: Deep cathedral slate and living flame, resting the eyes before sleep.
+The interface adjusts its illumination palette according to the monastic hours of your local clock:
+- 🌅 **06:00 – 11:59 (Aurora / Lauds)**: Morning solar gold and radiant parchment.
+- ☀️ **12:00 – 17:59 (Midday / Scriptorium)**: Warm classical parchment with vermilion accents.
+- 🌇 **18:00 – 21:59 (Sunset / Vespers)**: Amber candlelight for twilight reflection.
+- 🕯️ **22:00 – 05:59 (Night / Compline)**: Deep cathedral slate and living flame to protect your eyes before rest.
 
 ---
 
-## 📱 How to Install Aura Sacra as a PWA
+## 📱 Installation (Progressive Web App)
 
-Aura Sacra is a **Progressive Web App (PWA)** and installs natively across platforms:
+Aura Sacra is designed as a standalone PWA and can be installed on all modern devices:
 
-- **iPhone & iPad (Safari)**:
+- **iOS / iPadOS (Safari)**:
   1. Open the app in Safari.
-  2. Tap the **Share** button (square with an arrow pointing up).
-  3. Scroll down and tap **"Add to Home Screen"**.
-- **Android (Chrome / Edge / Brave)**:
+  2. Tap the **Share** icon (square with arrow up).
+  3. Tap **"Add to Home Screen"**.
+- **Android (Chrome, Edge, Brave)**:
   1. Open the app in your browser.
-  2. Tap the three-dot menu in the upper-right corner.
-  3. Tap **"Install App"** or **"Add to Home screen"**.
-- **Desktop Mac, Windows, or Linux (Chrome / Edge / Brave)**:
-  1. Click the **Install** icon on the right side of the browser address bar.
+  2. Tap the menu (three dots in top right).
+  3. Select **"Install App"** or **"Add to Home screen"**.
+- **Desktop (macOS, Windows, Linux via Chrome / Edge / Brave)**:
+  1. Click the **Install** icon on the right side of the address bar.
 
 ---
 
-## 💻 Running Locally
+## 💻 Local Development Setup
 
-To run the application locally on your computer:
+Aura Sacra adheres to a **zero-build-step** philosophy:
+- Built strictly with standard **ES Modules (ESM)**, HTML5, and CSS3.
+- No Node.js build step, bundler (Webpack/Vite), or transpiler required.
 
-1. Clone or download the repository:
-   ```bash
-   git clone https://github.com/AQUILtheeagle/AURAsacra.git
-   cd AURAsacra
-   ```
+To run locally:
+```bash
+# 1. Clone the repository
+git clone https://github.com/AQUILtheeagle/AURAsacra.git
+cd AURAsacra
 
-2. Start any lightweight static web server:
-   ```bash
-   # Using npx (Node.js)
-   npx serve . -p 8080
+# 2. Start any lightweight static web server
+# Using Python:
+python3 -m http.server 8080
 
-   # Or using any standard static server / VS Code Live Server
-   ```
+# Or using Node (npx):
+npx serve . -p 8080
 
-3. Open your browser at:
-   ```
-   http://localhost:8080
-   ```
+# 3. Open in your browser
+open http://localhost:8080
+```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions from developers, theologians, and believers of all Christian traditions are warmly welcomed! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) guide for architecture details and code conventions.
+We warmly invite theologians, linguists, developers, and believers of all Christian traditions to contribute. Please consult our [CONTRIBUTING.md](CONTRIBUTING.md) guide for architecture details, localization standards, and submission guidelines.
 
 ---
 
 ## 📜 License
 
-This project is free software licensed under the terms of the **GNU General Public License v3 (GNU GPL v3)**.  
-See the [LICENSE](LICENSE) file for complete terms and conditions.
+Aura Sacra is free and open-source software released under the terms of the **GNU General Public License v3.0 (GNU GPL v3)**.  
+See the [LICENSE](LICENSE) file for the full license text.
 
 *Aura Sacra • Soli Deo Gloria*

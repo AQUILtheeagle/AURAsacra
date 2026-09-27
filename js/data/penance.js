@@ -1,3 +1,8 @@
+import { getLanguage } from '../i18n.js';
+import { localizePenanceStatus, getTraditionMeta } from './penance-i18n.js';
+
+export { localizePenanceStatus, getTraditionMeta };
+
 // Sacred Penance, Fasting, and Abstinence Liturgical Engine for Aura Sacra
 // Accurately computes penitential obligations, moveable fasts (via Computus),
 // Ember Days, Vigils, and canonical dispensations across Christian traditions.
@@ -146,8 +151,8 @@ function getEmberDays(year) {
   return days;
 }
 
-// Evaluates penitential status of any given day
-export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
+// Computes raw liturgical penitential status for any given date and tradition
+function computeRawPenanceStatus(dateInput, tradition = 'catholic') {
   const normTrad =
     tradition === 'universal' ? 'catholic' :
     tradition === 'eastern' ? 'orthodox' :
@@ -181,6 +186,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
   if (normTrad === 'catholic') {
     if (isAshWednesday) {
       return {
+        statusKey: 'ash_wednesday',
         isPenitential: true,
         type: 'strict_fast',
         title: 'Ash Wednesday',
@@ -204,6 +210,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
 
     if (isGoodFriday) {
       return {
+        statusKey: 'good_friday',
         isPenitential: true,
         type: 'strict_fast',
         title: 'Good Friday',
@@ -228,6 +235,8 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     // Friday with a Solemnity -> Fasting & Abstinence Dispensed!
     if (dayOfWeek === 5 && solemnityName) {
       return {
+        statusKey: 'solemnity_dispensation',
+        solemnityKey: solemnityName,
         isPenitential: false,
         type: 'solemnity_dispensation',
         title: `Friday: ${solemnityName}`,
@@ -252,6 +261,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     // Every other Friday of the whole year
     if (dayOfWeek === 5) {
       return {
+        statusKey: isLent ? 'lenten_friday' : 'friday_penance',
         isPenitential: true,
         type: 'abstinence',
         title: isLent ? 'Lenten Friday of Penance' : 'Friday of Penance',
@@ -283,6 +293,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     // Lenten Weekday (non-Friday)
     if (isLent && dayOfWeek !== 0) {
       return {
+        statusKey: 'lenten_feria',
         isPenitential: true,
         type: 'lenten_feria',
         title: 'Lenten Season',
@@ -313,6 +324,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
 
     // Ordinary Day
     return {
+      statusKey: 'ordinary',
       isPenitential: false,
       type: 'ordinary',
       title: 'Ordinary Day',
@@ -351,6 +363,8 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     if (matchedEmber) {
       const isEmberSat = date.getDay() === 6;
       return {
+        statusKey: 'ember_day',
+        emberKey: matchedEmber.name,
         isPenitential: true,
         type: 'ember_day',
         title: matchedEmber.name,
@@ -389,7 +403,10 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
         ? 'Vigil of All Saints'
         : 'Vigil of Pentecost';
 
+      const vigilKey = isVigilChristmas ? 'christmas' : isVigilAssumption ? 'assumption' : isVigilAllSaints ? 'all_saints' : 'pentecost';
       return {
+        statusKey: 'vigil',
+        vigilKey,
         isPenitential: true,
         type: 'strict_fast',
         title: vigilName,
@@ -413,12 +430,13 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
 
     // Ash Wednesday & Good Friday
     if (isAshWednesday || isGoodFriday) {
-      return getDayPenanceStatus(dateInput, 'universal');
+      return computeRawPenanceStatus(dateInput, 'catholic');
     }
 
     // Holy Saturday
     if (isHolySaturday) {
       return {
+        statusKey: 'holy_saturday',
         isPenitential: true,
         type: 'strict_fast',
         title: 'Holy Saturday (Sabato Santo)',
@@ -443,7 +461,9 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     // Traditional Lenten Weekdays (All weekdays of Lent are fasting days in 1917/1962)
     if (isLent && dayOfWeek !== 0) {
       const isFriSat = dayOfWeek === 5 || dayOfWeek === 6;
+      const statusKey = dayOfWeek === 5 ? 'traditional_lenten_friday' : dayOfWeek === 6 ? 'traditional_lenten_saturday' : 'traditional_lenten_weekday';
       return {
+        statusKey,
         isPenitential: true,
         type: isFriSat ? 'fast_and_abstinence' : 'fast',
         title: `Lenten Weekday (${dayOfWeek === 5 ? 'Friday Abstinence' : dayOfWeek === 6 ? 'Saturday Abstinence' : 'Fasting Day'})`,
@@ -474,9 +494,10 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     // Traditional Friday throughout the year
     if (dayOfWeek === 5) {
       if (solemnityName) {
-        return getDayPenanceStatus(dateInput, 'universal');
+        return computeRawPenanceStatus(dateInput, 'catholic');
       }
       return {
+        statusKey: 'traditional_friday',
         isPenitential: true,
         type: 'abstinence',
         title: 'Friday of Abstinence',
@@ -498,7 +519,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
       };
     }
 
-    return getDayPenanceStatus(dateInput, 'universal');
+    return computeRawPenanceStatus(dateInput, 'catholic');
   }
 
   // -------------------------------------------------------------
@@ -531,12 +552,15 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     const isCrossElevation = month === 9 && dayOfMonth === 14;
 
     if (isTheophanyEve || isBeheadingJohn || isCrossElevation) {
+      const byzantineSingleKey = isTheophanyEve ? 'theophany' : isBeheadingJohn ? 'beheading' : 'cross';
       const title = isTheophanyEve
         ? 'Eve of Theophany (Paramon)'
         : isBeheadingJohn
         ? 'Beheading of Saint John the Baptist'
         : 'Universal Elevation of the Precious Cross';
       return {
+        statusKey: 'byzantine_strict_single',
+        byzantineSingleKey,
         isPenitential: true,
         type: 'byzantine_strict',
         title,
@@ -561,6 +585,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     if (isGreatLent) {
       const isHolyWeek = date >= addDays(orthodoxEaster, -7);
       return {
+        statusKey: 'byzantine_great_lent',
         isPenitential: true,
         type: 'byzantine_fast',
         title: isHolyWeek ? 'Great and Holy Week' : 'Great Lent (Tessaracoste)',
@@ -591,7 +616,10 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
         ? 'Nativity Fast (St. Philip\'s Fast)'
         : 'Apostles\' Fast';
 
+      const byzantineSeasonKey = isDormitionFast ? 'dormition' : isNativityFast ? 'nativity' : 'apostles';
       return {
+        statusKey: 'byzantine_seasonal',
+        byzantineSeasonKey,
         isPenitential: true,
         type: 'byzantine_fast',
         title: seasonName,
@@ -616,6 +644,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     // Weekly Eastern Wednesday & Friday Fast
     if (dayOfWeek === 3 || dayOfWeek === 5) {
       return {
+        statusKey: 'byzantine_wed_fri',
         isPenitential: true,
         type: 'byzantine_fast',
         title: dayOfWeek === 3 ? 'Wednesday Fast (The Betrayal)' : 'Friday Fast (The Crucifixion)',
@@ -637,7 +666,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
       };
     }
 
-    return getDayPenanceStatus(dateInput, 'catholic');
+    return computeRawPenanceStatus(dateInput, 'catholic');
   }
 
   // -------------------------------------------------------------
@@ -646,6 +675,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
   if (normTrad === 'protestant') {
     if (isAshWednesday) {
       return {
+        statusKey: 'protestant_ash_wednesday',
         isPenitential: true,
         type: 'protestant_fast',
         title: 'Ash Wednesday (Biblical Day of Repentance)',
@@ -669,6 +699,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
 
     if (isGoodFriday) {
       return {
+        statusKey: 'good_friday',
         isPenitential: true,
         type: 'strict_fast',
         title: 'Good Friday (The Cross of Christ)',
@@ -692,6 +723,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
 
     if (dayOfWeek === 5) {
       return {
+        statusKey: 'protestant_friday',
         isPenitential: true,
         type: 'protestant_friday',
         title: 'Friday Cross Memorial',
@@ -715,6 +747,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
 
     if (isLent && dayOfWeek !== 0) {
       return {
+        statusKey: 'protestant_lenten',
         isPenitential: true,
         type: 'lenten_feria',
         title: 'Season of Spiritual Renewal',
@@ -737,6 +770,7 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     }
 
     return {
+      statusKey: 'protestant_ordinary',
       isPenitential: false,
       type: 'ordinary',
       title: 'Day of Christian Liberty & Gratitude',
@@ -763,14 +797,15 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
   // -------------------------------------------------------------
   if (normTrad === 'ecumenical') {
     if (isAshWednesday || isGoodFriday) {
-      return getDayPenanceStatus(dateInput, 'catholic');
+      return computeRawPenanceStatus(dateInput, 'catholic');
     }
 
     if (dayOfWeek === 5) {
       if (solemnityName) {
-        return getDayPenanceStatus(dateInput, 'catholic');
+        return computeRawPenanceStatus(dateInput, 'catholic');
       }
       return {
+        statusKey: 'ecumenical_friday',
         isPenitential: true,
         type: 'abstinence',
         title: 'Universal Friday of Contemplation',
@@ -793,23 +828,29 @@ export function getDayPenanceStatus(dateInput, tradition = 'catholic') {
     }
 
     if (isLent && dayOfWeek !== 0) {
-      return getDayPenanceStatus(dateInput, 'catholic');
+      return computeRawPenanceStatus(dateInput, 'catholic');
     }
 
-    return getDayPenanceStatus(dateInput, 'catholic');
+    return computeRawPenanceStatus(dateInput, 'catholic');
   }
 
-  return getDayPenanceStatus(dateInput, 'catholic');
+  return computeRawPenanceStatus(dateInput, 'catholic');
 }
 
-// Generates an array of day statuses for an entire month
-export function getMonthPenanceDays(year, monthIndex, tradition = 'catholic') {
+// Evaluates penitential status of any given day with full localization
+export function getDayPenanceStatus(dateInput, tradition = 'catholic', lang = null) {
+  const rawStatus = computeRawPenanceStatus(dateInput, tradition);
+  return localizePenanceStatus(rawStatus, lang);
+}
+
+// Generates an array of day statuses for an entire month with full localization
+export function getMonthPenanceDays(year, monthIndex, tradition = 'catholic', lang = null) {
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const days = [];
 
   for (let d = 1; d <= daysInMonth; d++) {
     const curDate = new Date(year, monthIndex, d);
-    const status = getDayPenanceStatus(curDate, tradition);
+    const status = getDayPenanceStatus(curDate, tradition, lang);
     days.push({
       day: d,
       date: curDate,

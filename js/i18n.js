@@ -95,6 +95,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'The Church exercises maternal care. God desires mercy and not sacrifice (Mt 9:13). Those who are sick, pregnant, elderly, or engaged in exhausting manual labor are excused from food fasts and invited to practice prayer and acts of charity.',
       prevMonth: 'Previous Month',
       nextMonth: 'Next Month',
+      feast: 'Feast',
+      feasts: 'Feasts',
       exemptionsList: [
         'The physically sick, chronically ill, or convalescing (e.g., diabetics, cardiac patients, undergoing medical therapy).',
         'Pregnant women and nursing mothers.',
@@ -524,6 +526,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'La Chiesa esercita la sollecitudine materna. Dio desidera la misericordia e non il sacrificio (Mt 9,13). Coloro che sono malati, donne incinte, anziani o lavoratori manuali pesanti sono dispensati dai digiuni corporali e invitati a praticare la preghiera e opere di carità.',
       prevMonth: 'Mese Precedente',
       nextMonth: 'Mese Successivo',
+      feast: 'Festa',
+      feasts: 'Feste',
       exemptionsList: [
         'Malati fisici, persone con patologie croniche o convalescenti (es. diabetici, cardiopatici, terapie mediche).',
         'Donne in gravidanza e madri che allattano.',
@@ -953,6 +957,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'Biserica poartă de grijă ca o mamă iubitoare. Dumnezeu voiește milă, iar nu jertfă (Mt 9:13). Cei bolnavi, femeile însărcinate, bătrânii și ostenitorii cu munca grea sunt scutiți de ajunare trupească, fiind chemați la rugăciune și milostenie.',
       prevMonth: 'Luna Precedentă',
       nextMonth: 'Luna Următoare',
+      feast: 'Sărbătoare',
+      feasts: 'Sărbători',
       exemptionsList: [
         'Cei bolnavi trupește, cu suferințe cronice sau în convalescență.',
         'Femeile însărcinate și mamele care alăptează.',
@@ -1382,6 +1388,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'L\'Église exerce une sollicitude maternelle. Dieu désire la miséricorde et non le sacrifice (Mt 9,13). Les malades, femmes enceintes, personnes âgées et travailleurs de force sont dispensés du jeûne corporel et invités à la prière et aux œuvres de charité.',
       prevMonth: 'Mois Précédent',
       nextMonth: 'Mois Suivant',
+      feast: 'Fête',
+      feasts: 'Fêtes',
       exemptionsList: [
         'Personnes malades, souffrant d\'affections chroniques ou convalescentes.',
         'Femmes enceintes et mères qui allaitent.',
@@ -1811,6 +1819,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'La Iglesia ejerce cuidado maternal. Dios desea misericordia y no sacrificio (Mt 9,13). Los enfermos, embarazadas, ancianos y trabajadores de esfuerzo físico intenso están dispensados del ayuno corporal y llamados a la oración y obras de caridad.',
       prevMonth: 'Mes Anterior',
       nextMonth: 'Mes Siguiente',
+      feast: 'Fiesta',
+      feasts: 'Fiestas',
       exemptionsList: [
         'Enfermos físicos, personas con patologías crónicas o convalecientes.',
         'Mujeres embarazadas y madres lactantes.',
@@ -2240,6 +2250,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'A Igreja exerce solicitude materna. Deus deseja misericórdia e não sacrifício (Mt 9,13). Os doentes, grávidas, idosos e trabalhadores de esforço físico pesado estão dispensados do jejum alimentar e convidados à oração e caridade.',
       prevMonth: 'Mês Anterior',
       nextMonth: 'Mês Seguinte',
+      feast: 'Festa',
+      feasts: 'Festas',
       exemptionsList: [
         'Doentes físicos, portadores de doenças crónicas ou em convalescença.',
         'Mulheres grávidas e lactantes.',
@@ -2669,6 +2681,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'Die Kirche übt mütterliche Fürsorge. Gott will Barmherzigkeit und nicht Opfer (Mt 9,13). Kranke, Schwangere, ältere Menschen und schwere körperliche Arbeiter sind vom leiblichen Fasten befreit und zu Gebet und Werken der Nächstenliebe gerufen.',
       prevMonth: 'Vorheriger Monat',
       nextMonth: 'Nächster Monat',
+      feast: 'Fest',
+      feasts: 'Feste',
       exemptionsList: [
         'Kranke, chronisch Leidende und Rekonvaleszenten.',
         'Schwangere Frauen und stillende Mütter.',
@@ -3097,6 +3111,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'Церковь проявляет материнскую заботу. Милости хочу, а не жертвы (Мф 9:13). Болящие, беременные, престарелые и занятые тяжелым физическим трудом освобождаются от телесного поста и призываются к молитве и делам милосердия.',
       prevMonth: 'Предыдущий месяц',
       nextMonth: 'Следующий месяц',
+      feast: 'Праздник',
+      feasts: 'Праздников',
       exemptionsList: [
         'Телесно болящие, страдающие хроническими недугами или выздоравливающие.',
         'Беременные женщины и кормящие матери.',
@@ -3526,6 +3542,8 @@ export const TRANSLATIONS = {
       exemptionsDesc: 'Ecclesia maternam curam adhibet. Misericordiam volo, et non sacrificium (Mt 9,13). Infirmi, gravidae, senes et duro labore corporeo occupati a ieiuniis ciborum excusantur et ad orationem caritatemque invitantur.',
       prevMonth: 'Mensis Praecedens',
       nextMonth: 'Mensis Sequens',
+      feast: 'Festum',
+      feasts: 'Festa',
       exemptionsList: [
         'Aegrotantes corpore, chronice infirmi vel convalescentes.',
         'Mulieres gravidae et matres lactantes.',

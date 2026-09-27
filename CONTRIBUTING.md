@@ -1,83 +1,163 @@
-# How to Contribute to Aura Sacra 🕊️
+# Contributing to Aura Sacra 🕊️
 
 Thank you for your interest in contributing to **Aura Sacra**!  
-Aura Sacra is an ecumenical, contemplative, 100% offline-first Christian Progressive Web App (PWA) built for deep spiritual reflection, prayer, Bible study, and absolute personal data sovereignty.
+Aura Sacra is an ecumenical, contemplative, and 100% offline-first Christian Progressive Web App (PWA) dedicated to deep biblical study, liturgical penance and fasting discipline, prayer, and absolute personal data sovereignty.
 
 ---
 
 ## 🌿 Core Guiding Principles
 
-Every code and content contribution should adhere to these core principles:
+Every code and content contribution should adhere to these core pillars:
 
-### 1. Pure Web Architecture & Zero Build Toolchains
-- The entire application is built using standard, modern **JavaScript (ES Modules)**, HTML5, and CSS3.
-- No bundlers, transpilers, or complex build toolchains are required (no mandatory Node.js, Webpack, Vite, or Babel).
-- Any modern web browser can execute the application directly by serving the static files, ensuring maximum transparency, longevity, and technological independence.
+### 1. Pure Web Standards & Zero Build Toolchains
+- The entire codebase is implemented in standard, native **JavaScript (ES Modules)**, HTML5, and CSS3.
+- No bundlers, transpilers, or build steps are permitted (no mandatory Webpack, Vite, Babel, or npm dependencies).
+- Any modern web browser must be able to serve the application directly from static files, ensuring architectural simplicity, auditability, and long-term technological independence.
 
 ### 2. Complete Data Sovereignty & 100% Offline Privacy
-- No user data (personal journal entries, prayers, Bible highlights, or reflections) ever leaves the user's device.
-- State and archives are stored exclusively on the user's local device using **IndexedDB** (with a mirror in `localStorage`).
-- Full backup and restore capability via standard, open JSON files is guaranteed at all times.
+- **Zero user data** (personal journal notes, prayers, Bible highlights, or chat reflections) ever leaves the user's device.
+- State and archives are stored exclusively on the user's local machine via **IndexedDB** (with a fallback mirror in `localStorage`).
+- Zero analytics, trackers, cookies, or remote logging are allowed.
+- Export and import of user data via standard plain or encrypted JSON files must remain fully supported.
 
-### 3. Ecumenical Respect & Canonical Faithfulness
-- Aura Sacra embraces Christians across historical traditions: Catholic, Orthodox, Protestant / Evangelical, and all sincere spiritual seekers.
-- The platform includes the full **80-Book Canonical & Deuterocanonical library** (including Sirach / Ecclesiasticus, Wisdom of Solomon, Tobit, Judith, Baruch, and Maccabees).
-- All Biblical content, liturgical calendars, and spiritual reflections must preserve a welcoming, reverent tone faithful to the Holy Scriptures and the Gospel of Jesus Christ.
+### 3. Ecumenical Respect & Canonical Integrity
+- Aura Sacra welcomes Christians across historical traditions: Catholic, Eastern Orthodox, Protestant / Evangelical, and all sincere spiritual seekers.
+- The platform hosts **9 complete historical Holy Bibles** (including the full Deuterocanonical / Apocryphal books).
+- All liturgical computations, theological commentary, and scripture texts must maintain high scholarly rigor and reverent fidelity to the Christian faith.
 
-### 4. Transparent AI Architecture
-- The spiritual dialogue assistant interfaces with **Google Gemini 3** (via personal API key) or on-device local models (such as Chrome Gemini Nano).
-- When offline or when no model is available, the AI assistant gracefully disables itself with clear feedback, preventing fabricated or unvetted responses.
+### 4. Comprehensive Localization (9 Languages)
+- All user-facing strings must be localized across the 9 supported languages:
+  - English (`en`), Italian (`it`), Romanian (`ro`), French (`fr`), Spanish (`es`), Portuguese (`pt`), German (`de`), Russian (`ru`), and Latin (`la`).
+- Main UI strings reside in `js/i18n.js`.
+- Liturgical fasting rules, permissions, theology, and traditions reside in `js/data/penance-i18n.js`.
+
+### 5. Transparent & Privacy-Preserving AI
+- The spiritual dialogue assistant interfaces directly with **Google Gemini 3** (via user-supplied API key) or on-device local models (*Chrome Gemini Nano*).
+- No proxy servers or third-party gateways are permitted.
+- When offline or when no model is configured, the assistant gracefully informs the user without attempting to simulate or fabricate answers.
 
 ---
 
-## 🛠️ Development Environment Setup
+## 📁 Repository Structure
 
-1. **Clone or download the repository**:
+```
+aura-sacra/
+├── index.html                   # Main single-page application shell
+├── candle-popup.html            # Standalone Picture-in-Picture candle player
+├── manifest.json                # PWA manifest
+├── sw.js                        # Cache-first offline service worker
+├── css/
+│   └── style.css                # Medieval manuscript styling & circadian themes
+├── data/                        # 100% offline canonical Bibles (JSON)
+│   ├── bible-kjv.json           # English (KJV + Deuterocanon)
+│   ├── bible-cei.json           # Italian (CEI 2008)
+│   ├── bible-sinodala.json      # Romanian (Sinodală)
+│   ├── bible-segond.json        # French (Louis Segond 1910)
+│   ├── bible-reina.json         # Spanish (Reina-Valera 1909)
+│   ├── bible-almeida.json       # Portuguese (João Ferreira de Almeida)
+│   ├── bible-luther.json        # German (Lutherbibel 1912)
+│   ├── bible-synodal.json       # Russian (Синодальный перевод)
+│   └── bible-vulgata.json       # Latin (Biblia Sacra Vulgata Clementina 1592)
+├── js/
+│   ├── app.js                   # Application coordinator & navigation
+│   ├── i18n.js                  # Central localization dictionary (9 languages)
+│   ├── db.js                    # Local IndexedDB storage engine
+│   ├── circadian.js             # Circadian liturgical theme manager
+│   ├── audio-engine.js          # Web Audio procedural rain synthesis
+│   ├── ai-engine.js             # Google Gemini 3 & Gemini Nano interface
+│   ├── card-generator.js        # Canvas manuscript card generator
+│   ├── icons.js                 # Central SVG icon catalog
+│   ├── data/
+│   │   ├── penance.js           # Liturgical Computus & fasting engine
+│   │   ├── penance-i18n.js      # Fasting & traditions multilingual catalog
+│   │   ├── scriptures.js        # Bible loader & book catalog
+│   │   ├── scripture-archives.js# Pre-loaded offline reference verses
+│   │   ├── daily-saints.js      # Liturgical saints & color calendar
+│   │   ├── saints.js            # Tradition-specific Church fathers
+│   │   ├── promises.js          # Jar of Promises reflections & prayers
+│   │   └── doubts.js            # Faith Compass questions & answers
+│   └── components/              # Modular UI components
+│       ├── bible-reader.js      # Scripture reader & highlight engine
+│       ├── penance-calendar.js  # Liturgical calendar & Day Inspector
+│       ├── jesus-chat.js        # Spiritual dialogue view
+│       ├── prayer-journal.js    # Local prayer journal
+│       ├── saints-view.js       # Saints & Church fathers view
+│       ├── evening-exam.js      # Compline examination of conscience
+│       ├── jar-promises.js      # Jar of Promises view
+│       ├── sos-temptation.js    # SOS Peace & breathing shield
+│       ├── faith-compass.js     # Existential faith Q&A
+│       ├── floating-candle.js   # Picture-in-Picture candle controller
+│       ├── focus-mode.js        # Timed contemplative timer
+│       ├── share-card.js        # Illuminated card modal
+│       ├── settings-modal.js    # Settings & data backup/restore
+│       └── ...
+└── icons/                       # PWA application icons
+```
+
+---
+
+## 🛠️ Local Development & Testing
+
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/AQUILtheeagle/AURAsacra.git
    cd AURAsacra
    ```
 
-2. **Serve the application locally**:
-   Any lightweight static web server can serve Aura Sacra with proper MIME types. You can use any static server of your preference, for example:
+2. **Serve with any static HTTP server**:
+   Because Aura Sacra requires no build tools, any static web server is sufficient:
    ```bash
-   # Using npx (Node.js)
-   npx serve . -p 8080
+   # Using Python:
+   python3 -m http.server 8080
 
-   # Or using VS Code Live Server extension
-   # Right-click index.html -> "Open with Live Server"
+   # Or using npx:
+   npx serve . -p 8080
    ```
    Open `http://localhost:8080` in your web browser.
 
-3. **Code Conventions**:
-   - Use standard ES Modules (`import` / `export`).
-   - Maintain UI consistency using the pre-configured Tailwind CSS utility classes and semantic variables (`var(--accent-vermilion)`, `var(--bg-parchment)`).
-   - Use the centralized, accessible SVG icons defined in `js/icons.js`.
+3. **Verify JavaScript Syntax**:
+   On macOS, you can test ES Module import syntax using the JavaScriptCore CLI:
+   ```bash
+   /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -e "import('./js/app.js').then(() => print('OK')).catch(print)"
+   ```
+
+4. **Service Worker Cache Updates**:
+   When adding or renaming cached assets:
+   - Add the path to `ASSETS_TO_CACHE` in `sw.js`.
+   - Increment `CACHE_NAME` in `sw.js` (e.g., from `aura-sacra-v1.2.2` to `aura-sacra-v1.2.3`).
 
 ---
 
-## 🤝 Submitting a Contribution
+## 🎨 UI Guidelines & Code Standards
 
-1. **Fork** the repository on GitHub.
-2. Create a dedicated branch for your feature or bug fix:
+- **Semantic CSS Variables**: Use the circadian CSS custom properties defined in `css/style.css` (`var(--bg-primary)`, `var(--bg-card)`, `var(--text-primary)`, `var(--accent-vermilion)`, `var(--bg-parchment)`).
+- **Icons**: Always reuse or add icons to `js/icons.js`. Do not embed unstyled or duplicate inline SVGs in components.
+- **Notranslate Attributes**: Preserve the `notranslate` class and `translate="no"` attribute on sacred Latin text, Bible verses, and saint quotations to prevent browser auto-translators from altering canonical texts.
+- **Defensive Error Handling**: Always handle offline scenarios gracefully without throwing uncaught exceptions.
+
+---
+
+## 🚀 Submitting Contributions
+
+1. **Fork** the repository and create your feature branch:
    ```bash
    git checkout -b feature/your-feature-name
    ```
-3. Test your changes thoroughly:
-   - Ensure the user interface renders seamlessly across all 4 circadian liturgical themes (*Dawn / Lauds, Midday / Scriptorium, Sunset / Vespers, Night / Compline*).
-   - Test offline functionality by toggling "Offline" mode in your browser DevTools.
-   - Verify that the 80-book Bible reader and the Penance Calendar function smoothly.
-4. Commit your changes with clear, descriptive commit messages:
+2. Test your changes:
+   - Verify UI rendering across all 4 circadian themes (*Dawn, Midday, Sunset, Night*).
+   - Test offline support by enabling "Offline" in DevTools Network tab.
+   - Verify language switching across all 9 supported languages.
+3. Commit with concise, descriptive commit messages:
    ```bash
-   git commit -m "Add descriptive summary of changes"
+   git commit -m "feat(penance): add multilingual support for Ember Day descriptions"
    ```
-5. Push the branch to your fork and submit a **Pull Request**.
+4. Push your branch to GitHub and open a **Pull Request**.
 
 ---
 
 ## 📜 License
 
-By contributing to Aura Sacra, you agree that your contributions will be licensed and distributed under the terms of the **GNU General Public License v3 (GNU GPL v3)**.  
-See the [LICENSE](LICENSE) file for the full legal text and conditions.
+By contributing to Aura Sacra, you agree that your contributions will be licensed under the **GNU General Public License v3.0 (GNU GPL v3)**.  
+See the [LICENSE](LICENSE) file for the complete terms.
 
 *Aura Sacra • Soli Deo Gloria*

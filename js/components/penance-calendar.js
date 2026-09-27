@@ -3,7 +3,8 @@ import {
   TRADITIONS,
   getDayPenanceStatus,
   getMonthPenanceDays,
-  PENANCE_GUIDE
+  PENANCE_GUIDE,
+  getTraditionMeta
 } from '../data/penance.js';
 import {
   getSaintsForDate,
@@ -14,6 +15,15 @@ import {
 import { icons } from '../icons.js';
 import { getSetting, saveSetting } from '../db.js';
 import { t, getLanguage } from '../i18n.js';
+
+function getSaintName(saint, lang = 'it') {
+  if (!saint) return '';
+  if (lang === 'it' && saint.name_it) return saint.name_it;
+  if (lang === 'ro' && saint.name_ro) return saint.name_ro;
+  if (lang === 'la' && saint.name_la) return saint.name_la;
+  if (saint[`name_${lang}`]) return saint[`name_${lang}`];
+  return (lang === 'it' || lang === 'la') && saint.name_it ? saint.name_it : (saint.name || '');
+}
 
 let activeTradition = 'universal';
 let currentDisplayDate = new Date();
@@ -32,18 +42,18 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
   activeTradition = await getSetting('penance_tradition', normalizedTradition);
   const today = new Date();
   currentDisplayDate = new Date(today.getFullYear(), today.getMonth(), 1);
-  selectedDayData = getDayPenanceStatus(today, activeTradition);
+  selectedDayData = getDayPenanceStatus(today, activeTradition, getLanguage());
 
   function render() {
     const lang = getLanguage();
     const today = new Date();
-    const todayStatus = getDayPenanceStatus(today, activeTradition);
+    const todayStatus = getDayPenanceStatus(today, activeTradition, lang);
     const todaySaints = getTodaySaints(activeTradition);
 
     const curYear = currentDisplayDate.getFullYear();
     const curMonth = currentDisplayDate.getMonth();
     const monthName = getLocalizedMonthName(curMonth, lang);
-    const monthDays = getMonthPenanceDays(curYear, curMonth, activeTradition);
+    const monthDays = getMonthPenanceDays(curYear, curMonth, activeTradition, lang);
 
     // Calculate grid padding for first day of month (0 = Sun, 1 = Mon...)
     const firstDayIndex = new Date(curYear, curMonth, 1).getDay();
@@ -75,15 +85,18 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             <!-- Tradition Mode Segmented Control -->
             <div class="bg-[var(--bg-secondary)] p-1 rounded-xl border border-stone-300 dark:border-stone-700 flex flex-wrap sm:flex-nowrap gap-1">
               ${TRADITIONS.map(
-                (trad) => `
+                (trad) => {
+                  const meta = getTraditionMeta(trad.id, lang);
+                  return `
                 <button data-tradition="${trad.id}" class="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold transition cursor-pointer ${
                   activeTradition === trad.id
                     ? 'bg-amber-600 text-white shadow-sm'
                     : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-stone-500/10'
-                }" title="${trad.subtitle}">
-                  ${trad.name}
+                }" title="${meta.subtitle}">
+                  ${meta.name}
                 </button>
-              `
+              `;
+                }
               ).join('')}
             </div>
           </div>
@@ -92,8 +105,8 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
           <div class="text-xs text-[var(--text-muted)] bg-[var(--bg-secondary)] px-3 py-2 rounded-xl border border-stone-200 dark:border-stone-800/80 flex items-center justify-between gap-2">
             <div>
               <strong class="text-[var(--text-primary)] font-semibold">${t('penance.activeRite', 'Active Rite:')}</strong>
-              ${TRADITIONS.find((t) => t.id === activeTradition)?.subtitle} — ${
-      TRADITIONS.find((t) => t.id === activeTradition)?.description
+              ${getTraditionMeta(activeTradition, lang).subtitle} — ${
+      getTraditionMeta(activeTradition, lang).description
     }
             </div>
           </div>
@@ -141,10 +154,10 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                   ${todaySaints.map(s => {
                     const cMeta = s.colorMeta;
                     const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
+                    const sName = getSaintName(s, lang);
                     return `
                       <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg border text-xs font-sans font-semibold ${cMeta.badgeClass}">
-                        <span class="w-2 h-2 rounded-full ${cMeta.dotClass}"></span>
-                        <span>${cMeta.symbol} ${s.name_it && lang === 'it' ? s.name_it : s.name}</span>
+                        <span>${cMeta.symbol} ${sName}</span>
                         <span class="opacity-75 text-[10px]">(${cName} • ${t(`ranks.${s.rank}`, s.rank)})</span>
                       </span>
                     `;
@@ -287,7 +300,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                     ${
                       primarySaint ? `
                         <div class="text-[9px] font-sans font-medium truncate ${primarySaint.colorMeta.textClass} hidden sm:block">
-                          ${primarySaint.colorMeta.symbol} ${primarySaint.name_it && lang === 'it' ? primarySaint.name_it.split(',')[0] : primarySaint.name.split(',')[0]}
+                          ${primarySaint.colorMeta.symbol} ${getSaintName(primarySaint, lang).split(',')[0]}
                         </div>
                       ` : ''
                     }
@@ -374,7 +387,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 <span>${t('penance.saintsOnThisDay', 'Saints & Feasts Commemorated on this Day')}</span>
               </h4>
               <span class="text-[11px] font-sans text-[var(--text-muted)]">
-                ${selectedDaySaints.length} ${selectedDaySaints.length === 1 ? 'Feast' : 'Feasts'}
+                ${selectedDaySaints.length} ${selectedDaySaints.length === 1 ? t('penance.feast', 'Feast') : t('penance.feasts', 'Feasts')}
               </span>
             </div>
 
@@ -383,7 +396,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 const cMeta = saint.colorMeta;
                 const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
                 const rankName = t(`ranks.${saint.rank}`, saint.rank);
-                const saintDisplayName = (lang === 'it' && saint.name_it) ? saint.name_it : saint.name;
+                const saintDisplayName = getSaintName(saint, lang);
 
                 return `
                   <div class="bg-[var(--bg-card)] border-2 ${cMeta.borderClass} rounded-xl p-4 space-y-3 shadow-xs transition hover:shadow-md">
@@ -482,7 +495,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             <!-- Foods Allowed -->
             <div class="bg-emerald-500/5 border border-emerald-500/30 rounded-xl p-4 space-y-1.5">
               <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                <span>✓ ${t('penance.allowedTable', 'Permitted Table')}</span>
+                <span>${t('penance.allowedTable', '✓ Permitted Table')}</span>
               </div>
               <p class="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">
                 ${selected.rules.allowed}
@@ -492,7 +505,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             <!-- Foods to Avoid -->
             <div class="bg-red-500/5 border border-red-500/30 rounded-xl p-4 space-y-1.5">
               <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-red-700 dark:text-red-400">
-                <span>✗ ${t('penance.avoidTable', 'Prohibited or Restricted')}</span>
+                <span>${t('penance.avoidTable', '✗ Prohibited or Restricted')}</span>
               </div>
               <p class="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">
                 ${selected.rules.avoid}
@@ -601,7 +614,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
         try {
           localStorage.setItem('aurasacra_user_confession', activeTradition);
         } catch (e) {}
-        selectedDayData = getDayPenanceStatus(selectedDayData?.date || new Date(), activeTradition);
+        selectedDayData = getDayPenanceStatus(selectedDayData?.date || new Date(), activeTradition, lang);
         render();
       });
     });
@@ -630,7 +643,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     container.querySelector('#btn-jump-today').addEventListener('click', () => {
       const now = new Date();
       currentDisplayDate = new Date(now.getFullYear(), now.getMonth(), 1);
-      selectedDayData = getDayPenanceStatus(now, activeTradition);
+      selectedDayData = getDayPenanceStatus(now, activeTradition, lang);
       render();
     });
 
@@ -652,7 +665,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
       btn.addEventListener('click', () => {
         const dayNum = parseInt(btn.getAttribute('data-calendar-day'), 10);
         const clickedDate = new Date(curYear, curMonth, dayNum);
-        selectedDayData = getDayPenanceStatus(clickedDate, activeTradition);
+        selectedDayData = getDayPenanceStatus(clickedDate, activeTradition, lang);
         render();
         const inspectorEl = container.querySelector('#day-inspector');
         if (inspectorEl) {
