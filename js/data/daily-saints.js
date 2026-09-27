@@ -13,6 +13,11 @@ export const LITURGICAL_COLORS = {
     name_it: 'Bianco',
     name_ro: 'Alb',
     name_la: 'Albus',
+    name_es: 'Blanco',
+    name_fr: 'Blanc',
+    name_de: 'Weiß',
+    name_pt: 'Branco',
+    name_ru: 'Белый',
     dotClass: 'bg-stone-100 ring-1 ring-stone-300 dark:ring-stone-600',
     badgeClass: 'bg-stone-100/15 text-stone-100 border-stone-300/60 dark:border-stone-500/80',
     borderClass: 'border-stone-300/80 dark:border-stone-600/80',
@@ -26,6 +31,11 @@ export const LITURGICAL_COLORS = {
     name_it: 'Blu',
     name_ro: 'Albastru',
     name_la: 'Caeruleus',
+    name_es: 'Azul',
+    name_fr: 'Bleu',
+    name_de: 'Blau',
+    name_pt: 'Azul',
+    name_ru: 'Синий',
     dotClass: 'bg-blue-500 ring-1 ring-blue-400',
     badgeClass: 'bg-blue-600/20 text-blue-400 border-blue-500/60',
     borderClass: 'border-blue-500/60',
@@ -39,12 +49,89 @@ export const LITURGICAL_COLORS = {
     name_it: 'Rosso',
     name_ro: 'Roșu',
     name_la: 'Ruber',
+    name_es: 'Rojo',
+    name_fr: 'Rouge',
+    name_de: 'Rot',
+    name_pt: 'Vermelho',
+    name_ru: 'Красный',
     dotClass: 'bg-red-600 ring-1 ring-red-400',
     badgeClass: 'bg-red-600/20 text-red-400 border-red-500/60',
     borderClass: 'border-red-500/60',
     textClass: 'text-red-400 dark:text-red-300',
     symbol: '🔴',
     desc: 'Holy Apostles, Evangelists & Martyrs of the Christian Faith'
+  },
+  purple: {
+    id: 'purple',
+    name: 'Purple',
+    name_it: 'Viola',
+    name_ro: 'Violet',
+    name_la: 'Purpureus',
+    name_es: 'Morado',
+    name_fr: 'Violet',
+    name_de: 'Violett',
+    name_pt: 'Roxo',
+    name_ru: 'Фиолетовый',
+    dotClass: 'bg-purple-600 ring-1 ring-purple-400',
+    badgeClass: 'bg-purple-600/20 text-purple-400 border-purple-500/60',
+    borderClass: 'border-purple-500/60',
+    textClass: 'text-purple-400 dark:text-purple-300',
+    symbol: '🟣',
+    desc: 'Penitential days, Advent & Lent'
+  },
+  green: {
+    id: 'green',
+    name: 'Green',
+    name_it: 'Verde',
+    name_ro: 'Verde',
+    name_la: 'Viridis',
+    name_es: 'Verde',
+    name_fr: 'Vert',
+    name_de: 'Grün',
+    name_pt: 'Verde',
+    name_ru: 'Зеленый',
+    dotClass: 'bg-emerald-600 ring-1 ring-emerald-400',
+    badgeClass: 'bg-emerald-600/20 text-emerald-400 border-emerald-500/60',
+    borderClass: 'border-emerald-500/60',
+    textClass: 'text-emerald-400 dark:text-emerald-300',
+    symbol: '🟢',
+    desc: 'Ordinary Time & Hope of Resurrection'
+  },
+  rose: {
+    id: 'rose',
+    name: 'Rose',
+    name_it: 'Rosa',
+    name_ro: 'Roz',
+    name_la: 'Rosaceus',
+    name_es: 'Rosa',
+    name_fr: 'Rose',
+    name_de: 'Rosa',
+    name_pt: 'Rosa',
+    name_ru: 'Розовый',
+    dotClass: 'bg-pink-500 ring-1 ring-pink-400',
+    badgeClass: 'bg-pink-600/20 text-pink-400 border-pink-500/60',
+    borderClass: 'border-pink-500/60',
+    textClass: 'text-pink-400 dark:text-pink-300',
+    symbol: '🌸',
+    desc: 'Gaudete & Laetare Sundays'
+  },
+  gold: {
+    id: 'gold',
+    name: 'Gold',
+    name_it: 'Oro',
+    name_ro: 'Auriu',
+    name_la: 'Aureus',
+    name_es: 'Dorado',
+    name_fr: 'Or',
+    name_de: 'Gold',
+    name_pt: 'Dourado',
+    name_ru: 'Золотой',
+    dotClass: 'bg-amber-400 ring-1 ring-amber-300',
+    badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-400/60',
+    borderClass: 'border-amber-400/60',
+    textClass: 'text-amber-300 dark:text-amber-200',
+    symbol: '🟡',
+    desc: 'Solemnities of highest dignity, Easter & Christmas'
   }
 };
 
@@ -3551,6 +3638,12 @@ export function getTodaySaints(confession = 'ecumenical') {
   return getSaintsForDate(new Date(), confession);
 }
 
-export function getLiturgicalColorMeta(colorKey) {
-  return LITURGICAL_COLORS[colorKey] || LITURGICAL_COLORS.white;
+export function getLiturgicalColorMeta(colorKey, lang = 'it') {
+  const meta = LITURGICAL_COLORS[colorKey] || LITURGICAL_COLORS.white;
+  const localizedName = (lang && meta[`name_${lang}`]) || meta.name_it || meta.name;
+  return {
+    ...meta,
+    name: localizedName,
+    displayName: localizedName
+  };
 }

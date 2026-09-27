@@ -260,6 +260,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 const isSelected = selected && isSameDate(dObj.date, selected.date);
                 const daySaints = getSaintsForDate(dObj.date, activeTradition);
                 const primarySaint = daySaints[0] || null;
+                const locPrimary = primarySaint ? getLocalizedSaint(primarySaint, lang) : null;
 
                 let cellColorStyle = 'border-stone-200 dark:border-stone-800 bg-[var(--bg-secondary)] hover:border-amber-600';
                 if (dObj.badge.color === 'vermilion') {
@@ -286,8 +287,8 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
                     <div class="flex items-center gap-1">
                       ${
-                        primarySaint
-                          ? `<span class="w-2 h-2 rounded-full ${primarySaint.colorMeta.dotClass}" title="${primarySaint.name} (${primarySaint.colorMeta.name})"></span>`
+                        locPrimary
+                          ? `<span class="w-2 h-2 rounded-full ${primarySaint.colorMeta.dotClass}" title="${locPrimary.displayName || locPrimary.name} (${locPrimary.colorName || primarySaint.colorMeta.name})"></span>`
                           : ''
                       }
                     </div>
@@ -296,9 +297,9 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                   <!-- Day Indicator Badge & Saint Mini Title -->
                   <div class="w-full space-y-1">
                     ${
-                      primarySaint ? `
+                      locPrimary ? `
                         <div class="text-[9px] font-sans font-medium truncate ${primarySaint.colorMeta.textClass} hidden sm:block">
-                          ${primarySaint.colorMeta.symbol} ${getSaintName(primarySaint, lang).split(',')[0]}
+                          ${primarySaint.colorMeta.symbol} ${(locPrimary.displayName || locPrimary.name).split(',')[0]}
                         </div>
                       ` : ''
                     }
@@ -392,10 +393,10 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             <div class="space-y-3">
               ${selectedDaySaints.map(saint => {
                 const locSaint = getLocalizedSaint(saint, lang);
-                const cMeta = locSaint.colorMeta || getLiturgicalColorMeta(locSaint.color);
-                const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
-                const rankName = t(`ranks.${locSaint.rank}`, locSaint.rank);
-                const saintDisplayName = locSaint.name;
+                const cMeta = locSaint.colorMeta || getLiturgicalColorMeta(locSaint.color, lang);
+                const cName = locSaint.colorName || cMeta.name;
+                const rankName = locSaint.rankName || t(`ranks.${locSaint.rank}`, locSaint.rank);
+                const saintDisplayName = locSaint.displayName || locSaint.name;
 
                 return `
                   <div class="bg-[var(--bg-card)] border-2 ${cMeta.borderClass} rounded-xl p-4 space-y-3 shadow-xs transition hover:shadow-md">

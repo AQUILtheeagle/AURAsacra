@@ -119,10 +119,10 @@ export async function renderSaintsView(container, onOpenShareCard) {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           ${displayedSaints.map((saint) => {
             const locSaint = getLocalizedSaint(saint, lang);
-            const cMeta = locSaint.colorMeta || getLiturgicalColorMeta(locSaint.color || 'white');
-            const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
-            const rankName = locSaint.rank ? t(`ranks.${locSaint.rank}`, locSaint.rank) : t('ranks.memorial');
-            const primaryName = locSaint.name;
+            const cMeta = locSaint.colorMeta || getLiturgicalColorMeta(locSaint.color || 'white', lang);
+            const cName = locSaint.colorName || cMeta.name;
+            const rankName = locSaint.rankName || (locSaint.rank ? t(`ranks.${locSaint.rank}`, locSaint.rank) : t('ranks.memorial'));
+            const primaryName = locSaint.displayName || locSaint.name;
 
             return `
               <div class="bg-[var(--bg-parchment)] border-2 ${cMeta.borderClass} rounded-2xl p-5 sm:p-6 shadow-md flex flex-col justify-between space-y-4 parchment-border hover:shadow-xl transition">
