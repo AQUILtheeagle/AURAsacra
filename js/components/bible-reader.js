@@ -151,26 +151,44 @@ export async function renderBibleReader(container, onOpenShareCard) {
     const currentCitationRange = getCitationRange(book.title, activeChapter, sortedSelected);
 
     container.innerHTML = `
-      <div class="space-y-6 pb-24">
+      <div class="space-y-6 pb-32 sm:pb-24">
         
         <!-- Header & Scripture Selector Toolbar -->
-        <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-3 sm:p-4 shadow-sm space-y-3">
           
-          <!-- Book, Chapter, and Bible Version Pickers -->
-          <div class="flex flex-wrap items-center gap-2 sm:gap-3 w-full md:w-auto">
-            <span class="text-amber-600">${icons.book('w-5 h-5')}</span>
+          <!-- Top Row: Bible Version & Status Badge -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-4">
             
-            <!-- Bible Version / Translation Archive Picker -->
-            <select id="select-bible-version" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no" title="${t('reader.canonicalArchive', 'Historic Canonical Scripture Archive')}">
-              ${SUPPORTED_BIBLES.map((b) => `
-                <option value="${b.id}" ${b.id === activeBibleVersion ? 'selected' : ''}>
-                  ${b.flag} ${b.label} — ${b.name}
-                </option>
-              `).join('')}
-            </select>
+            <!-- Version Selector with Icon -->
+            <div class="flex items-center gap-2 flex-1 min-w-0">
+              <span class="text-amber-600 flex-shrink-0">${icons.book('w-5 h-5')}</span>
+              <select id="select-bible-version" class="flex-1 min-w-0 w-full max-w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('reader.canonicalArchive', 'Historic Canonical Scripture Archive')}">
+                ${SUPPORTED_BIBLES.map((b) => `
+                  <option value="${b.id}" ${b.id === activeBibleVersion ? 'selected' : ''}>
+                    ${b.flag} ${b.label} — ${b.name}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
 
+            <!-- Scripture Archive Status & Selection Badge -->
+            <div class="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0">
+              <button id="btn-toggle-select-all" class="text-xs font-sans font-medium text-amber-600 hover:text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-600/40 hover:bg-amber-600/10 transition cursor-pointer flex-shrink-0">
+                ${selectedCount === chapterData.verses.length ? t('reader.deselectAll', 'Deselect All') : t('reader.selectChapter', 'Select Chapter')}
+              </button>
+              <div class="flex items-center gap-1.5 text-xs font-sans text-[var(--text-muted)] bg-[var(--bg-secondary)] px-2.5 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 notranslate flex-shrink-0" translate="no">
+                <span class="w-2 h-2 rounded-full ${isArchivalCustom ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
+                <span class="truncate max-w-[150px] sm:max-w-none">${isArchivalCustom ? `${currentBibleObj.label} ${t('reader.canonicalArchive', 'Archive')}` : `KJV ${t('reader.canonicalArchive', 'Archive')}`}</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Row: Book, Chapter, and Steppers -->
+          <div class="flex items-center gap-2 pt-2 border-t border-stone-200/60 dark:border-stone-800/60 w-full min-w-0">
+            
             <!-- Book Dropdown -->
-            <select id="select-bible-book" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no">
+            <select id="select-bible-book" class="flex-1 min-w-0 max-w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no">
               ${Object.entries(testamentGroups)
                 .filter(([_, books]) => books.length > 0)
                 .map(
@@ -192,7 +210,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
             </select>
 
             <!-- Chapter Dropdown -->
-            <select id="select-bible-chapter" class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no">
+            <select id="select-bible-chapter" class="w-24 sm:w-32 flex-shrink-0 bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2 sm:px-3 py-2 text-xs sm:text-sm font-display font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm notranslate" translate="no">
               ${availableChapters
                 .map(
                   (ch) => `
@@ -205,7 +223,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
             </select>
 
             <!-- Chapter Stepper Buttons -->
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-1 flex-shrink-0">
               <button id="btn-prev-chapter" class="p-2 rounded-lg border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition disabled:opacity-30 disabled:pointer-events-none cursor-pointer" ${
                 !hasPrevChapter ? 'disabled' : ''
               } title="${t('reader.prevChapter', 'Previous Chapter')}">
@@ -217,23 +235,13 @@ export async function renderBibleReader(container, onOpenShareCard) {
                 ${icons.chevronRight('w-4 h-4')}
               </button>
             </div>
-          </div>
 
-          <!-- Scripture Details Badge -->
-          <div class="flex items-center gap-3">
-            <button id="btn-toggle-select-all" class="text-xs font-sans font-medium text-amber-600 hover:text-amber-700 px-2.5 py-1.5 rounded-lg border border-amber-600/40 hover:bg-amber-600/10 transition cursor-pointer">
-              ${selectedCount === chapterData.verses.length ? t('reader.deselectAll', 'Deselect All') : t('reader.selectChapter', 'Select Chapter')}
-            </button>
-            <div class="flex items-center gap-2 text-xs font-sans text-[var(--text-muted)] bg-[var(--bg-secondary)] px-3 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 notranslate" translate="no">
-              <span class="w-2 h-2 rounded-full ${isArchivalCustom ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
-              <span>${isArchivalCustom ? `${currentBibleObj.label} ${t('reader.canonicalArchive', 'Canonical Archive')}` : `KJV ${t('reader.canonicalArchive', 'Canonical Archive')}`}</span>
-            </div>
           </div>
 
         </div>
 
         <!-- Sacred Manuscript Open-Codex View -->
-        <div class="bg-[var(--bg-parchment)] border-2 border-stone-300/80 dark:border-stone-800/80 rounded-2xl p-6 sm:p-10 shadow-lg relative parchment-border notranslate" translate="no">
+        <div class="bg-[var(--bg-parchment)] border-2 border-stone-300/80 dark:border-stone-800/80 rounded-2xl p-4 sm:p-8 md:p-10 shadow-lg relative parchment-border notranslate" translate="no">
           
           <!-- Chapter Heading -->
           <div class="text-center mb-8 border-b border-stone-300/60 dark:border-stone-800 pb-4 notranslate" translate="no">
@@ -343,7 +351,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
         ${
           selectedCount > 0
             ? `
-          <div class="fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 shadow-2xl rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 max-w-xl w-[92%] animate-fade-in parchment-border">
+          <div class="fixed bottom-28 sm:bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-card)]/95 backdrop-blur-md border-2 border-amber-600/80 shadow-2xl rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 max-w-xl w-[92%] animate-fade-in parchment-border">
             
             <div class="flex items-center gap-2">
               <span class="bg-amber-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">

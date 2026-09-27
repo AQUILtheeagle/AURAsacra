@@ -62,7 +62,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     const selectedDaySaints = getSaintsForDate(selectedDate, activeTradition);
 
     container.innerHTML = `
-      <div class="space-y-6 pb-20 animate-fade-in max-w-5xl mx-auto">
+      <div class="space-y-6 pb-32 sm:pb-24 animate-fade-in max-w-5xl mx-auto">
         
         <!-- Header & Tradition Selection -->
         <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-5 shadow-sm space-y-4">

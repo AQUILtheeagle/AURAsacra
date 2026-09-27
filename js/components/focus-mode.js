@@ -17,7 +17,7 @@ export function renderFocusMode(container) {
     const volume = getRainVolume();
 
     container.innerHTML = `
-      <div class="max-w-2xl mx-auto space-y-6">
+      <div class="max-w-2xl mx-auto space-y-6 pb-32 sm:pb-24">
         
         <!-- Header Card -->
         <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-6 sm:p-8 text-center shadow-lg">

@@ -25,6 +25,11 @@ export const TRANSLATIONS = {
   // ==========================================
   en: {
     nav: {
+      tabBible: 'Bible',
+      tabPenance: 'Penance',
+      tabJesus: 'Jesus',
+      tabJournal: 'Journal',
+      tabTools: 'Tools',
       brandSub: 'Universal Christian Platform • 100% Offline',
       scripture: 'Scripture',
       penance: 'Penance & Fasting',
@@ -456,6 +461,11 @@ export const TRANSLATIONS = {
   // ==========================================
   it: {
     nav: {
+      tabBible: 'Bibbia',
+      tabPenance: 'Penitenza',
+      tabJesus: 'Gesù',
+      tabJournal: 'Diario',
+      tabTools: 'Strumenti',
       brandSub: 'Piattaforma Cristiana Universale • 100% Offline',
       scripture: 'Scrittura',
       penance: 'Penitenza e Digiuno',
@@ -887,6 +897,11 @@ export const TRANSLATIONS = {
   // ==========================================
   ro: {
     nav: {
+      tabBible: 'Biblia',
+      tabPenance: 'Pocăință',
+      tabJesus: 'Iisus',
+      tabJournal: 'Jurnal',
+      tabTools: 'Unelte',
       brandSub: 'Platformă Creștină Universală • 100% Offline',
       scripture: 'Scriptură',
       penance: 'Post și Pocăință',
@@ -1318,6 +1333,11 @@ export const TRANSLATIONS = {
   // ==========================================
   fr: {
     nav: {
+      tabBible: 'Bible',
+      tabPenance: 'Pénitence',
+      tabJesus: 'Jésus',
+      tabJournal: 'Journal',
+      tabTools: 'Outils',
       brandSub: 'Plateforme Chrétienne Universelle • 100% Hors-ligne',
       scripture: 'Écritures',
       penance: 'Pénitence & Jeûne',
@@ -1749,6 +1769,11 @@ export const TRANSLATIONS = {
   // ==========================================
   es: {
     nav: {
+      tabBible: 'Biblia',
+      tabPenance: 'Penitencia',
+      tabJesus: 'Jesús',
+      tabJournal: 'Diario',
+      tabTools: 'Herramientas',
       brandSub: 'Plataforma Cristiana Universal • 100% Fuera de Línea',
       scripture: 'Escritura',
       penance: 'Penitencia y Ayuno',
@@ -2180,6 +2205,11 @@ export const TRANSLATIONS = {
   // ==========================================
   pt: {
     nav: {
+      tabBible: 'Bíblia',
+      tabPenance: 'Penitência',
+      tabJesus: 'Jesus',
+      tabJournal: 'Diário',
+      tabTools: 'Ferramentas',
       brandSub: 'Plataforma Cristã Universal • 100% Offline',
       scripture: 'Escritura',
       penance: 'Penitência e Jejum',
@@ -2611,6 +2641,11 @@ export const TRANSLATIONS = {
   // ==========================================
   de: {
     nav: {
+      tabBible: 'Bibel',
+      tabPenance: 'Buße',
+      tabJesus: 'Jesus',
+      tabJournal: 'Tagebuch',
+      tabTools: 'Werkzeuge',
       brandSub: 'Universelle Christliche Plattform • 100% Offline',
       scripture: 'Schrift',
       penance: 'Buße & Fasten',
@@ -3042,6 +3077,11 @@ export const TRANSLATIONS = {
   // ==========================================
   ru: {
     nav: {
+      tabBible: 'Библия',
+      tabPenance: 'Покаяние',
+      tabJesus: 'Иисус',
+      tabJournal: 'Дневник',
+      tabTools: 'Служба',
       brandSub: 'Вселенская Христианская Платформа • 100% Офлайн',
       scripture: 'Писание',
       penance: 'Пост и Покаяние',
@@ -3472,6 +3512,11 @@ export const TRANSLATIONS = {
   // ==========================================
   la: {
     nav: {
+      tabBible: 'Scriptura',
+      tabPenance: 'Poenitentia',
+      tabJesus: 'Iesus',
+      tabJournal: 'Diarium',
+      tabTools: 'Instrumenta',
       brandSub: 'Suggestus Christianus Universalis • 100% Sine Filo',
       scripture: 'Scriptura Sacra',
       penance: 'Paenitentia et Ieiunium',

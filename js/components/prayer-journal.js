@@ -9,7 +9,7 @@ export async function renderPrayerJournal(container, onBringPrayerToJesus) {
 
   function renderView() {
     container.innerHTML = `
-      <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl shadow-lg flex flex-col h-[78vh] overflow-hidden">
+      <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl shadow-lg flex flex-col h-[calc(100dvh-13.5rem)] sm:h-[78vh] min-h-[460px] overflow-hidden">
         
         <!-- Header -->
         <div class="px-6 py-4 border-b border-stone-200 dark:border-stone-800 bg-[var(--bg-secondary)] flex items-center justify-between">
