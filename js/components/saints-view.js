@@ -1,10 +1,10 @@
-// Saints & Church Fathers View for Aura Sacra
 import {
   getSaintsForConfession,
   getTodaySaints,
   DAILY_SAINTS_CALENDAR,
   LITURGICAL_COLORS,
-  getLiturgicalColorMeta
+  getLiturgicalColorMeta,
+  getLocalizedSaint
 } from '../data/saints.js';
 import { icons } from '../icons.js';
 import { getSetting } from '../db.js';
@@ -118,10 +118,11 @@ export async function renderSaintsView(container, onOpenShareCard) {
         <!-- Saints Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           ${displayedSaints.map((saint) => {
-            const cMeta = saint.colorMeta || getLiturgicalColorMeta(saint.color || 'white');
+            const locSaint = getLocalizedSaint(saint, lang);
+            const cMeta = locSaint.colorMeta || getLiturgicalColorMeta(locSaint.color || 'white');
             const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
-            const rankName = saint.rank ? t(`ranks.${saint.rank}`, saint.rank) : t('ranks.memorial');
-            const primaryName = (lang === 'it' && saint.name_it) ? saint.name_it : (saint.name ? saint.name.split('/')[0].trim() : 'Holy Saint');
+            const rankName = locSaint.rank ? t(`ranks.${locSaint.rank}`, locSaint.rank) : t('ranks.memorial');
+            const primaryName = locSaint.name;
 
             return `
               <div class="bg-[var(--bg-parchment)] border-2 ${cMeta.borderClass} rounded-2xl p-5 sm:p-6 shadow-md flex flex-col justify-between space-y-4 parchment-border hover:shadow-xl transition">
@@ -129,13 +130,10 @@ export async function renderSaintsView(container, onOpenShareCard) {
                 <div>
                   <div class="flex items-start justify-between gap-3 border-b border-stone-200 dark:border-stone-800 pb-3">
                     <div class="space-y-0.5">
-                      <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full ${cMeta.dotClass}"></span>
-                        <h3 class="text-lg font-bold font-display text-[var(--accent-vermilion)] leading-tight">
-                          ${primaryName}
-                        </h3>
-                      </div>
-                      <p class="text-xs font-serif italic text-[var(--text-muted)]">${saint.title}</p>
+                      <h3 class="text-lg font-bold font-display text-[var(--accent-vermilion)] leading-tight">
+                        ${primaryName}
+                      </h3>
+                      <p class="text-xs font-serif italic text-[var(--text-muted)]">${locSaint.title}</p>
                     </div>
 
                     <!-- Badges: Color & Rank -->
@@ -151,28 +149,28 @@ export async function renderSaintsView(container, onOpenShareCard) {
                   </div>
 
                   <!-- Quote -->
-                  ${(saint.quote || saint.quote_en) ? `
-                    <blockquote class="my-3 text-sm sm:text-base italic font-serif text-[var(--text-primary)] border-l-4 border-amber-600/70 pl-3 py-1 bg-amber-500/5 rounded-r-lg notranslate" translate="no">
-                      ${saint.quote || saint.quote_en}
+                  ${locSaint.quote ? `
+                    <blockquote class="my-3 text-sm sm:text-base italic font-serif text-[var(--text-primary)] border-l-4 border-amber-600/70 pl-3 py-1 bg-amber-500/5 rounded-r-lg">
+                      ${locSaint.quote}
                     </blockquote>
                   ` : ''}
 
                   <!-- Bio -->
-                  ${saint.bio ? `
+                  ${locSaint.bio ? `
                     <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-serif leading-relaxed">
-                      ${saint.bio}
+                      ${locSaint.bio}
                     </p>
                   ` : ''}
                 </div>
 
                 <!-- Card Footer: Scripture Ref & Share -->
                 <div class="pt-3 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between text-xs">
-                  <span class="font-mono font-semibold text-amber-600 notranslate" translate="no">
-                    📖 ${saint.scriptureRef || 'Gospel of Christ'}
+                  <span class="font-mono font-semibold text-amber-600">
+                    📖 ${locSaint.scriptureRef || (lang === 'it' ? 'Evangelo di Cristo' : 'Gospel of Christ')}
                   </span>
 
-                  ${(saint.quote || saint.quote_en) ? `
-                    <button class="btn-share-saint flex items-center gap-1.5 font-medium text-amber-600 hover:text-amber-700 px-3 py-1 rounded-lg border border-amber-600/30 hover:border-amber-600 transition cursor-pointer" data-quote="${encodeURIComponent(saint.quote || saint.quote_en)}" data-name="${encodeURIComponent(primaryName)}">
+                  ${locSaint.quote ? `
+                    <button class="btn-share-saint flex items-center gap-1.5 font-medium text-amber-600 hover:text-amber-700 px-3 py-1 rounded-lg border border-amber-600/30 hover:border-amber-600 transition cursor-pointer" data-quote="${encodeURIComponent(locSaint.quote)}" data-name="${encodeURIComponent(primaryName)}">
                       ${icons.share('w-3.5 h-3.5')}
                       <span>${t('saints.shareQuote', 'Share Quote')}</span>
                     </button>

@@ -10,7 +10,8 @@ import {
   getSaintsForDate,
   getTodaySaints,
   LITURGICAL_COLORS,
-  getLiturgicalColorMeta
+  getLiturgicalColorMeta,
+  getLocalizedSaint
 } from '../data/saints.js';
 import { icons } from '../icons.js';
 import { getSetting, saveSetting } from '../db.js';
@@ -18,11 +19,8 @@ import { t, getLanguage } from '../i18n.js';
 
 function getSaintName(saint, lang = 'it') {
   if (!saint) return '';
-  if (lang === 'it' && saint.name_it) return saint.name_it;
-  if (lang === 'ro' && saint.name_ro) return saint.name_ro;
-  if (lang === 'la' && saint.name_la) return saint.name_la;
-  if (saint[`name_${lang}`]) return saint[`name_${lang}`];
-  return (lang === 'it' || lang === 'la') && saint.name_it ? saint.name_it : (saint.name || '');
+  const loc = getLocalizedSaint(saint, lang);
+  return loc ? loc.name : (saint.name || '');
 }
 
 let activeTradition = 'universal';
@@ -393,24 +391,22 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
             <div class="space-y-3">
               ${selectedDaySaints.map(saint => {
-                const cMeta = saint.colorMeta;
+                const locSaint = getLocalizedSaint(saint, lang);
+                const cMeta = locSaint.colorMeta || getLiturgicalColorMeta(locSaint.color);
                 const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
-                const rankName = t(`ranks.${saint.rank}`, saint.rank);
-                const saintDisplayName = getSaintName(saint, lang);
+                const rankName = t(`ranks.${locSaint.rank}`, locSaint.rank);
+                const saintDisplayName = locSaint.name;
 
                 return `
                   <div class="bg-[var(--bg-card)] border-2 ${cMeta.borderClass} rounded-xl p-4 space-y-3 shadow-xs transition hover:shadow-md">
                     
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 dark:border-stone-800 pb-2.5">
                       <div>
-                        <div class="flex items-center gap-2">
-                          <span class="w-3 h-3 rounded-full ${cMeta.dotClass}"></span>
-                          <h5 class="text-base sm:text-lg font-display font-bold text-[var(--text-primary)]">
-                            ${saintDisplayName}
-                          </h5>
-                        </div>
+                        <h5 class="text-base sm:text-lg font-display font-bold text-[var(--text-primary)]">
+                          ${saintDisplayName}
+                        </h5>
                         <p class="text-xs font-serif italic text-[var(--text-muted)] mt-0.5">
-                          ${saint.title}
+                          ${locSaint.title}
                         </p>
                       </div>
 
@@ -427,27 +423,27 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                     </div>
 
                     <!-- Saint Spiritual Quote -->
-                    ${saint.quote ? `
-                      <blockquote class="text-sm font-serif italic text-[var(--text-primary)] border-l-4 border-amber-600/70 pl-3 py-1 bg-amber-500/5 rounded-r-lg notranslate" translate="no">
-                        ${saint.quote}
+                    ${locSaint.quote ? `
+                      <blockquote class="text-sm font-serif italic text-[var(--text-primary)] border-l-4 border-amber-600/70 pl-3 py-1 bg-amber-500/5 rounded-r-lg">
+                        ${locSaint.quote}
                       </blockquote>
                     ` : ''}
 
                     <!-- Saint Spiritual Bio -->
-                    ${saint.bio ? `
+                    ${locSaint.bio ? `
                       <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-serif leading-relaxed">
-                        ${saint.bio}
+                        ${locSaint.bio}
                       </p>
                     ` : ''}
 
                     <!-- Footer: Scripture & Share Quote Action -->
                     <div class="flex items-center justify-between pt-2 border-t border-stone-200 dark:border-stone-800 text-xs">
-                      <span class="font-mono text-amber-600 font-semibold notranslate" translate="no">
-                        📖 ${saint.scriptureRef || 'Gospel of Christ'}
+                      <span class="font-mono text-amber-600 font-semibold">
+                        📖 ${locSaint.scriptureRef || (lang === 'it' ? 'Evangelo di Cristo' : 'Gospel of Christ')}
                       </span>
 
-                      ${saint.quote ? `
-                        <button class="btn-share-calendar-saint flex items-center gap-1 text-amber-600 hover:text-amber-700 font-sans font-semibold border border-amber-600/30 hover:border-amber-600 px-2.5 py-1 rounded-lg transition cursor-pointer" data-quote="${encodeURIComponent(saint.quote)}" data-author="${encodeURIComponent(saintDisplayName)}">
+                      ${locSaint.quote ? `
+                        <button class="btn-share-calendar-saint flex items-center gap-1 text-amber-600 hover:text-amber-700 font-sans font-semibold border border-amber-600/30 hover:border-amber-600 px-2.5 py-1 rounded-lg transition cursor-pointer" data-quote="${encodeURIComponent(locSaint.quote)}" data-author="${encodeURIComponent(saintDisplayName)}">
                           ${icons.share('w-3.5 h-3.5')}
                           <span>${t('saints.shareQuote', 'Share Quote')}</span>
                         </button>
