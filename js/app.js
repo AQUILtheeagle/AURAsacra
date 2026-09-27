@@ -2,6 +2,7 @@
 import { initDB, getSetting } from './db.js';
 import { initCircadianTheme, onThemeChange } from './circadian.js';
 import { initSchedule, onScheduleChange } from './schedule.js';
+import { initI18n, onLanguageChange } from './i18n.js';
 
 // Components
 import { renderNavbar } from './components/navbar.js';
@@ -56,6 +57,7 @@ function setupStandaloneDetection() {
 async function bootstrap() {
   setupStandaloneDetection();
   try { await initDB(); } catch (e) { console.warn('IndexedDB init:', e); }
+  try { await initI18n(); } catch (e) { console.warn('i18n init:', e); }
   try { await initCircadianTheme(); } catch (e) { console.warn('Circadian init:', e); }
   try { await initSchedule(); } catch (e) { console.warn('Schedule init:', e); }
 
@@ -159,7 +161,9 @@ async function bootstrap() {
         renderFocusMode(mainContent);
         break;
       case 'penance':
-        renderPenanceCalendar(mainContent);
+        renderPenanceCalendar(mainContent, (quote, author) => {
+          openModal('share', { quote, citation: author });
+        });
         break;
       default:
         renderBibleReader(mainContent, (quote, ref) => openModal('share', { quote, citation: ref }));
@@ -174,6 +178,11 @@ async function bootstrap() {
 
   onScheduleChange(() => {
     renderAllNavigation();
+  });
+
+  onLanguageChange(() => {
+    renderAllNavigation();
+    renderActiveView();
   });
 
   // Render initial static components

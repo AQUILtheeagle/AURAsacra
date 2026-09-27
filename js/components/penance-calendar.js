@@ -1,23 +1,25 @@
-// Penitential Days, Fasting & Abstinence Calendar for Aura Sacra
+// Penitential Days, Fasting, Abstinence & Liturgical Saints Calendar for Aura Sacra
 import {
   TRADITIONS,
   getDayPenanceStatus,
   getMonthPenanceDays,
   PENANCE_GUIDE
 } from '../data/penance.js';
+import {
+  getSaintsForDate,
+  getTodaySaints,
+  LITURGICAL_COLORS,
+  getLiturgicalColorMeta
+} from '../data/saints.js';
 import { icons } from '../icons.js';
 import { getSetting, saveSetting } from '../db.js';
+import { t, getLanguage } from '../i18n.js';
 
 let activeTradition = 'universal';
 let currentDisplayDate = new Date();
 let selectedDayData = null;
 
-const MONTH_NAMES = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
-
-export async function renderPenanceCalendar(container) {
+export async function renderPenanceCalendar(container, onOpenShareCard) {
   // Correlate calendar directly with the user's saved faith belief (confession)
   const userConfession = (await getSetting('user_confession')) || (await getSetting('confession', 'catholic'));
   const normalizedTradition =
@@ -33,19 +35,23 @@ export async function renderPenanceCalendar(container) {
   selectedDayData = getDayPenanceStatus(today, activeTradition);
 
   function render() {
+    const lang = getLanguage();
     const today = new Date();
     const todayStatus = getDayPenanceStatus(today, activeTradition);
+    const todaySaints = getTodaySaints(activeTradition);
 
     const curYear = currentDisplayDate.getFullYear();
     const curMonth = currentDisplayDate.getMonth();
-    const monthName = MONTH_NAMES[curMonth];
+    const monthName = getLocalizedMonthName(curMonth, lang);
     const monthDays = getMonthPenanceDays(curYear, curMonth, activeTradition);
 
     // Calculate grid padding for first day of month (0 = Sun, 1 = Mon...)
     const firstDayIndex = new Date(curYear, curMonth, 1).getDay();
 
     const selected = selectedDayData || todayStatus;
-    const isInspectingToday = isSameDate(selected.date || today, today);
+    const selectedDate = selected.date || today;
+    const isInspectingToday = isSameDate(selectedDate, today);
+    const selectedDaySaints = getSaintsForDate(selectedDate, activeTradition);
 
     container.innerHTML = `
       <div class="space-y-6 pb-20 animate-fade-in max-w-5xl mx-auto">
@@ -56,13 +62,13 @@ export async function renderPenanceCalendar(container) {
             <div>
               <div class="flex items-center gap-2 text-amber-600 dark:text-amber-500 font-sans font-bold text-xs uppercase tracking-widest">
                 <span>${icons.calendar('w-4 h-4')}</span>
-                <span>Sacred Liturgical Discipline</span>
+                <span>${t('penance.badge', 'Sacred Liturgical Discipline')}</span>
               </div>
               <h1 class="text-2xl sm:text-3xl font-display font-bold text-[var(--accent-vermilion)] mt-1">
-                Penance, Fasting & Abstinence
+                ${t('penance.title', 'Penance, Fasting & Abstinence')}
               </h1>
               <p class="text-xs sm:text-sm text-[var(--text-muted)] font-serif italic mt-0.5">
-                Know when to fast, abstain from meat, and sanctify your days in union with the Cross of Christ.
+                ${t('penance.subtitle', 'Know when to fast, abstain from meat, and sanctify your days in union with the Cross of Christ.')}
               </p>
             </div>
 
@@ -70,7 +76,7 @@ export async function renderPenanceCalendar(container) {
             <div class="bg-[var(--bg-secondary)] p-1 rounded-xl border border-stone-300 dark:border-stone-700 flex flex-wrap sm:flex-nowrap gap-1">
               ${TRADITIONS.map(
                 (trad) => `
-                <button data-tradition="${trad.id}" class="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold transition ${
+                <button data-tradition="${trad.id}" class="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold transition cursor-pointer ${
                   activeTradition === trad.id
                     ? 'bg-amber-600 text-white shadow-sm'
                     : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-stone-500/10'
@@ -85,7 +91,7 @@ export async function renderPenanceCalendar(container) {
           <!-- Active Tradition Description Pill -->
           <div class="text-xs text-[var(--text-muted)] bg-[var(--bg-secondary)] px-3 py-2 rounded-xl border border-stone-200 dark:border-stone-800/80 flex items-center justify-between gap-2">
             <div>
-              <strong class="text-[var(--text-primary)] font-semibold">Active Rite:</strong>
+              <strong class="text-[var(--text-primary)] font-semibold">${t('penance.activeRite', 'Active Rite:')}</strong>
               ${TRADITIONS.find((t) => t.id === activeTradition)?.subtitle} — ${
       TRADITIONS.find((t) => t.id === activeTradition)?.description
     }
@@ -93,7 +99,7 @@ export async function renderPenanceCalendar(container) {
           </div>
         </div>
 
-        <!-- Today's Status Banner -->
+        <!-- Today's Status Banner with Saints of the Day -->
         <div class="rounded-2xl p-5 sm:p-6 shadow-md border-2 relative overflow-hidden transition ${
           todayStatus.badge.color === 'vermilion'
             ? 'bg-red-500/10 border-red-600/70 text-red-950 dark:text-red-100'
@@ -105,8 +111,8 @@ export async function renderPenanceCalendar(container) {
         } parchment-border">
           
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
+            <div class="space-y-1.5">
+              <div class="flex flex-wrap items-center gap-2">
                 <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
                   todayStatus.badge.color === 'vermilion'
                     ? 'bg-red-600 text-white'
@@ -119,7 +125,7 @@ export async function renderPenanceCalendar(container) {
                   <span>${icons[todayStatus.badge.icon]('w-3.5 h-3.5')}</span>
                   <span>${todayStatus.badge.label}</span>
                 </span>
-                <span class="text-xs font-mono text-[var(--text-muted)]">Today • ${formatDateString(today)}</span>
+                <span class="text-xs font-mono text-[var(--text-muted)]">${t('penance.today', 'Today')} • ${formatLocalizedDate(today, lang)}</span>
               </div>
               <h2 class="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
                 ${todayStatus.title}
@@ -127,16 +133,34 @@ export async function renderPenanceCalendar(container) {
               <p class="text-xs sm:text-sm font-serif italic text-[var(--text-secondary)]">
                 ${todayStatus.subtitle}
               </p>
+
+              <!-- Today's Saint Highlight Pill -->
+              ${todaySaints.length > 0 ? `
+                <div class="pt-1 flex flex-wrap items-center gap-2">
+                  <span class="text-[11px] font-sans font-bold text-amber-600 uppercase tracking-wider">${t('penance.todayCommemoration', "Today's Saint / Feast:")}</span>
+                  ${todaySaints.map(s => {
+                    const cMeta = s.colorMeta;
+                    const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
+                    return `
+                      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg border text-xs font-sans font-semibold ${cMeta.badgeClass}">
+                        <span class="w-2 h-2 rounded-full ${cMeta.dotClass}"></span>
+                        <span>${cMeta.symbol} ${s.name_it && lang === 'it' ? s.name_it : s.name}</span>
+                        <span class="opacity-75 text-[10px]">(${cName} • ${t(`ranks.${s.rank}`, s.rank)})</span>
+                      </span>
+                    `;
+                  }).join('')}
+                </div>
+              ` : ''}
             </div>
 
             <!-- Quick Food Indicator Badge -->
             <div class="bg-[var(--bg-card)]/90 border border-stone-300 dark:border-stone-700 rounded-xl p-3 text-xs space-y-1 w-full sm:w-72 shadow-xs">
               <div class="flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-400">
-                <span>✓ Allowed:</span>
+                <span>✓ ${t('common.allowed', 'Allowed')}:</span>
                 <span class="font-normal text-[var(--text-primary)] truncate">${todayStatus.rules.allowed.split(',')[0]} & more</span>
               </div>
               <div class="flex items-center gap-1.5 font-bold text-red-700 dark:text-red-400">
-                <span>✗ Avoid:</span>
+                <span>✗ ${t('common.avoid', 'Avoid')}:</span>
                 <span class="font-normal text-[var(--text-primary)] truncate">${todayStatus.rules.avoid}</span>
               </div>
             </div>
@@ -144,11 +168,11 @@ export async function renderPenanceCalendar(container) {
 
           <!-- Bottom Action Buttons on Today's Banner -->
           <div class="mt-4 pt-3 border-t border-stone-300/60 dark:border-stone-700/60 flex flex-wrap items-center justify-between gap-3 text-xs">
-            <span class="text-[var(--text-muted)] italic">
-              «${todayStatus.scripture.ref}»: "${todayStatus.scripture.text.slice(0, 90)}..."
+            <span class="text-[var(--text-muted)] italic truncate max-w-md notranslate" translate="no">
+              «${todayStatus.scripture.ref}»: "${todayStatus.scripture.text.slice(0, 85)}..."
             </span>
             <button id="btn-inspect-today" class="font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1 cursor-pointer">
-              <span>View Full Day Guide & Prayer</span>
+              <span>${t('penance.viewDayGuide', 'View Full Day Guide & Prayer')}</span>
               <span>${icons.chevronRight('w-3.5 h-3.5')}</span>
             </button>
           </div>
@@ -161,42 +185,50 @@ export async function renderPenanceCalendar(container) {
           <!-- Month & Year Navigation Toolbar -->
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 dark:border-stone-800 pb-3">
             <div class="flex items-center gap-2">
-              <button id="btn-prev-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition" title="Previous Month">
+              <button id="btn-prev-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition cursor-pointer" title="Previous Month">
                 ${icons.chevronLeft('w-4 h-4')}
               </button>
               <h3 class="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)] min-w-[160px] text-center">
                 ${monthName} ${curYear}
               </h3>
-              <button id="btn-next-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition" title="Next Month">
+              <button id="btn-next-month" class="p-2 rounded-xl border border-stone-300 dark:border-stone-700 text-[var(--text-secondary)] hover:text-amber-600 hover:border-amber-600 transition cursor-pointer" title="Next Month">
                 ${icons.chevronRight('w-4 h-4')}
               </button>
             </div>
 
-            <!-- Quick Action: Jump to Today & Legend -->
-            <div class="flex items-center gap-2">
-              <button id="btn-jump-today" class="px-3 py-1.5 rounded-xl border border-amber-600/40 text-amber-600 hover:bg-amber-600/10 text-xs font-semibold font-sans transition">
-                Today
+            <!-- Quick Action: Jump to Today & Liturgical Color Legend -->
+            <div class="flex items-center gap-3">
+              <button id="btn-jump-today" class="px-3 py-1.5 rounded-xl border border-amber-600/40 text-amber-600 hover:bg-amber-600/10 text-xs font-semibold font-sans transition cursor-pointer">
+                ${t('penance.jumpToday', 'Jump to Today')}
               </button>
               
-              <!-- Legend Pills -->
-              <div class="hidden lg:flex items-center gap-2 text-[11px] font-sans text-[var(--text-muted)] border-l border-stone-300 dark:border-stone-700 pl-3">
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-600"></span> Strict Fast</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span> Abstinence</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Ember Day</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Dispensation</span>
+              <!-- Liturgical Colors Legend Pills (White, Blue, Red) -->
+              <div class="hidden xl:flex items-center gap-2.5 text-[11px] font-sans text-[var(--text-muted)] border-l border-stone-300 dark:border-stone-700 pl-3">
+                <span class="flex items-center gap-1 font-semibold text-stone-200" title="${t('colors.whiteDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-stone-100 ring-1 ring-stone-400"></span>
+                  <span>⚪ ${t('colors.white', 'White')}</span>
+                </span>
+                <span class="flex items-center gap-1 font-semibold text-blue-400" title="${t('colors.blueDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-500 ring-1 ring-blue-400"></span>
+                  <span>🔵 ${t('colors.blue', 'Blue')}</span>
+                </span>
+                <span class="flex items-center gap-1 font-semibold text-red-400" title="${t('colors.redDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 ring-1 ring-red-400"></span>
+                  <span>🔴 ${t('colors.red', 'Red')}</span>
+                </span>
               </div>
             </div>
           </div>
 
           <!-- Weekday Headers -->
           <div class="grid grid-cols-7 gap-1 text-center font-sans font-bold text-[11px] uppercase tracking-wider text-[var(--text-muted)] py-1">
-            <span>Sun</span>
-            <span>Mon</span>
-            <span>Tue</span>
-            <span>Wed</span>
-            <span>Thu</span>
-            <span class="text-purple-600 dark:text-purple-400 font-black">Fri (Penance)</span>
-            <span>Sat</span>
+            <span>${t('common.sun', 'Sun')}</span>
+            <span>${t('common.mon', 'Mon')}</span>
+            <span>${t('common.tue', 'Tue')}</span>
+            <span>${t('common.wed', 'Wed')}</span>
+            <span>${t('common.thu', 'Thu')}</span>
+            <span class="text-purple-600 dark:text-purple-400 font-black">${t('common.friPenance', 'Fri (Penance)')}</span>
+            <span>${t('common.sat', 'Sat')}</span>
           </div>
 
           <!-- Calendar Days Grid -->
@@ -210,11 +242,13 @@ export async function renderPenanceCalendar(container) {
               )
               .join('')}
 
-            <!-- Month Days -->
+            <!-- Month Days with Integrated Saints Indicators -->
             ${monthDays
               .map((dObj) => {
                 const isToday = isSameDate(dObj.date, today);
                 const isSelected = selected && isSameDate(dObj.date, selected.date);
+                const daySaints = getSaintsForDate(dObj.date, activeTradition);
+                const primarySaint = daySaints[0] || null;
 
                 let cellColorStyle = 'border-stone-200 dark:border-stone-800 bg-[var(--bg-secondary)] hover:border-amber-600';
                 if (dObj.badge.color === 'vermilion') {
@@ -239,15 +273,30 @@ export async function renderPenanceCalendar(container) {
                       ${dObj.day}
                     </span>
 
-                    ${
-                      isToday
-                        ? `<span class="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" title="Today"></span>`
-                        : ''
-                    }
+                    <div class="flex items-center gap-1">
+                      ${
+                        primarySaint
+                          ? `<span class="w-2 h-2 rounded-full ${primarySaint.colorMeta.dotClass}" title="${primarySaint.name} (${primarySaint.colorMeta.name})"></span>`
+                          : ''
+                      }
+                      ${
+                        isToday
+                          ? `<span class="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" title="Today"></span>`
+                          : ''
+                      }
+                    </div>
                   </div>
 
-                  <!-- Day Indicator Badge / Icon -->
-                  <div class="w-full">
+                  <!-- Day Indicator Badge & Saint Mini Title -->
+                  <div class="w-full space-y-1">
+                    ${
+                      primarySaint ? `
+                        <div class="text-[9px] font-sans font-medium truncate ${primarySaint.colorMeta.textClass} hidden sm:block">
+                          ${primarySaint.colorMeta.symbol} ${primarySaint.name_it && lang === 'it' ? primarySaint.name_it.split(',')[0] : primarySaint.name.split(',')[0]}
+                        </div>
+                      ` : ''
+                    }
+
                     ${
                       dObj.isPenitential
                         ? `
@@ -266,12 +315,12 @@ export async function renderPenanceCalendar(container) {
                         ? `
                       <div class="flex items-center gap-1 text-[10px] font-sans font-semibold rounded-md px-1 py-0.5 truncate bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30">
                         <span>${icons.sparkles('w-2.5 h-2.5')}</span>
-                        <span class="truncate hidden sm:inline">Dispensed</span>
+                        <span class="truncate hidden sm:inline">${t('penance.dispensation', 'Dispensation')}</span>
                       </div>
                     `
                         : `
                       <div class="text-[9px] text-[var(--text-muted)] font-serif italic truncate hidden sm:block">
-                        Ordinary
+                        ${t('penance.ordinary', 'Ordinary')}
                       </div>
                     `
                     }
@@ -285,18 +334,18 @@ export async function renderPenanceCalendar(container) {
 
         </div>
 
-        <!-- Selected Day Inspector Drawer / Details Card -->
+        <!-- Selected Day Inspector Drawer / Details Card with Saints Integration -->
         <div id="day-inspector" class="bg-[var(--bg-card)] border-2 border-amber-600/50 rounded-2xl p-6 sm:p-8 shadow-xl parchment-border space-y-6 animate-fade-in">
           
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-4">
             <div>
               <div class="flex items-center gap-2">
                 <span class="text-xs font-mono uppercase tracking-widest text-amber-600 dark:text-amber-400 font-bold">
-                  Inspection of Selected Date
+                  ${t('penance.inspection', 'Inspection of Selected Date')}
                 </span>
                 <span class="text-xs font-sans text-[var(--text-muted)]">•</span>
                 <span class="text-xs font-mono text-[var(--text-secondary)] font-semibold">
-                  ${formatDateString(selected.date || today)}
+                  ${formatLocalizedDate(selectedDate, lang)}
                 </span>
               </div>
               <h3 class="text-2xl sm:text-3xl font-display font-bold text-[var(--accent-vermilion)] mt-1">
@@ -307,7 +356,7 @@ export async function renderPenanceCalendar(container) {
               </p>
             </div>
 
-            <!-- Badge -->
+            <!-- Penance Status Badge -->
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border ${
               selected.badge.color === 'vermilion'
                 ? 'bg-red-600 text-white border-red-700 shadow-sm'
@@ -322,6 +371,94 @@ export async function renderPenanceCalendar(container) {
             </div>
           </div>
 
+          <!-- Saints Commemorated on this Day (White, Blue, Red correlated) -->
+          <div class="space-y-3 bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700/80 rounded-2xl p-5 shadow-xs">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-sans font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 flex items-center gap-2">
+                <span>${icons.cross('w-4 h-4')}</span>
+                <span>${t('penance.saintsOnThisDay', 'Saints & Feasts Commemorated on this Day')}</span>
+              </h4>
+              <span class="text-[11px] font-sans text-[var(--text-muted)]">
+                ${selectedDaySaints.length} ${selectedDaySaints.length === 1 ? 'Feast' : 'Feasts'}
+              </span>
+            </div>
+
+            <div class="space-y-3">
+              ${selectedDaySaints.map(saint => {
+                const cMeta = saint.colorMeta;
+                const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
+                const rankName = t(`ranks.${saint.rank}`, saint.rank);
+                const saintDisplayName = (lang === 'it' && saint.name_it) ? saint.name_it : saint.name;
+
+                return `
+                  <div class="bg-[var(--bg-card)] border-2 ${cMeta.borderClass} rounded-xl p-4 space-y-3 shadow-xs transition hover:shadow-md">
+                    
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 dark:border-stone-800 pb-2.5">
+                      <div>
+                        <div class="flex items-center gap-2">
+                          <span class="w-3 h-3 rounded-full ${cMeta.dotClass}"></span>
+                          <h5 class="text-base sm:text-lg font-display font-bold text-[var(--text-primary)]">
+                            ${saintDisplayName}
+                          </h5>
+                        </div>
+                        <p class="text-xs font-serif italic text-[var(--text-muted)] mt-0.5">
+                          ${saint.title}
+                        </p>
+                      </div>
+
+                      <!-- Liturgical Color & Rank Badges -->
+                      <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-sans font-bold ${cMeta.badgeClass}">
+                          <span>${cMeta.symbol}</span>
+                          <span>${cName}</span>
+                        </span>
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-lg border border-stone-300 dark:border-stone-700 bg-[var(--bg-secondary)] text-[var(--text-secondary)] text-xs font-sans font-semibold uppercase">
+                          ${rankName}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Saint Spiritual Quote -->
+                    ${saint.quote ? `
+                      <blockquote class="text-sm font-serif italic text-[var(--text-primary)] border-l-4 border-amber-600/70 pl-3 py-1 bg-amber-500/5 rounded-r-lg notranslate" translate="no">
+                        ${saint.quote}
+                      </blockquote>
+                    ` : ''}
+
+                    <!-- Saint Spiritual Bio -->
+                    ${saint.bio ? `
+                      <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-serif leading-relaxed">
+                        ${saint.bio}
+                      </p>
+                    ` : ''}
+
+                    <!-- Footer: Scripture & Share Quote Action -->
+                    <div class="flex items-center justify-between pt-2 border-t border-stone-200 dark:border-stone-800 text-xs">
+                      <span class="font-mono text-amber-600 font-semibold notranslate" translate="no">
+                        📖 ${saint.scriptureRef || 'Gospel of Christ'}
+                      </span>
+
+                      ${saint.quote ? `
+                        <button class="btn-share-calendar-saint flex items-center gap-1 text-amber-600 hover:text-amber-700 font-sans font-semibold border border-amber-600/30 hover:border-amber-600 px-2.5 py-1 rounded-lg transition cursor-pointer" data-quote="${encodeURIComponent(saint.quote)}" data-author="${encodeURIComponent(saintDisplayName)}">
+                          ${icons.share('w-3.5 h-3.5')}
+                          <span>${t('saints.shareQuote', 'Share Quote')}</span>
+                        </button>
+                      ` : ''}
+                    </div>
+
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Liturgical Color Guidelines Footer -->
+            <div class="text-[11px] text-[var(--text-muted)] pt-1 flex flex-wrap items-center gap-3">
+              <span><strong>⚪ ${t('colors.white', 'White')}:</strong> ${t('colors.whiteDesc')}</span>
+              <span><strong>🔵 ${t('colors.blue', 'Blue')}:</strong> ${t('colors.blueDesc')}</span>
+              <span><strong>🔴 ${t('colors.red', 'Red')}:</strong> ${t('colors.redDesc')}</span>
+            </div>
+          </div>
+
           <!-- Rules Grid: Fasting, Abstinence, Allowed, Avoid -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
@@ -329,7 +466,7 @@ export async function renderPenanceCalendar(container) {
             <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl p-4 space-y-2">
               <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                 <span>${icons.bread('w-4 h-4')}</span>
-                <span>Fasting Discipline (Quantity of Meals)</span>
+                <span>${t('penance.fastingDiscipline', 'Fasting Discipline (Quantity of Meals)')}</span>
               </div>
               <p class="text-sm text-[var(--text-primary)] leading-relaxed">
                 ${selected.rules.fasting}
@@ -340,7 +477,7 @@ export async function renderPenanceCalendar(container) {
             <div class="bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl p-4 space-y-2">
               <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400">
                 <span>${icons.fish('w-4 h-4')}</span>
-                <span>Abstinence Discipline (Quality of Food)</span>
+                <span>${t('penance.abstinenceDiscipline', 'Abstinence Discipline (Quality of Food)')}</span>
               </div>
               <p class="text-sm text-[var(--text-primary)] leading-relaxed">
                 ${selected.rules.abstinence}
@@ -350,7 +487,7 @@ export async function renderPenanceCalendar(container) {
             <!-- Foods Allowed -->
             <div class="bg-emerald-500/5 border border-emerald-500/30 rounded-xl p-4 space-y-1.5">
               <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                <span>✓ Permitted Table</span>
+                <span>✓ ${t('penance.allowedTable', 'Permitted Table')}</span>
               </div>
               <p class="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">
                 ${selected.rules.allowed}
@@ -360,7 +497,7 @@ export async function renderPenanceCalendar(container) {
             <!-- Foods to Avoid -->
             <div class="bg-red-500/5 border border-red-500/30 rounded-xl p-4 space-y-1.5">
               <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-red-700 dark:text-red-400">
-                <span>✗ Prohibited or Restricted</span>
+                <span>✗ ${t('penance.avoidTable', 'Prohibited or Restricted')}</span>
               </div>
               <p class="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">
                 ${selected.rules.avoid}
@@ -373,7 +510,7 @@ export async function renderPenanceCalendar(container) {
           <div class="bg-[var(--bg-parchment)] border border-stone-300/80 dark:border-stone-700/80 rounded-xl p-5 space-y-3">
             <div>
               <h4 class="text-xs font-sans font-bold uppercase tracking-wider text-[var(--accent-vermilion)]">
-                Theological Meaning
+                ${t('penance.theologicalMeaning', 'Theological & Biblical Meaning')}
               </h4>
               <p class="text-sm sm:text-base font-serif text-[var(--text-primary)] leading-relaxed mt-1">
                 ${selected.theology}
@@ -391,7 +528,7 @@ export async function renderPenanceCalendar(container) {
           <!-- Prayer of Strength -->
           <div class="bg-amber-600/10 border-l-4 border-amber-600 rounded-r-xl p-4 space-y-1 notranslate" translate="no">
             <span class="text-[11px] font-sans font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-              Penitential Prayer of the Day
+              ${t('penance.prayerOfDay', 'Penitential Prayer of the Day')}
             </span>
             <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] leading-relaxed notranslate" translate="no">
               «${selected.prayer}»
@@ -400,56 +537,42 @@ export async function renderPenanceCalendar(container) {
 
         </div>
 
-        <!-- Comprehensive Spiritual Guide & Patristic Wisdom Accordion -->
+        <!-- Comprehensive Spiritual Guide & Three Pillars -->
         <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-5 sm:p-6 shadow-sm space-y-6">
           
           <div class="text-center max-w-xl mx-auto space-y-1">
             <h3 class="text-xl sm:text-2xl font-display font-bold text-[var(--accent-vermilion)]">
-              The Three Pillars of Gospel Penance
+              ${t('penance.pillarsTitle', 'The Three Pillars of Gospel Penance')}
             </h3>
             <p class="text-xs sm:text-sm font-serif italic text-[var(--text-muted)]">
-              «When you give alms... when you pray... when you fast» (Matthew 6)
+              ${t('penance.pillarsSubtitle', '«When you give alms... when you pray... when you fast» (Matthew 6)')}
             </p>
           </div>
 
           <!-- 3 Pillars Cards -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            ${PENANCE_GUIDE.pillars
-              .map(
-                (p) => `
-              <div class="bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 rounded-xl p-4 text-center space-y-2">
-                <div class="w-10 h-10 rounded-full bg-amber-600/15 text-amber-600 flex items-center justify-center mx-auto">
-                  ${icons[p.icon]('w-5 h-5')}
-                </div>
-                <h4 class="font-display font-bold text-base text-[var(--text-primary)]">${p.title}</h4>
-                <p class="text-xs text-[var(--text-secondary)] font-serif leading-relaxed">${p.desc}</p>
+            <div class="bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 rounded-xl p-4 text-center space-y-2">
+              <div class="w-10 h-10 rounded-full bg-amber-600/15 text-amber-600 flex items-center justify-center mx-auto">
+                ${icons.flame('w-5 h-5')}
               </div>
-            `
-              )
-              .join('')}
-          </div>
+              <h4 class="font-display font-bold text-base text-[var(--text-primary)]">${t('penance.prayerPillarTitle', '1. Interior Prayer')}</h4>
+              <p class="text-xs text-[var(--text-secondary)] font-serif leading-relaxed">${t('penance.prayerPillarDesc')}</p>
+            </div>
 
-          <!-- Fasting vs. Abstinence Definitions -->
-          <div class="space-y-3 pt-2 border-t border-stone-200 dark:border-stone-800">
-            <h4 class="text-sm font-sans font-bold uppercase tracking-wider text-[var(--text-primary)]">
-              Canonical & Spiritual Definitions
-            </h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              ${PENANCE_GUIDE.definitions
-                .map(
-                  (d) => `
-                <div class="bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 rounded-xl p-4 space-y-1">
-                  <div class="flex items-center justify-between">
-                    <strong class="text-sm font-display font-bold text-[var(--accent-vermilion)]">${d.term}</strong>
-                    <span class="text-[10px] uppercase font-mono text-amber-600 font-bold">${d.summary}</span>
-                  </div>
-                  <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-1">
-                    ${d.details}
-                  </p>
-                </div>
-              `
-                )
-                .join('')}
+            <div class="bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 rounded-xl p-4 text-center space-y-2">
+              <div class="w-10 h-10 rounded-full bg-amber-600/15 text-amber-600 flex items-center justify-center mx-auto">
+                ${icons.bread('w-5 h-5')}
+              </div>
+              <h4 class="font-display font-bold text-base text-[var(--text-primary)]">${t('penance.fastingPillarTitle', '2. Bodily Fasting')}</h4>
+              <p class="text-xs text-[var(--text-secondary)] font-serif leading-relaxed">${t('penance.fastingPillarDesc')}</p>
+            </div>
+
+            <div class="bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 rounded-xl p-4 text-center space-y-2">
+              <div class="w-10 h-10 rounded-full bg-amber-600/15 text-amber-600 flex items-center justify-center mx-auto">
+                ${icons.heart('w-5 h-5')}
+              </div>
+              <h4 class="font-display font-bold text-base text-[var(--text-primary)]">${t('penance.almsPillarTitle', '3. Generous Almsgiving')}</h4>
+              <p class="text-xs text-[var(--text-secondary)] font-serif leading-relaxed">${t('penance.almsPillarDesc')}</p>
             </div>
           </div>
 
@@ -460,35 +583,11 @@ export async function renderPenanceCalendar(container) {
               <span>Lawful Canonical Exemptions (Who is Excused?)</span>
             </div>
             <p class="text-xs text-[var(--text-secondary)]">
-              The Church exercises maternal care. God desires mercy and not sacrifice (Mt 9:13). Those in the following conditions are naturally excused from the physical fast:
+              The Church exercises maternal care. God desires mercy and not sacrifice (Mt 9:13). Those who are sick, pregnant, elderly, or engaged in exhausting manual labor are excused from food fasts and invited to practice prayer and acts of charity.
             </p>
             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[var(--text-primary)] list-disc list-inside">
               ${PENANCE_GUIDE.exemptions.map((ex) => `<li>${ex}</li>`).join('')}
             </ul>
-            <p class="text-[11px] text-[var(--text-muted)] italic pt-1">
-              Those excused from food fasts are warmly invited to practice spiritual fasting (refraining from idle talk, television, social media) or performing an act of charity.
-            </p>
-          </div>
-
-          <!-- Patristic Quotes Carousel / Cards -->
-          <div class="space-y-3 pt-2 border-t border-stone-200 dark:border-stone-800">
-            <h4 class="text-sm font-sans font-bold uppercase tracking-wider text-[var(--text-primary)]">
-              Voices of the Holy Fathers
-            </h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              ${PENANCE_GUIDE.patristicQuotes
-                .map(
-                  (q) => `
-                <div class="bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800 rounded-xl p-3.5 space-y-1">
-                  <div class="text-xs font-sans font-bold text-amber-700 dark:text-amber-400">${q.author}</div>
-                  <p class="text-xs font-serif italic text-[var(--text-secondary)] leading-relaxed">
-                    «${q.quote}»
-                  </p>
-                </div>
-              `
-                )
-                .join('')}
-            </div>
           </div>
 
         </div>
@@ -503,7 +602,7 @@ export async function renderPenanceCalendar(container) {
         activeTradition = btn.getAttribute('data-tradition');
         await saveSetting('penance_tradition', activeTradition);
         await saveSetting('user_confession', activeTradition);
-        await saveSetting('confession', activeTradition); // Synchronize belief across entire app
+        await saveSetting('confession', activeTradition);
         try {
           localStorage.setItem('aurasacra_user_confession', activeTradition);
         } catch (e) {}
@@ -566,6 +665,17 @@ export async function renderPenanceCalendar(container) {
         }
       });
     });
+
+    // 7. Share Saint Quote Buttons
+    container.querySelectorAll('.btn-share-calendar-saint').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const quote = decodeURIComponent(btn.getAttribute('data-quote') || '');
+        const author = decodeURIComponent(btn.getAttribute('data-author') || '');
+        if (onOpenShareCard) {
+          onOpenShareCard(quote, author);
+        }
+      });
+    });
   }
 
   function isSameDate(d1, d2) {
@@ -577,13 +687,30 @@ export async function renderPenanceCalendar(container) {
     );
   }
 
-  function formatDateString(d) {
-    return d.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+  function getLocalizedMonthName(monthIndex, lang) {
+    const key = [
+      'january', 'february', 'march', 'april', 'may', 'june',
+      'july', 'august', 'september', 'october', 'november', 'december'
+    ][monthIndex];
+    return t(`common.${key}`, new Date(2026, monthIndex, 1).toLocaleDateString(lang, { month: 'long' }));
+  }
+
+  function formatLocalizedDate(d, lang) {
+    try {
+      return d.toLocaleDateString(lang, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch (e) {
+      return d.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
   }
 
   render();

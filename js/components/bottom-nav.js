@@ -1,13 +1,14 @@
 // Mobile Bottom Navigation Bar for Aura Sacra
 import { icons } from '../icons.js';
+import { t } from '../i18n.js';
 
 export function renderBottomNav(container, activeTab, onNavigate, onOpenModal) {
   const tabs = [
-    { id: 'bible', label: 'Scripture', icon: 'book', isTab: true },
-    { id: 'penance', label: 'Penance', icon: 'calendar', isTab: true },
-    { id: 'chat', label: 'Jesus', icon: 'message', isTab: true },
-    { id: 'journal', label: 'Journal', icon: 'heart', isTab: true },
-    { id: 'tools', label: 'Tools', icon: 'grid', isModal: true }
+    { id: 'bible', label: t('nav.scripture', 'Scripture'), icon: 'book', isTab: true },
+    { id: 'penance', label: t('nav.penance', 'Penance'), icon: 'calendar', isTab: true },
+    { id: 'chat', label: t('nav.jesus', 'Jesus'), icon: 'message', isTab: true },
+    { id: 'journal', label: t('nav.journal', 'Journal'), icon: 'heart', isTab: true },
+    { id: 'tools', label: t('nav.tools', 'Tools'), icon: 'grid', isModal: true }
   ];
 
   container.innerHTML = `
@@ -21,7 +22,7 @@ export function renderBottomNav(container, activeTab, onNavigate, onOpenModal) {
               : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-stone-500/5'
           }">
             <div class="mb-0.5">${icons[tab.icon] ? icons[tab.icon]('w-5 h-5') : icons.sun('w-5 h-5')}</div>
-            <span class="text-[10px] font-sans tracking-wide uppercase font-semibold">${tab.label}</span>
+            <span class="text-[10px] font-sans tracking-wide uppercase font-semibold truncate max-w-[64px]">${tab.label}</span>
           </button>
         `;
       }).join('')}

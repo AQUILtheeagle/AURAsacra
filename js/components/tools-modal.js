@@ -1,23 +1,24 @@
 // Mobile & Desktop Sacred Tools Hub Modal for Aura Sacra
 import { icons } from '../icons.js';
+import { t } from '../i18n.js';
 
 export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
   const toolsSections = [
     {
-      category: 'Spiritual Disciplines & Daily Rhythm',
+      category: t('tools.spiritualDisciplines', 'Spiritual Disciplines & Daily Rhythm'),
       items: [
         {
           id: 'penance',
-          label: 'Penance & Fasting Calendar',
-          desc: 'Daily fasts, meat abstinence, and liturgical rules',
+          label: t('nav.penance', 'Penance & Fasting Calendar'),
+          desc: 'Daily fasts, meat abstinence, and liturgical rules with saints commemorations',
           icon: 'calendar',
-          badge: 'New',
+          badge: 'Saints',
           color: 'border-amber-600/60 bg-amber-500/10 text-amber-700 dark:text-amber-400',
           isTab: true
         },
         {
           id: 'promises',
-          label: 'The Jar of Promises',
+          label: t('nav.promises', 'The Jar of Promises'),
           desc: 'Biblical promises for anxiety, sorrow, decisions & gratitude',
           icon: 'jar',
           color: 'border-amber-600/40 bg-amber-500/5 text-amber-600',
@@ -33,7 +34,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         },
         {
           id: 'focus',
-          label: 'Focus with Candle & Rain',
+          label: t('nav.focus', 'Focus with Candle & Rain'),
           desc: 'Living flame meditation and procedural soothing rain',
           icon: 'flame',
           color: 'border-orange-600/40 bg-orange-500/5 text-orange-600',
@@ -42,11 +43,11 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
       ]
     },
     {
-      category: 'Wisdom & Spiritual Armor',
+      category: t('tools.wisdomArmor', 'Wisdom & Spiritual Armor'),
       items: [
         {
           id: 'sos',
-          label: 'SOS Temptation & Peace Shield',
+          label: t('nav.sos', 'SOS Temptation & Peace Shield'),
           desc: '30-second rhythmic breathing and 1 Cor 10:13 shield verse',
           icon: 'shield',
           color: 'border-red-600/60 bg-red-500/10 text-red-600',
@@ -62,8 +63,8 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         },
         {
           id: 'saints',
-          label: 'Saints & Church Fathers',
-          desc: 'Treasury of wisdom from the desert fathers and doctors',
+          label: t('nav.saints', 'Saints & Church Fathers'),
+          desc: 'Treasury of wisdom with liturgical colors and ranks',
           icon: 'cross',
           color: 'border-amber-600/40 bg-amber-500/5 text-amber-600',
           isTab: true
@@ -71,7 +72,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
       ]
     },
     {
-      category: 'Sacred Utilities & Personal Growth',
+      category: t('tools.utilities', 'Sacred Utilities & Personal Growth'),
       items: [
         {
           id: 'share',
@@ -83,7 +84,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         },
         {
           id: 'schedule',
-          label: 'School & Work Planner',
+          label: t('nav.schedule', 'School & Work Planner'),
           desc: 'Harmonize your study and labor with the monastic hours',
           icon: 'clock',
           color: 'border-blue-600/40 bg-blue-500/5 text-blue-600',
@@ -91,8 +92,8 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         },
         {
           id: 'settings',
-          label: 'Settings & Confession',
-          desc: 'API key setup, local backup & restore, circadian themes',
+          label: t('nav.settings', 'Settings & Confession'),
+          desc: 'Language selector, API key, backup & restore, circadian themes',
           icon: 'settings',
           color: 'border-stone-400 dark:border-stone-700 bg-stone-500/5 text-stone-600 dark:text-stone-300',
           isModal: true
@@ -121,15 +122,15 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
             </span>
             <div>
               <h2 class="text-xl sm:text-2xl font-display font-bold text-[var(--accent-vermilion)] leading-tight">
-                Sacred Tools & Contemplation
+                ${t('tools.title', 'Sacred Tools & Contemplation')}
               </h2>
               <p class="text-xs text-[var(--text-muted)] font-serif italic">
-                Instruments for prayer, fasting, peace, and spiritual growth
+                ${t('tools.subtitle', 'Instruments for prayer, fasting, peace, and spiritual growth')}
               </p>
             </div>
           </div>
 
-          <button id="btn-close-tools" class="p-2 text-stone-400 hover:text-[var(--text-primary)] rounded-lg transition" title="Close">
+          <button id="btn-close-tools" class="p-2 text-stone-400 hover:text-[var(--text-primary)] rounded-lg transition cursor-pointer" title="Close">
             ${icons.close('w-5 h-5')}
           </button>
         </div>
@@ -185,7 +186,7 @@ export function renderToolsModal(container, onClose, onNavigate, onOpenModal) {
         <!-- Footer Motto -->
         <div class="border-t border-stone-200 dark:border-stone-800 pt-3 text-center">
           <p class="text-xs italic text-[var(--text-muted)] font-serif">
-            «Ora et Labora» • All tools run 100% offline with zero cloud tracking.
+            ${t('tools.motto', '«Ora et Labora» • All tools run 100% offline with zero cloud tracking.')}
           </p>
         </div>
 

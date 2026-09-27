@@ -1,82 +1,211 @@
 // Saints & Church Fathers View for Aura Sacra
-import { getSaintsForConfession } from '../data/saints.js';
+import {
+  getSaintsForConfession,
+  getTodaySaints,
+  DAILY_SAINTS_CALENDAR,
+  LITURGICAL_COLORS,
+  getLiturgicalColorMeta
+} from '../data/saints.js';
 import { icons } from '../icons.js';
 import { getSetting } from '../db.js';
+import { t, getLanguage } from '../i18n.js';
+
+let activeViewFilter = 'today'; // 'today' | 'calendar' | 'fathers'
 
 export async function renderSaintsView(container, onOpenShareCard) {
+  const lang = getLanguage();
   const confession = (await getSetting('user_confession', 'ecumenical')).toLowerCase();
-  const saints = getSaintsForConfession(confession);
+  const traditionSaints = getSaintsForConfession(confession);
+  const todaySaints = getTodaySaints(confession);
 
-  container.innerHTML = `
-    <div class="space-y-6">
-      
-      <!-- Header -->
-      <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-xl p-5 shadow-sm">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full border border-amber-500/40 bg-[var(--bg-secondary)] flex items-center justify-center text-amber-600">
-            ${icons.cross('w-5 h-5')}
-          </div>
-          <div>
-            <h2 class="text-xl sm:text-2xl font-bold font-display text-[var(--accent-vermilion)]">
-              Saints & Fathers • Cloud of Witnesses
-            </h2>
-            <p class="text-xs sm:text-sm text-[var(--text-muted)] italic font-serif">
-              Current Tradition: <span class="capitalize font-bold text-amber-600">${confession}</span> (Switch anytime in Settings)
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Saints Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        ${saints.map((saint) => {
-          const primaryName = saint.name.split('/')[0].trim();
-          return `
-            <div class="bg-[var(--bg-parchment)] border border-stone-300/80 dark:border-stone-800 rounded-2xl p-6 shadow-md flex flex-col justify-between space-y-4 parchment-border">
-              
-              <div>
-                <div class="flex items-start justify-between gap-2 border-b border-stone-200 dark:border-stone-800 pb-3">
-                  <div>
-                    <h3 class="text-lg font-bold font-display text-[var(--accent-vermilion)]">${primaryName}</h3>
-                    <p class="text-xs font-sans text-stone-400">${saint.title} • <span class="italic text-amber-600">${saint.feast}</span></p>
-                  </div>
-                </div>
-
-                <!-- Quote -->
-                <blockquote class="my-4 text-base italic font-serif text-[var(--text-primary)] border-l-4 border-amber-600/60 pl-3 py-1 notranslate" translate="no">
-                  ${saint.quote || saint.quote_en}
-                </blockquote>
-
-                <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
-                  ${saint.bio}
-                </p>
-              </div>
-
-              <!-- Card Footer: Scripture Ref & Share -->
-              <div class="pt-3 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between">
-                <span class="text-xs font-mono font-semibold text-amber-600 notranslate" translate="no">
-                  📖 ${saint.scriptureRef}
-                </span>
-
-                <button class="btn-share-saint flex items-center gap-1.5 text-xs font-medium text-amber-600 hover:text-amber-700 px-3 py-1 rounded-lg border border-amber-600/30 hover:border-amber-600 transition" data-quote="${encodeURIComponent(saint.quote_en)}" data-name="${encodeURIComponent(primaryName)}">
-                  ${icons.share('w-3.5 h-3.5')}
-                  <span>Share Quote</span>
-                </button>
-              </div>
-
-            </div>
-          `;
-        }).join('')}
-      </div>
-
-    </div>
-  `;
-
-  container.querySelectorAll('.btn-share-saint').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const quote = decodeURIComponent(btn.getAttribute('data-quote'));
-      const name = decodeURIComponent(btn.getAttribute('data-name'));
-      onOpenShareCard(quote, name);
+  // Flatten calendar saints
+  const allCalendarSaints = [];
+  Object.keys(DAILY_SAINTS_CALENDAR).forEach(dateKey => {
+    const list = DAILY_SAINTS_CALENDAR[dateKey] || [];
+    list.forEach(saint => {
+      allCalendarSaints.push({
+        ...saint,
+        dateKey,
+        colorMeta: LITURGICAL_COLORS[saint.color] || LITURGICAL_COLORS.white
+      });
     });
   });
+
+  function render() {
+    let displayedSaints = [];
+    if (activeViewFilter === 'today') {
+      displayedSaints = todaySaints;
+    } else if (activeViewFilter === 'fathers') {
+      displayedSaints = traditionSaints.map(s => ({
+        ...s,
+        colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
+      }));
+    } else {
+      displayedSaints = allCalendarSaints;
+    }
+
+    container.innerHTML = `
+      <div class="space-y-6 pb-20 animate-fade-in max-w-5xl mx-auto">
+        
+        <!-- Header -->
+        <div class="bg-[var(--bg-card)] border border-stone-300 dark:border-stone-800 rounded-2xl p-5 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl border border-amber-500/40 bg-[var(--bg-secondary)] flex items-center justify-center text-amber-600 shadow-sm flex-shrink-0">
+                ${icons.cross('w-6 h-6')}
+              </div>
+              <div>
+                <h1 class="text-xl sm:text-2xl font-bold font-display text-[var(--accent-vermilion)]">
+                  ${t('saints.title', 'Saints & Church Fathers')}
+                </h1>
+                <p class="text-xs sm:text-sm text-[var(--text-muted)] italic font-serif">
+                  ${t('saints.subtitle', 'Cloud of Witnesses across Church history')} • <span class="capitalize font-bold text-amber-600">${confession}</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- View Filter Tabs -->
+            <div class="bg-[var(--bg-secondary)] p-1 rounded-xl border border-stone-300 dark:border-stone-700 flex gap-1">
+              <button data-filter="today" class="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold transition cursor-pointer ${
+                activeViewFilter === 'today'
+                  ? 'bg-amber-600 text-white shadow-sm'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }">
+                ${t('saints.filterToday', 'Today Only')} (${todaySaints.length})
+              </button>
+              <button data-filter="calendar" class="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold transition cursor-pointer ${
+                activeViewFilter === 'calendar'
+                  ? 'bg-amber-600 text-white shadow-sm'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }">
+                ${t('saints.calendarTitle', 'Full Year Calendar')}
+              </button>
+              <button data-filter="fathers" class="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold transition cursor-pointer ${
+                activeViewFilter === 'fathers'
+                  ? 'bg-amber-600 text-white shadow-sm'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }">
+                ${t('nav.spiritualLife', 'Tradition Fathers')}
+              </button>
+            </div>
+          </div>
+
+          <!-- Liturgical Color Legend -->
+          <div class="bg-[var(--bg-secondary)] border border-stone-200 dark:border-stone-800/80 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-[var(--text-primary)]">${t('saints.liturgicalColor', 'Liturgical Colors:')}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 text-[11px] font-sans">
+              <span class="flex items-center gap-1.5 font-semibold text-stone-200">
+                <span class="w-2.5 h-2.5 rounded-full bg-stone-100 ring-1 ring-stone-400"></span>
+                <span>⚪ ${t('colors.white', 'White')}</span>
+                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.whiteDesc')})</span>
+              </span>
+              <span class="flex items-center gap-1.5 font-semibold text-blue-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500 ring-1 ring-blue-400"></span>
+                <span>🔵 ${t('colors.blue', 'Blue')}</span>
+                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.blueDesc')})</span>
+              </span>
+              <span class="flex items-center gap-1.5 font-semibold text-red-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-600 ring-1 ring-red-400"></span>
+                <span>🔴 ${t('colors.red', 'Red')}</span>
+                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.redDesc')})</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saints Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          ${displayedSaints.map((saint) => {
+            const cMeta = saint.colorMeta || getLiturgicalColorMeta(saint.color || 'white');
+            const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
+            const rankName = saint.rank ? t(`ranks.${saint.rank}`, saint.rank) : t('ranks.memorial');
+            const primaryName = (lang === 'it' && saint.name_it) ? saint.name_it : (saint.name ? saint.name.split('/')[0].trim() : 'Holy Saint');
+
+            return `
+              <div class="bg-[var(--bg-parchment)] border-2 ${cMeta.borderClass} rounded-2xl p-5 sm:p-6 shadow-md flex flex-col justify-between space-y-4 parchment-border hover:shadow-xl transition">
+                
+                <div>
+                  <div class="flex items-start justify-between gap-3 border-b border-stone-200 dark:border-stone-800 pb-3">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full ${cMeta.dotClass}"></span>
+                        <h3 class="text-lg font-bold font-display text-[var(--accent-vermilion)] leading-tight">
+                          ${primaryName}
+                        </h3>
+                      </div>
+                      <p class="text-xs font-serif italic text-[var(--text-muted)]">${saint.title}</p>
+                    </div>
+
+                    <!-- Badges: Color & Rank -->
+                    <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[11px] font-sans font-bold ${cMeta.badgeClass}">
+                        <span>${cMeta.symbol}</span>
+                        <span>${cName}</span>
+                      </span>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-md border border-stone-300 dark:border-stone-700 bg-[var(--bg-secondary)] text-[var(--text-secondary)] text-[10px] font-sans font-semibold uppercase">
+                        ${rankName}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Quote -->
+                  ${(saint.quote || saint.quote_en) ? `
+                    <blockquote class="my-3 text-sm sm:text-base italic font-serif text-[var(--text-primary)] border-l-4 border-amber-600/70 pl-3 py-1 bg-amber-500/5 rounded-r-lg notranslate" translate="no">
+                      ${saint.quote || saint.quote_en}
+                    </blockquote>
+                  ` : ''}
+
+                  <!-- Bio -->
+                  ${saint.bio ? `
+                    <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-serif leading-relaxed">
+                      ${saint.bio}
+                    </p>
+                  ` : ''}
+                </div>
+
+                <!-- Card Footer: Scripture Ref & Share -->
+                <div class="pt-3 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between text-xs">
+                  <span class="font-mono font-semibold text-amber-600 notranslate" translate="no">
+                    📖 ${saint.scriptureRef || 'Gospel of Christ'}
+                  </span>
+
+                  ${(saint.quote || saint.quote_en) ? `
+                    <button class="btn-share-saint flex items-center gap-1.5 font-medium text-amber-600 hover:text-amber-700 px-3 py-1 rounded-lg border border-amber-600/30 hover:border-amber-600 transition cursor-pointer" data-quote="${encodeURIComponent(saint.quote || saint.quote_en)}" data-name="${encodeURIComponent(primaryName)}">
+                      ${icons.share('w-3.5 h-3.5')}
+                      <span>${t('saints.shareQuote', 'Share Quote')}</span>
+                    </button>
+                  ` : ''}
+                </div>
+
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+      </div>
+    `;
+
+    // Filter Buttons
+    container.querySelectorAll('button[data-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeViewFilter = btn.getAttribute('data-filter');
+        render();
+      });
+    });
+
+    // Share buttons
+    container.querySelectorAll('.btn-share-saint').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const quote = decodeURIComponent(btn.getAttribute('data-quote') || '');
+        const name = decodeURIComponent(btn.getAttribute('data-name') || '');
+        if (onOpenShareCard) {
+          onOpenShareCard(quote, name);
+        }
+      });
+    });
+  }
+
+  render();
 }
