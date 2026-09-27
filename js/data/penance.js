@@ -839,8 +839,13 @@ function computeRawPenanceStatus(dateInput, tradition = 'catholic') {
 
 // Evaluates penitential status of any given day with full localization
 export function getDayPenanceStatus(dateInput, tradition = 'catholic', lang = null) {
-  const rawStatus = computeRawPenanceStatus(dateInput, tradition);
-  return localizePenanceStatus(rawStatus, lang);
+  const d = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  const rawStatus = computeRawPenanceStatus(d, tradition);
+  const localized = localizePenanceStatus(rawStatus, lang);
+  return {
+    ...localized,
+    date: d
+  };
 }
 
 // Generates an array of day statuses for an entire month with full localization

@@ -41,11 +41,13 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
   const today = new Date();
   currentDisplayDate = new Date(today.getFullYear(), today.getMonth(), 1);
   selectedDayData = getDayPenanceStatus(today, activeTradition, getLanguage());
+  selectedDayData.date = today;
 
   function render() {
     const lang = getLanguage();
     const today = new Date();
     const todayStatus = getDayPenanceStatus(today, activeTradition, lang);
+    todayStatus.date = today;
     const todaySaints = getTodaySaints(activeTradition);
 
     const curYear = currentDisplayDate.getFullYear();
@@ -60,6 +62,8 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     const selectedDate = selected.date || today;
     const isInspectingToday = isSameDate(selectedDate, today);
     const selectedDaySaints = getSaintsForDate(selectedDate, activeTradition);
+    const primarySelectedSaint = selectedDaySaints[0] || null;
+    const locPrimarySelectedSaint = primarySelectedSaint ? getLocalizedSaint(primarySelectedSaint, lang) : null;
 
     container.innerHTML = `
       <div class="space-y-6 pb-32 sm:pb-24 animate-fade-in max-w-5xl mx-auto">
@@ -150,13 +154,15 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 <div class="pt-1 flex flex-wrap items-center gap-2">
                   <span class="text-[11px] font-sans font-bold text-amber-600 uppercase tracking-wider">${t('penance.todayCommemoration', "Today's Saint / Feast:")}</span>
                   ${todaySaints.map(s => {
-                    const cMeta = s.colorMeta;
-                    const cName = lang === 'it' ? cMeta.name_it : cMeta.name;
-                    const sName = getSaintName(s, lang);
+                    const locS = getLocalizedSaint(s, lang);
+                    const cMeta = locS.colorMeta || getLiturgicalColorMeta(locS.color, lang);
+                    const cName = locS.colorName || cMeta.name;
+                    const sName = locS.displayName || locS.name;
+                    const rankName = locS.rankName || t(`ranks.${locS.rank}`, locS.rank);
                     return `
                       <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg border text-xs font-sans font-semibold ${cMeta.badgeClass}">
                         <span>${cMeta.symbol} ${sName}</span>
-                        <span class="opacity-75 text-[10px]">(${cName} • ${t(`ranks.${s.rank}`, s.rank)})</span>
+                        <span class="opacity-75 text-[10px]">(${cName} • ${rankName})</span>
                       </span>
                     `;
                   }).join('')}
@@ -180,7 +186,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
           <!-- Bottom Action Buttons on Today's Banner -->
           <div class="mt-4 pt-3 border-t border-stone-300/60 dark:border-stone-700/60 flex flex-wrap items-center justify-between gap-3 text-xs">
             <span class="text-[var(--text-muted)] italic truncate max-w-md notranslate" translate="no">
-              «${todayStatus.scripture.ref}»: "${((todayStatus.scripture.archives && todayStatus.scripture.archives[lang]) || todayStatus.scripture.text).slice(0, 85)}..."
+              «${todayStatus.scripture?.ref || ''}»: "${(todayStatus.scripture?.text || '').slice(0, 85)}..."
             </span>
             <button id="btn-inspect-today" class="font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1 cursor-pointer">
               <span>${t('penance.viewDayGuide', 'View Full Day Guide & Prayer')}</span>
@@ -257,7 +263,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             ${monthDays
               .map((dObj) => {
                 const isToday = isSameDate(dObj.date, today);
-                const isSelected = selected && isSameDate(dObj.date, selected.date);
+                const isSelected = isSameDate(dObj.date, selectedDate);
                 const daySaints = getSaintsForDate(dObj.date, activeTradition);
                 const primarySaint = daySaints[0] || null;
                 const locPrimary = primarySaint ? getLocalizedSaint(primarySaint, lang) : null;
@@ -273,7 +279,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
                 return `
                 <button data-calendar-day="${dObj.day}" class="h-20 sm:h-24 rounded-xl border p-1.5 sm:p-2 flex flex-col justify-between text-left transition relative cursor-pointer group ${cellColorStyle} ${
-                  isSelected ? 'ring-2 ring-amber-600 shadow-md scale-[1.02]' : ''
+                  isSelected ? 'ring-2 ring-amber-600 bg-amber-500/15 shadow-md scale-[1.02]' : ''
                 } ${isToday ? 'border-2 border-amber-600 font-bold' : ''}">
                   
                   <div class="flex items-center justify-between w-full">
@@ -298,7 +304,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                   <div class="w-full space-y-1">
                     ${
                       locPrimary ? `
-                        <div class="text-[9px] font-sans font-medium truncate ${primarySaint.colorMeta.textClass} hidden sm:block">
+                        <div class="text-[8.5px] sm:text-[9.5px] font-sans font-semibold truncate leading-tight ${primarySaint.colorMeta.textClass}">
                           ${primarySaint.colorMeta.symbol} ${(locPrimary.displayName || locPrimary.name).split(',')[0]}
                         </div>
                       ` : ''
@@ -307,7 +313,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                     ${
                       dObj.isPenitential
                         ? `
-                      <div class="flex items-center gap-1 text-[10px] font-sans font-semibold rounded-md px-1 py-0.5 truncate ${
+                      <div class="flex items-center gap-1 text-[9px] sm:text-[10px] font-sans font-semibold rounded-md px-1 py-0.5 truncate ${
                         dObj.badge.color === 'vermilion'
                           ? 'bg-red-600 text-white'
                           : dObj.badge.color === 'purple'
@@ -315,18 +321,18 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                           : 'bg-amber-600 text-white'
                       }">
                         <span>${icons[dObj.badge.icon]('w-2.5 h-2.5')}</span>
-                        <span class="truncate hidden sm:inline">${dObj.badge.label}</span>
+                        <span class="truncate">${dObj.badge.label}</span>
                       </div>
                     `
                         : dObj.type === 'solemnity_dispensation'
                         ? `
-                      <div class="flex items-center gap-1 text-[10px] font-sans font-semibold rounded-md px-1 py-0.5 truncate bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+                      <div class="flex items-center gap-1 text-[9px] sm:text-[10px] font-sans font-semibold rounded-md px-1 py-0.5 truncate bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30">
                         <span>${icons.sparkles('w-2.5 h-2.5')}</span>
-                        <span class="truncate hidden sm:inline">${t('penance.dispensation', 'Dispensation')}</span>
+                        <span class="truncate">${t('penance.dispensation', 'Dispensation')}</span>
                       </div>
                     `
                         : `
-                      <div class="text-[9px] text-[var(--text-muted)] font-serif italic truncate hidden sm:block">
+                      <div class="text-[8.5px] sm:text-[9.5px] text-[var(--text-muted)] font-serif italic truncate">
                         ${t('penance.ordinary', 'Ordinary')}
                       </div>
                     `
@@ -345,8 +351,8 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
         <div id="day-inspector" class="bg-[var(--bg-card)] border-2 border-amber-600/50 rounded-2xl p-6 sm:p-8 shadow-xl parchment-border space-y-6 animate-fade-in">
           
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-4">
-            <div>
-              <div class="flex items-center gap-2">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
                 <span class="text-xs font-mono uppercase tracking-widest text-amber-600 dark:text-amber-400 font-bold">
                   ${t('penance.inspection', 'Inspection of Selected Date')}
                 </span>
@@ -355,16 +361,27 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                   ${formatLocalizedDate(selectedDate, lang)}
                 </span>
               </div>
+
+              ${locPrimarySelectedSaint ? `
+                <div class="pt-1">
+                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg border text-xs font-sans font-bold ${locPrimarySelectedSaint.colorMeta?.badgeClass || 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30'}">
+                    <span>${locPrimarySelectedSaint.colorMeta?.symbol || '✝'}</span>
+                    <span>${locPrimarySelectedSaint.displayName || locPrimarySelectedSaint.name}</span>
+                    <span class="opacity-80 text-[10px] uppercase font-semibold">(${locPrimarySelectedSaint.colorName || locPrimarySelectedSaint.colorMeta?.name || ''} • ${locPrimarySelectedSaint.rankName || t(`ranks.${locPrimarySelectedSaint.rank}`, locPrimarySelectedSaint.rank)})</span>
+                  </div>
+                </div>
+              ` : ''}
+
               <h3 class="text-2xl sm:text-3xl font-display font-bold text-[var(--accent-vermilion)] mt-1">
-                ${selected.title}
+                ${locPrimarySelectedSaint ? (locPrimarySelectedSaint.displayName || locPrimarySelectedSaint.name) : selected.title}
               </h3>
               <p class="text-sm font-serif italic text-[var(--text-muted)] mt-0.5">
-                ${selected.subtitle}
+                ${locPrimarySelectedSaint && locPrimarySelectedSaint.title ? locPrimarySelectedSaint.title + ' • ' : ''}${selected.title} — ${selected.subtitle}
               </p>
             </div>
 
             <!-- Penance Status Badge -->
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border ${
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border flex-shrink-0 ${
               selected.badge.color === 'vermilion'
                 ? 'bg-red-600 text-white border-red-700 shadow-sm'
                 : selected.badge.color === 'purple'
@@ -523,9 +540,9 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
             </div>
 
             <div class="border-t border-stone-300/60 dark:border-stone-700/60 pt-3 notranslate" translate="no">
-              <span class="text-xs font-mono font-bold text-amber-600 notranslate" translate="no">— ${selected.scripture.ref}</span>
+              <span class="text-xs font-mono font-bold text-amber-600 notranslate" translate="no">— ${selected.scripture?.ref || ''}</span>
               <p class="text-xs sm:text-sm font-serif italic text-[var(--text-primary)] mt-0.5 notranslate" translate="no">
-                "${(selected.scripture.archives && selected.scripture.archives[lang]) || selected.scripture.text}"
+                «${selected.scripture?.text || ''}»
               </p>
             </div>
           </div>
@@ -641,7 +658,12 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
       const now = new Date();
       currentDisplayDate = new Date(now.getFullYear(), now.getMonth(), 1);
       selectedDayData = getDayPenanceStatus(now, activeTradition, lang);
+      selectedDayData.date = now;
       render();
+      const inspectorEl = container.querySelector('#day-inspector');
+      if (inspectorEl) {
+        inspectorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
 
     // 5. Inspect Today from banner
@@ -649,10 +671,11 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     if (inspectTodayBtn) {
       inspectTodayBtn.addEventListener('click', () => {
         selectedDayData = todayStatus;
+        selectedDayData.date = today;
         render();
         const inspectorEl = container.querySelector('#day-inspector');
         if (inspectorEl) {
-          inspectorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          inspectorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     }
@@ -663,10 +686,11 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
         const dayNum = parseInt(btn.getAttribute('data-calendar-day'), 10);
         const clickedDate = new Date(curYear, curMonth, dayNum);
         selectedDayData = getDayPenanceStatus(clickedDate, activeTradition, lang);
+        selectedDayData.date = clickedDate;
         render();
         const inspectorEl = container.querySelector('#day-inspector');
         if (inspectorEl) {
-          inspectorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          inspectorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });

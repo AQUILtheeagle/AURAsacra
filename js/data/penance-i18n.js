@@ -2,6 +2,7 @@
 // Supports: it (Italiano), en (English), ro (Română), fr (Français), es (Español), pt (Português), de (Deutsch), ru (Русский), la (Lingua Latina)
 
 import { getLanguage } from '../i18n.js';
+import { localizeScriptureRef } from './saints-i18n.js';
 
 export const TRADITIONS_I18N = {
   catholic: {
@@ -3088,6 +3089,284 @@ const FRIDAY_PREFIX_I18N = {
   la: 'Feria Sexta: '
 };
 
+export const PENANCE_SCRIPTURES_I18N = {
+  ash_wednesday: {
+    it: { ref: 'Gioele 2:12-13', text: '«Ritornate a me con tutto il cuore, con digiuni, con pianti e con lamenti». Laceratevi il cuore e non le vesti, ritornate al Signore, vostro Dio.' },
+    en: { ref: 'Joel 2:12-13', text: 'Turn ye even to me with all your heart, and with fasting, and with weeping, and with mourning: and rend your heart, and not your garments, and turn unto the Lord your God.' },
+    la: { ref: 'Ioel 2:12-13', text: 'Convertimini ad me in toto corde vestro, in ieiunio, et in fletu, et in planctu. Et scindite corda vestra, et non vestimenta vestra, et convertimini ad Dominum Deum vestrum.' },
+    ro: { ref: 'Ioel 2:12-13', text: '„Întoarceţi-vă la Mine din toată inima voastră, cu post, cu plâns şi cu tânguire!” Sfâşiaţi-vă inimile, nu hainele, şi întoarceţi-vă la Domnul Dumnezeul vostru.' },
+    fr: { ref: 'Joël 2:12-13', text: '«Revenez à moi de tout votre cœur, avec des jeûnes, avec des pleurs et des lamentations!» Déchirez vos cœurs et non vos vêtements, et revenez à l\'Éternel, votre Dieu.' },
+    es: { ref: 'Joel 2:12-13', text: '«Convertíos a mí con todo vuestro corazón, con ayuno y lloro y lamento». Rasgad vuestro corazón, y no vuestros vestidos, y convertíos a Jehová vuestro Dios.' },
+    pt: { ref: 'Joel 2:12-13', text: '«Convertei-vos a mim de todo o vosso coração; e isso com jejuns, e com choro, e com pranto». E rasgai o vosso coração, e não as vossas vestes, e convertei-vos ao Senhor vosso Deus.' },
+    de: { ref: 'Joel 2:12-13', text: '«Bekehrt euch zu mir von ganzem Herzen mit Fasten, mit Weinen, mit Klagen!» Zerreißet eure Herzen und nicht eure Kleider und bekehrt euch zu dem HERRN, eurem Gott.' },
+    ru: { ref: 'Иоиль 2:12-13', text: '«Обратитесь ко Мне всем сердцем своим в посте, плаче и рыдании». Раздирайте сердца ваши, а не одежды ваши, и обратитесь к Господу Богу вашему.' }
+  },
+  good_friday: {
+    it: { ref: '1 Pietro 2:24', text: 'Egli portò i nostri peccati nel suo corpo sul legno della croce, perché, non vivendo più per il peccato, vivessimo per la giustizia; dalle sue piaghe siete stati guariti.' },
+    en: { ref: '1 Peter 2:24', text: 'Who his own self bare our sins in his own body on the tree, that we, being dead to sins, should live unto righteousness: by whose stripes ye were healed.' },
+    la: { ref: '1 Petri 2:24', text: 'Qui peccata nostra ipse pertulit in corpore suo super lignum: ut peccatis mortui, iustitiae vivamus: cuius livore sanati estis.' },
+    ro: { ref: '1 Petru 2:24', text: 'El a purtat păcatele noastre în trupul Său pe lemn, pentru ca noi, murind faţă de păcate, să trăim pentru neprihănire; prin rănile Lui aţi fost vindecaţi.' },
+    fr: { ref: '1 Pierre 2:24', text: 'Lui qui a porté lui-même nos péchés en son corps sur le bois, afin que morts aux péchés nous vivions pour la justice; lui par les meurtrissures duquel vous avez été guéris.' },
+    es: { ref: '1 Pedro 2:24', text: 'Quien llevó él mismo nuestros pecados en su cuerpo sobre el madero, para que nosotros, estando muertos a los pecados, vivamos a la justicia; y por cuya herida fuisteis sanados.' },
+    pt: { ref: '1 Pedro 2:24', text: 'Levando ele mesmo em seu corpo os nossos pecados sobre o madeiro, para que, mortos para os pecados, pudéssemos viver para a justiça; e pelas suas feridas fostes sarados.' },
+    de: { ref: '1. Petrus 2:24', text: 'Der unsre Sünden selbst hinaufgetragen hat an seinem Leibe auf das Holz, damit wir, den Sünden abgestorben, der Gerechtigkeit leben. Durch seine Wunden seid ihr heil geworden.' },
+    ru: { ref: '1 Петра 2:24', text: 'Он грехи наши Сам вознес телом Своим на древо, дабы мы, избавившись от грехов, жили для правды: ранами Его вы исцелились.' }
+  },
+  solemnity_dispensation: {
+    it: { ref: 'Luca 9:23', text: 'Se qualcuno vuole venire dietro a me, rinneghi se stesso, prenda la sua croce ogni giorno e mi segua.' },
+    en: { ref: 'Luke 9:23', text: 'If any man will come after me, let him deny himself, and take up his cross daily, and follow me.' },
+    la: { ref: 'Lucas 9:23', text: 'Si quis vult post me venire, abneget semetipsum, et tollat crucem suam quotidie, et sequatur me.' },
+    ro: { ref: 'Luca 9:23', text: 'Dacă voieşte cineva să vină după Mine, să se lepede de sine, să-şi ia crucea în fiecare zi şi să Mă urmeze.' },
+    fr: { ref: 'Luc 9:23', text: 'Si quelqu\'un veut venir après moi, qu\'il renonce à lui-même, qu\'il se charge chaque jour de sa croix, et qu\'il me suive.' },
+    es: { ref: 'Lucas 9:23', text: 'Si alguno quiere venir en pos de mí, niéguese a sí mismo, tome su cruz cada día, y sígame.' },
+    pt: { ref: 'Lucas 9:23', text: 'Se alguém quer vir após mim, negue-se a si mesmo, e tome cada dia a sua cruz, e siga-me.' },
+    de: { ref: 'Lukas 9:23', text: 'Wer mir nachfolgen will, der verleugne sich selbst und nehme sein Kreuz auf sich täglich und folge mir nach.' },
+    ru: { ref: 'Луки 9:23', text: 'Если кто хочет идти за Мною, отвергнись себя, и возьми крест свой, и следуй за Мною.' }
+  },
+  friday_penance: {
+    it: { ref: 'Galati 2:20', text: 'Sono stato crocifisso con Cristo: non sono più io che vivo, ma Cristo vive in me.' },
+    en: { ref: 'Galatians 2:20', text: 'I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me.' },
+    la: { ref: 'Ad Galatas 2:20', text: 'Christo confixus sum cruci. Vivo autem, iam non ego: vivit vero in me Christus.' },
+    ro: { ref: 'Galateni 2:20', text: 'Am fost răstignit împreună cu Hristos şi trăiesc... dar nu mai trăiesc eu, ci Hristos trăieşte în mine.' },
+    fr: { ref: 'Galates 2:20', text: 'J\'ai été crucifié avec Christ; et si je vis, ce n\'est plus moi qui vis, c\'est Christ qui vit en moi.' },
+    es: { ref: 'Gálatas 2:20', text: 'Con Cristo estoy juntamente crucificado, y ya no vivo yo, mas vive Cristo en mí.' },
+    pt: { ref: 'Gálatas 2:20', text: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim.' },
+    de: { ref: 'Galater 2:20', text: 'Ich bin mit Christus gekreuzigt. Ich lebe, doch nun nicht ich, sondern Christus lebt in mir.' },
+    ru: { ref: 'Галатам 2:20', text: 'И уже не я живу, но живет во мне Христос. А что ныне живу во плоти, то живу верою в Сына Божия.' }
+  },
+  lenten_friday: {
+    it: { ref: 'Matteo 6:16', text: 'E quando digiunate, non assumete un\'aria malinconica come gli ipocriti... tu invece, quando digiuni, profumati la testa e lavati il volto.' },
+    en: { ref: 'Matthew 6:16', text: 'Moreover when ye fast, be not, as the hypocrites, of a sad countenance... but thou, when thou fastest, anoint thine head, and wash thy face.' },
+    la: { ref: 'Matthaeus 6:16', text: 'Cum autem ieiunatis, nolite fieri sicut hypocritae, tristes... Tu autem cum ieiunas, unge caput tuum, et faciem tuam lava.' },
+    ro: { ref: 'Matei 6:16', text: 'Când postiţi, nu fiţi trişti ca făţarnicii... Ci tu, când posteşti, unge-ţi capul şi spală-ţi faţa.' },
+    fr: { ref: 'Matthieu 6:16', text: 'Lorsque vous jeûnez, ne prenez pas un air triste, comme les hypocrites... Mais quand tu jeûnes, parfume ta tête et lave ton visage.' },
+    es: { ref: 'Mateo 6:16', text: 'Cuando ayunéis, no seáis austeros, como los hipócritas... pero tú, cuando ayunes, unge tu cabeza y lava tu rostro.' },
+    pt: { ref: 'Mateus 6:16', text: 'E, quando jejuardes, não vos mostreis contristados como os hipócritas... Tu, porém, quando jejuares, unge a tua cabeça, e lava o teu rosto.' },
+    de: { ref: 'Matthäus 6:16', text: 'Wenn ihr fastet, sollt ihr nicht sauer sehen wie die Heuchler... Wenn du aber fastest, so salbe dein Haupt und wasche dein Angesicht.' },
+    ru: { ref: 'Матфея 6:16', text: 'Также, когда поститесь, не будьте унылы, как лицемеры... А ты, когда постишься, помажь голову твою и умой лице твое.' }
+  },
+  lenten_feria: {
+    it: { ref: 'Luca 9:23', text: 'Se qualcuno vuole venire dietro a me, rinneghi se stesso, prenda la sua croce ogni giorno e mi segua.' },
+    en: { ref: 'Luke 9:23', text: 'If any man will come after me, let him deny himself, and take up his cross daily, and follow me.' },
+    la: { ref: 'Lucas 9:23', text: 'Si quis vult post me venire, abneget semetipsum, et tollat crucem suam quotidie, et sequatur me.' },
+    ro: { ref: 'Luca 9:23', text: 'Dacă voieşte cineva să vină după Mine, să se lepede de sine, să-şi ia crucea în fiecare zi şi să Mă urmeze.' },
+    fr: { ref: 'Luc 9:23', text: 'Si quelqu\'un veut venir après moi, qu\'il renonce à lui-même, qu\'il se charge chaque jour de sa croix, et qu\'il me suive.' },
+    es: { ref: 'Lucas 9:23', text: 'Si alguno quiere venir en pos de mí, niéguese a sí mismo, tome su cruz cada día, y sígame.' },
+    pt: { ref: 'Lucas 9:23', text: 'Se alguém quer vir após mim, negue-se a si mesmo, e tome cada dia a sua cruz, e siga-me.' },
+    de: { ref: 'Lukas 9:23', text: 'Wer mir nachfolgen will, der verleugne sich selbst und nehme sein Kreuz auf sich täglich und folge mir nach.' },
+    ru: { ref: 'Луки 9:23', text: 'Если кто хочет идти за Мною, отвергнись себя, и возьми крест свой, и следуй за Мною.' }
+  },
+  ordinary: {
+    it: { ref: '1 Corinzi 10:31', text: 'Sia dunque che mangiate, sia che beviate, sia che facciate alcun\'altra cosa, fate tutto alla gloria di Dio.' },
+    en: { ref: '1 Corinthians 10:31', text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.' },
+    la: { ref: '1 ad Corinthios 10:31', text: 'Sive ergo manducatis, sive bibitis, sive aliud quid facitis: omnia in gloriam Dei facite.' },
+    ro: { ref: '1 Corinteni 10:31', text: 'Deci, fie că mâncaţi, fie că beţi, fie că altceva faceţi, toate spre slava lui Dumnezeu să le faceţi.' },
+    fr: { ref: '1 Corinthiens 10:31', text: 'Soit donc que vous mangiez, soit que vous buviez, soit que vous fassiez quelque autre chose, faites tout pour la gloire de Dieu.' },
+    es: { ref: '1 Corintios 10:31', text: 'Si pues coméis, o bebéis, o hacéis otra cosa, hacedlo todo para la gloria de Dios.' },
+    pt: { ref: '1 Coríntios 10:31', text: 'Portanto, quer comais quer bebais, ou façais outra qualquer coisa, fazei tudo para glória de Deus.' },
+    de: { ref: '1. Korinther 10:31', text: 'Ob ihr nun esst oder trinkt oder was ihr auch tut, das tut alles zu Gottes Ehre.' },
+    ru: { ref: '1 Коринфянам 10:31', text: 'Итак, едите ли, пьете ли, или иное что делаете, все делайте в славу Божию.' }
+  },
+  ember_day: {
+    it: { ref: 'Atti 13:3', text: 'Allora, dopo aver digiunato e pregato, imposero loro le mani e li congedarono.' },
+    en: { ref: 'Acts 13:3', text: 'And when they had fasted and prayed, and laid their hands on them, they sent them away.' },
+    la: { ref: 'Actus 13:3', text: 'Tunc ieiunantes, et orantes, imponentesque eis manus, dimiserunt illos.' },
+    ro: { ref: 'Faptele Apostolilor 13:3', text: 'Atunci, după ce au postit şi s-au rugat, şi-au pus mâinile peste ei şi i-au lăsat să plece.' },
+    fr: { ref: 'Actes 13:3', text: 'Alors, après avoir jeûné et prié, ils leur imposèrent les mains, et les laissèrent partir.' },
+    es: { ref: 'Hechos 13:3', text: 'Entonces, habiendo ayunado y orado, les impusieron las manos y los despidieron.' },
+    pt: { ref: 'Atos 13:3', text: 'Então, jejuando e orando, e pondo sobre eles as mãos, os despediram.' },
+    de: { ref: 'Apostelgeschichte 13:3', text: 'Da fasteten sie und beteten und legten die Hände auf sie und ließen sie ziehen.' },
+    ru: { ref: 'Деяния 13:3', text: 'Тогда они, совершив пост и молитву и возложив на них руки, отпустили их.' }
+  },
+  vigil: {
+    it: { ref: 'Matteo 25:6', text: 'A mezzanotte si alzò un grido: «Ecco lo sposo! Andategli incontro!». ' },
+    en: { ref: 'Matthew 25:6', text: 'And at midnight there was a cry made, Behold, the bridegroom cometh; go ye out to meet him.' },
+    la: { ref: 'Matthaeus 25:6', text: 'Media autem nocte clamor factus est: Ecce sponsus venit, exite obviam ei.' },
+    ro: { ref: 'Matei 25:6', text: 'La miezul nopţii s-a auzit o strigare: „Iată mirele, ieşiţi-i în întâmpinare!”' },
+    fr: { ref: 'Matthieu 25:6', text: 'Au milieu de la nuit, on cria: Voici l\'époux, allez à sa rencontre!' },
+    es: { ref: 'Mateo 25:6', text: 'Y a la medianoche se oyó un clamor: ¡Aquí viene el esposo; salid a recibirle!' },
+    pt: { ref: 'Mateus 25:6', text: 'Mas à meia-noite ouviu-se um clamor: Aí vem o esposo, saí-lhe ao encontro.' },
+    de: { ref: 'Matthäus 25:6', text: 'Um Mitternacht aber erhob sich lautes Rufen: Siehe, der Bräutigam kommt! Geht hinaus, ihm entgegen!' },
+    ru: { ref: 'Матфея 25:6', text: 'Но в полночь раздался крик: «вот, жених идет, выходите навстречу ему».' }
+  },
+  holy_saturday: {
+    it: { ref: 'Romani 6:4', text: 'Per mezzo del battesimo siamo dunque stati sepolti insieme a lui nella morte affinché, come Cristo fu risuscitato dai morti per mezzo della gloria del Padre, così anche noi camminassimo in una vita nuova.' },
+    en: { ref: 'Romans 6:4', text: 'Therefore we are buried with him by baptism into death: that like as Christ was raised up from the dead by the glory of the Father, even so we also should walk in newness of life.' },
+    la: { ref: 'Ad Romanos 6:4', text: 'Consepulti enim sumus cum illo per baptismum in mortem: ut quomodo Christus surrexit a mortuis per gloriam Patris, ita et nos in novitate vitae ambulemus.' },
+    ro: { ref: 'Romani 6:4', text: 'Noi deci, prin botezul în moartea Lui, am fost îngropaţi împreună cu El, pentru ca, după cum Hristos a înviat din morţi prin slava Tatălui, tot aşa şi noi să trăim o viaţă nouă.' },
+    fr: { ref: 'Romains 6:4', text: 'Nous avons donc été ensevelis avec lui par le baptême en sa mort, afin que, comme Christ est ressuscité des morts par la gloire du Père, de même nous aussi nous marchions en nouveauté de vie.' },
+    es: { ref: 'Romanos 6:4', text: 'Porque somos sepultados juntamente con él para muerte por el bautismo, a fin de que como Cristo resucitó de los muertos por la gloria del Padre, así también nosotros andemos en vida nueva.' },
+    pt: { ref: 'Romanos 6:4', text: 'De sorte que fomos sepultados com ele pelo batismo na morte; para que, como Cristo foi ressuscitado dentre os mortos, pela glória do Pai, assim andemos nós também em novidade de vida.' },
+    de: { ref: 'Römer 6:4', text: 'So sind wir ja mit ihm begraben durch die Taufe in den Tod, damit, wie Christus auferweckt ist von den Toten durch die Herrlichkeit des Vaters, so auch wir in einem neuen Leben wandeln.' },
+    ru: { ref: 'Римлянам 6:4', text: 'Итак мы погреблись с Ним крещением в смерть, дабы, как Христос воскрес из мертвых славою Отца, так и нам ходить в обновленной жизни.' }
+  },
+  traditional_lenten_weekday: {
+    it: { ref: 'Salmo 35:13', text: 'Io, quand\'erano malati, vestivo di sacco, mi mortificavo col digiuno, e la mia preghiera tornava nel mio seno.' },
+    en: { ref: 'Psalm 35:13', text: 'I humbled my soul with fasting; and my prayer returned into mine own bosom.' },
+    la: { ref: 'Psalmus 35:13', text: 'Ego autem, cum infirmi essent, induebar cilicio; humiliabam in ieiunio animam meam, et oratio mea in sinu meo convertebatur.' },
+    ro: { ref: 'Psalmul 35:13', text: 'Şi eu, când erau ei bolnavi, mă îmbrăcam cu sac, îmi smeream sufletul cu post şi mă rugam cu capul plecat la sân.' },
+    fr: { ref: 'Psaume 35:13', text: 'Et moi, quand ils étaient malades, je revêtais un sac, j\'humiliais mon âme par le jeûne, et je priais, la tête penchée sur mon sein.' },
+    es: { ref: 'Salmo 35:13', text: 'Pero yo, cuando ellos enfermaron, me vestí de cilicio; afligí con ayuno mi alma, y mi oración se volvía a mi seno.' },
+    pt: { ref: 'Salmo 35:13', text: 'Mas, quanto a mim, quando estavam enfermos, as minhas vestes eram o cilício; humilhava a minha alma com o jejum, e a minha oração voltava para o meu seio.' },
+    de: { ref: 'Psalm 35:13', text: 'Ich aber, da sie krank waren, zog einen Sack an, kasteite meine Seele mit Fasten und betete von ganzem Herzen.' },
+    ru: { ref: 'Псалтирь 34:13', text: 'Я во время болезни их одевался во вретище, изнурял постом душу мою, и молитва моя возвращалась в недро мое.' }
+  },
+  traditional_lenten_friday: {
+    it: { ref: 'Salmo 35:13', text: 'Io, quand\'erano malati, vestivo di sacco, mi mortificavo col digiuno, e la mia preghiera tornava nel mio seno.' },
+    en: { ref: 'Psalm 35:13', text: 'I humbled my soul with fasting; and my prayer returned into mine own bosom.' },
+    la: { ref: 'Psalmus 35:13', text: 'Ego autem, cum infirmi essent, induebar cilicio; humiliabam in ieiunio animam meam, et oratio mea in sinu meo convertebatur.' },
+    ro: { ref: 'Psalmul 35:13', text: 'Şi eu, când erau ei bolnavi, mă îmbrăcam cu sac, îmi smeream sufletul cu post şi mă rugam cu capul plecat la sân.' },
+    fr: { ref: 'Psaume 35:13', text: 'Et moi, quand ils étaient malades, je revêtais un sac, j\'humiliais mon âme par le jeûne, et je priais, la tête penchée sur mon sein.' },
+    es: { ref: 'Salmo 35:13', text: 'Pero yo, cuando ellos enfermaron, me vestí de cilicio; afligí con ayuno mi alma, y mi oración se volvía a mi seno.' },
+    pt: { ref: 'Salmo 35:13', text: 'Mas, quanto a mim, quando estavam enfermos, as minhas vestes eram o cilício; humilhava a minha alma com o jejum, e a minha oração voltava para o meu seio.' },
+    de: { ref: 'Psalm 35:13', text: 'Ich aber, da sie krank waren, zog einen Sack an, kasteite meine Seele mit Fasten und betete von ganzem Herzen.' },
+    ru: { ref: 'Псалтирь 34:13', text: 'Я во время болезни их одевался во вретище, изнурял постом душу мою, и молитва моя возвращалась в недро мое.' }
+  },
+  traditional_lenten_saturday: {
+    it: { ref: 'Salmo 35:13', text: 'Io, quand\'erano malati, vestivo di sacco, mi mortificavo col digiuno, e la mia preghiera tornava nel mio seno.' },
+    en: { ref: 'Psalm 35:13', text: 'I humbled my soul with fasting; and my prayer returned into mine own bosom.' },
+    la: { ref: 'Psalmus 35:13', text: 'Ego autem, cum infirmi essent, induebar cilicio; humiliabam in ieiunio animam meam, et oratio mea in sinu meo convertebatur.' },
+    ro: { ref: 'Psalmul 35:13', text: 'Şi eu, când erau ei bolnavi, mă îmbrăcam cu sac, îmi smeream sufletul cu post şi mă rugam cu capul plecat la sân.' },
+    fr: { ref: 'Psaume 35:13', text: 'Et moi, quand ils étaient malades, je revêtais un sac, j\'humiliais mon âme par le jeûne, et je priais, la tête penchée sur mon sein.' },
+    es: { ref: 'Salmo 35:13', text: 'Pero yo, cuando ellos enfermaron, me vestí de cilicio; afligí con ayuno mi alma, y mi oración se volvía a mi seno.' },
+    pt: { ref: 'Salmo 35:13', text: 'Mas, quanto a mim, quando estavam enfermos, as minhas vestes eram o cilício; humilhava a minha alma com o jejum, e a minha oração voltava para o meu seio.' },
+    de: { ref: 'Psalm 35:13', text: 'Ich aber, da sie krank waren, zog einen Sack an, kasteite meine Seele mit Fasten und betete von ganzem Herzen.' },
+    ru: { ref: 'Псалтирь 34:13', text: 'Я во время болезни их одевался во вретище, изнурял постом душу мою, и молитва моя возвращалась в недро мое.' }
+  },
+  traditional_friday: {
+    it: { ref: 'Galati 2:20', text: 'Sono stato crocifisso con Cristo: non sono più io che vivo, ma Cristo vive in me.' },
+    en: { ref: 'Galatians 2:20', text: 'I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me.' },
+    la: { ref: 'Ad Galatas 2:20', text: 'Christo confixus sum cruci. Vivo autem, iam non ego: vivit vero in me Christus.' },
+    ro: { ref: 'Galateni 2:20', text: 'Am fost răstignit împreună cu Hristos şi trăiesc... dar nu mai trăiesc eu, ci Hristos trăieşte în mine.' },
+    fr: { ref: 'Galates 2:20', text: 'J\'ai été crucifié avec Christ; et si je vis, ce n\'est plus moi qui vis, c\'est Christ qui vit en moi.' },
+    es: { ref: 'Gálatas 2:20', text: 'Con Cristo estoy juntamente crucificado, y ya no vivo yo, mas vive Cristo en mí.' },
+    pt: { ref: 'Gálatas 2:20', text: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim.' },
+    de: { ref: 'Galater 2:20', text: 'Ich bin mit Christus gekreuzigt. Ich lebe, doch nun nicht ich, sondern Christus lebt in mir.' },
+    ru: { ref: 'Галатам 2:20', text: 'И уже не я живу, но живет во мне Христос. А что ныне живу во плоти, то живу верою в Сына Божия.' }
+  },
+  byzantine_strict_single: {
+    it: { ref: 'Matteo 3:4', text: 'Giovanni portava un vestito di peli di cammello e una cintura di cuoio attorno ai fianchi; il suo cibo erano locuste e miele selvatico.' },
+    en: { ref: 'Matthew 3:4', text: 'And the same John had his raiment of camel\'s hair, and a leathern girdle about his loins; and his meat was locusts and wild honey.' },
+    la: { ref: 'Matthaeus 3:4', text: 'Ipse autem Ioannes habebat vestimentum de pilis camelorum, et zonam pelliceam circa lumbos suos: esca autem eius erat locustae, et mel silvestre.' },
+    ro: { ref: 'Matei 3:4', text: 'Ioan purta o haină de păr de cămilă şi la mijloc era încins cu o cingătoare de piele; şi hrana lui erau lăcuste şi miere sălbatică.' },
+    fr: { ref: 'Matthieu 3:4', text: 'Jean avait un vêtement de poils de chameau, et une ceinture de cuir autour des reins; il se nourrissait de sauterelles et de miel sauvage.' },
+    es: { ref: 'Mateo 3:4', text: 'Y Juan estaba vestido de pelo de camello, y tenía un cinto de cuero alrededor de sus lomos; y su comida era langostas y miel silvestre.' },
+    pt: { ref: 'Mateus 3:4', text: 'E este João tinha as suas vestes de pelos de camelo, e um cinto de couro em torno de seus lombos; e alimentava-se de gafanhotos e de mel silvestre.' },
+    de: { ref: 'Matthäus 3:4', text: 'Er aber, Johannes, hatte ein Gewand aus Kamelhaaren und einen ledernen Gürtel um seine Lenden; seine Speise aber waren Heuschrecken und wilder Honig.' },
+    ru: { ref: 'Матфея 3:4', text: 'Сам же Иоанн имел одежду из верблюжьего волоса и пояс кожаный на чреслах своих, а пищею его были акриды и дикий мед.' }
+  },
+  byzantine_elevation_cross: {
+    it: { ref: '1 Corinzi 1:18', text: 'La parola della croce infatti è stoltezza per quelli che si perdono, ma per quelli che si salvano, ossia per noi, è potenza di Dio.' },
+    en: { ref: '1 Corinthians 1:18', text: 'For the preaching of the cross is to them that perish foolishness; but unto us which are saved it is the power of God.' },
+    la: { ref: '1 ad Corinthios 1:18', text: 'Verbum enim crucis pereuntibus quidem stultitia est: iis autem qui salvi fiunt, id est nobis, virtus Dei est.' },
+    ro: { ref: '1 Corinteni 1:18', text: 'Căci propovăduirea crucii este o nebunie pentru cei ce sunt pe calea pierzării; dar pentru noi, care suntem pe calea mântuirii, este puterea lui Dumnezeu.' },
+    fr: { ref: '1 Corinthiens 1:18', text: 'Car la prédication de la croix est une folie pour ceux qui périssent; mais pour nous qui sommes sauvés, elle est une puissance de Dieu.' },
+    es: { ref: '1 Corintios 1:18', text: 'Porque la palabra de la cruz es locura a los que se pierden; pero a los que se salvan, esto es, a nosotros, es poder de Dios.' },
+    pt: { ref: '1 Coríntios 1:18', text: 'Porque a palavra da cruz é loucura para os que perecem; mas para nós, que somos salvos, é o poder de Deus.' },
+    de: { ref: '1. Korinther 1:18', text: 'Denn das Wort vom Kreuz ist eine Torheit denen, die verloren werden; uns aber, die wir selig werden, ist\'s eine Gotteskraft.' },
+    ru: { ref: '1 Коринфянам 1:18', text: 'Ибо слово о кресте для погибающих юродство есть, а для нас, спасаемых, — сила Божия.' }
+  },
+  byzantine_great_lent: {
+    it: { ref: 'Preghiera di Sant\'Efrem', text: '«Signore e Sovrano della mia vita, allontana da me lo spirito di pigrizia, di sconforto, di brama di potere e di vaniloquio. Concedi invece al tuo servo uno spirito di castità, di umiltà, di pazienza e di amore».' },
+    en: { ref: 'Prayer of St. Ephrem', text: 'O Lord and Master of my life, take from me the spirit of sloth, despair, lust of power, and idle talk. But give rather the spirit of chastity, humility, patience, and love to Thy servant.' },
+    la: { ref: 'Oratio Sancti Ephrem', text: 'Domine et Magister vitae meae, spiritum otii, curiositatis, dominationis et vaniloquii ne mihi des. Spiritum vero castitatis, humilitatis, patientiae et caritatis largire mihi servo tuo.' },
+    ro: { ref: 'Rugăciunea Sfântului Efrem Sirul', text: '„Doamne şi Stăpânul vieţii mele, duhul trândăviei, al grijii de multe, al iubirii de stăpânire şi al grăirii în deşert nu mi-l da mie. Iar duhul curăţiei, al gândului smerit, al răbdării şi al dragostei dăruieşte-l mie, slugii Tale.”' },
+    fr: { ref: 'Prière de Saint Éphrem', text: '«Seigneur et Maître de ma vie, éloigne de moi l\'esprit de paresse, de découragement, de domination et de vaines paroles. Mais accorde à ton serviteur l\'esprit de chasteté, d\'humilité, de patience et d\'amour».' },
+    es: { ref: 'Oración de San Efrén', text: '«¡Señor y Soberano de mi vida! Aleja de mí el espíritu de pereza, desaliento, ambición de poder y vanilocuencia. Mas concede a tu siervo el espíritu de castidad, humildad, paciencia y amor».' },
+    pt: { ref: 'Oração de Santo Efrém', text: '«Senhor e Soberano da minha vida, afasta de mim o espírito de preguiça, desânimo, ambição de poder e palavras vãs. Mas concede ao teu servo o espírito de castidade, humildade, paciência e amor».' },
+    de: { ref: 'Gebet des hl. Ephräm', text: '«Herr und Meister meines Lebens, den Geist des Müßiggangs, der Verzagtheit, der Herrschsucht und des Geschwätzes gib mir nicht! Den Geist der Keuschheit, der Demut, der Geduld und der Liebe aber schenke Deinem Diener!»' },
+    ru: { ref: 'Молитва св. Ефрема Сирина', text: '«Господи и Владыко живота моего, дух праздности, уныния, любоначалия и празднословия не даждь ми. Дух же целомудрия, смиренномудрия, терпения и любве даруй ми, рабу Твоему».' }
+  },
+  byzantine_seasonal: {
+    it: { ref: 'Filippesi 4:8', text: 'Tutto quello che è vero, nobile, giusto, puro, amabile, onorato, quello che è virtù e merita lode, tutto questo sia oggetto dei vostri pensieri.' },
+    en: { ref: 'Philippians 4:8', text: 'Finally, brethren, whatsoever things are true, honest, just, pure, lovely, of good report; think on these things.' },
+    la: { ref: 'Ad Philippenses 4:8', text: 'De cetero, fratres, quaecumque sunt vera, quaecumque pudica, quaecumque iusta, quaecumque sancta, quaecumque amabilia, quaecumque bonae famae: haec cogitate.' },
+    ro: { ref: 'Filipeni 4:8', text: 'Încolo, fraţii mei, tot ce este adevărat, tot ce este vrednic de cinste, tot ce este drept, tot ce este curat, tot ce este vrednic de iubit: la acestea să vă gândiţi.' },
+    fr: { ref: 'Philippiens 4:8', text: 'Au reste, frères, que tout ce qui est vrai, tout ce qui est honorable, tout ce qui est juste, tout ce qui est pur, tout ce qui est aimable... soit l\'objet de vos pensées.' },
+    es: { ref: 'Filipenses 4:8', text: 'Por lo demás, hermanos, todo lo que es verdadero, todo lo honesto, todo lo justo, todo lo puro, todo lo amable... en esto pensad.' },
+    pt: { ref: 'Filipenses 4:8', text: 'Quanto ao mais, irmãos, tudo o que é verdadeiro, tudo o que é honesto, tudo o que é justo, tudo o que é puro, tudo o que é amável... nisso pensai.' },
+    de: { ref: 'Philipper 4:8', text: 'Weiter, liebe Brüder: Was wahrhaftig ist, was ehrbar, was gerecht, was rein, was liebenswert, was einen guten Ruf hat... darüber denkt nach!' },
+    ru: { ref: 'Филиппийцам 4:8', text: 'Наконец, братия мои, что только истинно, что честно, что справедливо, что чисто, что любезно, что достославно: о том помышляйте.' }
+  },
+  byzantine_wed_fri: {
+    it: { ref: 'Didachè 8:1', text: 'I vostri digiuni non siano con gli ipocriti; voi invece digiunate il quarto giorno (mercoledì) e il giorno della preparazione (venerdì).' },
+    en: { ref: 'Didache 8:1', text: 'Let not your fasts be with the hypocrites; but you shall fast on Wednesdays and Fridays.' },
+    la: { ref: 'Didache 8:1', text: 'Ieiunia autem vestra ne sint cum hypocritis; vos vero ieiunate quarta et parasceve.' },
+    ro: { ref: 'Didahia 8:1', text: 'Posturile voastre să nu fie ca ale făţarnicilor; voi însă postiţi miercurea şi vinerea.' },
+    fr: { ref: 'Didaché 8:1', text: 'Que vos jeûnes ne soient pas avec les hypocrites; vous, jeûnez le mercredi et le vendredi.' },
+    es: { ref: 'Didaché 8:1', text: 'No hagáis vuestros ayunos con los hipócritas; vosotros ayunad miércoles y viernes.' },
+    pt: { ref: 'Didaquê 8:1', text: 'Não façais os vossos jejuns com os hipócritas; vós, porém, jejuai às quartas e sextas-feiras.' },
+    de: { ref: 'Didache 8:1', text: 'Eure Fasten aber seien nicht zusammen mit den Heuchlern; ihr aber sollt mittwochs und freitags fasten.' },
+    ru: { ref: 'Дидахе 8:1', text: 'Посты же ваши да не будут с лицемерами; вы же поститесь в среду и пятницу.' }
+  },
+  protestant_ash_wednesday: {
+    it: { ref: 'Matteo 6:17-18', text: 'Tu invece, quando digiuni, profumati la testa e lavati il volto, perché la gente non veda che tu digiuni, ma solo il Padre tuo, che è nel segreto.' },
+    en: { ref: 'Matthew 6:17-18', text: 'But thou, when thou fastest, anoint thine head, and wash thy face; that thou appear not unto men to fast, but unto thy Father which is in secret.' },
+    la: { ref: 'Matthaeus 6:17-18', text: 'Tu autem cum ieiunas, unge caput tuum, et faciem tuam lava, ne videaris hominibus ieiunans, sed Patri tuo, qui est in abscondito.' },
+    ro: { ref: 'Matei 6:17-18', text: 'Ci tu, când posteşti, unge-ţi capul şi spală-ţi faţa, ca să nu te arăţi oamenilor că posteşti, ci Tatălui tău, care este în ascuns.' },
+    fr: { ref: 'Matthieu 6:17-18', text: 'Mais quand tu jeûnes, parfume ta tête et lave ton visage, afin de ne pas montrer aux hommes que tu jeûnes, mais à ton Père qui est là dans le lieu secret.' },
+    es: { ref: 'Mateo 6:17-18', text: 'Pero tú, cuando ayunes, unge tu cabeza y lava tu rostro, para no mostrar a los hombres que ayunas, sino a tu Padre que está en secreto.' },
+    pt: { ref: 'Mateus 6:17-18', text: 'Tu, porém, quando jejuares, unge a tua cabeça, e lava o teu rosto, para não pareceres aos homens que jejuas, mas a teu Pai, que está em secreto.' },
+    de: { ref: 'Matthäus 6:17-18', text: 'Wenn du aber fastest, so salbe dein Haupt und wasche dein Angesicht, damit du nicht vor den Leuten fastest, sondern vor deinem Vater, der im Verborgenen ist.' },
+    ru: { ref: 'Матфея 6:17-18', text: 'А ты, когда постишься, помажь голову твою и умой лице твое, чтобы явиться постящимся не пред людьми, но пред Отцом твоим, Который втайне.' }
+  },
+  protestant_good_friday: {
+    it: { ref: 'Galati 6:14', text: 'Quanto a me invece non ci sia altro vanto che nella croce del Signore nostro Gesù Cristo, per mezzo della quale il mondo per me è stato crocifisso, come io per il mondo.' },
+    en: { ref: 'Galatians 6:14', text: 'God forbid that I should glory, save in the cross of our Lord Jesus Christ, by whom the world is crucified unto me, and I unto the world.' },
+    la: { ref: 'Ad Galatas 6:14', text: 'Mihi autem absit gloriari, nisi in cruce Domini nostri Iesu Christi: per quem mihi mundus crucifixus est, et ego mundo.' },
+    ro: { ref: 'Galateni 6:14', text: 'În ce mă priveşte, departe de mine gândul să mă laud cu altceva decât cu crucea Domnului nostru Iisus Hristos, prin care lumea este răstignită faţă de mine şi eu faţă de lume!' },
+    fr: { ref: 'Galates 6:14', text: 'Pour ce qui me concerne, loin de moi la pensée de me glorifier d\'autre chose que de la croix de notre Seigneur Jésus-Christ, par qui le monde est crucifié pour moi, comme je le suis pour le monde!' },
+    es: { ref: 'Gálatas 6:14', text: 'Pero lejos esté de mí gloriarme, sino en la cruz de nuestro Señor Jesucristo, por quien el mundo me es crucificado a mí, y yo al mundo.' },
+    pt: { ref: 'Gálatas 6:14', text: 'Mas longe esteja de mim gloriar-me, a não ser na cruz de nosso Senhor Jesus Cristo, pela qual o mundo está crucificado para mim e eu para o mundo.' },
+    de: { ref: 'Galater 6:14', text: 'Es sei aber fern von mir, mich zu rühmen als allein des Kreuzes unseres Herrn Jesus Christus, durch den mir die Welt gekreuzigt ist und ich der Welt.' },
+    ru: { ref: 'Галатам 6:14', text: 'А я не желаю хвалиться, разве только крестом Господа нашего Иисуса Христа, которым для меня мир распят, и я для мира.' }
+  },
+  protestant_friday: {
+    it: { ref: 'Romani 12:1', text: 'Vi esorto dunque, fratelli, per la misericordia di Dio, a offrire i vostri corpi come sacrificio vivente, santo e gradito a Dio; è questo il vostro culto spirituale.' },
+    en: { ref: 'Romans 12:1', text: 'I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service.' },
+    la: { ref: 'Ad Romanos 12:1', text: 'Obsecro itaque vos fratres per misericordiam Dei, ut exhibeatis corpora vestra hostiam viventem, sanctam, Deo placentem, rationabile obsequium vestrum.' },
+    ro: { ref: 'Romani 12:1', text: 'Vă îndemn dar, fraţilor, pentru îndurările lui Dumnezeu, să aduceţi trupurile voastre ca o jertfă vie, sfântă, plăcută lui Dumnezeu: aceasta va fi din partea voastră o slujbă duhovnicească.' },
+    fr: { ref: 'Romains 12:1', text: 'Je vous exhorte donc, frères, par les compassions de Dieu, à offrir vos corps comme un sacrifice vivant, saint, agréable à Dieu, ce qui sera de votre part un culte raisonnable.' },
+    es: { ref: 'Romanos 12:1', text: 'Así que, hermanos, os ruego por las misericordias de Dios, que presentéis vuestros cuerpos en sacrificio vivo, santo, agradable a Dios, que es vuestro culto racional.' },
+    pt: { ref: 'Romanos 12:1', text: 'Rogo-vos, pois, irmãos, pela compaixão de Deus, que apresenteis os vossos corpos em sacrifício vivo, santo e agradável a Deus, que é o vosso culto racional.' },
+    de: { ref: 'Römer 12:1', text: 'Ich ermahne euch nun, liebe Brüder, durch die Barmherzigkeit Gottes, dass ihr eure Leiber hingebt als ein Opfer, das lebendig, heilig und Gott wohlgefällig ist. Das sei euer vernünftiger Gottesdienst.' },
+    ru: { ref: 'Римлянам 12:1', text: 'Итак умоляю вас, братия, милосердием Божиим, представьте тела ваши в жертву живую, святую, благоугодную Богу, для разумного служения вашего.' }
+  },
+  protestant_lenten: {
+    it: { ref: 'Daniele 10:3', text: 'Non mangiai alcun cibo prelibato, né carne né vino entrarono nella mia bocca e non mi unsi d\'olio, finché non furono compiute tre settimane intere.' },
+    en: { ref: 'Daniel 10:3', text: 'I ate no pleasant bread, neither came flesh nor wine in my mouth, till three whole weeks were fulfilled.' },
+    la: { ref: 'Daniel 10:3', text: 'Panem desiderabilem non comedi, et caro et vinum non introierunt in os meum, sed neque unguento unctus sum, donec complerentur trium hebdomadarum dies.' },
+    ro: { ref: 'Daniel 10:3', text: 'N-am mâncat deloc bucate alese, nu mi-a intrat în gură nici carne, nici vin şi nici nu m-am uns deloc, până s-au împlinit cele trei săptămâni.' },
+    fr: { ref: 'Daniel 10:3', text: 'Je ne mangeai aucun mets délicat, il n\'entra ni viande ni vin dans ma bouche, et je ne m\'oignis point jusqu\'à ce que les trois semaines fussent accomplies.' },
+    es: { ref: 'Daniel 10:3', text: 'No comí manjar delicado, ni entró en mi boca carne ni vino, ni me ungí con ungüento, hasta que se cumplieron las tres semanas.' },
+    pt: { ref: 'Daniel 10:3', text: 'Manjar desejável não comi, nem carne nem vinho entraram na minha boca, nem me ungi com unguento, até que se cumpriram as três semanas.' },
+    de: { ref: 'Daniel 10:3', text: 'Ich aß keine leckere Speise, Fleisch und Wein kam nicht in meinen Mund; ich salbte mich auch nicht, bis die drei Wochen um waren.' },
+    ru: { ref: 'Даниил 10:3', text: 'Вкусного хлеба я не ел; мясо и вино не входило в уста мои, и мастями я не умащал себя до исполнения трех седмиц дней.' }
+  },
+  protestant_ordinary: {
+    it: { ref: 'Romani 14:6', text: 'Chi bada al giorno, vi bada per il Signore; chi mangia, mangia per il Signore, poiché rende grazie a Dio; e chi non mangia, non mangia per il Signore e rende grazie a Dio.' },
+    en: { ref: 'Romans 14:6', text: 'He that regardeth the day, regardeth it unto the Lord; and he that regardeth not the day, to the Lord he doth not regard it. He that eateth, eateth to the Lord, for he giveth God thanks.' },
+    la: { ref: 'Ad Romanos 14:6', text: 'Qui sapit diem, Domino sapit; et qui manducat, Domino manducat, gratias enim agit Deo; et qui non manducat, Domino non manducat et gratias agit Deo.' },
+    ro: { ref: 'Romani 14:6', text: 'Cel ce ţine ziua, o ţine pentru Domnul; şi cel ce mănâncă, pentru Domnul mănâncă, căci mulţumeşte lui Dumnezeu; şi cel ce nu mănâncă, pentru Domnul nu mănâncă şi mulţumeşte lui Dumnezeu.' },
+    fr: { ref: 'Romains 14:6', text: 'Celui qui distingue entre les jours agit ainsi pour le Seigneur. Celui qui mange, c\'est pour le Seigneur qu\'il mange, car il rend grâces à Dieu; celui qui ne mange pas, c\'est pour le Seigneur qu\'il ne mange pas, et il rend grâces à Dieu.' },
+    es: { ref: 'Romanos 14:6', text: 'El que hace caso del día, lo hace para el Señor; y el que come, para el Señor come, porque da gracias a Dios; y el que no come, para el Señor no come, y da gracias a Dios.' },
+    pt: { ref: 'Romanos 14:6', text: 'Aquele que faz caso do dia, para o Senhor o faz; e o que come, para o Senhor come, porque dá graças a Deus; e o que não come, para o Senhor não come, e dá graças a Deus.' },
+    de: { ref: 'Römer 14:6', text: 'Wer auf den Tag achtet, der tut\'s im Blick auf den Herrn; und wer isst, der isst im Blick auf den Herrn, denn er dankt Gott; und wer nicht isst, der isst im Blick auf den Herrn nicht und dankt Gott auch.' },
+    ru: { ref: 'Римлянам 14:6', text: 'Кто различает дни, для Господа различает; и кто не различает дней, для Господа не различает. Кто ест, для Господа ест, ибо благодарит Бога; и кто не ест, для Господа не ест, и благодарит Бога.' }
+  },
+  ecumenical_friday: {
+    it: { ref: 'Isaia 58:6-7', text: 'Non è questo il digiuno che io voglio: sciogliere le catene inique, togliere i legami del giogo, rimandare liberi gli oppressi e spezzare ogni giogo? Non consiste forse nel dividere il pane con l\'affamato?' },
+    en: { ref: 'Isaiah 58:6-7', text: 'Is not this the fast that I have chosen? to loose the bands of wickedness, to undo the heavy burdens, and to let the oppressed go free... to deal thy bread to the hungry?' },
+    la: { ref: 'Isaias 58:6-7', text: 'Nonne hoc est magis ieiunium quod elegi? Dissolve colligationes impietatis, solve fasciculos deprimentes, dimitte eos qui confracti sunt liberos... Frange esurienti panem tuum.' },
+    ro: { ref: 'Isaia 58:6-7', text: 'Nu este oare acesta postul pe care l-am ales: desfaceţi lanţurile răutăţii, dezlegaţi legăturile jugului, lăsaţi liberi pe cei asupriţi... Împarte pâinea ta cu cel flămând?' },
+    fr: { ref: 'Ésaïe 58:6-7', text: 'Voici le jeûne auquel je prends plaisir: Détache les chaînes de la méchanceté, dénoue les liens de la servitude, renvoie libres les opprimés... Partage ton pain avec celui qui a faim.' },
+    es: { ref: 'Isaías 58:6-7', text: '¿No es más bien el ayuno que yo escogí, desatar las ligaduras de impiedad, soltar las cargas de opresión, y dejar ir libres a los quebrantados... partir tu pan con el hambriento?' },
+    pt: { ref: 'Isaías 58:6-7', text: 'Porventura não é este o jejum que escolhi, que soltes as ligaduras da impiedade, que desfaças as ataduras do jugo e que deixes livres os oprimidos... repartir o teu pão com o faminto?' },
+    de: { ref: 'Jesaja 58:6-7', text: 'Ist nicht das ein Fasten, an dem ich Gefallen habe: Lass los, die du mit Unrecht gebunden hast, lass ledig, auf die du das Joch gelegt hast! Gib frei, die du bedrückst... Brich dem Hungrigen dein Brot!' },
+    ru: { ref: 'Исаия 58:6-7', text: 'Вот пост, который Я избрал: разреши оковы неправды, развяжи узы ярма, и угнетенных отпусти на свободу... раздели с голодным хлеб твой?' }
+  }
+};
+
 /**
  * Returns localized metadata for a Christian tradition.
  */
@@ -3130,6 +3409,28 @@ export function localizePenanceStatus(statusObj, lang = null) {
     if (bsNameObj) computedTitle = bsNameObj[currentLang] || bsNameObj.it || bsNameObj.en;
   }
 
+  // Localize scripture reference and quote text
+  let locScripture = statusObj.scripture;
+  const scriptI18n = PENANCE_SCRIPTURES_I18N[key] || PENANCE_SCRIPTURES_I18N[statusObj.type] || PENANCE_SCRIPTURES_I18N.ordinary;
+  if (scriptI18n) {
+    const langScript = scriptI18n[currentLang] || scriptI18n.it || scriptI18n.en;
+    if (langScript) {
+      locScripture = {
+        ref: langScript.ref,
+        text: langScript.text
+      };
+    }
+  } else if (statusObj.scripture) {
+    const rawRef = statusObj.scripture.ref || '';
+    const localizedRef = localizeScriptureRef(rawRef, currentLang);
+    const locText = (statusObj.scripture.archives && statusObj.scripture.archives[currentLang]) || statusObj.scripture.text;
+    locScripture = {
+      ...statusObj.scripture,
+      ref: localizedRef,
+      text: locText
+    };
+  }
+
   return {
     ...statusObj,
     title: computedTitle,
@@ -3147,6 +3448,7 @@ export function localizePenanceStatus(statusObj, lang = null) {
     },
     obligation: loc?.obligation || statusObj.obligation,
     theology: loc?.theology || statusObj.theology,
+    scripture: locScripture,
     prayer: loc?.prayer || statusObj.prayer
   };
 }
