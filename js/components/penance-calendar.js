@@ -221,17 +221,17 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
               
               <!-- Liturgical Colors Legend Pills (White, Blue, Red) -->
               <div class="hidden xl:flex items-center gap-2.5 text-[11px] font-sans text-[var(--text-muted)] border-l border-stone-300 dark:border-stone-700 pl-3">
-                <span class="flex items-center gap-1 font-semibold text-stone-200" title="${t('colors.whiteDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-stone-100 ring-1 ring-stone-400"></span>
-                  <span>⚪ ${t('colors.white', 'White')}</span>
+                <span class="flex items-center gap-1 font-semibold text-stone-700 dark:text-stone-300" title="${t('colors.whiteDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-stone-200 dark:bg-stone-300 ring-1 ring-stone-400 dark:ring-stone-500"></span>
+                  <span>† ${t('colors.white', 'White')}</span>
                 </span>
-                <span class="flex items-center gap-1 font-semibold text-blue-400" title="${t('colors.blueDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-blue-500 ring-1 ring-blue-400"></span>
-                  <span>🔵 ${t('colors.blue', 'Blue')}</span>
+                <span class="flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400" title="${t('colors.blueDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-500 ring-1 ring-blue-400"></span>
+                  <span>† ${t('colors.blue', 'Blue')}</span>
                 </span>
-                <span class="flex items-center gap-1 font-semibold text-red-400" title="${t('colors.redDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 ring-1 ring-red-400"></span>
-                  <span>🔴 ${t('colors.red', 'Red')}</span>
+                <span class="flex items-center gap-1 font-semibold text-red-600 dark:text-red-400" title="${t('colors.redDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 dark:bg-red-500 ring-1 ring-red-400"></span>
+                  <span>† ${t('colors.red', 'Red')}</span>
                 </span>
               </div>
             </div>
@@ -475,9 +475,9 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
             <!-- Liturgical Color Guidelines Footer -->
             <div class="text-[11px] text-[var(--text-muted)] pt-1 flex flex-wrap items-center gap-3">
-              <span><strong>⚪ ${t('colors.white', 'White')}:</strong> ${t('colors.whiteDesc')}</span>
-              <span><strong>🔵 ${t('colors.blue', 'Blue')}:</strong> ${t('colors.blueDesc')}</span>
-              <span><strong>🔴 ${t('colors.red', 'Red')}:</strong> ${t('colors.redDesc')}</span>
+              <span class="flex items-center gap-1"><strong class="text-stone-700 dark:text-stone-300">† ${t('colors.white', 'White')}:</strong> ${t('colors.whiteDesc')}</span>
+              <span class="flex items-center gap-1"><strong class="text-blue-600 dark:text-blue-400">† ${t('colors.blue', 'Blue')}:</strong> ${t('colors.blueDesc')}</span>
+              <span class="flex items-center gap-1"><strong class="text-red-600 dark:text-red-400">† ${t('colors.red', 'Red')}:</strong> ${t('colors.redDesc')}</span>
             </div>
           </div>
 

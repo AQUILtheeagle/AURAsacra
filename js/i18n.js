@@ -55,9 +55,9 @@ export const TRANSLATIONS = {
       white: 'White',
       blue: 'Blue',
       red: 'Red',
-      whiteDesc: 'Solemnities of the Lord, Confessors, Doctors, Holy Virgins & Angels',
-      blueDesc: 'Marian Feasts & Blessed Virgin Mary',
-      redDesc: 'Apostles, Evangelists & Holy Martyrs of Faith'
+      whiteDesc: 'Confessors, Doctors of the Church, Venerable Monastics & Ordinary Commemorations',
+      blueDesc: 'Marian Feasts, Blessed Virgin Mary & Feasts with Polyeleos / Doxology',
+      redDesc: 'Solemnities of the Lord, Great Feasts, Apostles, Evangelists & Holy Martyrs'
     },
     ranks: {
       solemnity: 'Solemnity',
@@ -496,9 +496,9 @@ export const TRANSLATIONS = {
       white: 'Bianco',
       blue: 'Blu',
       red: 'Rosso',
-      whiteDesc: 'Solennità del Signore, Confessori, Dottori della Chiesa, Vergini e Angeli',
-      blueDesc: 'Festività Mariane e Beata Vergine Maria',
-      redDesc: 'Apostoli, Evangelisti e Santi Martiri della Fede'
+      whiteDesc: 'Confessori, Dottori della Chiesa, Venerabili Monaci e Memorie Ordinarie',
+      blueDesc: 'Festività Mariane, Beata Vergine Maria e Feste con Polieleo / Doxologia',
+      redDesc: 'Solennità del Signore, Grandi Feste, Apostoli, Evangelisti e Grandi Martiri'
     },
     ranks: {
       solemnity: 'Solennità',
@@ -937,9 +937,9 @@ export const TRANSLATIONS = {
       white: 'Alb',
       blue: 'Albastru',
       red: 'Roșu',
-      whiteDesc: 'Praznice Împărătești, Cuvioși, Ierarhi, Drepți, Fecioare și Îngeri',
-      blueDesc: 'Sărbători ale Maicii Domnului (Născătoarea de Dumnezeu)',
-      redDesc: 'Sfinții Apostoli, Evangheliști și Mucenici ai Credinței'
+      whiteDesc: 'Cuvioși, Părinți Mărturisitori, Ierarhi, Fecioare și Pomeniri Simple',
+      blueDesc: 'Sărbătorile Maicii Domnului și Sfinți cu Polieleu / Doxologie Mare',
+      redDesc: 'Praznice Împărătești, Sărbători Mari cu Priveghere, Apostoli și Mari Mucenici'
     },
     ranks: {
       solemnity: 'Praznic Mare (Solennitate)',
@@ -1378,9 +1378,9 @@ export const TRANSLATIONS = {
       white: 'Blanc',
       blue: 'Bleu',
       red: 'Rouge',
-      whiteDesc: 'Solennités du Seigneur, Confesseurs, Docteurs de l\'Église, Vierges et Anges',
-      blueDesc: 'Fêtes Mariales & Bienheureuse Vierge Marie',
-      redDesc: 'Apôtres, Évangélistes & Saints Martyrs de la Foi'
+      whiteDesc: 'Confesseurs, Docteurs de l\'Église, Pères Monastiques et Mémoires Ordinaires',
+      blueDesc: 'Fêtes Mariales, Sainte Vierge Marie et Fêtes avec Polyéléos',
+      redDesc: 'Solennités du Seigneur, Grandes Fêtes, Apôtres, Évangélistes et Grands Martyrs'
     },
     ranks: {
       solemnity: 'Solennité',
@@ -1819,9 +1819,9 @@ export const TRANSLATIONS = {
       white: 'Blanco',
       blue: 'Azul',
       red: 'Rojo',
-      whiteDesc: 'Solemnidades del Señor, Confesores, Doctores de la Iglesia, Vírgenes y Ángeles',
-      blueDesc: 'Fiestas Marianas y Santísima Virgen María',
-      redDesc: 'Apóstoles, Evangelistas y Santos Mártires de la Fe'
+      whiteDesc: 'Confesores, Doctores de la Iglesia, Venerables Monjes y Memorias Ordinarias',
+      blueDesc: 'Fiestas Marianas, Santa Virgen María y Fiestas con Polieleo',
+      redDesc: 'Solemnidades del Señor, Grandes Fiestas, Apóstoles, Evangelistas y Santos Mártires'
     },
     ranks: {
       solemnity: 'Solemnidad',
@@ -2260,9 +2260,9 @@ export const TRANSLATIONS = {
       white: 'Branco',
       blue: 'Azul',
       red: 'Vermelho',
-      whiteDesc: 'Solenidades do Senhor, Confessores, Doutores da Igreja, Virgens e Anjos',
-      blueDesc: 'Festas Marianas e Santíssima Virgem Maria',
-      redDesc: 'Apóstolos, Evangelistas e Santos Mártires da Fé'
+      whiteDesc: 'Confessores, Doutores da Igreja, Veneráveis Monges e Memórias Ordinárias',
+      blueDesc: 'Festas Marianas, Santíssima Virgem Maria e Festas com Polieleu',
+      redDesc: 'Solenidades do Senhor, Grandes Festas, Apóstolos, Evangelistas e Santos Mártires'
     },
     ranks: {
       solemnity: 'Solenidade',
@@ -2701,9 +2701,9 @@ export const TRANSLATIONS = {
       white: 'Weiß',
       blue: 'Blau',
       red: 'Rot',
-      whiteDesc: 'Herrenfeste, Bekenner, Kirchenlehrer, Jungfrauen und Engel',
-      blueDesc: 'Marienfeste & Selige Jungfrau Maria',
-      redDesc: 'Apostel, Evangelisten & Heilige Märtyrer des Glaubens'
+      whiteDesc: 'Bekenner, Kirchenlehrer, Ehrwürdige Väter und Tägliche Gedenken',
+      blueDesc: 'Marienfeste, Selige Jungfrau Maria und Feste mit Polyeleos',
+      redDesc: 'Herrenfeste, Große Feste, Apostel, Evangelisten und Große Märtyrer'
     },
     ranks: {
       solemnity: 'Hochfest',
@@ -3142,9 +3142,9 @@ export const TRANSLATIONS = {
       white: 'Белый',
       blue: 'Синий',
       red: 'Красный',
-      whiteDesc: 'Господские Праздники, Преподобные, Святители, Праведные и Ангелы',
-      blueDesc: 'Богородичные Праздники и Пресвятая Богородица',
-      redDesc: 'Святые Апостолы, Евангелисты и Священномученики'
+      whiteDesc: 'Преподобные, Святители, Исповедники, Девы и Рядовые Памяти',
+      blueDesc: 'Богородичные Праздники и Святые с Полиелеем / Великим Славословием',
+      redDesc: 'Господские Праздники, Великие Праздники, Апостолы, Евангелисты и Великомученики'
     },
     ranks: {
       solemnity: 'Великий Праздник (Торжество)',
@@ -3582,9 +3582,9 @@ export const TRANSLATIONS = {
       white: 'Albus',
       blue: 'Caeruleus',
       red: 'Ruber',
-      whiteDesc: 'Sollemnitates Domini, Confessores, Doctores, Virgines et Angeli',
-      blueDesc: 'Festa Mariana et Beata Maria Virgo',
-      redDesc: 'Apostoli, Evangelistae et Sancti Martyres'
+      whiteDesc: 'Confessores, Doctores Ecclesiae, Venerabiles et Memoriae Ordinariae',
+      blueDesc: 'Festa Beatae Mariae Virginis et Officia cum Polyeleo',
+      redDesc: 'Sollemnitates Domini, Festa Maiora, Apostoli et Martyres'
     },
     ranks: {
       solemnity: 'Sollemnitas',

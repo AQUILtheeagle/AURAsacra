@@ -96,19 +96,19 @@ export async function renderSaintsView(container, onOpenShareCard) {
               <span class="font-bold text-[var(--text-primary)]">${t('saints.liturgicalColor', 'Liturgical Colors:')}</span>
             </div>
             <div class="flex flex-wrap items-center gap-3 text-[11px] font-sans">
-              <span class="flex items-center gap-1.5 font-semibold text-stone-200">
-                <span class="w-2.5 h-2.5 rounded-full bg-stone-100 ring-1 ring-stone-400"></span>
-                <span>⚪ ${t('colors.white', 'White')}</span>
+              <span class="flex items-center gap-1.5 font-semibold text-stone-700 dark:text-stone-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-stone-200 dark:bg-stone-300 ring-1 ring-stone-400 dark:ring-stone-500"></span>
+                <span>† ${t('colors.white', 'White')}</span>
                 <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.whiteDesc')})</span>
               </span>
-              <span class="flex items-center gap-1.5 font-semibold text-blue-400">
-                <span class="w-2.5 h-2.5 rounded-full bg-blue-500 ring-1 ring-blue-400"></span>
-                <span>🔵 ${t('colors.blue', 'Blue')}</span>
+              <span class="flex items-center gap-1.5 font-semibold text-blue-600 dark:text-blue-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-500 ring-1 ring-blue-400"></span>
+                <span>† ${t('colors.blue', 'Blue')}</span>
                 <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.blueDesc')})</span>
               </span>
-              <span class="flex items-center gap-1.5 font-semibold text-red-400">
-                <span class="w-2.5 h-2.5 rounded-full bg-red-600 ring-1 ring-red-400"></span>
-                <span>🔴 ${t('colors.red', 'Red')}</span>
+              <span class="flex items-center gap-1.5 font-semibold text-red-600 dark:text-red-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-600 dark:bg-red-500 ring-1 ring-red-400"></span>
+                <span>† ${t('colors.red', 'Red')}</span>
                 <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.redDesc')})</span>
               </span>
             </div>
