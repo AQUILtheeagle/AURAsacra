@@ -93,11 +93,11 @@ export const LITURGICAL_COLORS = {
     name_de: 'Grün',
     name_pt: 'Verde',
     name_ru: 'Зеленый',
-    dotClass: 'bg-emerald-600 ring-1 ring-emerald-400',
-    badgeClass: 'bg-emerald-600/20 text-emerald-400 border-emerald-500/60',
-    borderClass: 'border-emerald-500/60',
-    textClass: 'text-emerald-400 dark:text-emerald-300',
-    symbol: '🟢',
+    dotClass: 'bg-stone-100 ring-1 ring-stone-300 dark:ring-stone-600',
+    badgeClass: 'bg-stone-100/15 text-stone-100 border-stone-300/60 dark:border-stone-500/80',
+    borderClass: 'border-stone-300/80 dark:border-stone-600/80',
+    textClass: 'text-stone-100 dark:text-stone-100',
+    symbol: '⚪',
     desc: 'Ordinary Time & Hope of Resurrection'
   },
   rose: {
@@ -129,11 +129,11 @@ export const LITURGICAL_COLORS = {
     name_de: 'Gold',
     name_pt: 'Dourado',
     name_ru: 'Золотой',
-    dotClass: 'bg-amber-400 ring-1 ring-amber-300',
-    badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-400/60',
-    borderClass: 'border-amber-400/60',
-    textClass: 'text-amber-300 dark:text-amber-200',
-    symbol: '🟡',
+    dotClass: 'bg-stone-100 ring-1 ring-stone-300 dark:ring-stone-600',
+    badgeClass: 'bg-stone-100/15 text-stone-100 border-stone-300/60 dark:border-stone-500/80',
+    borderClass: 'border-stone-300/80 dark:border-stone-600/80',
+    textClass: 'text-stone-100 dark:text-stone-100',
+    symbol: '⚪',
     desc: 'Solemnities of highest dignity, Easter & Christmas'
   }
 };
