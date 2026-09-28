@@ -3789,10 +3789,14 @@ export async function ensureFullBibleLoaded(versionId = 'kjv') {
 
 export function getChapterFromBible(versionId, bookId, chapterNum) {
   const v = versionId || 'kjv';
+  const cKey = String(chapterNum);
+  if (LOADED_BIBLES[v]?.[bookId]?.[cKey]) {
+    return LOADED_BIBLES[v][bookId][cKey];
+  }
   if (LOADED_BIBLES[v]?.[bookId]?.[chapterNum]) {
     return LOADED_BIBLES[v][bookId][chapterNum];
   }
-  return SCRIPTURE_TEXTS[bookId]?.[chapterNum] || null;
+  return SCRIPTURE_TEXTS[bookId]?.[chapterNum] || SCRIPTURE_TEXTS[bookId]?.[cKey] || null;
 }
 
 export function getLoadedBibleBooks(versionId) {

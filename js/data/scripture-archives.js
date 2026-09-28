@@ -463,11 +463,15 @@ export const SCRIPTURE_ARCHIVES = {
 };
 
 export function getArchivalChapter(versionId, bookId, chapterNum) {
-  if (!versionId || versionId === 'kjv') return null;
+  const v = versionId || 'kjv';
+  const cKey = String(chapterNum);
   // 1. High-fidelity liturgical passage override (e.g. CEI, BOR liturgical wording)
-  if (SCRIPTURE_ARCHIVES[versionId]?.[bookId]?.[chapterNum]) {
-    return SCRIPTURE_ARCHIVES[versionId][bookId][chapterNum];
+  if (SCRIPTURE_ARCHIVES[v]?.[bookId]?.[chapterNum]) {
+    return SCRIPTURE_ARCHIVES[v][bookId][chapterNum];
+  }
+  if (SCRIPTURE_ARCHIVES[v]?.[bookId]?.[cKey]) {
+    return SCRIPTURE_ARCHIVES[v][bookId][cKey];
   }
   // 2. Full official historic canonical archive from data/bible-${versionId}.json
-  return getChapterFromBible(versionId, bookId, chapterNum);
+  return getChapterFromBible(v, bookId, chapterNum);
 }
