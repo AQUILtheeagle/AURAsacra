@@ -2,6 +2,8 @@
 // Fully supports all 9 languages: it, en, ro, la, es, fr, de, pt, ru
 // Sourced from Martyrologium Romanum, Calendarium Romanum, and historical Christian Synaxaria.
 
+import { getNationalityMeta } from './orthodox-saints.js';
+
 export const BIBLE_BOOKS_I18N = {
   // New Testament
   'Matthew': { it: 'Matteo', ro: 'Matei', la: 'Matthaeum', es: 'Mateo', fr: 'Matthieu', de: 'Matthäus', pt: 'Mateus', ru: 'Матфея' },
@@ -3272,6 +3274,9 @@ export function getLocalizedSaint(saint, lang = 'it') {
   const colorName = getLocalizedColorName(saint.color || 'white', lang);
   const rankName = getLocalizedRankName(saint.rank || 'memorial', lang);
 
+  // 8. Nationality meta resolution
+  const nationalityMeta = saint.nationalityMeta || (saint.nationality ? getNationalityMeta(saint.nationality, lang) : null);
+
   return {
     ...saint,
     displayName: name,
@@ -3281,6 +3286,7 @@ export function getLocalizedSaint(saint, lang = 'it') {
     displayScriptureRef: scriptureRef,
     colorName,
     rankName,
+    nationalityMeta,
     // Convenience aliases
     name,
     title,

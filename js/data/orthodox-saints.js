@@ -6,6 +6,118 @@
 // Provides complete localized commemorations in 9 languages (en, it, ro, ru, la, es, fr, de, pt)
 // completely independent of nationality, covering all Christian lands and universal traditions.
 
+export const NATIONALITY_META = {
+  universal: {
+    code: 'universal',
+    flag: '🌍',
+    name: 'Universal',
+    name_it: 'Universale',
+    name_ro: 'Universal',
+    name_ru: 'Вселенский',
+    name_la: 'Universalis',
+    name_es: 'Universal',
+    name_fr: 'Universel',
+    name_de: 'Universal',
+    name_pt: 'Universal',
+    badgeClass: 'bg-stone-500/10 text-stone-700 dark:text-stone-300 border-stone-300/80 dark:border-stone-700/80'
+  },
+  ro: {
+    code: 'ro',
+    flag: '🇷🇴',
+    name: 'Romania',
+    name_it: 'Romania',
+    name_ro: 'România',
+    name_ru: 'Румыния',
+    name_la: 'Dacia',
+    name_es: 'Rumanía',
+    name_fr: 'Roumanie',
+    name_de: 'Rumänien',
+    name_pt: 'Romênia',
+    badgeClass: 'bg-blue-600/10 text-blue-700 dark:text-blue-300 border-blue-500/40'
+  },
+  gr: {
+    code: 'gr',
+    flag: '🇬🇷',
+    name: 'Greece & Athos',
+    name_it: 'Grecia & Athos',
+    name_ro: 'Grecia & Athos',
+    name_ru: 'Греция и Афон',
+    name_la: 'Graecia et Athos',
+    name_es: 'Grecia y Athos',
+    name_fr: 'Grèce et Athos',
+    name_de: 'Griechenland & Athos',
+    name_pt: 'Grécia e Athos',
+    badgeClass: 'bg-sky-600/10 text-sky-700 dark:text-sky-300 border-sky-500/40'
+  },
+  ru: {
+    code: 'ru',
+    flag: '🇷🇺',
+    name: 'Slavic Tradition',
+    name_it: 'Tradizione Slava',
+    name_ro: 'Tradiția Slavă',
+    name_ru: 'Славянская Традиция',
+    name_la: 'Traditio Slavonica',
+    name_es: 'Tradición Eslava',
+    name_fr: 'Tradition Slave',
+    name_de: 'Slawische Tradition',
+    name_pt: 'Tradição Eslava',
+    badgeClass: 'bg-red-600/10 text-red-700 dark:text-red-300 border-red-500/40'
+  },
+  it: {
+    code: 'it',
+    flag: '🇮🇹',
+    name: 'Italy & Western',
+    name_it: 'Italia & Occidente',
+    name_ro: 'Italia & Apus',
+    name_ru: 'Италия и Запад',
+    name_la: 'Italia et Occidens',
+    name_es: 'Italia y Occidente',
+    name_fr: 'Italie et Occident',
+    name_de: 'Italien & Westlich',
+    name_pt: 'Itália e Ocidente',
+    badgeClass: 'bg-emerald-600/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
+  },
+  ge: {
+    code: 'ge',
+    flag: '🇬🇪',
+    name: 'Georgia',
+    name_it: 'Georgia',
+    name_ro: 'Georgia',
+    name_ru: 'Грузия',
+    name_la: 'Georgia',
+    name_es: 'Georgia',
+    name_fr: 'Géorgie',
+    name_de: 'Georgien',
+    name_pt: 'Geórgia',
+    badgeClass: 'bg-amber-600/10 text-amber-700 dark:text-amber-300 border-amber-500/40'
+  },
+  rs: {
+    code: 'rs',
+    flag: '🇷🇸',
+    name: 'Serbia & Balkans',
+    name_it: 'Serbia & Balcani',
+    name_ro: 'Serbia & Balcani',
+    name_ru: 'Сербия и Балканы',
+    name_la: 'Serbia et Balcania',
+    name_es: 'Serbia y Balcanes',
+    name_fr: 'Serbie et Balkans',
+    name_de: 'Serbien & Balkan',
+    name_pt: 'Sérvia e Balcãs',
+    badgeClass: 'bg-indigo-600/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/40'
+  }
+};
+
+export function getNationalityMeta(nationalityCode = 'universal', lang = 'it') {
+  const norm = (nationalityCode || 'universal').toLowerCase();
+  const meta = NATIONALITY_META[norm] || NATIONALITY_META.universal;
+  const localizedName = (lang && meta[`name_${lang}`]) || meta.name_it || meta.name;
+  return {
+    ...meta,
+    name: localizedName,
+    displayName: localizedName
+  };
+}
+
 export const ORTHODOX_SAINTS_CALENDAR = {
   "1-1": {
     "name": "Circumcision of our Lord & St. Basil the Great",
@@ -35,33 +147,73 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
-  "1-2": {
-    "name": "St. Sylvester, Pope of Rome & St. Seraphim of Sarov (Repose)",
-    "name_it": "San Silvestro Papa di Roma e San Serafino di Sarov",
-    "name_ro": "Sf. Ierarh Silvestru, Episcopul Romei și Sf. Serafim de Sarov",
-    "name_ru": "Святитель Сильвестр Римский и Преподобный Серафим Саровский",
-    "title": "Hierarch of Rome & Wonderworker of Sarov",
-    "title_it": "Vescovo di Roma e Taumaturgo di Sarov",
-    "title_ro": "Episcopul Romei și Cuviosul Taumaturg de la Sarov",
-    "title_ru": "Епископ Рима и чудотворец Саровский",
-    "color": "blue",
-    "rank": "feast",
-    "quote": "«Acquire a peaceful spirit, and around you thousands will be saved.»",
-    "quote_it": "«Acquisisci lo spirito di pace, e intorno a te migliaia troveranno la salvezza.»",
-    "quote_ro": "«Dobândește duhul păcii și mii de oameni în jurul tău se vor mântui.»",
-    "quote_ru": "«Стяжи дух мирен, и тогда тысячи вокруг тебя спасутся.»",
-    "bio": "St. Seraphim welcomed every pilgrim with the paschal greeting: 'My joy, Christ is risen!'",
-    "bio_it": "San Serafino accoglieva tutti con il saluto pasquale: 'Gioia mia, Cristo è risorto!'",
-    "bio_ro": "Sfântul Serafim întâmpina pe fiecare pelerin cu lumina pascală: 'Bucuria mea, Hristos a înviat!'",
-    "bio_ru": "Преподобный Серафим встречал каждого приходящего словами: 'Радость моя, Христос воскресе!'",
-    "scriptureRef": "John 20:19-21",
-    "traditions": [
-      "orthodox",
-      "eastern"
-    ]
-  },
+  "1-2": [
+    {
+      "name": "St. Sylvester, Pope of Rome",
+      "name_it": "San Silvestro Papa di Roma",
+      "name_ro": "Sfântul Ierarh Silvestru, Episcopul Romei",
+      "name_ru": "Святитель Сильвестр Римский, папа Римский",
+      "name_la": "Sanctus Silvester Papa Romae",
+      "name_es": "San Silvestre Papa de Roma",
+      "name_fr": "Saint Sylvestre Pape de Rome",
+      "name_de": "Hl. Silvester Papst von Rom",
+      "name_pt": "São Silvestre Papa de Roma",
+      "title": "Hierarch of Rome & Defender of the Council of Nicaea",
+      "title_it": "Vescovo di Roma e Difensore del Concilio di Nicea",
+      "title_ro": "Episcopul Romei și Apărătorul Sinodului de la Niceea",
+      "title_ru": "Епископ Рима и защитник православной веры от арианства",
+      "color": "white",
+      "rank": "memorial",
+      "nationality": "it",
+      "quote": "«The confession of the True Faith is the unshakeable foundation of the Church of God.»",
+      "quote_it": "«La confessione della vera fede è il fondamento incrollabile della Chiesa di Dio.»",
+      "quote_ro": "«Mărturisirea Dreptei Credințe este temelia neclintită a Bisericii lui Hristos.»",
+      "quote_ru": "«Исповедание правой веры есть непоколебимое основание Церкви Божией.»",
+      "bio": "Shepherd of the Church of Rome during the triumph of Christianity under Emperor Constantine and the First Ecumenical Council of Nicaea (325).",
+      "bio_it": "Pontefice di Roma durante il regno di Costantino il Grande e il primo Concilio Ecumenico di Nicea.",
+      "bio_ro": "A păstorit Biserica Romei în timpul primului Sinod Ecumenic de la Niceea (325), apărând dogma dumnezeirii Mântuitorului Hristos.",
+      "bio_ru": "Святитель Христов, управлявший Римской кафедрой в эпоху святого царя Константина и Первого Вселенского Собора.",
+      "scriptureRef": "2 Timothy 4:1-2",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    },
+    {
+      "name": "St. Seraphim of Sarov (Repose)",
+      "name_it": "San Serafino di Sarov (Beato Transito)",
+      "name_ro": "Sfântul Cuvios Serafim de Sarov (Adormirea)",
+      "name_ru": "Преподобный Серафим Саровский чудотворец",
+      "name_la": "Sanctus Seraphim Saroviensis",
+      "name_es": "San Serafín de Sarov",
+      "name_fr": "Saint Séraphin de Sarov",
+      "name_de": "Hl. Seraphim von Sarow",
+      "name_pt": "São Serafim de Sarov",
+      "title": "Wonderworker of Sarov & Bearer of the Holy Spirit",
+      "title_it": "Taumaturgo di Sarov e Maestro dell'Acquisizione dello Spirito Santo",
+      "title_ro": "Cuviosul Taumaturg de la Sarov, Purtătorul Duhului Sfânt",
+      "title_ru": "Великий старец и чудотворец Саровский, стяжавший благодать Духа Святого",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "ru",
+      "quote": "«Acquire the Spirit of Peace, and thousands around you will be saved. Christ is risen, my joy!»",
+      "quote_it": "«Acquisisci lo Spirito di Pace, e migliaia attorno a te si salveranno. Cristo è risorto, mia gioia!»",
+      "quote_ro": "«Dobândește Duhul Păcii și mii de oameni din jurul tău se vor mântui. Hristos a înviat, bucuria mea!»",
+      "quote_ru": "«Стяжи дух мирен, и тогда тысячи вокруг тебя спасутся. Радость моя, Христос воскресе!»",
+      "bio": "Beloved Russian hesychast and elder of Sarov Monastery; lived in unbroken prayer, fed wild forest bears, and taught that the true aim of Christian life is the acquisition of the Holy Spirit.",
+      "bio_it": "Grande mistico ed eremita di Sarov; accoglieva ogni pellegrino con gioia pasquale e insegnò la preghiera incessante del cuore.",
+      "bio_ro": "Marele sihastru și taumaturg din pădurile Sarovului, care a descoperit ucenicului Motovilov scopul vieții creștine: dobândirea Duhului Sfânt.",
+      "bio_ru": "Пламенный молитвенник земли Русской, подвизавшийся в саровских лесах и стяжавший мир Христов.",
+      "scriptureRef": "Galatians 5:22-23",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    }
+  ],
   "1-3": {
     "name": "Holy Prophet Malachi & Martyr Gordius",
     "name_it": "Santo Profeta Malachia e San Gordio Martire",
@@ -85,7 +237,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-4": {
     "name": "Synaxis of the Seventy Holy Apostles",
@@ -110,7 +263,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-5": {
     "name": "Eve of Theophany & Martyrs Theopemptus and Theonas",
@@ -135,7 +289,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-6": {
     "name": "The Holy Theophany of our Lord (Baptism of Christ)",
@@ -160,7 +315,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-7": {
     "name": "Synaxis of the Holy Prophet, Forerunner & Baptist John",
@@ -185,7 +341,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "1-8": {
     "name": "St. George the Chozebite & St. Domnica",
@@ -210,7 +367,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-9": {
     "name": "Holy Martyr Polyeuktos & St. Eustratius",
@@ -235,7 +393,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "1-10": {
     "name": "St. Gregory, Bishop of Nyssa & St. Dometian",
@@ -260,7 +419,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-11": {
     "name": "St. Theodosius the Cenobiarch",
@@ -285,7 +445,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-12": {
     "name": "Holy Virgin-Martyr Tatiana of Rome & Martyr Mertius",
@@ -310,7 +471,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "1-13": {
     "name": "Holy Martyrs Hermylus and Stratonicus",
@@ -335,33 +497,73 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
-  "1-14": {
-    "name": "St. Nina, Equal-to-the-Apostles, Enlightener of Georgia",
-    "name_it": "Santa Nina, Uguale agli Apostoli, Illuminatrice della Georgia",
-    "name_ro": "Sfânta Nina, Întocmai cu Apostolii, Luminătoarea Georgiei",
-    "name_ru": "Равноапостольная Нина, просветительница Грузии",
-    "title": "Bearer of the Grapevine Cross & Apostle to the Caucasus",
-    "title_it": "Apostola del Caucaso con la Croce di Vite",
-    "title_ro": "Apostola Caucazului cu Crucea din viță de vie",
-    "title_ru": "Просветительница Иверии со крестом из виноградной лозы",
-    "color": "blue",
-    "rank": "feast",
-    "quote": "«Take this cross of grapevine, Nina, and preach the Gospel in the land of Iberia.»",
-    "quote_it": "«Prendi questa croce di vite, Nina, e annuncia il Vangelo nella terra d'Iberia.»",
-    "quote_ro": "«Primește această cruce din viță de vie, Nina, și propovăduiește Evanghelia în pământul Iviriei!»",
-    "quote_ru": "«Приими сей крест от лозы виноградной, Нино, и проповедуй Евангелие Христово в Иверии.»",
-    "bio": "Cappadocian virgin who brought the light of Christ to all Georgia with her grapevine cross.",
-    "bio_it": "Vergine cappadoce che convertì l'intero regno di Georgia con la sua croce di vite.",
-    "bio_ro": "Fecioara din Capadocia care a creștinat întreaga Georgie cu crucea din viță de vie dăruită de Maica Domnului.",
-    "bio_ru": "Каппадокийская дева, просветившая Грузию светом веры Христовой.",
-    "scriptureRef": "Galatians 3:28",
-    "traditions": [
-      "orthodox",
-      "eastern"
-    ]
-  },
+  "1-14": [
+    {
+      "name": "St. Nina (Nino), Equal-to-the-Apostles, Enlightener of Georgia",
+      "name_it": "Santa Nina (Nino), Eguale agli Apostoli, Illuminatrice della Georgia",
+      "name_ro": "Sfânta Nina, cea întocmai cu Apostolii, Luminătoarea Georgiei",
+      "name_ru": "Равноапостольная Нина, просветительница Грузии",
+      "name_la": "Sancta Nina Aequalis Apostolis, Illuminatrix Georgiae",
+      "name_es": "Santa Nina, Igual a los Apóstoles, Iluminadora de Georgia",
+      "name_fr": "Sainte Nina, Égale aux Apôtres, Illuminatrice de la Géorgie",
+      "name_de": "Hl. Nina, den Aposteln gleich, Erleuchterin Georgiens",
+      "name_pt": "Santa Nina, Igual aos Apóstolos, Iluminadora da Geórgia",
+      "title": "Apostle of Iberia & Bearer of the Grapevine Cross",
+      "title_it": "Apostola d'Iberia con la Croce di Vite",
+      "title_ro": "Luminătoarea Georgiei cu Crucea din Viță de Vie legată cu propriul păr",
+      "title_ru": "Просветительница Иверии крестом из виноградной лозы",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "ge",
+      "quote": "«The Mother of God gave me the Cross of vine; by this holy sign the people of Iberia found life eternal.»",
+      "quote_it": "«La Madre di Dio mi ha donato la Croce di vite: con questo santo segno i popoli d'Iberia hanno trovato la vita eterna.»",
+      "quote_ro": "«Maica Domnului mi-a dăruit Crucea de viță de vie; prin acest semn sfânt poporul georgian a aflat lumina mântuirii.»",
+      "quote_ru": "«Крестом от Пречистой Девы просветися Иверия и позна Христа Спасителя мира.»",
+      "bio": "Virgin from Cappadocia who journeyed to Georgia in the 4th century bearing a grapevine cross from the Theotokos; converted King Mirian III and Queen Nana, establishing Orthodoxy across the Caucasus.",
+      "bio_it": "Vergine cappadoce che portò il Vangelo in Georgia legando la croce di vite con le proprie trecce; convertì i sovrani e battezzò l'intera nazione.",
+      "bio_ro": "Sfânta fecioară din Capadocia trimisă de Maica Domnului în Iviria (Georgia), pe care a creștinat-o prin rugăciune și nenumărate minuni.",
+      "bio_ru": "Святая дева, пришедшая в Грузию по велению Богородицы и обратившая весь народ в православную веру.",
+      "scriptureRef": "Romans 10:14-15",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    },
+    {
+      "name": "St. Sava, First Archbishop and Enlightener of Serbia",
+      "name_it": "San Sava, Primo Arcivescovo e Patrono della Serbia",
+      "name_ro": "Sfântul Sava, Primul Arhiepiscop și Luminătorul Serbiei",
+      "name_ru": "Святитель Савва, первый архиепископ Сербский",
+      "name_la": "Sanctus Sabas Primus Archiepiscopus Serbiae",
+      "name_es": "San Sava, Primer Arzobispo e Iluminador de Serbia",
+      "name_fr": "Saint Sava, Premier Archevêque et Illuminateur de la Serbie",
+      "name_de": "Hl. Sava, Erster Erzbischof und Erleuchter Serbiens",
+      "name_pt": "São Sava, Primeiro Arcebispo e Iluminador da Sérvia",
+      "title": "Prince Monastic of Hilandar & Father of the Serbian Church",
+      "title_it": "Principe Monaco di Hilandar e Padre della Chiesa Serba",
+      "title_ro": "Prințul sârb devenit monah athonit la Hilandar, primul întâistătător al Serbiei",
+      "title_ru": "Основатель автокефальной Сербской Церкви и ктитор Хиландара",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "rs",
+      "quote": "«Love truth and peace; keep the Orthodox faith undefiled as the most precious treasure of your soul.»",
+      "quote_it": "«Amate la verità e la pace; custodite la fede ortodossa intatta come il tesoro più prezioso.»",
+      "quote_ro": "«Iubiți adevărul și pacea; păziți credința ortodoxă curată ca pe cel mai de preț odor sufletesc.»",
+      "quote_ru": "«Любите правду и мир; блюдите веру православную чистой и непорочной.»",
+      "bio": "Rastko Nemanjić (+1236), youngest son of Grand Prince Stefan Nemanja; fled to Mount Athos to become a monk; co-founded Hilandar Monastery; established Serbian Church autocephaly.",
+      "bio_it": "Figlio del principe serbo Nemanja, scelse la vita monastica all'Athos fondando Hilandar, poi arcivescovo e padre pacificatore della sua terra.",
+      "bio_ro": "Prințul moștenitor al Serbiei care a fugit la Athos pentru dragostea lui Hristos, întemeind Mănăstirea Hilandar și rânduind Biserica Serbiei.",
+      "bio_ru": "Великий сербский святитель и просветитель, примиритель братьев и строитель духовной крепости своего народа.",
+      "scriptureRef": "Hebrews 13:7",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    }
+  ],
   "1-15": {
     "name": "St. Paul of Thebes & St. John the Hut-Dweller",
     "name_it": "San Paolo di Tebe e San Giovanni Calibita",
@@ -385,7 +587,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-16": {
     "name": "Veneration of the Precious Chains of Apostle Peter",
@@ -410,7 +613,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-17": {
     "name": "St. Anthony the Great, Father of Monasticism",
@@ -435,7 +639,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-18": {
     "name": "Saints Athanasius & Cyril, Archbishops of Alexandria",
@@ -460,7 +665,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-19": {
     "name": "St. Macarius the Great of Egypt & St. Mark of Ephesus",
@@ -485,7 +691,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-20": {
     "name": "St. Euthymius the Great",
@@ -510,7 +717,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "1-21": {
     "name": "St. Maximus the Confessor & Martyr Neophytus",
@@ -535,7 +743,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-22": {
     "name": "Holy Apostle Timothy & Venerable-Martyr Anastasius the Persian",
@@ -560,7 +769,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-23": {
     "name": "Holy Hieromartyr Clement of Ancyra & Martyr Agathangelus",
@@ -585,7 +795,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "1-24": {
     "name": "St. Xenia of St. Petersburg & St. Xenia of Rome",
@@ -610,7 +821,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "1-25": {
     "name": "St. Gregory the Theologian (Nazianzen)",
@@ -635,7 +847,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "1-26": {
     "name": "St. Xenophon, his wife Maria and sons Arcadius and John",
@@ -660,7 +873,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-27": {
     "name": "Translation of Relics of St. John Chrysostom",
@@ -685,7 +899,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "1-28": {
     "name": "St. Ephrem the Syrian & St. Isaac the Syrian",
@@ -710,7 +925,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-29": {
     "name": "Translation of Relics of St. Ignatius the God-Bearer",
@@ -735,7 +951,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "1-30": {
     "name": "Synaxis of the Three Holy Hierarchs: Basil, Gregory and John Chrysostom",
@@ -765,7 +982,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "1-31": {
     "name": "Holy Unmercenaries and Wonderworkers Cyrus and John",
@@ -790,7 +1008,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-1": {
     "name": "Holy Martyr Tryphon of Phrygia & Holy Martyrs Perpetua and Felicity",
@@ -815,7 +1034,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-2": {
     "name": "The Meeting (Presentation) of our Lord Jesus Christ in the Temple",
@@ -845,7 +1065,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-3": {
     "name": "Holy and Righteous Simeon the God-Receiver and Prophetess Anna",
@@ -870,7 +1091,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-4": {
     "name": "St. Isidore of Pelusium & St. George of Ioannina",
@@ -895,7 +1117,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "2-5": {
     "name": "Holy Virgin-Martyr Agatha of Sicily & St. Polyeuctus of Constantinople",
@@ -920,7 +1143,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "2-6": {
     "name": "St. Photius the Great, Patriarch of Constantinople & St. Bucolus",
@@ -945,7 +1169,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "2-7": {
     "name": "St. Parthenius of Lampsacus & St. Luke of Hellas",
@@ -970,7 +1195,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-8": {
     "name": "Holy Great-Martyr Theodore Stratelates & Prophet Zechariah",
@@ -995,7 +1221,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-9": {
     "name": "Holy Martyr Nicephorus of Antioch & Hieromartyr Marcellus",
@@ -1020,7 +1247,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-10": {
     "name": "Holy Hieromartyr Charalambos the Wonderworker",
@@ -1050,7 +1278,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-11": {
     "name": "Holy Hieromartyr Blaise of Sebaste & Empress Theodora",
@@ -1075,7 +1304,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-12": {
     "name": "St. Meletius of Antioch & St. Anthony of Constantinople",
@@ -1100,7 +1330,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "2-13": {
     "name": "St. Martinian & Holy Apostles Aquila and Priscilla",
@@ -1125,7 +1356,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-14": {
     "name": "St. Maron of Syria & St. Cyril, Equal-to-the-Apostles, Enlightener of the Slavs",
@@ -1150,7 +1382,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "2-15": {
     "name": "Holy Apostle Onesimus & Martyr Major",
@@ -1175,7 +1408,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "2-16": {
     "name": "Holy Hieromartyr Pamphilus & Companions, and St. Flavian",
@@ -1200,7 +1434,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-17": {
     "name": "Holy Great-Martyr Theodore the Recruit (Tiro)",
@@ -1225,7 +1460,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-18": {
     "name": "St. Leo the Great, Pope of Rome",
@@ -1250,7 +1486,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "2-19": {
     "name": "Holy Apostles Archippus, Philemon and Apphia",
@@ -1275,7 +1512,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-20": {
     "name": "St. Leo, Bishop of Catania & St. Agatho, Pope of Rome",
@@ -1300,7 +1538,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "2-21": {
     "name": "St. Timothy of Symbola & St. Eustathius of Antioch",
@@ -1325,7 +1564,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-22": {
     "name": "Finding of the Holy Martyrs' Relics at Eugenius & St. Athanasius the Confessor",
@@ -1350,7 +1590,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "2-23": {
     "name": "Holy Hieromartyr Polycarp, Bishop of Smyrna",
@@ -1380,7 +1621,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-24": {
     "name": "First & Second Finding of the Precious Head of St. John the Baptist",
@@ -1405,7 +1647,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-25": {
     "name": "St. Tarasius, Patriarch of Constantinople",
@@ -1430,7 +1673,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "2-26": {
     "name": "St. Porphyrius, Bishop of Gaza & Holy Martyr Photini",
@@ -1455,7 +1699,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-27": {
     "name": "St. Procopius the Decapolite & St. Thalelaeus",
@@ -1480,7 +1725,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "2-28": {
     "name": "St. Basil the Confessor & St. Proterius of Alexandria",
@@ -1505,7 +1751,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "2-29": {
     "name": "St. John Cassian the Roman & St. Germanus of Dobrogea",
@@ -1530,7 +1777,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "3-1": {
     "name": "Holy Venerable-Martyr Eudokia of Heliopolis",
@@ -1555,7 +1803,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-2": {
     "name": "Holy Hieromartyr Theodotus, Bishop of Cyrenia in Cyprus",
@@ -1580,7 +1829,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "3-3": {
     "name": "Holy Martyrs Eutropius, Cleonicus and Basiliscus",
@@ -1605,7 +1855,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-4": {
     "name": "St. Gerasimus of the Jordan & St. Gregory of Assos",
@@ -1630,7 +1881,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-5": {
     "name": "Holy Martyr Conon of Isauria & Martyr Conon the Gardener",
@@ -1655,7 +1907,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-6": {
     "name": "The 42 Holy Martyrs of Amorium in Phrygia",
@@ -1680,7 +1933,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-7": {
     "name": "Holy Hieromartyrs of Cherson: Basil, Ephrem, Eugene, Elpidius, Agathodorus, Aetherius, and Capito",
@@ -1705,7 +1959,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-8": {
     "name": "St. Theophylact the Confessor, Bishop of Nicomedia",
@@ -1730,7 +1985,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-9": {
     "name": "The Holy Forty Martyrs of Sebaste",
@@ -1760,7 +2016,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "3-10": {
     "name": "Holy Martyrs Quadratus, Cyprian, Dionysius, Anectus, Paul and Crescens of Corinth",
@@ -1785,7 +2042,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-11": {
     "name": "St. Sophronius, Patriarch of Jerusalem",
@@ -1810,7 +2068,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-12": {
     "name": "St. Theophanes the Confessor & St. Gregory the Dialogist (the Great)",
@@ -1835,7 +2094,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-13": {
     "name": "Translation of the Relics of St. Nicephorus, Patriarch of Constantinople",
@@ -1860,7 +2120,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "3-14": {
     "name": "St. Benedict of Nursia & St. Alexander of Pydna",
@@ -1885,7 +2146,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "3-15": {
     "name": "Holy Martyr Agapius and his Seven Companions",
@@ -1910,7 +2172,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-16": {
     "name": "Holy Martyrs Sabinus of Egypt and Romanus",
@@ -1935,7 +2198,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "3-17": {
     "name": "St. Alexis, the Man of God",
@@ -1965,7 +2229,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "3-18": {
     "name": "St. Cyril, Archbishop of Jerusalem",
@@ -1990,7 +2255,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-19": {
     "name": "Holy Martyrs Chrysanthus and Daria of Rome",
@@ -2015,7 +2281,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "3-20": {
     "name": "Holy Fathers Slain at the Monastery of St. Sabbas",
@@ -2040,7 +2307,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-21": {
     "name": "St. James the Confessor, Bishop of Catania & St. Serapion of Thmuis",
@@ -2065,7 +2333,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "3-22": {
     "name": "Holy Hieromartyr Basil, Priest of Ancyra & Martyr Drosida",
@@ -2090,7 +2359,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-23": {
     "name": "Holy Hieromartyr Nicon and his 199 Disciples",
@@ -2115,7 +2385,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "3-24": {
     "name": "Forefeast of the Annunciation & St. Zachariah the Recluse",
@@ -2140,7 +2411,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-25": {
     "name": "The Annunciation of the Most Holy Theotokos and Ever-Virgin Mary",
@@ -2170,7 +2442,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-26": {
     "name": "Synaxis of the Holy Archangel Gabriel",
@@ -2195,7 +2468,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-27": {
     "name": "Holy Martyr Matrona of Thessaloniki & St. Philetus",
@@ -2220,7 +2494,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "3-28": {
     "name": "St. Hilarion the New & St. Stephen the Wonderworker",
@@ -2245,7 +2520,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-29": {
     "name": "Holy Hieromartyr Mark, Bishop of Arethusa & St. Cyril the Deacon",
@@ -2270,7 +2546,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-30": {
     "name": "St. John Climacus, Author of the Ladder of Divine Ascent",
@@ -2300,7 +2577,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "3-31": {
     "name": "Holy Hieromartyr Hypatius, Bishop of Gangra",
@@ -2325,7 +2603,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-1": {
     "name": "St. Mary of Egypt",
@@ -2350,7 +2629,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-2": {
     "name": "St. Titus the Wonderworker & Holy Martyrs Amphianus and Aedesius",
@@ -2375,7 +2655,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-3": {
     "name": "St. Nicetas the Confessor, Abbot of Medikion",
@@ -2400,7 +2681,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-4": {
     "name": "St. Joseph the Hymnographer & St. George of Maleon",
@@ -2425,7 +2707,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-5": {
     "name": "Holy Martyrs Claudius, Diodorus, Victor, Victorinus, Papias, Serapion and Nicephorus",
@@ -2450,7 +2733,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-6": {
     "name": "St. Eutychius, Patriarch of Constantinople & St. Methodius, Enlightener of the Slavs",
@@ -2475,7 +2759,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "4-7": {
     "name": "St. George the Confessor, Bishop of Mitylene & Martyr Calliopius",
@@ -2500,7 +2785,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "4-8": {
     "name": "Holy Apostles Herodion, Agabus, Rufus, Asyncritus, Phlegon, and Hermes of the Seventy",
@@ -2525,7 +2811,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "4-9": {
     "name": "Holy Martyr Eupsychius of Caesarea & St. Vadim of Persia",
@@ -2550,7 +2837,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-10": {
     "name": "Holy Martyrs Terence, Africanus, Maximus, Pompeius and 36 Companions of Carthage",
@@ -2575,7 +2863,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-11": {
     "name": "Holy Hieromartyr Antipas, Bishop of Pergamum",
@@ -2600,7 +2889,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-12": {
     "name": "St. Basil the Confessor of Parium & St. Sabbas the Goth of Buzău",
@@ -2625,7 +2915,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "4-13": {
     "name": "Holy Hieromartyr Artemon of Laodicea & Martyr Eleutherius the Persian",
@@ -2650,7 +2941,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-14": {
     "name": "St. Martin the Confessor, Pope of Rome & Holy Martyrs Anthony, John and Eustathius of Lithuania",
@@ -2675,7 +2967,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "4-15": {
     "name": "Holy Apostles Aristarchus, Pudens and Trophimus of the Seventy",
@@ -2700,7 +2993,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "4-16": {
     "name": "Holy Virgin-Martyrs Agape, Irene and Chionia of Aquileia",
@@ -2725,7 +3019,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "4-17": {
     "name": "Holy Hieromartyr Simeon of Persia & St. Acacius of Melitene",
@@ -2750,7 +3045,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-18": {
     "name": "St. John, Disciple of St. Gregory the Decapolite & St. Cosmas of Chalcedon",
@@ -2775,7 +3071,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-19": {
     "name": "St. John of the Ancient Caves (Lavra) in Palestine",
@@ -2800,7 +3097,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-20": {
     "name": "St. Theodore Trichinas & St. Athanasius of Aegina",
@@ -2825,7 +3123,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "4-21": {
     "name": "Holy Hieromartyr Januarius, Bishop of Benevento & Martyr Theodore of Perga",
@@ -2850,7 +3149,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-22": {
     "name": "St. Theodore the Sykeote, Bishop of Anastasiopolis & Apostle Nathanael",
@@ -2875,7 +3175,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-23": {
     "name": "Holy Great-Martyr George the Trophy-Bearer (Victory-Bearer)",
@@ -2905,7 +3206,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "4-24": {
     "name": "Holy Hieromartyrs and Confessors Elias Iorest, Sabbas Brancovici, and Joseph of Maramureș",
@@ -2930,7 +3232,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "4-25": {
     "name": "Holy Apostle and Evangelist Mark",
@@ -2960,7 +3263,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-26": {
     "name": "Holy Hieromartyr Basil, Bishop of Amasea & St. Glaphyra",
@@ -2985,7 +3289,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-27": {
     "name": "Holy Hieromartyr Simeon, Brother of the Lord & St. Eulogius the Hospitable",
@@ -3010,7 +3315,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-28": {
     "name": "The Nine Holy Martyrs of Cyzicus & St. Memnon the Wonderworker",
@@ -3035,7 +3341,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "4-29": {
     "name": "Holy Apostles Jason and Sosipater of the Seventy & Virgin-Martyr Cercyra",
@@ -3060,7 +3367,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "4-30": {
     "name": "Holy Apostle James, the Son of Zebedee & St. Donatus",
@@ -3090,7 +3398,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-1": {
     "name": "Holy Prophet Jeremiah & St. Tamara, Queen of Georgia",
@@ -3115,7 +3424,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ge"
   },
   "5-2": {
     "name": "Translation of Relics of St. Athanasius the Great & St. Boris of Bulgaria",
@@ -3140,7 +3450,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "5-3": {
     "name": "Holy Martyrs Timothy and Maura & St. Theodosius of the Kiev Caves",
@@ -3165,7 +3476,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "5-4": {
     "name": "Holy Virgin-Martyr Pelagia of Tarsus & St. Nicephorus of Chios",
@@ -3190,7 +3502,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-5": {
     "name": "Holy Great-Martyr Irene of Thessalonica (Balkans)",
@@ -3220,7 +3533,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "5-6": {
     "name": "Holy and Righteous Job the Long-Suffering",
@@ -3245,7 +3559,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-7": {
     "name": "Commemoration of the Apparition of the Holy Cross over Jerusalem in 351",
@@ -3270,7 +3585,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-8": {
     "name": "Holy Apostle and Evangelist John the Theologian & St. Arsenius the Great",
@@ -3300,7 +3616,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-9": {
     "name": "Holy Prophet Isaiah & Holy Martyr Christopher",
@@ -3325,7 +3642,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-10": {
     "name": "Holy Apostle Simon the Zealot (the Canaanite) & St. Hesychius",
@@ -3350,7 +3668,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ge"
   },
   "5-11": {
     "name": "Holy Equals-to-the-Apostles Methodius and Cyril, Enlighteners of the Slavs",
@@ -3380,7 +3699,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "5-12": {
     "name": "St. Epiphanius of Cyprus & St. Germanus, Patriarch of Constantinople",
@@ -3405,7 +3725,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "5-13": {
     "name": "Holy Virgin-Martyr Glykeria of Heraclea & Martyr Laodicius",
@@ -3430,7 +3751,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-14": {
     "name": "Holy Martyr Isidore of Chios & Hieromartyr Therapon of Cyprus",
@@ -3455,7 +3777,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "5-15": {
     "name": "St. Pachomius the Great, Founder of Cenobitic Monasticism & St. Achilles of Larissa",
@@ -3480,7 +3803,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-16": {
     "name": "St. Theodore the Sanctified, Disciple of St. Pachomius",
@@ -3505,7 +3829,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-17": {
     "name": "Holy Apostles Andronicus and Junia of the Seventy",
@@ -3530,7 +3855,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-18": {
     "name": "Holy Martyrs Peter, Dionysius, Andrew, Paul, Christina, Heraclius, and Paulinus",
@@ -3555,7 +3881,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-19": {
     "name": "Holy Hieromartyr Patrick, Bishop of Prusa and Companions Acacius, Menander and Polyenus",
@@ -3580,7 +3907,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "5-20": {
     "name": "Holy Martyr Thalelaeus of Cilicia & St. Mark the Ascetic",
@@ -3605,7 +3933,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-21": {
     "name": "Holy Great Sovereigns and Equals-to-the-Apostles Constantine and his Mother Helen",
@@ -3635,7 +3964,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "5-22": {
     "name": "Holy Martyr Basiliscus of Comana & Fathers of the Second Ecumenical Council",
@@ -3660,7 +3990,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-23": {
     "name": "St. Michael the Confessor, Bishop of Synnada & St. Euphrosyne of Polotsk",
@@ -3685,7 +4016,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-24": {
     "name": "St. Symeon the Stylite of the Wonderful Mountain",
@@ -3710,7 +4042,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-25": {
     "name": "Third Finding of the Precious Head of St. John the Baptist",
@@ -3735,7 +4068,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "5-26": {
     "name": "Holy Apostles Carpus and Alphaeus of the Seventy & Martyr George of Sofia",
@@ -3760,7 +4094,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-27": {
     "name": "Holy Hieromartyr Helladius & Holy Martyr Julius the Veteran of Durostorum",
@@ -3785,7 +4120,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "5-28": {
     "name": "St. Eutychius, Bishop of Melitene & St. Nicetas the Confessor",
@@ -3810,7 +4146,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "5-29": {
     "name": "Holy Virgin-Martyr Theodosia of Tyre & Virgin-Martyr Theodosia of Constantinople",
@@ -3835,7 +4172,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "5-30": {
     "name": "St. Isaac the Confessor, Abbot of the Dalmatian Monastery in Constantinople",
@@ -3860,7 +4198,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "5-31": {
     "name": "Holy Apostle Hermas of the Seventy & Martyr Hermias of Comana",
@@ -3885,7 +4224,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-1": {
     "name": "Holy Justin the Philosopher and Martyrs of Rome",
@@ -3915,38 +4255,73 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
-  "6-2": {
-    "name": "Holy Great Martyr John the New of Suceava & St. Nicephorus of Constantinople",
-    "name_it": "San Giovanni il Nuovo di Suceava e San Niceforo di Costantinopoli",
-    "name_ro": "Sfântul Mare Mucenic Ioan cel Nou de la Suceava și Sfântul Nichifor Mărturisitorul",
-    "name_ru": "Великомученик Иоанн Новый, Сочавский и святитель Никифор исповедник",
-    "name_la": "Sanctus Ioannes Novus Suciavensis et Sanctus Nicephorus",
-    "name_es": "San Juan el Nuevo de Suceava y San Nicéforo",
-    "name_fr": "Saint Jean le Nouveau de Suceava et Saint Nicéphore",
-    "name_de": "Hl. Johannes der Neue von Suceava und Hl. Nikephoros",
-    "name_pt": "São João o Novo de Suceava e São Nicéforo",
-    "title": "Protector of Moldavia & Patriarchal Defender of Icons",
-    "title_it": "Patrono della Moldavia e Difensore delle Sacre Icone",
-    "title_ro": "Ocrotitorul Moldovei și Ierarhul mărturisitor al icoanelor",
-    "title_ru": "Покровитель Молдавии и исповедник почитания икон",
-    "color": "blue",
-    "rank": "feast",
-    "quote": "«Neither sword, nor fire, nor cruel beasts shall separate me from the love of my Master Christ.»",
-    "quote_it": "«Né la spada, né il fuoco, né le fiere crudeli mi separeranno dall'amore del mio Maestro Cristo.»",
-    "quote_ro": "«Nici sabia, nici focul, nici fiarele cele cumplite nu mă vor despărți de dragostea Stăpânului meu Hristos!»",
-    "quote_ru": "«Ни меч, ни огонь, ни лютые муки не отлучат меня от любви Христа Спасителя моего!»",
-    "bio": "Merchant of Trebizond martyred at Cetatea Albă (1303-1330), whose sacred incorrupt relics protect Romania; also Nicephorus patriarch who resisted iconoclasm.",
-    "bio_it": "Mercante di Trebisonda martirizzato a Cetatea Albă; le sue reliquie incorrotte sono venerate nel monastero di Suceava.",
-    "bio_ro": "Negustor din Trapezunt martirizat de tătari la Cetatea Albă; moaștele sale fac neîncetat minuni la Suceava din vremea lui Alexandru cel Bun.",
-    "bio_ru": "Трапезундский купец, претерпевший лютые муки от неверных в Белгороде; нетленные мощи его почивают в Сучаве.",
-    "scriptureRef": "Romans 8:35-39",
-    "traditions": [
-      "orthodox",
-      "eastern"
-    ]
-  },
+  "6-2": [
+    {
+      "name": "Holy Great Martyr John the New of Suceava",
+      "name_it": "San Giovanni il Nuovo di Suceava",
+      "name_ro": "Sfântul Mare Mucenic Ioan cel Nou de la Suceava",
+      "name_ru": "Великомученик Иоанн Новый, Сочавский",
+      "name_la": "Sanctus Ioannes Novus Suceviensis",
+      "name_es": "San Juan el Nuevo de Suceava",
+      "name_fr": "Saint Jean le Nouveau de Suceava",
+      "name_de": "Hl. Johannes der Neue von Suceava",
+      "name_pt": "São João o Novo de Suceava",
+      "title": "Protector of Moldavia & Incorrupt Martyr of Cetatea Albă",
+      "title_it": "Patrono della Moldavia e Martire Incorrotto",
+      "title_ro": "Ocrotitorul Moldovei, făcătorul de minuni ale cărui moaște nestricăcioase străjuiesc Suceava",
+      "title_ru": "Великомученик Христов, покровитель Молдавии",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "ro",
+      "quote": "«Neither threats nor scourges shall separate me from the love of Christ, my Savior!»",
+      "quote_it": "«Né minacce né supplizi mi separeranno dall'amore di Cristo, mio Salvatore!»",
+      "quote_ro": "«Nici focul, nici sabia, nici cumplitele bătăi nu mă vor despărți de dragostea lui Hristos!»",
+      "quote_ru": "«Никакие муки не возмогут отлучить меня от любви Христовой!»",
+      "bio": "Christian merchant of Trebizond martyred at Cetatea Albă (Akkerman) in 1330 for refusing to deny Christ; in 1402 Prince Alexander the Good translated his incorrupt wonderworking relics to Suceava.",
+      "bio_it": "Mercante di Trebisonda martirizzato sulle rive del Mar Nero; le sue spoglie incorrotte sono venerate nel monastero di Suceava da oltre sei secoli.",
+      "bio_ro": "Negustorul drept-credincios din Trapezunt chinuit până la moarte pentru credința ortodoxă; moaștele sale au fost aduse la Suceava de Alexandru cel Bun în 1402.",
+      "bio_ru": "Благочестивый купец, претерпевший лютые мучения за Христа в Белграде Босфорском; его святые мощи покоятся в Сучаве.",
+      "scriptureRef": "2 Corinthians 4:8-9",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    },
+    {
+      "name": "St. Nicephorus the Confessor, Patriarch of Constantinople",
+      "name_it": "San Niceforo il Confessore, Patriarca di Costantinopoli",
+      "name_ro": "Sfântul Nichifor Mărturisitorul, Patriarhul Constantinopolului",
+      "name_ru": "Святитель Никифор исповедник, патриарх Константинопольский",
+      "name_la": "Sanctus Nicephorus Confessor Patriarcha Constantinopolitanus",
+      "name_es": "San Nicéforo el Confesor, Patriarca de Constantinopla",
+      "name_fr": "Saint Nicéphore le Confesseur, Patriarche de Constantinople",
+      "name_de": "Hl. Nikephoros der Bekenner, Patriarch von Konstantinopel",
+      "name_pt": "São Nicéforo o Confessor, Patriarca de Constantinopla",
+      "title": "Patriarchal Defender of Holy Icons & Theologian",
+      "title_it": "Difensore delle Sacre Icone ed Esule per la Fede",
+      "title_ro": "Stâlpul Ortodoxiei în fața iconoclasmului și Ierarhul mărturisitor din Bizanț",
+      "title_ru": "Святитель и защитник почитания святых икон",
+      "color": "black",
+      "rank": "memorial",
+      "nationality": "gr",
+      "quote": "«He who denies the icon of Christ denies the true reality of the Incarnation of God.»",
+      "quote_it": "«Chi nega l'icona di Cristo nega la vera realtà dell'Incarnazione di Dio.»",
+      "quote_ro": "«Cine leapădă icoana lui Hristos se leapădă de însăși Întruparea Fiului lui Dumnezeu.»",
+      "quote_ru": "«Отвергающий икону Спасителя отвергает тайну Его Божественного воплощения.»",
+      "bio": "Patriarch of Constantinople (+828) who valiantly defended the veneration of holy icons against the iconoclast Emperor Leo the Armenian, enduring thirteen years of harsh exile until his holy death.",
+      "bio_it": "Patriarca di Costantinopoli che resistette con eroica fermezza alla furia iconoclasta, morendo in esilio per la venerazione delle immagini sacre.",
+      "bio_ro": "Marele patriarh bizantin care s-a împotrivit împăratului iconoclast Leon Armeanul, murind în exil pentru cinstirea sfintelor icoane.",
+      "bio_ru": "Святитель Константинопольский, перенесший тринадцать лет изгнания за защиту святых икон от еретиков.",
+      "scriptureRef": "Colossians 1:15",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    }
+  ],
   "6-3": {
     "name": "Holy Martyrs Lucillian, Claudius, Hypatius, Paul, Dionysius & Paula the Virgin",
     "name_it": "Santi Martiri Lucilliano, Claudio, Ipazio, Paolo, Dionigi e Paola",
@@ -3975,7 +4350,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "6-4": {
     "name": "Holy Metrophanes of Constantinople & Martyrs Zoticus, Attalus, Camasis and Philip of Niculițel",
@@ -4005,7 +4381,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "6-5": {
     "name": "Holy Hieromartyr Dorotheus of Tyre & Blessed Prince Igor of Chernigov",
@@ -4035,7 +4412,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "6-6": {
     "name": "Holy Venerable Hilarion the New of the Dalmatian Monastery",
@@ -4065,7 +4443,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-7": {
     "name": "Holy Hieromartyr Theodotus of Ancyra & Hieromartyr Marcellinus of Rome",
@@ -4095,7 +4474,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "6-8": {
     "name": "Translation of the Relics of Great Martyr Theodore Stratelates",
@@ -4125,7 +4505,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "6-9": {
     "name": "Holy Cyril, Archbishop of Alexandria & St. Columba of Iona",
@@ -4155,7 +4536,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-10": {
     "name": "Holy Hieromartyr Timothy of Prussa & St. John of Tobolsk",
@@ -4185,7 +4567,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ge"
   },
   "6-11": {
     "name": "Holy Apostles Bartholomew and Barnabas & St. Luke of Crimea",
@@ -4215,7 +4598,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "6-12": {
     "name": "Holy Venerable Onuphrius the Great & Peter the Athonite",
@@ -4245,7 +4629,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "6-13": {
     "name": "Holy Martyr Aquilina of Byblos & St. Triphyllius of Leucosia",
@@ -4275,7 +4660,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-14": {
     "name": "Holy Prophet Elisha & St. Methodius, Patriarch of Constantinople",
@@ -4305,7 +4691,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "6-15": {
     "name": "Holy Prophet Amos, Blessed Jerome & Prince Lazar of Serbia",
@@ -4335,7 +4722,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "rs"
   },
   "6-16": {
     "name": "Holy Tikhon, Bishop of Amathus in Cyprus",
@@ -4365,7 +4753,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "6-17": {
     "name": "Holy Martyrs Manuel, Sabel, and Ismael of Persia",
@@ -4395,7 +4784,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-18": {
     "name": "Holy Martyrs Leontius, Hypatius, and Theodulus of Tripoli",
@@ -4425,7 +4815,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "6-19": {
     "name": "Holy Apostle Jude, Brother of the Lord & St. Paisios the Great",
@@ -4455,7 +4846,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-20": {
     "name": "Holy Hieromartyr Methodius of Patara & St. Callistus of Constantinople",
@@ -4485,7 +4877,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "6-21": {
     "name": "Holy Great Martyr Julian of Tarsus (Cilicia)",
@@ -4515,7 +4908,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-22": {
     "name": "Holy Hieromartyr Eusebius, Bishop of Samosata",
@@ -4545,7 +4939,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-23": {
     "name": "Holy Virgin-Martyr Agrippina of Rome & Vladimir Icon of the Mother of God",
@@ -4575,7 +4970,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "6-24": {
     "name": "Nativity of the Holy Forerunner and Baptist John",
@@ -4605,7 +5001,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "6-25": {
     "name": "Holy Venerable Virgin-Martyr Febronia of Nisibis",
@@ -4635,7 +5032,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-26": {
     "name": "Holy Venerable David of Thessalonica & St. John of the Gothia",
@@ -4665,7 +5063,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "6-27": {
     "name": "Holy Venerable Sampson the Hospitable of Constantinople",
@@ -4695,7 +5094,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "6-28": {
     "name": "Translation of the Relics of Unmercenaries Cyrus and John & Sts. Sergius and Herman of Valaam",
@@ -4725,7 +5125,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "6-29": {
     "name": "Holy, Glorious and All-Praised Leaders of the Apostles, Peter and Paul",
@@ -4755,7 +5156,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "6-30": {
     "name": "Synaxis of the Twelve Holy, Glorious and All-Praised Apostles & St. Gelasios of Râmeț",
@@ -4785,7 +5187,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "7-1": {
     "bio": "Twin physicians who healed men and animals asking only faith in Christ; stoned by a jealous teacher in Rome (284); St. Leontius was bishop of Rădăuți (14th c.).",
@@ -4815,7 +5218,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "7-10": {
     "bio": "45 Christians burned together in Nicopolis under Licinius (319); Anthony brought Mount Athos monasticism to the Caves of Kiev in 1051.",
@@ -4845,7 +5249,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "7-11": {
     "bio": "At Chalcedon (451), Euphemia held the Orthodox tome in her hands and trampled the Monophysite book; Olga was baptized in Constantinople in 957.",
@@ -4875,7 +5280,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "7-12": {
     "bio": "Prodromița icon was miraculously completed by angels at Iași in 1863; Elder Paisios (+1994) offered holy discernment to countless seekers on Athos.",
@@ -4905,7 +5311,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "7-13": {
     "bio": "Gabriel proclaimed the mysteries of God to Daniel, Zechariah, and Mary at the Annunciation; Stephen was nephew of St. John of Damascus.",
@@ -4935,7 +5342,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-14": {
     "bio": "Aquila and Priscilla hosted Paul at Corinth; Nicodemus of Athos (1749-1809) compiled the Philokalia, the Rudder (Pedalion), and Synaxarion.",
@@ -4965,7 +5373,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "7-15": {
     "bio": "Three-year-old Cyricus confessed Christ as his mother Julitta was tortured; Vladimir baptized Kievan Rus in the Dnieper in 988, transforming the realm.",
@@ -4995,7 +5404,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "7-16": {
     "bio": "Athenogenes sang the evening hymn 'Phos Hilaron' entering the fire with 10 disciples (311); 630 Fathers at Chalcedon confessed Christ truly God and truly man.",
@@ -5025,7 +5435,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-17": {
     "bio": "Daughter of a pagan priest in Pisidia; when cast into prison, the demon appeared as a dragon and she defeated him with the Cross; beheaded under Diocletian.",
@@ -5055,7 +5466,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-18": {
     "bio": "Emilian, a slave at Durostorum (Silistra on the Danube), smashed pagan temple idols and willingly went into a bonfire under Julian the Apostate in 362.",
@@ -5085,7 +5497,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "7-19": {
     "bio": "Elder sister of St. Basil and St. Gregory of Nyssa; inspired Basil to embrace asceticism; established a model monastery on the river Iris in Pontus.",
@@ -5115,7 +5528,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "7-2": {
     "bio": "Stephen ruled Moldavia for 47 years, erected 44 churches and defended Europe against Ottoman conquest; at Blachernae the Virgin's Robe was enshrined in 472.",
@@ -5145,7 +5559,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "7-20": {
     "bio": "Zealous prophet who shut the heavens for three and a half years, brought fire down on Mount Carmel, heard God in the still small voice, and was taken to heaven in a fiery chariot.",
@@ -5175,7 +5590,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-21": {
     "bio": "Symeon lived thirty years in secret desert prayer then went to Emesa pretending madness to save souls and mock demonic pride; Ezekiel beheld dry bones resurrected.",
@@ -5205,7 +5621,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-22": {
     "bio": "Delivered of seven demons by Christ; stood faithfully beneath the Cross; brought myrrh to the empty tomb; confronted Tiberius Caesar in Rome with a red egg proclaiming the Resurrection.",
@@ -5235,7 +5652,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "7-23": {
     "bio": "Bishop of Sinope on the Black Sea who expelled demons and healed the sick; invoked by Christian sailors in storms; plunged into a boiling bath under Trajan.",
@@ -5265,7 +5683,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-24": {
     "bio": "Christina smashed her father's gold idols and gave pieces to the poor; Boris and Gleb (sons of St. Vladimir) laid down weapons and accepted death rather than civil war in 1015.",
@@ -5295,7 +5714,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "7-25": {
     "bio": "Righteous Anna fell asleep in peace in Jerusalem having presented Mary into the Temple; Olympias consecrated her immense Byzantine fortune to the poor.",
@@ -5325,7 +5745,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-26": {
     "bio": "Hermolaus led young physician Pantaleon to Christ; Paraskevi of Rome was boiled in a caldron of pitch and oil unharmed, healing Antoninus Pius's blindness.",
@@ -5355,7 +5776,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "7-27": {
     "bio": "Physician to Maximian who healed in Jesus' name without payment; milk flowed when beheaded and an olive tree blossomed with fruit (305); patron of all doctors.",
@@ -5385,7 +5807,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "7-28": {
     "bio": "Four of the original seven deacons ordained by the Apostles: Prochorus served John the Theologian on Patmos; all sealed their diaconal service with blood.",
@@ -5415,7 +5838,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-29": {
     "bio": "Callinicus walked eighty miles in boots filled with sharp iron nails to Gangra, praying for water for his thirsty executioners, then entered the blazing furnace with joy.",
@@ -5445,7 +5869,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-3": {
     "bio": "Hyacinth, 20-year-old royal chamberlain, starved to death in prison rather than eat food offered to idols; Anatolius presided at Chalcedon (451).",
@@ -5475,7 +5900,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "7-30": {
     "bio": "Silas sang with Paul in Philippi's prison; Silvanus helped write Thessalonians; Crescens evangelized Gaul; all were faithful shepherds of Christ's flock.",
@@ -5505,7 +5931,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "7-31": {
     "bio": "Young Cappadocian governor under Theophilus who combined worldly authority with total chastity, hidden almsgiving and ceaseless prayer.",
@@ -5535,7 +5962,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "7-4": {
     "bio": "Andrew wrote the supreme 250-troparia Great Canon chanted in Great Lent; Nicholas II, Alexandra and children bore murder with Christ-like meekness (1918).",
@@ -5565,38 +5993,73 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
-  "7-5": {
-    "bio": "Athanasius established cenobitic monasticism on Athos, founding the Great Lavra in 963; in 1422 the incorrupt relics of St. Sergius were uncovered at Trinity Lavra.",
-    "bio_it": "Edificò la Grande Lavra sul Monte Athos introducendo la vita cenobitica; nel 1422 furono ritrovate intatte le spoglie di Sergio.",
-    "bio_ro": "A zidit Marea Lavră cu sprijinul împăratului Nichifor Focas; moaștele Sf. Serghie s-au aflat izvorând mir și tămăduiri în 1422.",
-    "bio_ru": "Прп. Афанасий заложил основу монашества на Афоне; в 1422 году открылись нетленные мощи преподобного Сергия Радонежского.",
-    "color": "blue",
-    "name": "Holy Venerable Athanasius of Mount Athos & Finding of the Relics of St. Sergius of Radonezh",
-    "name_de": "Hl. Athanasius vom Athos und Hl. Sergius von Radonesch",
-    "name_es": "San Atanasio del Monte Athos y San Sergio de Rádonezh",
-    "name_fr": "Saint Athanase de l'Athos et Translation de Saint Serge de Radonège",
-    "name_it": "San Atanasio dell'Athos e Invenzione delle Reliquie di San Sergio di Radonež",
-    "name_la": "Sanctus Athanasius Athonita et Inventio Reliquiarum Sancti Sergii",
-    "name_pt": "São Atanásio do Monte Atos e Invenção das Relíquias de São Sérgio",
-    "name_ro": "Sfântul Cuvios Atanasie Athonitul și Aflarea moaștelor Sfântului Serghie de la Radonej",
-    "name_ru": "Преподобный Афанасий Афонский и обретение честных мощей преподобного Сергия Радонежского",
-    "quote": "«Keep mutual love and peace among yourselves; for love is the fulfilling of the entire law of God.»",
-    "quote_it": "«Custodite l'amore reciproco e la pace tra voi; poiché la carità è il compimento della legge.»",
-    "quote_ro": "«Păziți dragostea frățească și pacea între voi; căci dragostea este plinirea legii lui Hristos!»",
-    "quote_ru": "«Имейте любовь между собою и мир; любовь бо есть исполнение всего закона.»",
-    "rank": "solemnity",
-    "scriptureRef": "Romans 13:10",
-    "title": "Founder of the Great Lavra of Athos & Abbot of All Rus",
-    "title_it": "Fondatore della Grande Lavra e Abate di Tutta la Rus'",
-    "title_ro": "Întemeietorul Marii Lavre din Muntele Athos și Starețul a toată Rusia",
-    "title_ru": "Основатель Великой Лавры на Афоне и игумен всея Руси",
-    "traditions": [
-      "orthodox",
-      "eastern"
-    ]
-  },
+  "7-5": [
+    {
+      "name": "Holy Venerable Athanasius of Mount Athos",
+      "name_it": "San Atanasio dell'Athos",
+      "name_ro": "Sfântul Cuvios Atanasie Athonitul",
+      "name_ru": "Преподобный Афанасий Афонский",
+      "name_la": "Sanctus Athanasius Athonita",
+      "name_es": "San Atanasio de Athos",
+      "name_fr": "Saint Athanase de l'Athos",
+      "name_de": "Hl. Athanasios vom Berg Athos",
+      "name_pt": "São Atanásio do Monte Athos",
+      "title": "Founder of the Great Lavra & Father of Athonite Monasticism",
+      "title_it": "Fondatore della Grande Lavra e Padre del Monachesimo dell'Athos",
+      "title_ro": "Întemeietorul Marii Lavre din Sfântul Munte Athos și Părintele vieții de obște athonite",
+      "title_ru": "Основатель общежительного монашества на Афоне и Великой Лавры",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "gr",
+      "quote": "«The monastic life is the angelic life on earth: prayer without cease, love without end, obedience in humility.»",
+      "quote_it": "«La vita monastica è vita angelica sulla terra: preghiera incessante, amore infinito, obbedienza nell'umiltà.»",
+      "quote_ro": "«Viețuirea călugărească este chipul vieții îngerești pe pământ: rugăciune neîncetată și ascultare smerită.»",
+      "quote_ru": "«Иноческое житие есть уподобление ангельскому чину в непрестанной молитве и любви.»",
+      "bio": "Born in Trebizond (920-1003); built the Great Lavra on Mount Athos with the help of Emperor Nikephoros Phokas, introducing the cenobitic monastic rule to the Holy Mountain.",
+      "bio_it": "Eremita e maestro spirituale, edificò la prima grande abbazia sul Monte Athos con la regola cenobitica.",
+      "bio_ro": "Părintele duhovnicesc al Sfântului Munte Athos, ctitorul Marii Lavre în 963, izvor de sfințenie pentru monahismul răsăritean.",
+      "bio_ru": "Преподобный отец, заложивший основы афонского монашеского устава и создавший Великую Лавру.",
+      "scriptureRef": "Philippians 3:20",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    },
+    {
+      "name": "Finding of the Relics of St. Sergius of Radonezh",
+      "name_it": "Invenzione delle Reliquie di San Sergio di Radonež",
+      "name_ro": "Aflarea Moaștelor Sfântului Cuvios Serghie de la Radonej",
+      "name_ru": "Обретение честных мощей преподобного Сергия, игумена Радонежского",
+      "name_la": "Inventio Reliquiarum Sancti Sergii Radonesiensis",
+      "name_es": "Hallazgo de las Reliquias de San Sergio de Radonezh",
+      "name_fr": "Invention des Reliques de Saint Serge de Radonège",
+      "name_de": "Auffindung der Reliquien des Hl. Sergius von Radonesch",
+      "name_pt": "Invenção das Relíquias de São Sérgio de Radonej",
+      "title": "Abbot of All Rus & Wonderworker of the Holy Trinity",
+      "title_it": "Abate di Tutta la Rus' e Costruttore della Santa Trinità",
+      "title_ro": "Luminătorul și Starețul a toată Rusia, Întemeietorul Lavrei Sfintei Treimi",
+      "title_ru": "Игумен всея Руси, всея России чудотворец",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "ru",
+      "quote": "«Behold, love one another, and hold fast to peace and unity in the Holy Trinity, for without love all works are vanity.»",
+      "quote_it": "«Amatevi gli uni gli altri, custodite la pace e l'unità nella Santa Trinità: senza amore ogni opera è vana.»",
+      "quote_ro": "«Iubiți-vă unii pe alții și țineți pacea și curăția, căci prin contemplarea Sfintei Treimi se biruiește frica și dezbinarea.»",
+      "quote_ru": "«Взирая на единство Пресвятой Троицы, побеждайте ненавистную рознь мира сего.»",
+      "bio": "In 1422, thirty years after St. Sergius (+1392) reposed, his holy relics were uncovered wholly incorrupt during the foundation of the stone Trinity Cathedral, working miraculous healings.",
+      "bio_it": "Nel 1422 le sacre spoglie di San Sergio furono ritrovate intatte e profumate nella Lavra della Trinità, divenendo il cuore spirituale della Russia.",
+      "bio_ro": "La 30 de ani de la adormirea sa, trupul marelui stareț Serghie a fost găsit neatins de stricăciune, izvorând mir și tămăduiri în Lavra Sfintei Treimi.",
+      "bio_ru": "В 1422 году честные мощи великого игумена были обретены нетленными при строительстве Троицкого собора.",
+      "scriptureRef": "John 17:21",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    }
+  ],
   "7-6": {
     "bio": "Disciple of Antony the Great who dwelt 60 years on Antony's mountain; at death his face shone like the sun before Christ and the angels.",
     "bio_it": "Visse 60 anni nella grotta di sant'Antonio abate; in punto di morte il suo volto brillò come il sole.",
@@ -5625,7 +6088,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-7": {
     "bio": "Named after Sunday (Kyriaki); endured wild beasts and fire unharmed under Diocletian before yielding her soul in prayer; Thomas was a Byzantine general.",
@@ -5655,7 +6119,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "7-8": {
     "bio": "Roman officer Neanias converted when a crystalline Cross appeared in the sky; converted his mother Theodosia and was beheaded in Caesarea (303).",
@@ -5685,7 +6150,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "7-9": {
     "bio": "Traveled to Antioch with his parents to hear Christ preach; consecrated bishop by Peter and sent to Sicily where pagan bandits stoned him.",
@@ -5715,7 +6181,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "8-1": {
     "bio": "Feast of the water-sanctification with the Wood of the Cross; the seven Maccabee brothers, their mother Solomonia and elder Eleazar died for divine truth (166 BC).",
@@ -5745,7 +6212,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-10": {
     "bio": "Archdeacon of Rome under Pope Sixtus; when demanded to produce the church's gold, brought the city's poor; roasted on an iron gridiron under Valerian (258).",
@@ -5775,7 +6243,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "8-11": {
     "bio": "Euplus entered the governor's court carrying the Gospel, reading it aloud; beheaded in Catania (304); Niphon reformed the Wallachian church under Radu the Great.",
@@ -5805,7 +6274,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "8-12": {
     "bio": "Anicletus, a military tribune, denounced Diocletian's anti-Christian edict; his nephew Photius embraced him; both stepped into a huge furnace with many believers (305).",
@@ -5835,7 +6305,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-13": {
     "bio": "Maximus had his right hand and tongue cut off for defending Christ's two wills; relics translated in 662; Tikhon (+1783) was revered for profound humility and love.",
@@ -5865,7 +6336,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-14": {
     "bio": "The Church prepares for the passing of the Mother of God, gathered from the ends of the earth by clouds; Micah foretold Christ's birth in Bethlehem 700 years prior.",
@@ -5895,7 +6367,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-15": {
     "bio": "Christ received the soul of His holy Mother into His arms; on the third day her tomb in Gethsemane was found empty, her body assumed into heaven; supreme feast of hope.",
@@ -5925,7 +6398,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-16": {
     "bio": "Mandylion sent to King Abgar of Edessa translated to Constantinople in 944; Constantine Brâncoveanu and sons (Constantin, Ștefan, Radu, Matei) and Ianache beheaded in 1714 for refusing to convert to Islam.",
@@ -5955,7 +6429,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "8-17": {
     "bio": "Myron defended his flock during Christmas liturgy and was beheaded under Decius; Alypius painted icons without fee, healed lepers, and angels completed his last icon.",
@@ -5985,7 +6460,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "8-18": {
     "bio": "Twin brothers in Illyricum who used wages from building a pagan temple to build a Christian church; cast into a dry well; John of Rila (+946) lived 60 years in mountain wilderness.",
@@ -6015,7 +6491,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-19": {
     "bio": "Andrew led Roman forces to miraculous victory invoking Christ; he and his 2,593 soldiers were baptized in Tarsus and slaughtered in prayer in a Taurus gorge under Maximian.",
@@ -6045,7 +6522,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "8-2": {
     "bio": "Stephen's relics were translated from Jerusalem to Constantinople in 428; Blessed Basil (+1552) went barefoot in snow, rebuking Ivan the Terrible with apostolic courage.",
@@ -6075,7 +6553,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "8-20": {
     "bio": "Dedicated to God by Hannah before birth; called as a boy in Shiloh; anointed Saul and David; preserved Israel in truth; Philip burned at the stake in Thrace (304).",
@@ -6105,7 +6584,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-21": {
     "bio": "Thaddaeus baptized King Abgar and people of Edessa; Bassa in Macedonia encouraged her three young sons to face torture, then was cast into the sea.",
@@ -6135,7 +6615,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-22": {
     "bio": "Agathonicus of noble family converted many Greeks; marched across Thrace in iron chains under Maximian, beheaded at Selymbria in 304.",
@@ -6165,7 +6646,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "8-23": {
     "bio": "Irenaeus, disciple of Polycarp who heard John the Apostle, wrote 'Against Heresies'; martyred in Lyons in 202; Lupus was a servant who suffered on the lower Danube.",
@@ -6195,7 +6677,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "8-24": {
     "bio": "Eutyches preached with John and Paul; Cosmas of Aetolia (+1779) walked throughout Ottoman Greece establishing 200 schools, foretelling modern inventions before his martyrdom.",
@@ -6225,7 +6708,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "8-25": {
     "bio": "Bartholomew's lead coffin floated miraculously across the sea to the Isle of Lipari; Titus, disciple of Paul, converted Crete and governed the island in peace till age 94.",
@@ -6255,7 +6739,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-26": {
     "bio": "Young Roman officer Adrian was so moved by the patience of 23 martyrs that he stepped forward to die with them; Natalia supported him tenderly and died on his tomb; deliverance from Tamerlane (1395).",
@@ -6285,7 +6770,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "8-27": {
     "bio": "Poemen was spiritual father of the Skete desert, renowned for gentle wisdom in the Desert Fathers; Phanourios's icon was unearthed on Rhodes in 1500.",
@@ -6315,7 +6801,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-28": {
     "bio": "Former chief of robbers who repented and became a gentle spiritual guide of 75 hermits in Scete; refused to flee Bedouin raiders in 405, laying down his life.",
@@ -6345,7 +6832,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-29": {
     "bio": "Beheaded by Herod Antipas at Machaerus at the wicked request of Herodias through Salome's dance; universal day of strict fasting and prayer.",
@@ -6375,7 +6863,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-3": {
     "bio": "Isaac confronted Emperor Valens over Arianism; Dalmatus defended the Council of Ephesus; Salome brought spices to Christ's sepulchre with faith.",
@@ -6405,7 +6894,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-30": {
     "bio": "Alexander prayed against Arius at Nicaea; Varlaam (1590-1657) printed the monumental Romanian 'Cazania' (Homiliary) in Iași in 1643, unifying the Romanian language.",
@@ -6435,7 +6925,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "8-31": {
     "bio": "Handwoven by the Theotokos from camel hair; given to St. Thomas as proof of her bodily assumption; enshrined in Constantinople under Theodosius II; heals women and childbirth.",
@@ -6465,7 +6956,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "8-4": {
     "bio": "Fleeing Decius's persecution in 250, seven youths fell asleep in a cave on Mount Celion; awakened under Theodosius II 194 years later proving resurrection.",
@@ -6495,7 +6987,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-5": {
     "bio": "Romanian monk born in Botoșani (1913-1960) who lived in the cave of St. Anne in the Judean desert; his body remains entirely incorrupt and fragrant at Chozeba.",
@@ -6525,7 +7018,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "8-6": {
     "bio": "Christ revealed His uncreated divine glory to Peter, James, and John on Mount Tabor, appearing with Moses and Elijah; grapes and fruit are blessed in gratitude.",
@@ -6555,7 +7049,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "8-7": {
     "bio": "Theodora (17th c.) lived for decades in a mountain cave at Sihla in Neamț, lifted above the earth in prayer; fed by forest birds; venerated as the jewel of Moldavia.",
@@ -6585,7 +7080,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "8-8": {
     "bio": "Emilian boldly confronted iconoclast emperor Leo the Armenian and died in exile in 820; Myron caught thieves stealing his wheat and helped them carry the sacks.",
@@ -6615,7 +7111,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "8-9": {
     "bio": "Chosen by the Apostles in Jerusalem to take Judas's place; preached in Judea and Colchis (Georgia) working wonders, martyred for Christ.",
@@ -6645,7 +7142,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ge"
   },
   "9-1": {
     "bio": "The liturgical year opens; Symeon stood 47 years atop a pillar in prayer; Dionysius Exiguus (from Dobrogea/Scythia Minor, +544) calculated the Anno Domini (AD) dating from Christ's birth.",
@@ -6675,7 +7173,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "9-10": {
     "bio": "Three biological sisters who lived as ascetics in the Bithynian wilderness near Pythia; tortured and beaten to death one by one under Galerius Maximian (305).",
@@ -6705,7 +7204,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-11": {
     "bio": "Theodora spent years in monk's habit bearing false accusations with silent tears (5th c.); St. Silouan (+1938) received the word from Christ at St. Panteleimon Monastery on Athos.",
@@ -6735,7 +7235,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "9-12": {
     "bio": "Bishop from Italy who fled Diocletian to Soren in Bithynia; converted many, built a church to Archangel Michael; pagan mob stoned him at the altar during Liturgy (313).",
@@ -6765,7 +7266,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-13": {
     "bio": "In 335, St. Constantine consecrated the basilica of the Resurrection over the Holy Sepulchre and Golgotha; John Chrysostom died on this day in exile in Comana (407).",
@@ -6795,7 +7297,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-14": {
     "bio": "Empress Helena discovered Christ's Cross in Jerusalem (326); Patriarch Macarius elevated it for crowds crying 'Kyrie eleison'; recovered from Persians in 628 by Heraclius; strict fast day.",
@@ -6825,7 +7328,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-15": {
     "bio": "Nicetas, a Christian Goth baptized by Theophilus at the Danube, was burned alive by pagan king Athanaric (372); Joseph (+1656), born in Dalmatia, saved Timișoara from fire by prayer.",
@@ -6855,7 +7359,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "9-16": {
     "bio": "Euphemia survived ravenous lions and the wheel unharmed before offering her spirit in 304; Cyprian (1336-1406) translated liturgical texts and united the Russian dioceses.",
@@ -6885,7 +7390,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "9-17": {
     "bio": "Widow Sophia brought up daughters Pistis (12), Elpis (10), and Agape (9) in Rome; Emperor Hadrian had the children tortured and beheaded before their mother, who died in prayer upon their grave (137).",
@@ -6915,7 +7421,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "9-18": {
     "bio": "Eumenes distributed his estate to the needy, governed Gortyna in Crete, expelled demons and died in the Thebaid; Ariadne fled her pagan master into a rock that split to shield her.",
@@ -6945,7 +7452,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "9-19": {
     "bio": "Refused pagan festival sacrifices; Sabbatius died under iron claws; Trophimus walked in iron shoes to Synnada; senator Dorymedon joined them in the amphitheater (278).",
@@ -6975,7 +7483,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-2": {
     "bio": "Mamas lived in solitude with lions and deer, milked wild goats for cheese for the poor, pierced with a trident under Aurelian (275); John practiced severe fasting.",
@@ -7005,7 +7514,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "9-20": {
     "bio": "Roman general who saw a radiant cross between a stag's antlers; endured trials like Job losing estate and family, then reunited; roasted in a brazen bull under Hadrian (118).",
@@ -7035,7 +7545,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "9-21": {
     "bio": "Quadratus presented the earliest written Christian apology to Emperor Hadrian; Jonah's 3-day deliverance from the sea beast was declared by Christ as the sign of His Resurrection.",
@@ -7065,7 +7576,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-22": {
     "bio": "Phocas the Gardener hospitably fed his executioners who were looking for him, dug his own grave at night in his garden, and gently offered his neck at dawn.",
@@ -7095,7 +7607,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-23": {
     "bio": "Archangel Gabriel appeared to Priest Zechariah at the incense altar in the Jerusalem Temple, announcing the birth of the greatest prophet from aged barren parents.",
@@ -7125,7 +7638,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-24": {
     "bio": "Thecla converted by Paul's preaching in Iconium; wild beasts licked her feet; fire was quenched by rain; lived as hermit at Maaloula (Syria) till age 90.",
@@ -7155,7 +7669,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-25": {
     "bio": "Bartholomew built a wooden chapel to the Trinity in dense forests; fed wild bears; blessed Prince Dmitry Donskoy for the Battle of Kulikovo (1380); Mother of God appeared to him.",
@@ -7185,7 +7700,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "9-26": {
     "bio": "Reclined on Jesus' breast at the Last Supper; took the Mother of God into his home from the Cross; penned the Fourth Gospel and Revelation on Patmos; buried himself in a cruciform grave at Ephesus at age 100+.",
@@ -7215,7 +7731,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-27": {
     "bio": "Born in Georgia (Iberia), brought to Bucharest by Brâncoveanu; printed liturgical books in Romanian, Greek, Arabic, and Georgian; author of Didahii; drowned by Turks in the Tungia river (1716).",
@@ -7245,7 +7762,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "9-28": {
     "bio": "Captured by bandits who died drinking snake venom; used their loot to found Pharan Lavra near Jerusalem; established Douka on Mount of Temptation and Old Lavra (Souka).",
@@ -7275,7 +7793,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-29": {
     "bio": "Lived in the Judean wilderness until age 107; defended Orthodoxy against Origenism; a huge lion guarded his solitary cell and vegetable patch from robbers.",
@@ -7305,7 +7824,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-3": {
     "bio": "Bishop Anthimus baptized his arresters after they shared bread; beheaded under Maximian (303); Theoctistus co-founded the Judean desert lavras with Euthymius.",
@@ -7335,7 +7855,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "9-30": {
     "bio": "Survived 14 years in a deep pit (Khor Virap) fed by a widow; healed King Tiridates III and baptized the entire Armenian realm in 301, making it the first Christian nation.",
@@ -7365,7 +7886,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-4": {
     "bio": "Babylas refused Emperor Philip access to church until he repented of murder; martyred with 3 boys (251); Moses beheld the Burning Bush and received the Law on Mount Sinai.",
@@ -7395,7 +7917,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-5": {
     "bio": "Zechariah, high priest, was slain in the Temple by Herod's soldiers for concealing baby John; Elizabeth fled to the hills where a rock opened to protect them.",
@@ -7425,7 +7948,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "9-6": {
     "bio": "Pagans diverted two rivers to submerge the sanctuary of Archangel Michael at Colossae; Michael appeared in light, struck the rock, and the torrent vanished underground.",
@@ -7455,7 +7979,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-7": {
     "bio": "Creation rejoices on the eve of Mary's birth; Sozon was a pious shepherd who broke the golden hand off a pagan idol to feed starving poor; burned at the stake (304).",
@@ -7485,7 +8010,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "9-8": {
     "bio": "Born to aged Joachim and Anna in Jerusalem after decades of barrenness; her birth marks the beginning of the New Testament dispensation of divine mercy.",
@@ -7515,7 +8041,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "9-9": {
     "bio": "Commemorated the day following Mary's nativity; lived in piety in Nazareth and Jerusalem; Severian was racked on the tree and beaten with leaden whips under Licinius (320).",
@@ -7545,7 +8072,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-1": {
     "bio": "St. Andrew the Fool-for-Christ saw the Virgin Mary spreading her radiant veil over worshippers at Blachernae in 911; Ananias healed Saul's blindness; Roman wrote 1,000 kondakia.",
@@ -7575,7 +8103,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-10": {
     "bio": "Eulampius and his sister Eulampia endured boiling pitch and furnace unharmed, then beheaded under Maximian (310); Ambrose (+1891) comforted thousands daily from his sickbed at Optina Monastery.",
@@ -7605,7 +8134,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-11": {
     "bio": "Philip converted Samaria, cast out unclean spirits and baptized the Ethiopian treasurer on the Gaza road; Theophanes and his brother Theodore had 12 abusive iambic verses burned onto their faces by iconoclasts.",
@@ -7635,7 +8165,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-12": {
     "bio": "Elder Tarachus, citizen Probus, and youth Andronicus were thrown to wild beasts in Tarsus amphitheater under Diocletian (304); Cosmas, foster-brother of John Damascene, wrote feastday canons.",
@@ -7665,7 +8196,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-13": {
     "bio": "Bishop Carpus and deacon Papylus healed many in Thyatira; stripped, tied behind horses, and burned alive in Pergamum; Papylus's sister Agathonica jumped into the fire crying 'Lord Jesus receive me!' (251).",
@@ -7695,38 +8227,73 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
-  "10-14": {
-    "bio": "Born at Epivates on Marmara (11th c.); gave clothes to the poor; lived in Jordan desert wilderness; relics translated to Trnovo, Vidin, Belgrade, and to Iași in 1641; visited by millions of pilgrims annually.",
-    "bio_it": "Visse nel deserto del Giordano; le sue reliquie incorrotte riposano nella cattedrale di Iași meta di milioni di pellegrini.",
-    "bio_ro": "A împărțit hainele săracilor în copilărie; a sihăstrit în pustiul Iordaniei; moaștele sale nestricăcioase au fost aduse la Iași de Vasile Lupu în 1641, revărsând noian de minuni.",
-    "bio_ru": "Подвизалась в Иорданской пустыне; нетленные мощи ее перенесены в Яссы господарем Василием Лупу в 1641 году; великая святыня православия.",
-    "color": "red",
-    "name": "Holy Venerable Mother Parascheva of Iași (Petka of the Balkans) & Martyrs of Milan",
-    "name_de": "Hl. Paraskeva die Jüngere von Iași und Märtyrer von Mailand",
-    "name_es": "Santa Parasceva la Joven de Iași (Petka) y Mártires de Milán",
-    "name_fr": "Sainte Parascève la Jeune de Iași (Petka) et Martyrs de Milan",
-    "name_it": "Santa Parasceve la Giovane di Iași (Petka dei Balcani) e Martiri di Milano",
-    "name_la": "Sancta Paraskeve Novior Epibadensis et Sancti Nazarius, Gervasius, Protasius et Celsus",
-    "name_pt": "Santa Parasqueva a Jovem de Iași (Petka) e Mártires de Milão",
-    "name_ro": "Sfânta Cuvioasă Maică Parascheva de la Iași, ocrotitoarea Moldovei și Sfinții Mucenici Nazarie, Ghervasie, Protase și Chelsie",
-    "name_ru": "Преподобная Параскева Сербская (Ясская, Тырновская) и мученики Назарий, Гервасий, Протасий и Келсий",
-    "quote": "«Rejoice, O holy mother Parascheva, our warm intercessor and glory of the faithful in every tribulation!»",
-    "quote_it": "«Rallégrati, o venerabile madre Parasceve, nostra fervida intercessora dinanzi al trono di Dio!»",
-    "quote_ro": "«Bucură-te, Sfântă Cuvioasă Maică Parascheva, mult-folositoare și grabnică ajutătoare a Moldovei și a toată lumea!»",
-    "quote_ru": "«Радуйся, преподобная мати Параскево, теплая заступнице и скорая помощнице всем с верою притекающим к тебе!»",
-    "rank": "solemnity",
-    "scriptureRef": "Psalm 45:13-15; Matthew 25:35-40",
-    "title": "Protector of Moldavia and the Balkans & Wonderworking Desert Nun",
-    "title_it": "Patrona della Moldavia e Consolatrice dei Balcani",
-    "title_ro": "Mult-folositoarea și Ocrotitoarea Moldovei, izvor nesecat de tămăduiri la Catedrala Mitropolitană din Iași",
-    "title_ru": "Небесная заступница Балкан и Молдавии, всенародно чтимая чудотворица",
-    "traditions": [
-      "orthodox",
-      "eastern"
-    ]
-  },
+  "10-14": [
+    {
+      "name": "Holy Venerable Mother Parascheva of Iași (Petka of the Balkans)",
+      "name_it": "Santa Parasceve la Giovane di Iași (Petka dei Balcani)",
+      "name_ro": "Sfânta Cuvioasă Maică Parascheva de la Iași, Ocrotitoarea Moldovei",
+      "name_ru": "Преподобная Параскева Сербская (Ясская, Тырновская)",
+      "name_la": "Sancta Parasceve Iassiensis",
+      "name_es": "Santa Parasqueva de Iași",
+      "name_fr": "Sainte Parascève de Iași",
+      "name_de": "Hl. Parascheva von Iași",
+      "name_pt": "Santa Parasqueva de Iași",
+      "title": "Protector of Moldavia and the Balkans & Wonderworking Desert Nun",
+      "title_it": "Patrona della Moldavia e Consolatrice dei Balcani",
+      "title_ro": "Mult-folositoarea și grabnic-ajutătoarea, ocrotitoarea Moldovei și a tuturor credincioșilor",
+      "title_ru": "Небесная покровительница Молдавии и Балкан",
+      "color": "red",
+      "rank": "solemnity",
+      "nationality": "ro",
+      "quote": "«He who desires to follow Christ must give all to the poor, crucify worldly passions, and dwell in unceasing prayer.»",
+      "quote_it": "«Chi desidera seguire Cristo doni tutto ai poveri e viva nella continua orazione del cuore.»",
+      "quote_ro": "«Cine voiește să vină după Hristos să lase toate ale lumii și să-și împodobească sufletul cu postul și rugăciunea.»",
+      "quote_ru": "«Желающий последовать Христу да раздаст все нищим и стяжет чистоту сердца молитвой.»",
+      "bio": "Born at Epivates (11th c.); lived in Jordan desert austerity; her sacred incorrupt relics were translated to Trnovo, Vidin, Belgrade, and in 1641 brought to Iași, where millions venerate her annually.",
+      "bio_it": "Eremita nel deserto di Giordania; le sue reliquie miracolose riposano nella Cattedrale di Iași meta di centinaia di migliaia di pellegrini ogni autunno.",
+      "bio_ro": "Cuvioasa maică din Epivata ce a sihăstrit în pustiul Iordanului; moaștele sale nestricăcioase au fost dăruite Moldovei de Vasile Lupu în 1641, la Mănăstirea Trei Ierarhi.",
+      "bio_ru": "Великая подвижница, мощи которой с 1641 года почивают в кафедральном соборе города Яссы, источая обильные исцеления.",
+      "scriptureRef": "Matthew 25:1-13",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    },
+    {
+      "name": "Holy Martyrs Nazarius, Gervasius, Protasius, and Celsus of Milan",
+      "name_it": "Santi Martiri Nazario, Celso, Gervasio e Protasio di Milano",
+      "name_ro": "Sfinții Mucenici Nazarie, Ghervasie, Protase și Chelsie din Milano",
+      "name_ru": "Мученики Назарий, Келсий, Гервасий и Протасий Медиоланские",
+      "name_la": "Sancti Martyres Nazarius, Celsus, Gervasius et Protasius Mediolanenses",
+      "name_es": "Santos Mártires Nazario, Celso, Gervasio y Protasio de Milán",
+      "name_fr": "Saints Martyrs Nazaire, Celse, Gervais et Protais de Milan",
+      "name_de": "Hl. Märtyrer Nazarius, Celsus, Gervasius und Protasius von Mailand",
+      "name_pt": "Santos Mártires Nazário, Celso, Gervásio e Protásio de Milão",
+      "title": "Early Italian Martyrs Found by St. Ambrose",
+      "title_it": "Gloriosi Martiri di Milano Rinvenuti da Sant'Ambrogio",
+      "title_ro": "Mucenicii Italiei primare descoperiți prin vedenie de Sfântul Ambrozie al Milanului",
+      "title_ru": "Древние мученики Миланские, обретенные святителем Амвросием",
+      "color": "black",
+      "rank": "memorial",
+      "nationality": "it",
+      "quote": "«Christ is our life, and to die for Him is great gain and everlasting glory.»",
+      "quote_it": "«Cristo è la nostra vita, e morire per Lui è sommo guadagno ed eterna gloria.»",
+      "quote_ro": "«Hristos este viața noastră, iar a muri pentru Numele Lui este mare dobândă și slavă veșnică.»",
+      "quote_ru": "«Христос — жизнь наша, и смерть ради Него есть приобретение вечной славы.»",
+      "bio": "Nazarius and his spiritual son Celsus preached in Gaul and northern Italy; beheaded under Nero; Ambrose discovered their incorrupt bodies at Milan in 395.",
+      "bio_it": "Martirizzati a Milano sotto Nerone; i loro corpi furono ritrovati miracolosamente da Sant'Ambrogio nel 395 confermando la fede della Chiesa ambrosiana.",
+      "bio_ro": "Pătimitori din Roma și Mediolanum (Milano) din vremea lui Nero, ale căror sfinte moaște au fost aflate de Sfântul Ierarh Ambrozie.",
+      "bio_ru": "Древнеримские страстотерпцы, проповедовавшие в Италии и пострадавшие за истину Христову.",
+      "scriptureRef": "Romans 8:35-39",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    }
+  ],
   "10-15": {
     "bio": "Lucian revised the Greek Old and New Testament manuscripts; starved in Nicomedia prison under Maximin Daza, celebrated Divine Liturgy chained on his back using his chest as altar (312).",
     "bio_it": "Famoso biblista di Antiochia; incatenato sul dorso in cella, consacrò il pane e il vino sul proprio petto prima di morire.",
@@ -7755,7 +8322,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "10-16": {
     "bio": "Centurion who guarded Christ's Cross and tomb; refused bribes from Jewish elders to deny the Resurrection; returned to Cappadocia preaching Christ; beheaded under Pilate.",
@@ -7785,7 +8353,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-17": {
     "bio": "Hosea prophesied 800 years BC of Christ's resurrection on the third day; monk Andrew confronted iconoclast emperor Constantine Copronymus, dragged through the streets of Byzantium in 767.",
@@ -7815,7 +8384,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "10-18": {
     "bio": "Companion of Paul; recorded the Nativity narratives, the Prodigal Son, and Good Samaritan; painted the first icons of the Theotokos (Hodigitria, Vladimir); crucified on an olive tree in Boeotia at age 84.",
@@ -7845,7 +8415,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "10-19": {
     "bio": "Joel foretold the outpouring of the Holy Spirit on Pentecost; Varus, a Roman soldier in Egypt, took the place of a dying hermit martyr in 307; prayed to for departed unbaptized kin.",
@@ -7875,7 +8446,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-2": {
     "bio": "Cyprian, a notorious pagan sorcerer, saw his dark arts completely fail against Justina's prayer and sign of the Cross; he burned his magic books, became bishop and was martyred with her in 304.",
@@ -7905,7 +8477,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-20": {
     "bio": "Artemius, Roman commander under Constantine the Great who helped translate relics of Andrew and Luke; rebuked Julian the Apostate in Antioch; crushed under two stones in 362; heals hernia.",
@@ -7935,7 +8508,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-21": {
     "bio": "Hilarion (291-371), disciple of Antony, founded monasticism in Gaza, working countless miracles; Visarion, Sofronie, and Oprea Miclăuș defended the Orthodox faith in 18th-century Habsburg Transylvania.",
@@ -7965,7 +8539,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "10-22": {
     "bio": "Abercius traveled to Rome and Mesopotamia healing sick and expelling demons; his famous 2nd-century epitaph discovered in 1883 is the earliest physical evidence of the Eucharist.",
@@ -7995,7 +8570,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-23": {
     "bio": "James the Just presided over the Council of Jerusalem (Acts 15); threw down from the Temple pinnacle and beaten to death with a fuller's club (62 AD); author of the Liturgy of St. James.",
@@ -8025,7 +8601,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "10-24": {
     "bio": "Arethas (age 95) and thousands of Arab Christians were burned in fire pits by Jewish king Dhu Nuwas in 523; miraculous healings in Moscow through the 'Joy of All Who Sorrow' icon in 1688.",
@@ -8055,7 +8632,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "10-25": {
     "bio": "Marcian and Martyrius, subdeacons and notaries, refused Arian bribes and were beheaded in Constantinople in 355; Tabitha sewed coats for poor widows and was raised from death by Peter in Joppa.",
@@ -8085,7 +8663,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "10-26": {
     "bio": "Dux of Thessalonica under Maximian; taught Christ boldly in the underground baths; blessed youth Nestor who defeated the pagan gladiator Lyaeus; pierced with spears in 306; fragrant healing myrrh streams continually from his tomb.",
@@ -8115,7 +8694,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "10-27": {
     "bio": "Demetrius (13th c.) grazed sheep in Basarabi, stepped on a bird's nest and walked barefoot 3 years in penance, died between two stones by the Lom river; relics brought to Bucharest in 1774 during the plague; Nestor was martyred in Salonica.",
@@ -8145,7 +8725,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-28": {
     "bio": "Hyacinth governed the ancient diocese of Vicina in Dobrogea; called to Curtea de Argeș by Prince Nicolae Alexandru Basarab in 1359, founding the official Romanian Orthodox hierarchy.",
@@ -8175,7 +8756,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "10-29": {
     "bio": "Anastasia, 20-year-old orphan nun in Rome under Decius; tortured, breasts and teeth pulled out, beheaded; Abramius rescued his niece Mary from a tavern through weeping prayer.",
@@ -8205,7 +8787,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-3": {
     "bio": "Member of the Athenian supreme court converted by Paul on Mars Hill; saw the sun darken at Christ's crucifixion in Heliopolis; wrote on Celestial Hierarchies; beheaded under Domitian in 96.",
@@ -8235,7 +8818,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "10-30": {
     "bio": "Zenobius healed without pay; his sister Zenobia ran to join his torture saying 'I also am a Christian'; beheaded in 285; Cleopas recognized the risen Lord at Emmaus in the breaking of bread.",
@@ -8265,7 +8849,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-31": {
     "bio": "Stachys was made first bishop of Byzantium by St. Andrew; Amplias and Urban were martyred in Rome; Aristobulus evangelized ancient Britain; all mentioned by Paul in Romans 16.",
@@ -8295,7 +8880,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-4": {
     "bio": "Hierotheus was first bishop of Athens, present with the Apostles at the Dormition of the Virgin; Demetrius of Rostov (1651-1709) spent 20 years writing the comprehensive 12-volume Lives of Saints.",
@@ -8325,7 +8911,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-5": {
     "bio": "Orphan Charitina taught other maidens the Gospel; hair cut off, coals poured over head, died in prayer under Diocletian (304); Peter (+1326) moved the metropolitan see to Moscow.",
@@ -8355,7 +8942,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "10-6": {
     "bio": "Doubt turned to unshakeable faith touching the side of Christ; preached in Parthia, Persia, and India where he founded ancient Malabar churches; pierced with five spears at Mylapore.",
@@ -8385,7 +8973,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "10-7": {
     "bio": "High-ranking Roman commanders under Maximian; stripped of military belts and paraded in women's clothing; Bacchus was beaten to death; Sergius was run in boots with iron nails and beheaded at Resafa (303).",
@@ -8415,7 +9004,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "10-8": {
     "bio": "Pelagia, a wealthy actress of Antioch, was moved to tears by Bishop Nonnus's sermon; gave away her fortune, lived disguised as monk Pelagius in a cave on Mount of Olives; Taisia was saved by St. John the Dwarf.",
@@ -8445,7 +9035,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "10-9": {
     "bio": "James the son of Alphaeus preached in southern Judea and Gaza, crucified in Egypt for the Gospel; Andronicus and Athanasia gave away wealth after their two children died, entering monastic life.",
@@ -8475,7 +9066,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-1": {
     "bio": "Raised in holiness by Theodota; treated the sick and animals freely; Damian accepted three eggs from healed woman Palladia to honor Christ, causing temporary grief until God revealed his pure motive; died in peace at Fereman.",
@@ -8505,7 +9097,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-10": {
     "bio": "Tertius penned Paul's Epistle to Romans; Erastus was Corinth treasurer then bishop of Paneas; Rodion and Olympus were beheaded with Peter in Rome under Nero; Orestes, a Christian doctor, tied to a wild horse in Tyana (304).",
@@ -8535,7 +9128,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "11-11": {
     "bio": "Menas, Egyptian soldier under Diocletian, retired to the desert, boldly entered the arena confessing Christ; beheaded in 296; famously exposes robberies and recovers lost property; Theodore (+826) defended holy icons.",
@@ -8565,7 +9159,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-12": {
     "bio": "John fed 7,500 poor daily in Alexandria, built hospitals, gave his own blanket to a beggar; Nilus, disciple of Chrysostom, wrote profound treatises on prayer at Mount Sinai.",
@@ -8595,7 +9190,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-13": {
     "bio": "Supreme orator of Antioch and Constantinople; authored the central Divine Liturgy of the Orthodox Church; exiled by Empress Eudoxia for defending the poor; died marching in exile in 407.",
@@ -8625,7 +9221,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "11-14": {
     "bio": "Philip preached in Asia Minor with Bartholomew and sister Mariamne; crucified upside down on a tall tree in Hierapolis (80 AD); Palamas (1296-1359) defended hesychast prayer and God's real uncreated energies.",
@@ -8655,7 +9252,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "11-15": {
     "bio": "40-day Advent fast begins; Paisius Velichkovsky (1722-1794) gathered 1,000 monks at Neamț Monastery in Moldavia, translated the Slavonic Dobrotolubiye (Philokalia) renewing entire Slavic and Romanian monasticism.",
@@ -8685,7 +9283,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "11-16": {
     "bio": "Levi the publican hosted Jesus in Capernaum; wrote the Gospel for Hebrews in Aramaic/Greek; preached in Parthia, Media, and Ethiopia where he was martyred by fire in Mirmena.",
@@ -8715,7 +9314,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "11-17": {
     "bio": "Gregory (disciple of Origen) found only 17 Christians upon arriving in Neocaesarea and left only 17 pagans upon his death; moved a huge boulder by prayer; received the Trinitarian Creed directly from St. John and the Theotokos in vision.",
@@ -8745,7 +9345,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "11-18": {
     "bio": "Plato, brother of Martyr Antiochus, preached openly in Galatia; refused to marry governor Agrippinus's daughter, beheaded in 306; Romanus had his tongue severed under Diocletian but continued speaking clearly in Antioch.",
@@ -8775,7 +9376,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "11-19": {
     "bio": "Obadiah (9th c. BC) hid 100 prophets from Jezebel in caves; Barlaam, an elderly peasant of Antioch, was forced to hold incense over glowing coals, choosing to let his hand burn through rather than drop incense on the pagan altar (304).",
@@ -8805,7 +9407,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-2": {
     "bio": "Christian nobles in Persian king Sapor II's court; when tortured, molten lead turned cool; Sapor was struck dumb until they prayed for him; burned in a furnace with 7,000 converts in 355.",
@@ -8835,7 +9438,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-20": {
     "bio": "Eve of Mary entering the Holy of Holies; Gregory (+816) defended icons throughout the empire, his relics were brought to Bistrița Monastery in Oltenia in 1497, saving Romania in times of drought and war.",
@@ -8865,7 +9469,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "11-21": {
     "bio": "Three-year-old Mary was brought by Joachim and Anna to fulfill their vow; High Priest Zechariah led her into the inner sanctum (Holy of Holies) where only the high priest entered once a year; nourished by Gabriel until age 12.",
@@ -8895,7 +9500,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-22": {
     "bio": "Philemon, wife Apphia, son Archippus and former slave Onesimus had church in their house in Colossae; stoned under Nero; Cecilia converted husband Valerian, survived scalding bath, beheaded in Rome (230).",
@@ -8925,38 +9531,73 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
-  "11-23": {
-    "bio": "Amphilochius taught Emperor Theodosius the necessity of honoring the Son like the Father; Gregory governed Agrigento in Sicily; Prince Alexander defeated Teutonic invaders in 1242, taking monastic vows as Alexis before death.",
-    "bio_it": "Anfilochio difese la divinità del Figlio; Gregorio resse Agrigento; Alessandro Nevskij difese l'Ortodossia con fede profonda.",
-    "bio_ro": "Amfilohie a dovedit împăratului că nesocotirea Fiului este ocară adusă Tatălui; Sf. Alexandru Nevski a rostit: Nu în putere stă Dumnezeu, ci în adevăr!",
-    "bio_ru": "Свт. Амфилохий обличил ариан пред Феодосием Великим; св. Александр Невский защитил Православие на Неве и Чудском озере.",
-    "color": "blue",
-    "name": "Holy Amphilochius of Iconium, St. Gregory of Agrigento & St. Alexander Nevsky",
-    "name_de": "Hl. Amphilochius von Iconium, Hl. Gregor von Agrigent und Hl. Alexander Newski",
-    "name_es": "San Anfiloquio de Iconio, San Gregorio de Agrigento y San Alejandro Nevski",
-    "name_fr": "Saint Amphiloque d'Iconium, Saint Grégoire d'Agrigente et Saint Alexandre Nevski",
-    "name_it": "San Anfilochio di Iconio, San Gregorio di Agrigento e San Alessandro Nevskij",
-    "name_la": "Sanctus Amphilochius Iconiensis, Sanctus Gregorius Agrigentinus et Sanctus Alexander Nevsky",
-    "name_pt": "São Anfilóquio de Iconio, São Gregório de Agrigento e São Alexandre Nevski",
-    "name_ro": "Sfântul Ierarh Amfilohie, episcopul Iconiei, Sfântul Grigorie al Acragantei și Sfântul Mare Cneaz Alexandru Nevski",
-    "name_ru": "Святитель Амфилохий епископ Иконийский, святитель Григорий Акрагантийский и благоверный великий князь Александр Невский",
-    "quote": "«God is not in power, but in truth! Some trust in chariots, and some in horses; but we will remember the name of the Lord our God!»",
-    "quote_it": "«Dio non è nella forza, ma nella verità! Alcuni confidano nei carri, altri nei cavalli; noi nel Signore!»",
-    "quote_ro": "«Nu în putere este Dumnezeu, ci în adevăr! Unii se laudă cu căruțele lor, alții cu caii lor, iar noi ne lăudăm cu numele Domnului Dumnezeului nostru!»",
-    "quote_ru": "«Не в силе Бог, а в правде! Инии оружием, инии на конех, мы же имя Господа Бога нашего призовем!»",
-    "rank": "feast",
-    "scriptureRef": "Psalm 20:7; John 5:23",
-    "title": "Friend of Basil and Gregory, Sicilian Commentator on Ecclesiastes & Defender of Holy Rus",
-    "title_it": "Padre Cappadoce, Vescovo di Sicilia e Difensore della Fede Ortodossa a Neva",
-    "title_ro": "Prietnul Sf. Vasile cel Mare, Ierarhul Siciliei și Domnitorul ce a biruit pe cruciați pe gheața lacului Ciud",
-    "title_ru": "Собеседник каппадокийцев, святитель Сицилийский и защитник земли Русской от крестоносцев",
-    "traditions": [
-      "orthodox",
-      "eastern"
-    ]
-  },
+  "11-23": [
+    {
+      "name": "Holy Grand Prince Alexander Nevsky, Defender of Orthodoxy",
+      "name_it": "San Alessandro Nevskij, Santo Gran Principe e Difensore della Fede",
+      "name_ro": "Sfântul Binecredincios Mare Cneaz Alexandru Nevski",
+      "name_ru": "Благоверный великий князь Александр Невский, в схиме Алексий",
+      "name_la": "Sanctus Alexander Nevensis",
+      "name_es": "San Alejandro Nevski",
+      "name_fr": "Saint Alexandre Nevski",
+      "name_de": "Hl. Alexander Newski",
+      "name_pt": "São Alexandre Nevsky",
+      "title": "Defender of Holy Rus & Prince Monastic",
+      "title_it": "Baluardo dell'Ortodossia e Principe Monaco",
+      "title_ro": "Apărătorul Dreptei Credințe, biruitorul pe Neva și lacul Ciud",
+      "title_ru": "Защитник земли Русской и православной веры от латинян",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "ru",
+      "quote": "«God is not in power, but in truth! Some trust in chariots, and some in horses: but we will remember the Name of the Lord our God.»",
+      "quote_it": "«Dio non è nella forza, ma nella verità! Gli uni si vantano dei carri, noi del Nome del Signore!»",
+      "quote_ro": "«Nu în putere este Dumnezeu, ci în adevăr! Unii se laudă cu caii și cu armele, noi însă ne lăudăm cu Numele Domnului Dumnezeului nostru!»",
+      "quote_ru": "«Не в силе Бог, а в правде! Инии оружием, инии на конех, мы же Имя Господа Бога нашего призовем!»",
+      "bio": "Prince of Novgorod and Grand Prince of Vladimir (1220-1263); defeated Swedish and Teutonic invaders, protected the Orthodox Church under the Mongol yoke, and took the monastic habit as Alexis before his holy death.",
+      "bio_it": "Vittorioso sulla Neva nel 1240 e sul ghiaccio del lago Ciud nel 1242; difese l'identità spirituale ortodossa contro le invasioni, spirando come monaco.",
+      "bio_ro": "Marele voievod rus care a apărat Biserica Ortodoxă de cruciații teutoni; a refuzat lepădarea de Ortodoxie în fața hanului tătar și s-a călugărit înainte de moarte.",
+      "bio_ru": "Святой благоверный князь, положивший душу свою за сохранение православной веры и народа от порабощения.",
+      "scriptureRef": "Psalm 20:7",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    },
+    {
+      "name": "St. Gregory, Bishop of Agrigento in Sicily",
+      "name_it": "San Gregorio Vescovo di Agrigento",
+      "name_ro": "Sfântul Ierarh Grigorie al Acragantei (Agrigento în Sicilia)",
+      "name_ru": "Святитель Григорий епископ Акрагантийский",
+      "name_la": "Sanctus Gregorius Agrigentinus",
+      "name_es": "San Gregorio de Agrigento",
+      "name_fr": "Saint Grégoire d'Agrigente",
+      "name_de": "Hl. Gregor von Agrigent",
+      "name_pt": "São Gregório de Agrigento",
+      "title": "Sicilian Father of the Church & Commentator on Ecclesiastes",
+      "title_it": "Padre della Chiesa Siciliana ed Esegeta dell'Ecclesiaste",
+      "title_ro": "Ierarhul Siciliei, dascălul duhovnicesc și tâlcuitorul Ecleziastului",
+      "title_ru": "Святитель Сицилийский, великий богослов и толкователь Священного Писания",
+      "color": "black",
+      "rank": "memorial",
+      "nationality": "it",
+      "quote": "«The soul that contemplates heavenly beauty counts all earthly riches as fleeting shadow and vanity of vanities.»",
+      "quote_it": "«L'anima che contempla la bellezza celeste considera ogni ricchezza terrena come ombra e vanità delle vanità.»",
+      "quote_ro": "«Sufletul ce privește spre frumusețea cerească socotește toate cele pământești ca o umbră trecătoare.»",
+      "quote_ru": "«Взирая на неизреченную красоту небесную, душа познает суету земных стяжаний.»",
+      "bio": "Born near Agrigento in Sicily (559-630); lived as a hermit in Palestine, studied at Constantinople, and became Bishop of Agrigento; authored a renowned commentary on the Book of Ecclesiastes.",
+      "bio_it": "Eremita in Terra Santa e poi illustre vescovo di Agrigento in Sicilia; scrisse insigni commentari biblici in lingua greca.",
+      "bio_ro": "Episcopul din Sicilia care a strălucit prin viață curată, învățătură adâncă și răbdarea calomniilor celor nedrepți.",
+      "bio_ru": "Святитель и богослов Сицилии, составивший знаменитое толкование на книгу Екклесиаста.",
+      "scriptureRef": "Ecclesiastes 1:2",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    }
+  ],
   "11-24": {
     "bio": "Clement, disciple of Peter and Paul, exiled to Crimea (Chersonesus), converted thousands in marble quarries; drowned with an anchor in 101; relics found by Sts. Cyril and Methodius; Peter was beheaded under Maximin (311).",
     "bio_it": "Terzo successore di san Pietro; fece scaturire acqua nel deserto di Crimea; gettato in mare con un'ancora al collo.",
@@ -8985,7 +9626,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "11-25": {
     "bio": "Catherine (age 18), daughter of King Constus, debated and converted 50 pagan philosophers; the torture wheels shattered at an angel's touch; beheaded in 305, body carried by angels to Mount Sinai; Mercurius slew Julian the Apostate in heavenly vision.",
@@ -9015,7 +9657,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-26": {
     "bio": "Alypius stood 53 years atop a pillar in a pagan graveyard in Paphlagonia; when his legs failed, lay on one side for 14 years praising God; Innocent (+1731) brought the Gospel to the tribes of Lake Baikal.",
@@ -9045,7 +9688,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-27": {
     "bio": "High Persian noble who briefly apostatized under King Yezdegerd; reproached by his Christian mother and wife, wept in bitter repentance; King Bahram ordered his fingers, toes, hands, feet, arms and legs severed one by one (421); with each cut James praised God.",
@@ -9075,7 +9719,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "11-28": {
     "bio": "Stephen lived as hermit on Mount Auxentius; when challenged by iconoclast Copronymus, stepped on an imperial coin to demonstrate that honor paid to an image transfers to the Prototype; dragged and clubbed to death in Constantinople in 767.",
@@ -9105,7 +9750,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "11-29": {
     "bio": "Paramon saw 370 Christians tortured by Decius in Bithynia, shouted 'Why do you kill innocent people?' and was pierced with lances alongside them (250); Philoumenos (+1979) guarded Jacob's Well in Nablus, martyred while singing vespers.",
@@ -9135,7 +9781,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-3": {
     "bio": "Acepsimas (80), priest Joseph, and deacon Aeithalas endured 3 years in dark Persian chains under Sapor; at Lydda in Palestine the magnificent church over St. George's relics was consecrated (4th c.).",
@@ -9165,7 +9812,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-30": {
     "bio": "First disciple called by Jesus at the Jordan; brought his brother Simon Peter; preached in Scythia (Dobrogea/Romania), Pontus, and up the Dnieper planting a Cross on Kiev's hills; crucified on an X-shaped cross in Patras in 60 AD; universal apostle.",
@@ -9195,7 +9843,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "11-4": {
     "bio": "Roman soldier of immense stature who spent 50 years on Mount Olympus in Bithynia; prayed floating in air, crossed flooded rivers dryshod, authored the famous triadic prayer.",
@@ -9225,7 +9874,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "11-5": {
     "bio": "Noble youth Galacteon and pagan maiden Episteme were baptized and agreed to live in virginity, entering monasteries near Mount Sinai; captured under Decius, dismembered and beheaded (250).",
@@ -9255,7 +9905,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "11-6": {
     "bio": "Paul was elected patriarch of Constantinople in 337; exiled five times by Arian emperor Constantius; strangled with his own omophorion in Cucusus (350); Barlaam founded Khutyn Monastery in Novgorod.",
@@ -9285,7 +9936,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "11-7": {
     "bio": "Hieron and 32 Christian soldiers refused to participate in pagan sacrifices; cut down in Melitene under Diocletian (298); Lazarus spent decades on a pillar on Mount Galesion near Ephesus.",
@@ -9315,7 +9967,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-8": {
     "bio": "Celebration of Archangels Michael, Gabriel, Raphael, Uriel, Salathiel, Jegudiel, Barachiel, and Jeremiel across nine angelic ranks; Michael cast Lucifer down shouting 'Let us stand fast!'; universal solemnity.",
@@ -9345,7 +9998,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "11-9": {
     "bio": "Born in Silivri (1846-1920); falsely slandered and expelled from Alexandria, swept floors as seminary dean in Athens in absolute silence; built monastery on Aegina; millions healed of tumors through his prayer.",
@@ -9375,7 +10029,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "12-1": {
     "bio": "Nahum foretold Nineveh's destruction 700 BC; Philaret in Paphlagonia (+792) gave away his horses, cows, and last sack of grain to starving neighbors; granddaughter Maria became empress.",
@@ -9405,7 +10060,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "12-10": {
     "bio": "Menas was sent by Emperor Galerius to quell riots in Alexandria, but instead converted the city; Judge Hermogenes saw Menas miraculously healed overnight and was baptized; his scribe Eugraphus stepped forward; all three beheaded in 313.",
@@ -9435,7 +10091,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-11": {
     "bio": "Daniel (409-490) met Symeon Stylite in Syria; climbed a column north of Constantinople where he stood 33 years in ice and gales; ordained priest on the pillar by the patriarch; Emperors Leo and Zeno sought his counsel.",
@@ -9465,7 +10122,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "12-12": {
     "bio": "Shepherd who remained simple and wore a woven willow cap even as bishop; squeezed a clay brick at First Council of Nicaea (325) while fire flared upward and water dripped downward proving the Trinity; his incorrupt walking relics on Corfu show worn slippers changed every year.",
@@ -9495,7 +10153,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "12-13": {
     "bio": "Lucy vowed virginity at St. Agatha's tomb in Catania; gave her dowry to the poor; resisted violation by remaining immovable like a mountain through prayer; throat pierced with a sword in Syracuse (304); Dosoftei (1624-1693) translated the Liturgy and Psalms into Romanian verse.",
@@ -9525,7 +10184,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "12-14": {
     "bio": "Leucius rebuked Governor Cumbricius and was beheaded; Thyrsus was sawn in half but the saw would not cut; in Egypt, the pagan piper Philemon was hired to dress as deacon Apollonius to offer sacrifice, but put on Christ instead and died a martyr.",
@@ -9555,7 +10215,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-15": {
     "bio": "Eleutherius of Rome was ordained bishop of Illyricum at age 20; healed and converted Coremon; lions licked his feet; pierced with swords under Hadrian (126); his mother Anthia embraced his slain body and was run through with a sword.",
@@ -9585,7 +10246,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "12-16": {
     "bio": "Haggai (520 BC) urged Zerubbabel and Joshua to rebuild the Jerusalem Temple where Christ would enter; Theophano (+893), wife of Emperor Leo the Wise, gave all luxury to the poor, wore hairshirt beneath silk, body incorrupt in Istanbul.",
@@ -9615,7 +10277,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "12-17": {
     "bio": "Daniel interpreted Nebuchadnezzar's dream of the great colossus and stone cut without hands; cast twice into the lions' den, the beasts became tame; the three youths refused to worship the golden image and walked unharmed in the blazing furnace.",
@@ -9645,39 +10308,73 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
-  "12-18": {
-    "bio": "Daniil hollowed out a hermitage in a cliff at Putna with his own hands; advised Stephen the Great to defend Christianity against the Ottomans; persuaded him to build Voroneț Monastery; Sebastian, captain of the Praetorian Guard in Rome, pierced with arrows under Diocletian (287).",
-    "bio_it": "Eremita nella rupe carpazica; guidò le scelte spirituali e militari del voivoda Stefano; Sebastiano confortò i martiri a Roma prima delle frecce.",
-    "bio_ro": "A cioplit chilia din stâncă de la Putna nevoindu-se 20 de ani în rugăciunea inimii; l-a îmbărbătat pe Ștefan cel Mare după bătălia de la Războieni; înmormântat la Mănăstirea Voroneț; Sf. Sebastian a fost străpuns de săgeți la Roma.",
-    "bio_ru": "Прп. Даниил выдолбил келью в скале; благословил победы Стефана Великого над турками; мощи почивают в Воронецком монастыре.",
-    "color": "black",
-    "name": "Holy Venerable Daniil the Hesychast of Voroneț & Holy Martyr Sebastian of Rome",
-    "name_de": "Hl. Daniel der Hesychast von Voroneț und Hl. Sebastian von Rom",
-    "name_es": "San Daniel el Hesicasta de Voroneț y San Sebastián de Roma",
-    "name_fr": "Saint Daniel l'Hésychaste de Voroneț et Saint Sébastien de Rome",
-    "name_it": "San Daniele l'Esicasta di Voroneț e San Sebastiano Martire di Roma",
-    "name_la": "Sanctus Daniel Hesychastes Voronetensis et Sanctus Sebastianus",
-    "name_pt": "São Daniel o Hesicasta de Voroneț e São Sebastião de Roma",
-    "name_ro": "Sfântul Cuvios Daniil Sihastrul de la Voroneț și Sfântul Mucenic Sebastian din Roma",
-    "name_ro_alt": "Sf. Daniil Sihastru",
-    "name_ru": "Преподобный Даниил Исихаст Воронецкий и мученик Севастиан Римский",
-    "quote": "«Fear not, Stephen! Fight valiantly for the holy faith of Christ, and the Mother of God will grant you victory over the infidels! Build a monastery after each triumph.»",
-    "quote_it": "«Non temere, Stefano! Combatti per la santa fede e la Vergine ti darà vittoria!»",
-    "quote_ro": "«Nu te teme, Măria Ta! Luptă bărbătește pentru sfânta credință a lui Hristos, căci Maica Domnului îți va da biruință! După biruință ridică mănăstire!»",
-    "quote_ru": "«Не бойся, воевода! Стой мужественно за святую веру Христову, и Господь дарует победу; воздвигни обитель во славу Божию!»",
-    "rank": "solemnity",
-    "scriptureRef": "Psalm 91:1-2; 2 Timothy 2:3",
-    "title": "Spiritual Father of Stephen the Great of Moldavia & Roman Officer Martyred by Arrows",
-    "title_it": "Padre Spirituale di Santo Stefano il Grande e Capitano Romano Martire",
-    "title_ro": "Părintele duhovnicesc al Sfântului Ștefan cel Mare, sihastrul din chilia săpată în stâncă și ctitorul Voronețului",
-    "title_ru": "Духовный наставник благоверного воеводы Стефана Великого и воин Христов Севастиан",
-    "traditions": [
-      "orthodox",
-      "eastern"
-    ]
-  },
+  "12-18": [
+    {
+      "name": "Holy Venerable Daniil the Hesychast of Voroneț",
+      "name_it": "San Daniele l'Esicasta di Voroneț",
+      "name_ro": "Sfântul Cuvios Daniil Sihastrul de la Voroneț",
+      "name_ru": "Преподобный Даниил Исихаст Воронецкий",
+      "name_la": "Sanctus Daniel Hesychasta Voronetensis",
+      "name_es": "San Daniel el Hesicasta de Voroneț",
+      "name_fr": "Saint Daniel l'Hésychaste de Voroneț",
+      "name_de": "Hl. Daniel der Hesychast von Voroneț",
+      "name_pt": "São Daniel o Hesicasta de Voroneț",
+      "title": "Spiritual Father of St. Stephen the Great & Moldavian Hermit",
+      "title_it": "Padre Spirituale di Santo Stefano il Grande ed Eremita di Voroneț",
+      "title_ro": "Părintele duhovnicesc al Sfântului Voievod Ștefan cel Mare, sihastrul din chilia săpată în stâncă",
+      "title_ru": "Духовный наставник святого воеводы Стефана Великого",
+      "color": "blue",
+      "rank": "feast",
+      "nationality": "ro",
+      "quote": "«Do not surrender the fortress of faith! Fight with courage for Christ, and God will grant victory to the humble!»",
+      "quote_it": "«Non arrendere la fortezza della fede! Combatti per Cristo e Dio donerà vittoria agli umili!»",
+      "quote_ro": "«Nu deznădăjdui, Măria Ta! Luptă bărbătește pentru credința lui Hristos și vei birui pe păgâni!»",
+      "quote_ru": "«Не бойся врагов креста Христова, борись за правду, и Господь дарует победу!»",
+      "bio": "Hollowed out a cave hermitage with his own hands in the Putna forest (15th c.); spiritual father to Prince Stephen the Great of Moldavia; urged him to build Voroneț Monastery (the Sistine Chapel of the East).",
+      "bio_it": "Monaco eremita nei Carpati; scavò la sua cella nella roccia e guidò spiritualmente il principe Stefano nella difesa della cristianità.",
+      "bio_ro": "Marele nevoitor moldovean care a trăit în peștera de la Putna și a ctitorit duhovnicește Mănăstirea Voroneț, mormântul său fiind izvor de binecuvântare.",
+      "bio_ru": "Преподобный молдавский пустынник, благословивший воеводу Стефана на защиту христианства от турецкого нашествия.",
+      "scriptureRef": "2 Corinthians 10:4",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    },
+    {
+      "name": "Holy Martyr Sebastian of Rome",
+      "name_it": "San Sebastiano Martire di Rome",
+      "name_ro": "Sfântul Mucenic Sebastian din Roma",
+      "name_ru": "Мученик Севастиан Римский",
+      "name_la": "Sanctus Sebastianus Martyr Romanus",
+      "name_es": "San Sebastián Mártir de Roma",
+      "name_fr": "Saint Sébastien Martyr de Rome",
+      "name_de": "Hl. Sebastian Märtyrer von Rom",
+      "name_pt": "São Sebastião Mártir de Roma",
+      "title": "Roman Officer & Stalwart Champion of the Persecuted",
+      "title_it": "Capitano Pretoriano e Difensore dei Perseguitati",
+      "title_ro": "Căpitanul gărzii pretoriene de la Roma, străpuns cu săgeți pentru Hristos",
+      "title_ru": "Римский воин и мученик, пронзенный стрелами за исповедание Христа",
+      "color": "black",
+      "rank": "memorial",
+      "nationality": "it",
+      "quote": "«I am a soldier of Christ; no earthly emperor can compel me to deny the King of Glory.»",
+      "quote_it": "«Sono un soldato di Cristo: nessun Cesare della terra potrà costringermi a rinnegare il Re della Gloria.»",
+      "quote_ro": "«Ostaș al lui Hristos sunt; niciun împărat pământesc nu mă poate despărți de Împăratul Slavei.»",
+      "quote_ru": "«Воин Христов есмь, и никакая земная власть не разлучит меня от Царя Небесного.»",
+      "bio": "Captain of the Praetorian Guard under Diocletian (+287); secretly converted Romans and comforted imprisoned Christians; shot with arrows at the Palatine Hill.",
+      "bio_it": "Nobile ufficiale imperiale a Roma; soccorse i cristiani incarcerati e subì il martirio delle frecce senza piegare la propria fede.",
+      "bio_ro": "Comandant militar la Roma care a îmbărbătat pe creștinii din temnițe și a mărturisit pe Hristos în fața împăratului Dioclețian.",
+      "bio_ru": "Святой римский мученик, начальник преторианцев, укреплявший страждущих христиан и претерпевший смерть за веру.",
+      "scriptureRef": "2 Timothy 2:3",
+      "traditions": [
+        "orthodox",
+        "eastern"
+      ]
+    }
+  ],
   "12-19": {
     "bio": "Boniface, chief steward of wealthy Roman patrician Aglaida, lived in drunkenness and sin; sent to Tarsus to buy martyr relics, was so overwhelmed by Christians' courage that he confessed Christ, was plunged in boiling pitch and beheaded (290); prayed to for deliverance from alcohol addiction.",
     "bio_it": "Viveva nel lusso e nel vizio; vedendo i supplizi dei cristiani a Tarso si proclamò discepolo di Cristo; invocato contro l'alcolismo.",
@@ -9706,7 +10403,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "12-2": {
     "bio": "Habakkuk stood on his watchtower foreseeing the Incarnation and carried food to Daniel in the lions' den; Elder Porphyrios (+1991) served 33 years as hospital chaplain in Athens with extraordinary clairvoyance.",
@@ -9736,7 +10434,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "12-20": {
     "bio": "According to tradition, Ignatius was the child Jesus embraced in Matthew 18:3; bishop of Antioch, wrote 7 apostolic letters on his way to Rome in chains; torn by lions in the Colosseum (107); John of Kronstadt (+1908) served daily Divine Liturgy drawing tens of thousands.",
@@ -9766,7 +10465,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "12-21": {
     "bio": "Juliana (age 16) refused marriage to pagan senator Eleusius; in prison, when the devil appeared disguised as an angel, she seized him and beat him with her chains; survived molten lead, beheaded in 304; Peter (+1326) was first Metropolitan of Moscow.",
@@ -9796,7 +10496,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "12-22": {
     "bio": "Noble Roman maiden, pupil of St. Chrysogonus; disguised in poor clothes, visited prison dungeons washing martyrs' sores; survived starvation and shipwreck, burned stretched between four posts at Sirmium in 304; invoked against poisoning, sorcery, and oppression.",
@@ -9826,7 +10527,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "12-23": {
     "bio": "Ten citizens from different cities of Crete gathered and refused to sacrifice at the dedication of an idol temple in Gortyna; tortured 30 days, beheaded in 250 under Decius; Naum (+910) translated the Bible and Liturgy with Clement at Ohrid.",
@@ -9856,7 +10558,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "12-24": {
     "bio": "Strict fasting until the evening star appears, reciting the Royal Hours; Eugenia, daughter of the prefect of Egypt, dressed as a monk, healed the sick, converted her family, beheaded on Christmas Day in Rome (262).",
@@ -9886,7 +10589,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "it"
   },
   "12-25": {
     "bio": "God becomes man in the cave of Bethlehem of the Virgin Mary; angels chant 'Glory to God in the highest', shepherds rush to adore the Babe wrapped in swaddling clothes, Magi present gold, frankincense and myrrh; the central feast of the Incarnation.",
@@ -9916,7 +10620,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-26": {
     "bio": "Universal thanksgiving to Mary who gave flesh to the Redeemer; Nicodemus (+1406), born in Prilep, spiritual son of Athos, founded Vodița and Tismana monasteries, crossing the Danube on his monastic mantle dryshod; Joseph, David, and James protected the Holy Family.",
@@ -9946,7 +10651,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "12-27": {
     "bio": "First of the seven deacons; saw heavens opened and Jesus standing at the right hand of God; stoned outside Damascus Gate in Jerusalem (34 AD); Saul guarded executioners' garments; Theodore had face burned with irons defending icons.",
@@ -9976,7 +10682,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-28": {
     "bio": "On Christmas Day in 302, Emperor Maximian surrounded the great cathedral of Nicomedia packed with 20,000 worshippers; offered amnesty if they sacrificed to idols; they refused, received baptism and communion, and the cathedral was ignited, burning 5 days.",
@@ -10006,7 +10713,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-29": {
     "bio": "King Herod, enraged that the Magi did not return, ordered all male infants two years old and under slain in Bethlehem and its borders; their spilled blood became their baptism; eternal first-fruits before the throne of God.",
@@ -10036,7 +10744,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "12-3": {
     "bio": "Zephaniah prophesied 630 BC during King Josiah's revival; John, bishop of Colonia in Armenia, secretly fled worldly honor, serving 30 years as kitchen worker and silent hermit under St. Sabbas until age 104.",
@@ -10066,7 +10775,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-30": {
     "bio": "Anysia, wealthy orphan in Thessalonica, freed slaves and distributed wealth; accosted by a Roman soldier dragging her to an idol sacrifice, she spat on the pagan altar and was run through with a sword (304); Zoticus fed lepers with imperial funds under Constantine.",
@@ -10096,7 +10806,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "12-31": {
     "bio": "Melania (383-439), richest heiress in the Roman Empire; she and husband Pinian freed 8,000 slaves, liquidated palaces across Italy, Gaul, and Africa, built churches, hospitals and monasteries; founded convent on Mount of Olives in Jerusalem where she died in peace.",
@@ -10126,7 +10837,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ru"
   },
   "12-4": {
     "bio": "Barbara had 3 windows cut in her tower symbolizing the Trinity; beheaded by her own pagan father Dioscorus who was instantly struck by lightning (306); prayed that her venerators not die without Holy Communion; John of Damascus (676-749) wrote the definitive defense of icons and church hymns.",
@@ -10156,7 +10868,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-5": {
     "bio": "Born in Cappadocia (439-532); founded Mar Saba Lavra in Kidron gorge above the Dead Sea; shared cave peacefully with a wild lion; established the Typikon which governs all Orthodox monastery and parish liturgies.",
@@ -10186,7 +10899,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "12-6": {
     "bio": "Attended First Ecumenical Council at Nicaea (325); secretly tossed gold into the window of a poor father with three daughters; stopped executioner's sword from 3 innocent men in Myra; calmed raging seas; universal saint.",
@@ -10216,7 +10930,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   },
   "12-7": {
     "bio": "Philothea (1206-1218), a 12-year-old girl in Trnovo/Argeș, carried food secretly to beggars; her angry father struck her with an axe, her body became weightless and radiant, resting at Curtea de Argeș; Ambrose (+397) baptized Augustine and barred Theodosius from communion until he repented.",
@@ -10246,7 +10961,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "ro"
   },
   "12-8": {
     "bio": "Patapius left Egyptian Thebaid for a solitary cell in the city walls of Constantinople at Blachernae; healed dropsy, cancer, and blindness; his relics on Geraneia mountains above Loutraki stream fragrances.",
@@ -10276,7 +10992,8 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "gr"
   },
   "12-9": {
     "bio": "Archangel Gabriel announced to Joachim on the mountain and Anna in the garden that they would bear a daughter blessed throughout all generations; celebrated 9 months before Mary's Nativity (Sept 8).",
@@ -10306,21 +11023,40 @@ export const ORTHODOX_SAINTS_CALENDAR = {
     "traditions": [
       "orthodox",
       "eastern"
-    ]
+    ],
+    "nationality": "universal"
   }
 };
 
-export function getOrthodoxSaintsForDate(date) {
+export function getOrthodoxSaintsForDate(date, userNationality = 'universal', lang = 'it') {
   if (!date) date = new Date();
   const m = date.getMonth() + 1;
   const d = date.getDate();
   const key = `${m}-${d}`;
-  const feast = ORTHODOX_SAINTS_CALENDAR[key];
-  if (!feast) return [];
-  return [
-    {
-      ...feast,
-      dateStr: `${m}/${d}`
-    }
-  ];
+  const raw = ORTHODOX_SAINTS_CALENDAR[key];
+  if (!raw) return [];
+
+  const rawList = Array.isArray(raw) ? raw : [raw];
+  const normNat = (userNationality || 'universal').toLowerCase();
+
+  const saints = rawList.map(s => ({
+    ...s,
+    dateStr: `${m}/${d}`,
+    nationalityMeta: getNationalityMeta(s.nationality, lang)
+  }));
+
+  // If user selected a specific nationality, sort so that nationality comes first
+  if (normNat && normNat !== 'universal') {
+    saints.sort((a, b) => {
+      const aMatch = (a.nationality === normNat) ? 1 : 0;
+      const bMatch = (b.nationality === normNat) ? 1 : 0;
+      if (aMatch !== bMatch) return bMatch - aMatch;
+      // Preserve solemnities
+      if (a.color === 'red' && b.color !== 'red') return -1;
+      if (b.color === 'red' && a.color !== 'red') return 1;
+      return 0;
+    });
+  }
+
+  return saints;
 }

@@ -6,8 +6,8 @@
 // - Evangelischer Namenkalender & Book of Common Prayer Calendar
 // 100% Fully localized with authentic patristic quotes and liturgical colors.
 
-import { getOrthodoxSaintsForDate, ORTHODOX_SAINTS_CALENDAR } from './orthodox-saints.js';
-export { getOrthodoxSaintsForDate, ORTHODOX_SAINTS_CALENDAR };
+import { getOrthodoxSaintsForDate, ORTHODOX_SAINTS_CALENDAR, NATIONALITY_META, getNationalityMeta } from './orthodox-saints.js';
+export { getOrthodoxSaintsForDate, ORTHODOX_SAINTS_CALENDAR, NATIONALITY_META, getNationalityMeta };
 
 export const LITURGICAL_COLORS = {
   white: {
@@ -3537,22 +3537,24 @@ export const TRADITION_FALLBACK_PATRONS = {
   ]
 };
 
-export function getSaintsForDate(date, confession = 'ecumenical') {
+export function getSaintsForDate(date, confession = 'ecumenical', userNationality = 'universal', lang = 'it') {
   if (!date) date = new Date();
   const m = date.getMonth() + 1;
   const d = date.getDate();
   const key = `${m}-${d}`;
   const normConf = (confession || 'ecumenical').toLowerCase();
+  const normNat = (userNationality || 'universal').toLowerCase();
 
   // 1. Strict Eastern Orthodox / Byzantine Synaxarion resolution
   // Eastern Orthodox users must always receive canonical Orthodox saints
   if (normConf === 'orthodox' || normConf === 'eastern') {
-    const orth = getOrthodoxSaintsForDate(date);
+    const orth = getOrthodoxSaintsForDate(date, normNat, lang);
     if (orth && orth.length > 0) {
       return orth.map(s => ({
         ...s,
         dateStr: `${m}/${d}`,
-        colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
+        colorMeta: s.colorMeta || LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white,
+        nationalityMeta: s.nationalityMeta || getNationalityMeta(s.nationality, lang)
       }));
     }
   }
@@ -3576,30 +3578,32 @@ export function getSaintsForDate(date, confession = 'ecumenical') {
     return false;
   });
 
-  if (matched.length > 0) {
-    return matched.map(s => ({
+  const selectedList = matched.length > 0 ? matched : dayFeasts;
+  if (selectedList.length > 0) {
+    let result = selectedList.map(s => ({
       ...s,
       dateStr: `${m}/${d}`,
-      colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
+      colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white,
+      nationalityMeta: getNationalityMeta(s.nationality || 'it', lang)
     }));
-  }
-
-  // 3. If there are feasts for this day in the primary calendar, return them
-  if (dayFeasts.length > 0) {
-    return dayFeasts.map(s => ({
-      ...s,
-      dateStr: `${m}/${d}`,
-      colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
-    }));
+    if (normNat && normNat !== 'universal') {
+      result.sort((a, b) => {
+        const aM = a.nationality === normNat ? 1 : 0;
+        const bM = b.nationality === normNat ? 1 : 0;
+        return bM - aM;
+      });
+    }
+    return result;
   }
 
   // 4. For ecumenical or unassigned days, consult the universal early church feast
-  const orthFallback = getOrthodoxSaintsForDate(date);
+  const orthFallback = getOrthodoxSaintsForDate(date, normNat, lang);
   if (orthFallback && orthFallback.length > 0) {
     return orthFallback.map(s => ({
       ...s,
       dateStr: `${m}/${d}`,
-      colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
+      colorMeta: s.colorMeta || LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white,
+      nationalityMeta: s.nationalityMeta || getNationalityMeta(s.nationality, lang)
     }));
   }
 
@@ -3612,13 +3616,14 @@ export function getSaintsForDate(date, confession = 'ecumenical') {
       ...patron,
       dateStr: `${m}/${d}`,
       bio: patron.bio || 'Commemoration of holy fathers and faithful witnesses who dedicated their lives to constant unceasing prayer in Christ.',
-      colorMeta: LITURGICAL_COLORS[patron.color] || LITURGICAL_COLORS.white
+      colorMeta: LITURGICAL_COLORS[patron.color] || LITURGICAL_COLORS.white,
+      nationalityMeta: getNationalityMeta(patron.nationality || 'universal', lang)
     }
   ];
 }
 
-export function getTodaySaints(confession = 'ecumenical') {
-  return getSaintsForDate(new Date(), confession);
+export function getTodaySaints(confession = 'ecumenical', userNationality = 'universal', lang = 'it') {
+  return getSaintsForDate(new Date(), confession, userNationality, lang);
 }
 
 export function getLiturgicalColorMeta(colorKey, lang = 'it') {

@@ -8,7 +8,9 @@ export {
   getTodaySaints,
   getLiturgicalColorMeta,
   ORTHODOX_SAINTS_CALENDAR,
-  getOrthodoxSaintsForDate
+  getOrthodoxSaintsForDate,
+  NATIONALITY_META,
+  getNationalityMeta
 } from './daily-saints.js';
 
 export {

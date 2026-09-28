@@ -15,8 +15,9 @@ let activeViewFilter = 'today'; // 'today' | 'calendar' | 'fathers'
 export async function renderSaintsView(container, onOpenShareCard) {
   const lang = getLanguage();
   const confession = (await getSetting('user_confession', 'ecumenical')).toLowerCase();
+  const userNationality = ((await getSetting('user_nationality', 'universal')) || 'universal').toLowerCase();
   const traditionSaints = getSaintsForConfession(confession);
-  const todaySaints = getTodaySaints(confession);
+  const todaySaints = getTodaySaints(confession, userNationality, lang);
 
   // Flatten calendar saints
   const allCalendarSaints = [];
@@ -140,8 +141,14 @@ export async function renderSaintsView(container, onOpenShareCard) {
                       <p class="text-xs font-serif italic text-[var(--text-muted)]">${locSaint.title}</p>
                     </div>
 
-                    <!-- Badges: Color & Rank -->
+                    <!-- Badges: Nationality, Color & Rank -->
                     <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                      ${locSaint.nationalityMeta ? `
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border border-amber-500/30 bg-amber-500/10 text-amber-800 dark:text-amber-300 text-[11px] font-sans font-bold" title="${locSaint.nationalityMeta.name}">
+                          <span>${locSaint.nationalityMeta.flag}</span>
+                          <span>${locSaint.nationalityMeta.name}</span>
+                        </span>
+                      ` : ''}
                       <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[11px] font-sans font-bold ${cMeta.badgeClass}">
                         ${cMeta.symbol ? `<span>${cMeta.symbol}</span>` : ''}
                         <span>${cName}</span>

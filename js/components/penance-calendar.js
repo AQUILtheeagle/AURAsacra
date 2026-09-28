@@ -38,6 +38,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     'catholic';
 
   activeTradition = await getSetting('penance_tradition', normalizedTradition);
+  const userNationality = ((await getSetting('user_nationality', 'universal')) || 'universal').toLowerCase();
   const today = new Date();
   currentDisplayDate = new Date(today.getFullYear(), today.getMonth(), 1);
   selectedDayData = getDayPenanceStatus(today, activeTradition, getLanguage());
@@ -48,7 +49,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     const today = new Date();
     const todayStatus = getDayPenanceStatus(today, activeTradition, lang);
     todayStatus.date = today;
-    const todaySaints = getTodaySaints(activeTradition);
+    const todaySaints = getTodaySaints(activeTradition, userNationality, lang);
 
     const curYear = currentDisplayDate.getFullYear();
     const curMonth = currentDisplayDate.getMonth();
@@ -61,7 +62,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
     const selected = selectedDayData || todayStatus;
     const selectedDate = selected.date || today;
     const isInspectingToday = isSameDate(selectedDate, today);
-    const selectedDaySaints = getSaintsForDate(selectedDate, activeTradition);
+    const selectedDaySaints = getSaintsForDate(selectedDate, activeTradition, userNationality, lang);
     const primarySelectedSaint = selectedDaySaints[0] || null;
     const locPrimarySelectedSaint = primarySelectedSaint ? getLocalizedSaint(primarySelectedSaint, lang) : null;
 
@@ -161,6 +162,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                     const rankName = locS.rankName || t(`ranks.${locS.rank}`, locS.rank);
                     return `
                       <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg border text-xs font-sans font-semibold ${cMeta.badgeClass}">
+                        ${locS.nationalityMeta ? `<span title="${locS.nationalityMeta.name}">${locS.nationalityMeta.flag}</span>` : ''}
                         <span>${cMeta.symbol} ${sName}</span>
                         <span class="opacity-75 text-[10px]">(${cName} • ${rankName})</span>
                       </span>
@@ -267,7 +269,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
               .map((dObj) => {
                 const isToday = isSameDate(dObj.date, today);
                 const isSelected = isSameDate(dObj.date, selectedDate);
-                const daySaints = getSaintsForDate(dObj.date, activeTradition);
+                const daySaints = getSaintsForDate(dObj.date, activeTradition, userNationality, lang);
                 const primarySaint = daySaints[0] || null;
                 const locPrimary = primarySaint ? getLocalizedSaint(primarySaint, lang) : null;
 
@@ -296,7 +298,12 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
                     <div class="flex items-center gap-1">
                       ${
-                        locPrimary && primarySaint.colorMeta.dotClass
+                        locPrimary && locPrimary.nationalityMeta && locPrimary.nationalityMeta.flag
+                          ? `<span class="text-[10px]" title="${locPrimary.nationalityMeta.name}">${locPrimary.nationalityMeta.flag}</span>`
+                          : ''
+                      }
+                      ${
+                        locPrimary && primarySaint.colorMeta && primarySaint.colorMeta.dotClass
                           ? `<span class="w-2 h-2 rounded-full ${primarySaint.colorMeta.dotClass}" title="${locPrimary.displayName || locPrimary.name} (${locPrimary.colorName || primarySaint.colorMeta.name})"></span>`
                           : ''
                       }
@@ -366,7 +373,13 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
               </div>
 
               ${locPrimarySelectedSaint ? `
-                <div class="pt-1">
+                <div class="pt-1 flex items-center gap-1.5 flex-wrap">
+                  ${locPrimarySelectedSaint.nationalityMeta ? `
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-800 dark:text-amber-300 text-xs font-sans font-bold" title="${locPrimarySelectedSaint.nationalityMeta.name}">
+                      <span>${locPrimarySelectedSaint.nationalityMeta.flag}</span>
+                      <span>${locPrimarySelectedSaint.nationalityMeta.name}</span>
+                    </span>
+                  ` : ''}
                   <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg border text-xs font-sans font-bold ${locPrimarySelectedSaint.colorMeta?.badgeClass || 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30'}">
                     ${locPrimarySelectedSaint.colorMeta?.symbol ? `<span>${locPrimarySelectedSaint.colorMeta.symbol}</span>` : ''}
                     <span>${locPrimarySelectedSaint.displayName || locPrimarySelectedSaint.name}</span>
@@ -431,8 +444,14 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                         </p>
                       </div>
 
-                      <!-- Liturgical Color & Rank Badges -->
+                      <!-- Liturgical Color, Nationality & Rank Badges -->
                       <div class="flex items-center gap-1.5 flex-wrap">
+                        ${locSaint.nationalityMeta ? `
+                          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-800 dark:text-amber-300 text-xs font-sans font-bold" title="${locSaint.nationalityMeta.name}">
+                            <span>${locSaint.nationalityMeta.flag}</span>
+                            <span>${locSaint.nationalityMeta.name}</span>
+                          </span>
+                        ` : ''}
                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-sans font-bold ${cMeta.badgeClass}">
                           ${cMeta.symbol ? `<span>${cMeta.symbol}</span>` : ''}
                           <span>${cName}</span>
