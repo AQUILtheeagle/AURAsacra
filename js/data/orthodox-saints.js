@@ -4,7 +4,7 @@
 // 2. Православный церковный календарь Русской Православной Церкви (РПЦ)
 // 3. Great Synaxaristes of the Orthodox Church & Mount Athos Typikon
 // Provides complete localized commemorations in 9 languages (en, it, ro, ru, la, es, fr, de, pt)
-// covering all 8 supported user nationalities.
+// completely independent of nationality, covering all Christian lands and universal traditions.
 
 export const ORTHODOX_SAINTS_CALENDAR = {
   "1-1": {

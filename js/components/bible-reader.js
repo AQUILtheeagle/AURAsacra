@@ -2,7 +2,7 @@
 import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded, getLoadedBibleBooks } from '../data/scriptures.js';
 import { SUPPORTED_BIBLES, getDefaultBibleForLanguage, getArchivalChapter } from '../data/scripture-archives.js';
 import { icons } from '../icons.js';
-import { getHighlights, saveHighlight, removeHighlight, getSetting } from '../db.js';
+import { getHighlights, saveHighlight, removeHighlight, getSetting, saveSetting } from '../db.js';
 import { getLanguage, t, onLanguageChange } from '../i18n.js';
 
 let activeBookId = 'matt';
@@ -14,7 +14,10 @@ const selectedVerses = new Set();
 let lastLoadedLang = null;
 
 onLanguageChange(async (newLang) => {
-  activeBibleVersion = getDefaultBibleForLanguage(newLang);
+  const savedBibleVersion = await getSetting('preferred_bible_version', null);
+  if (!savedBibleVersion) {
+    activeBibleVersion = getDefaultBibleForLanguage(newLang);
+  }
   lastLoadedLang = newLang;
   await ensureFullBibleLoaded(activeBibleVersion);
 });
@@ -43,10 +46,13 @@ function normalizeBookAndChapter(bookId, chapter) {
 
 export async function renderBibleReader(container, onOpenShareCard) {
   const currentLang = getLanguage();
-  if (!activeBibleVersion || lastLoadedLang !== currentLang) {
+  const savedBibleVersion = await getSetting('preferred_bible_version', null);
+  if (savedBibleVersion) {
+    activeBibleVersion = savedBibleVersion;
+  } else if (!activeBibleVersion) {
     activeBibleVersion = getDefaultBibleForLanguage(currentLang);
-    lastLoadedLang = currentLang;
   }
+  lastLoadedLang = currentLang;
   if (!activeCanon) {
     const userConfession = await getSetting('user_confession', 'ecumenical');
     if (userConfession === 'catholic' || userConfession === 'traditional') {
@@ -436,6 +442,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
     if (versionSelect) {
       versionSelect.addEventListener('change', async (e) => {
         activeBibleVersion = e.target.value;
+        await saveSetting('preferred_bible_version', activeBibleVersion);
         await ensureFullBibleLoaded(activeBibleVersion);
         selectedVerses.clear();
         await updateView();

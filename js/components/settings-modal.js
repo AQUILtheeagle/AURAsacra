@@ -14,6 +14,7 @@ import { t, getLanguage, setLanguage, SUPPORTED_LANGUAGES } from '../i18n.js';
 
 export async function renderSettingsModal(container, onClose, onRefresh) {
   const currentLanguage = getLanguage();
+  const currentNationality = await getSetting('user_nationality', 'universal');
   const currentConfession = await getSetting('user_confession', 'ecumenical');
   const currentThemeOverride = await getSetting('theme_override', 'auto');
   const currentUserName = await getSetting('user_name', '');
@@ -58,6 +59,32 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
                   ${lang.flag} ${lang.name} (${lang.nativeName})
                 </option>
               `).join('')}
+            </select>
+          </div>
+
+          <!-- Nationality & Regional Heritage (Separated from Language) -->
+          <div class="space-y-2 bg-[var(--bg-secondary)] p-3 rounded-2xl border border-stone-300 dark:border-stone-700">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] font-sans flex items-center gap-1.5">
+                <span>🌍</span>
+                <span>${t('settings.nationality', 'Nationality / Regional Heritage:')}</span>
+              </label>
+            </div>
+            <p class="text-[11px] text-[var(--text-muted)] font-serif italic">
+              ${t('settings.nationalityDesc', 'Independent of interface language. Choose your local devotion or keep Universal.')}
+            </p>
+            <select id="setting-nationality" class="w-full bg-[var(--bg-card)] border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-2 text-sm text-[var(--text-primary)] font-medium cursor-pointer">
+              <option value="universal" ${currentNationality === 'universal' ? 'selected' : ''}>🌍 ${t('settings.nationalities.universal', 'Universal / All Nations (Default)')}</option>
+              <option value="it" ${currentNationality === 'it' ? 'selected' : ''}>🇮🇹 ${t('settings.nationalities.it', 'Italy & Western Tradition')}</option>
+              <option value="gr" ${currentNationality === 'gr' ? 'selected' : ''}>🇬🇷 ${t('settings.nationalities.gr', 'Greece & Mount Athos')}</option>
+              <option value="ro" ${currentNationality === 'ro' ? 'selected' : ''}>🇷🇴 ${t('settings.nationalities.ro', 'Romania & Moldavia')}</option>
+              <option value="ru" ${currentNationality === 'ru' ? 'selected' : ''}>☦️ ${t('settings.nationalities.ru', 'Slavic & Rus Tradition')}</option>
+              <option value="ge" ${currentNationality === 'ge' ? 'selected' : ''}>🇬🇪 ${t('settings.nationalities.ge', 'Georgia & Caucasus')}</option>
+              <option value="rs" ${currentNationality === 'rs' ? 'selected' : ''}>🇷🇸 ${t('settings.nationalities.rs', 'Serbia & Balkans')}</option>
+              <option value="es" ${currentNationality === 'es' ? 'selected' : ''}>🇪🇸 ${t('settings.nationalities.es', 'Spain & Hispanic Americas')}</option>
+              <option value="fr" ${currentNationality === 'fr' ? 'selected' : ''}>🇫🇷 ${t('settings.nationalities.fr', 'France & Gallic Tradition')}</option>
+              <option value="de" ${currentNationality === 'de' ? 'selected' : ''}>🇩🇪 ${t('settings.nationalities.de', 'Germany & Central Europe')}</option>
+              <option value="en" ${currentNationality === 'en' ? 'selected' : ''}>🇬🇧 ${t('settings.nationalities.en', 'Anglosphere & Global Diaspora')}</option>
             </select>
           </div>
 
@@ -260,12 +287,14 @@ export async function renderSettingsModal(container, onClose, onRefresh) {
 
     container.querySelector('#btn-save-settings').addEventListener('click', async () => {
       const newLanguage = container.querySelector('#setting-language').value;
+      const nationality = container.querySelector('#setting-nationality')?.value || 'universal';
       const confession = container.querySelector('#setting-confession').value;
       const theme = container.querySelector('#setting-theme').value;
       const userName = container.querySelector('#setting-username').value.trim();
       const geminiKey = container.querySelector('#setting-gemini-key').value.trim();
       const geminiModel = container.querySelector('#setting-gemini-model').value;
 
+      await setSetting('user_nationality', nationality);
       await setSetting('user_confession', confession);
       await setSetting('confession', confession);
       await setSetting('penance_tradition', confession);
