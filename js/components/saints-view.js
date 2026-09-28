@@ -96,20 +96,24 @@ export async function renderSaintsView(container, onOpenShareCard) {
               <span class="font-bold text-[var(--text-primary)]">${t('saints.liturgicalColor', 'Liturgical Colors:')}</span>
             </div>
             <div class="flex flex-wrap items-center gap-3 text-[11px] font-sans">
-              <span class="flex items-center gap-1.5 font-semibold text-stone-700 dark:text-stone-300">
-                <span class="w-2.5 h-2.5 rounded-full bg-stone-200 dark:bg-stone-300 ring-1 ring-stone-400 dark:ring-stone-500"></span>
-                <span>† ${t('colors.white', 'White')}</span>
-                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.whiteDesc')})</span>
+              <span class="flex items-center gap-1.5 font-semibold text-red-600 dark:text-red-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-600 dark:bg-red-500 ring-1 ring-red-400"></span>
+                <span>† ${t('colors.red', 'Red')}</span>
+                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.redDesc')})</span>
               </span>
               <span class="flex items-center gap-1.5 font-semibold text-blue-600 dark:text-blue-400">
                 <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-500 ring-1 ring-blue-400"></span>
                 <span>† ${t('colors.blue', 'Blue')}</span>
                 <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.blueDesc')})</span>
               </span>
-              <span class="flex items-center gap-1.5 font-semibold text-red-600 dark:text-red-400">
-                <span class="w-2.5 h-2.5 rounded-full bg-red-600 dark:bg-red-500 ring-1 ring-red-400"></span>
-                <span>† ${t('colors.red', 'Red')}</span>
-                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.redDesc')})</span>
+              <span class="flex items-center gap-1.5 font-semibold text-stone-900 dark:text-stone-200">
+                <span class="w-2.5 h-2.5 rounded-full bg-stone-800 dark:bg-stone-300 ring-1 ring-stone-600 dark:ring-stone-400"></span>
+                <span>† ${t('colors.black', 'Black')}</span>
+                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.blackDesc')})</span>
+              </span>
+              <span class="flex items-center gap-1.5 font-normal text-stone-600 dark:text-stone-400">
+                <span>${t('colors.white', 'Ordinary')}</span>
+                <span class="text-[10px] text-[var(--text-muted)] font-normal hidden md:inline">(${t('colors.whiteDesc')})</span>
               </span>
             </div>
           </div>
@@ -139,7 +143,7 @@ export async function renderSaintsView(container, onOpenShareCard) {
                     <!-- Badges: Color & Rank -->
                     <div class="flex flex-col items-end gap-1 flex-shrink-0">
                       <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[11px] font-sans font-bold ${cMeta.badgeClass}">
-                        <span>${cMeta.symbol}</span>
+                        ${cMeta.symbol ? `<span>${cMeta.symbol}</span>` : ''}
                         <span>${cName}</span>
                       </span>
                       <span class="inline-flex items-center px-2 py-0.5 rounded-md border border-stone-300 dark:border-stone-700 bg-[var(--bg-secondary)] text-[var(--text-secondary)] text-[10px] font-sans font-semibold uppercase">

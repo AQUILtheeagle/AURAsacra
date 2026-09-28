@@ -52,12 +52,14 @@ export const TRANSLATIONS = {
       night: 'Night / Compline'
     },
     colors: {
-      white: 'White',
-      blue: 'Blue',
-      red: 'Red',
-      whiteDesc: 'Confessors, Doctors of the Church, Venerable Monastics & Ordinary Commemorations',
-      blueDesc: 'Marian Feasts, Blessed Virgin Mary & Feasts with Polyeleos / Doxology',
-      redDesc: 'Solemnities of the Lord, Great Feasts, Apostles, Evangelists & Holy Martyrs'
+      white: "No Cross (Ordinary)",
+      blue: "Blue",
+      black: "Black",
+      red: "Red",
+      whiteDesc: "Ordinary Ferias & Simple Daily Commemorations (No Cross)",
+      blueDesc: "Feasts of the Mother of God & National/Regional Patron Saints across all Christian traditions (Blue Cross)",
+      blackDesc: "Universal Saints with Polyeleos or Great Doxology: Church Fathers, Apostles & Martyrs (Black Cross)",
+      redDesc: "Great Feasts (Praznice) of the Lord and the Theotokos, and Great Solemnities with Vigil (Red Cross)"
     },
     ranks: {
       solemnity: 'Solemnity',
@@ -493,12 +495,14 @@ export const TRANSLATIONS = {
       night: 'Notte / Compieta'
     },
     colors: {
-      white: 'Bianco',
-      blue: 'Blu',
-      red: 'Rosso',
-      whiteDesc: 'Confessori, Dottori della Chiesa, Venerabili Monaci e Memorie Ordinarie',
-      blueDesc: 'Festività Mariane, Beata Vergine Maria e Feste con Polieleo / Doxologia',
-      redDesc: 'Solennità del Signore, Grandi Feste, Apostoli, Evangelisti e Grandi Martiri'
+      white: "Senza croce (Ordinario)",
+      blue: "Blu",
+      black: "Nero",
+      red: "Rosso",
+      whiteDesc: "Giorni feriali ordinari e memorie semplici del Sinassario (senza croce)",
+      blueDesc: "Feste della Madre di Dio e Santi Patroni Nazionali e Locali di tutte le Chiese (Croce Blu)",
+      blackDesc: "Santi della Chiesa universale con Polieleo o Grande Dossologia: Padri della Chiesa, Apostoli e Martiri (Croce Nera)",
+      redDesc: "Praznice Împărătești del Signore e della Madre di Dio, e Grandi Feste con Veglia (Croce Rossa)"
     },
     ranks: {
       solemnity: 'Solennità',
@@ -934,12 +938,14 @@ export const TRANSLATIONS = {
       night: 'Noapte / Pavecerniță'
     },
     colors: {
-      white: 'Alb',
-      blue: 'Albastru',
-      red: 'Roșu',
-      whiteDesc: 'Cuvioși, Părinți Mărturisitori, Ierarhi, Fecioare și Pomeniri Simple',
-      blueDesc: 'Sărbătorile Maicii Domnului și Sfinți cu Polieleu / Doxologie Mare',
-      redDesc: 'Praznice Împărătești, Sărbători Mari cu Priveghere, Apostoli și Mari Mucenici'
+      white: "Fără cruce (Zi de rând)",
+      blue: "Albastru",
+      black: "Negru",
+      red: "Roșu",
+      whiteDesc: "Zile de rând și pomeniri simple din sinaxar (zile lucrătoare, fără cruce)",
+      blueDesc: "Sărbători ale Maicii Domnului și Sfinți Patroni Naționali și Locali din toate Tradițiile Ortodoxe (Cruce Albastră)",
+      blackDesc: "Sfinți din toată Ortodoxia cu polieleu sau doxologie mare: Părinți, Apostoli și Mari Mucenici (Cruce Neagră)",
+      redDesc: "Praznice Împărătești ale Mântuitorului și ale Maicii Domnului, și Sărbători mari cu priveghere (Cruce Roșie)"
     },
     ranks: {
       solemnity: 'Praznic Mare (Solennitate)',
@@ -1375,12 +1381,14 @@ export const TRANSLATIONS = {
       night: 'Nuit / Complies'
     },
     colors: {
-      white: 'Blanc',
-      blue: 'Bleu',
-      red: 'Rouge',
-      whiteDesc: 'Confesseurs, Docteurs de l\'Église, Pères Monastiques et Mémoires Ordinaires',
-      blueDesc: 'Fêtes Mariales, Sainte Vierge Marie et Fêtes avec Polyéléos',
-      redDesc: 'Solennités du Seigneur, Grandes Fêtes, Apôtres, Évangélistes et Grands Martyrs'
+      white: "Sans croix (Ordinaire)",
+      blue: "Bleu",
+      black: "Noir",
+      red: "Rouge",
+      whiteDesc: "Jours de férie ordinaires et mémoires simples du synaxaire (sans croix)",
+      blueDesc: "Fêtes de la Mère de Dieu et Saints Patrons Nationaux et Locaux de toutes les Églises (Croix Bleue)",
+      blackDesc: "Saints de l'Église universelle avec Polyéléos ou Grande Doxologie: Pères, Apôtres et Martyrs (Croix Noire)",
+      redDesc: "Grandes Fêtes (Praznice) du Seigneur et de la Mère de Dieu, et Solennités avec Veillée (Croix Rouge)"
     },
     ranks: {
       solemnity: 'Solennité',
@@ -1816,12 +1824,14 @@ export const TRANSLATIONS = {
       night: 'Noche / Completas'
     },
     colors: {
-      white: 'Blanco',
-      blue: 'Azul',
-      red: 'Rojo',
-      whiteDesc: 'Confesores, Doctores de la Iglesia, Venerables Monjes y Memorias Ordinarias',
-      blueDesc: 'Fiestas Marianas, Santa Virgen María y Fiestas con Polieleo',
-      redDesc: 'Solemnidades del Señor, Grandes Fiestas, Apóstoles, Evangelistas y Santos Mártires'
+      white: "Sin cruz (Ordinario)",
+      blue: "Azul",
+      black: "Negro",
+      red: "Rojo",
+      whiteDesc: "Días feriales ordinarios y memorias simples del sinaxario (sin cruz)",
+      blueDesc: "Fiestas de la Madre de Dios y Santos Patronos Nacionales y Locales de todas las Iglesias (Cruz Azul)",
+      blackDesc: "Santos de la Iglesia universal con Polieleo o Gran Doxología: Padres, Apóstoles y Mártires (Cruz Negra)",
+      redDesc: "Grandes Fiestas (Praznice) del Señor y de la Madre de Dios, y Solemnidades con Vigilia (Cruz Roja)"
     },
     ranks: {
       solemnity: 'Solemnidad',
@@ -2257,12 +2267,14 @@ export const TRANSLATIONS = {
       night: 'Noite / Completas'
     },
     colors: {
-      white: 'Branco',
-      blue: 'Azul',
-      red: 'Vermelho',
-      whiteDesc: 'Confessores, Doutores da Igreja, Veneráveis Monges e Memórias Ordinárias',
-      blueDesc: 'Festas Marianas, Santíssima Virgem Maria e Festas com Polieleu',
-      redDesc: 'Solenidades do Senhor, Grandes Festas, Apóstolos, Evangelistas e Santos Mártires'
+      white: "Sem cruz (Ordinário)",
+      blue: "Azul",
+      black: "Preto",
+      red: "Vermelho",
+      whiteDesc: "Dias feriais ordinários e memórias simples do sinaxário (sem cruz)",
+      blueDesc: "Festas da Mãe de Deus e Santos Padroeiros Nacionais e Locais de todas as Igrejas (Cruz Azul)",
+      blackDesc: "Santos da Igreja universal com Polieleu ou Grande Doxologia: Padres, Apóstolos e Mártires (Cruz Negra)",
+      redDesc: "Grandes Festas (Praznice) do Senhor e da Mãe de Deus, e Solenidades com Vigília (Cruz Vermelha)"
     },
     ranks: {
       solemnity: 'Solenidade',
@@ -2698,12 +2710,14 @@ export const TRANSLATIONS = {
       night: 'Nacht / Komplet'
     },
     colors: {
-      white: 'Weiß',
-      blue: 'Blau',
-      red: 'Rot',
-      whiteDesc: 'Bekenner, Kirchenlehrer, Ehrwürdige Väter und Tägliche Gedenken',
-      blueDesc: 'Marienfeste, Selige Jungfrau Maria und Feste mit Polyeleos',
-      redDesc: 'Herrenfeste, Große Feste, Apostel, Evangelisten und Große Märtyrer'
+      white: "Ohne Kreuz (Gewöhnlich)",
+      blue: "Blau",
+      black: "Schwarz",
+      red: "Rot",
+      whiteDesc: "Gewöhnliche Werktage und einfache Gedenken des Synaxarions (ohne Kreuz)",
+      blueDesc: "Feste der Gottesgebärerin & Nationale und Lokale Schutzpatrone aller Kirchen (Blaues Kreuz)",
+      blackDesc: "Universale Heilige mit Polyeleos oder Großer Doxologie: Kirchenväter, Apostel und Märtyrer (Schwarzes Kreuz)",
+      redDesc: "Große Feste (Praznice) des Herrn und der Gottesmutter, und Hochfeste mit Vigil (Rotes Kreuz)"
     },
     ranks: {
       solemnity: 'Hochfest',
@@ -3139,12 +3153,14 @@ export const TRANSLATIONS = {
       night: 'Ночь / Повечерие'
     },
     colors: {
-      white: 'Белый',
-      blue: 'Синий',
-      red: 'Красный',
-      whiteDesc: 'Преподобные, Святители, Исповедники, Девы и Рядовые Памяти',
-      blueDesc: 'Богородичные Праздники и Святые с Полиелеем / Великим Славословием',
-      redDesc: 'Господские Праздники, Великие Праздники, Апостолы, Евангелисты и Великомученики'
+      white: "Без знака (Рядовой день)",
+      blue: "Синий",
+      black: "Черный",
+      red: "Красный",
+      whiteDesc: "Обычные седмичные дни и малые памяти святых по синаксарю (без знака)",
+      blueDesc: "Праздники Пресвятой Богородицы и чтимые святые всех Поместных Православных Церквей (Синий крест)",
+      blackDesc: "Вселенские святые со славословием или полиелеем: Святители, Апостолы и Мученики (Черный крест)",
+      redDesc: "Двунадесятые и великие праздники Господские и Богородичные, и святые с бдением (Красный крест)"
     },
     ranks: {
       solemnity: 'Великий Праздник (Торжество)',
@@ -3579,12 +3595,14 @@ export const TRANSLATIONS = {
       night: 'Nox / Completorium'
     },
     colors: {
-      white: 'Albus',
-      blue: 'Caeruleus',
-      red: 'Ruber',
-      whiteDesc: 'Confessores, Doctores Ecclesiae, Venerabiles et Memoriae Ordinariae',
-      blueDesc: 'Festa Beatae Mariae Virginis et Officia cum Polyeleo',
-      redDesc: 'Sollemnitates Domini, Festa Maiora, Apostoli et Martyres'
+      white: "Sine cruce (Ordinarium)",
+      blue: "Caeruleus",
+      black: "Niger",
+      red: "Ruber",
+      whiteDesc: "Feriae ordinariae et memoriae simplices synaxarii (sine cruce)",
+      blueDesc: "Festa Deiparae ac Sancti Patroni Nationales atque Locales omnium Ecclesiarum (Crux Caerulea)",
+      blackDesc: "Sancti universales cum Polyeleo vel Doxologia Maiori: Patres, Apostoli et Martyres (Crux Nigra)",
+      redDesc: "Sollemnitates Domini et Beatae Mariae Virginis, ac Festa Maiora cum Vigilia (Crux Rubra)"
     },
     ranks: {
       solemnity: 'Sollemnitas',

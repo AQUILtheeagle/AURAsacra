@@ -219,19 +219,22 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                 ${t('penance.jumpToday', 'Jump to Today')}
               </button>
               
-              <!-- Liturgical Colors Legend Pills (White, Blue, Red) -->
+              <!-- Liturgical Colors Legend Pills (Red, Blue, Black, Ordinary) -->
               <div class="hidden xl:flex items-center gap-2.5 text-[11px] font-sans text-[var(--text-muted)] border-l border-stone-300 dark:border-stone-700 pl-3">
-                <span class="flex items-center gap-1 font-semibold text-stone-700 dark:text-stone-300" title="${t('colors.whiteDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-stone-200 dark:bg-stone-300 ring-1 ring-stone-400 dark:ring-stone-500"></span>
-                  <span>† ${t('colors.white', 'White')}</span>
+                <span class="flex items-center gap-1 font-semibold text-red-600 dark:text-red-400" title="${t('colors.redDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 dark:bg-red-500 ring-1 ring-red-400"></span>
+                  <span>† ${t('colors.red', 'Red')}</span>
                 </span>
                 <span class="flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400" title="${t('colors.blueDesc')}">
                   <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-500 ring-1 ring-blue-400"></span>
                   <span>† ${t('colors.blue', 'Blue')}</span>
                 </span>
-                <span class="flex items-center gap-1 font-semibold text-red-600 dark:text-red-400" title="${t('colors.redDesc')}">
-                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 dark:bg-red-500 ring-1 ring-red-400"></span>
-                  <span>† ${t('colors.red', 'Red')}</span>
+                <span class="flex items-center gap-1 font-semibold text-stone-900 dark:text-stone-200" title="${t('colors.blackDesc')}">
+                  <span class="w-2.5 h-2.5 rounded-full bg-stone-800 dark:bg-stone-300 ring-1 ring-stone-600 dark:ring-stone-400"></span>
+                  <span>† ${t('colors.black', 'Black')}</span>
+                </span>
+                <span class="flex items-center gap-1 font-normal text-stone-600 dark:text-stone-400" title="${t('colors.whiteDesc')}">
+                  <span>${t('colors.white', 'Ordinary')}</span>
                 </span>
               </div>
             </div>
@@ -293,7 +296,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
                     <div class="flex items-center gap-1">
                       ${
-                        locPrimary
+                        locPrimary && primarySaint.colorMeta.dotClass
                           ? `<span class="w-2 h-2 rounded-full ${primarySaint.colorMeta.dotClass}" title="${locPrimary.displayName || locPrimary.name} (${locPrimary.colorName || primarySaint.colorMeta.name})"></span>`
                           : ''
                       }
@@ -305,7 +308,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                     ${
                       locPrimary ? `
                         <div class="text-[8.5px] sm:text-[9.5px] font-sans font-semibold truncate leading-tight ${primarySaint.colorMeta.textClass}">
-                          ${primarySaint.colorMeta.symbol} ${(locPrimary.displayName || locPrimary.name).split(',')[0]}
+                          ${primarySaint.colorMeta.symbol ? primarySaint.colorMeta.symbol + ' ' : ''}${(locPrimary.displayName || locPrimary.name).split(',')[0]}
                         </div>
                       ` : ''
                     }
@@ -365,7 +368,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
               ${locPrimarySelectedSaint ? `
                 <div class="pt-1">
                   <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg border text-xs font-sans font-bold ${locPrimarySelectedSaint.colorMeta?.badgeClass || 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30'}">
-                    <span>${locPrimarySelectedSaint.colorMeta?.symbol || '✝'}</span>
+                    ${locPrimarySelectedSaint.colorMeta?.symbol ? `<span>${locPrimarySelectedSaint.colorMeta.symbol}</span>` : ''}
                     <span>${locPrimarySelectedSaint.displayName || locPrimarySelectedSaint.name}</span>
                     <span class="opacity-80 text-[10px] uppercase font-semibold">(${locPrimarySelectedSaint.colorName || locPrimarySelectedSaint.colorMeta?.name || ''} • ${locPrimarySelectedSaint.rankName || t(`ranks.${locPrimarySelectedSaint.rank}`, locPrimarySelectedSaint.rank)})</span>
                   </div>
@@ -431,7 +434,7 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
                       <!-- Liturgical Color & Rank Badges -->
                       <div class="flex items-center gap-1.5 flex-wrap">
                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-sans font-bold ${cMeta.badgeClass}">
-                          <span>${cMeta.symbol}</span>
+                          ${cMeta.symbol ? `<span>${cMeta.symbol}</span>` : ''}
                           <span>${cName}</span>
                         </span>
                         <span class="inline-flex items-center px-2.5 py-1 rounded-lg border border-stone-300 dark:border-stone-700 bg-[var(--bg-secondary)] text-[var(--text-secondary)] text-xs font-sans font-semibold uppercase">
@@ -475,9 +478,10 @@ export async function renderPenanceCalendar(container, onOpenShareCard) {
 
             <!-- Liturgical Color Guidelines Footer -->
             <div class="text-[11px] text-[var(--text-muted)] pt-1 flex flex-wrap items-center gap-3">
-              <span class="flex items-center gap-1"><strong class="text-stone-700 dark:text-stone-300">† ${t('colors.white', 'White')}:</strong> ${t('colors.whiteDesc')}</span>
-              <span class="flex items-center gap-1"><strong class="text-blue-600 dark:text-blue-400">† ${t('colors.blue', 'Blue')}:</strong> ${t('colors.blueDesc')}</span>
               <span class="flex items-center gap-1"><strong class="text-red-600 dark:text-red-400">† ${t('colors.red', 'Red')}:</strong> ${t('colors.redDesc')}</span>
+              <span class="flex items-center gap-1"><strong class="text-blue-600 dark:text-blue-400">† ${t('colors.blue', 'Blue')}:</strong> ${t('colors.blueDesc')}</span>
+              <span class="flex items-center gap-1"><strong class="text-stone-900 dark:text-stone-200">† ${t('colors.black', 'Black')}:</strong> ${t('colors.blackDesc')}</span>
+              <span class="flex items-center gap-1"><strong class="text-stone-600 dark:text-stone-400">${t('colors.white', 'Ordinary')}:</strong> ${t('colors.whiteDesc')}</span>
             </div>
           </div>
 

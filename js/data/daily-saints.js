@@ -12,21 +12,21 @@ export { getOrthodoxSaintsForDate, ORTHODOX_SAINTS_CALENDAR };
 export const LITURGICAL_COLORS = {
   white: {
     id: 'white',
-    name: 'White',
-    name_it: 'Bianco',
-    name_ro: 'Alb',
-    name_la: 'Albus',
-    name_es: 'Blanco',
-    name_fr: 'Blanc',
-    name_de: 'Weiß',
-    name_pt: 'Branco',
-    name_ru: 'Белый',
-    dotClass: 'bg-stone-200 dark:bg-stone-300 ring-1 ring-stone-400 dark:ring-stone-500',
-    badgeClass: 'bg-stone-500/10 text-stone-700 dark:text-stone-200 border-stone-300 dark:border-stone-600',
-    borderClass: 'border-stone-300 dark:border-stone-700',
-    textClass: 'text-stone-700 dark:text-stone-300',
-    symbol: '†',
-    desc: 'Confessors, Doctors of the Church, Venerable Monastics & Ordinary Commemorations'
+    name: 'Ordinary',
+    name_it: 'Ordinario',
+    name_ro: 'Zi de rând',
+    name_la: 'Ordinarium',
+    name_es: 'Ordinario',
+    name_fr: 'Ordinaire',
+    name_de: 'Gewöhnlich',
+    name_pt: 'Ordinário',
+    name_ru: 'Рядовой',
+    dotClass: '',
+    badgeClass: 'bg-stone-500/10 text-stone-600 dark:text-stone-300 border-stone-300/60 dark:border-stone-700/60',
+    borderClass: 'border-stone-200 dark:border-stone-800',
+    textClass: 'text-stone-600 dark:text-stone-400 font-normal',
+    symbol: '',
+    desc: 'Pomeniri simple ale sfinților din sinaxar, fără semn de sărbătoare (zile de rând feriale, fără cruce)'
   },
   blue: {
     id: 'blue',
@@ -42,9 +42,27 @@ export const LITURGICAL_COLORS = {
     dotClass: 'bg-blue-600 dark:bg-blue-500 ring-1 ring-blue-400',
     badgeClass: 'bg-blue-600/15 text-blue-700 dark:text-blue-300 border-blue-500/60',
     borderClass: 'border-blue-500/60',
-    textClass: 'text-blue-600 dark:text-blue-400',
+    textClass: 'text-blue-600 dark:text-blue-400 font-semibold',
     symbol: '†',
-    desc: 'Marian Feasts, Blessed Virgin Mary & Feasts with Polyeleos / Doxology'
+    desc: 'Sărbători ale Maicii Domnului și Sfinți Patroni Naționali și Locali din toate Bisericile și tradițiile (Cruce Albastră)'
+  },
+  black: {
+    id: 'black',
+    name: 'Black',
+    name_it: 'Nero',
+    name_ro: 'Negru',
+    name_la: 'Niger',
+    name_es: 'Negro',
+    name_fr: 'Noir',
+    name_de: 'Schwarz',
+    name_pt: 'Preto',
+    name_ru: 'Черный',
+    dotClass: 'bg-stone-800 dark:bg-stone-300 ring-1 ring-stone-600 dark:ring-stone-400',
+    badgeClass: 'bg-stone-800/15 dark:bg-stone-300/15 text-stone-900 dark:text-stone-200 border-stone-700/60 dark:border-stone-400/60',
+    borderClass: 'border-stone-700/60 dark:border-stone-500/60',
+    textClass: 'text-stone-900 dark:text-stone-200 font-semibold',
+    symbol: '†',
+    desc: 'Sfinți universali cu polieleu sau doxologie mare: Părinți ai Bisericii, Apostoli și Mucenici (Cruce Neagră)'
   },
   red: {
     id: 'red',
@@ -60,18 +78,17 @@ export const LITURGICAL_COLORS = {
     dotClass: 'bg-red-600 dark:bg-red-500 ring-1 ring-red-400',
     badgeClass: 'bg-red-600/15 text-red-700 dark:text-red-300 border-red-500/60',
     borderClass: 'border-red-500/60',
-    textClass: 'text-red-600 dark:text-red-400',
+    textClass: 'text-red-600 dark:text-red-400 font-bold',
     symbol: '†',
-    desc: 'Solemnities of the Lord, Great Feasts, Apostles, Evangelists & Holy Martyrs'
+    desc: 'Praznice Împărătești și Sărbători mari cu priveghere din toată Ortodoxia (Cruce Roșie)'
   }
 };
 
-// Aliases ensuring only White, Blue, and Red ever resolve in Aura Sacra
-LITURGICAL_COLORS.purple = LITURGICAL_COLORS.white;
-LITURGICAL_COLORS.violet = LITURGICAL_COLORS.white;
-LITURGICAL_COLORS.green = LITURGICAL_COLORS.white;
-LITURGICAL_COLORS.gold = LITURGICAL_COLORS.white;
+LITURGICAL_COLORS.purple = LITURGICAL_COLORS.black;
+LITURGICAL_COLORS.violet = LITURGICAL_COLORS.black;
+LITURGICAL_COLORS.gold = LITURGICAL_COLORS.red;
 LITURGICAL_COLORS.rose = LITURGICAL_COLORS.white;
+LITURGICAL_COLORS.green = LITURGICAL_COLORS.white;
 
 export const DAILY_SAINTS_CALENDAR = {
 
@@ -3605,7 +3622,7 @@ export function getTodaySaints(confession = 'ecumenical') {
 }
 
 export function getLiturgicalColorMeta(colorKey, lang = 'it') {
-  const normKey = (colorKey === 'blue' || colorKey === 'red') ? colorKey : 'white';
+  const normKey = (colorKey === 'blue' || colorKey === 'red' || colorKey === 'black') ? colorKey : 'white';
   const meta = LITURGICAL_COLORS[normKey] || LITURGICAL_COLORS.white;
   const localizedName = (lang && meta[`name_${lang}`]) || meta.name_it || meta.name;
   return {
