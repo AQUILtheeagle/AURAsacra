@@ -6,7 +6,9 @@ export {
   TRADITION_FALLBACK_PATRONS,
   getSaintsForDate,
   getTodaySaints,
-  getLiturgicalColorMeta
+  getLiturgicalColorMeta,
+  ORTHODOX_SAINTS_CALENDAR,
+  getOrthodoxSaintsForDate
 } from './daily-saints.js';
 
 export {

@@ -2,9 +2,12 @@
 // Sourced from:
 // - Martyrologium Romanum (Editio Altera, 2004)
 // - Calendarium Romanum Generale (Missale Romanum)
-// - Sinassario Ortodosso (Synaxarion of the Eastern Orthodox Church)
+// - Sinaxarul Bisericii Ortodoxe (Synaxarion of the Eastern Orthodox Church)
 // - Evangelischer Namenkalender & Book of Common Prayer Calendar
 // 100% Fully localized with authentic patristic quotes and liturgical colors.
+
+import { getOrthodoxSaintsForDate, ORTHODOX_SAINTS_CALENDAR } from './orthodox-saints.js';
+export { getOrthodoxSaintsForDate, ORTHODOX_SAINTS_CALENDAR };
 
 export const LITURGICAL_COLORS = {
   white: {
@@ -3589,16 +3592,35 @@ export function getSaintsForDate(date, confession = 'ecumenical') {
   const key = `${m}-${d}`;
   const normConf = (confession || 'ecumenical').toLowerCase();
 
+  // 1. Strict Eastern Orthodox / Byzantine Synaxarion resolution
+  // Eastern Orthodox users must always receive canonical Orthodox saints
+  if (normConf === 'orthodox' || normConf === 'eastern') {
+    const orth = getOrthodoxSaintsForDate(date);
+    if (orth && orth.length > 0) {
+      return orth.map(s => ({
+        ...s,
+        dateStr: `${m}/${d}`,
+        colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
+      }));
+    }
+  }
+
   const dayFeasts = DAILY_SAINTS_CALENDAR[key] || [];
 
-  // Filter feasts matching the active tradition
+  // 2. Filter Western / Ecumenical feasts matching the active tradition
   const matched = dayFeasts.filter(s => {
+    if (normConf === 'catholic') {
+      return s.traditions.includes('catholic') || s.traditions.includes('traditional') || s.traditions.includes('all');
+    }
+    if (normConf === 'traditional') {
+      return s.traditions.includes('traditional') || s.traditions.includes('catholic') || s.traditions.includes('all');
+    }
+    if (normConf === 'protestant') {
+      return s.traditions.includes('protestant') || s.traditions.includes('ecumenical') || s.traditions.includes('all');
+    }
+    if (normConf === 'ecumenical') return true;
     if (!s.traditions || s.traditions.includes('all')) return true;
     if (s.traditions.includes(normConf)) return true;
-    if (normConf === 'traditional' && (s.traditions.includes('catholic') || s.traditions.includes('traditional'))) return true;
-    if (normConf === 'catholic' && s.traditions.includes('traditional')) return true;
-    if (normConf === 'eastern' && s.traditions.includes('orthodox')) return true;
-    if (normConf === 'ecumenical') return true;
     return false;
   });
 
@@ -3610,8 +3632,7 @@ export function getSaintsForDate(date, confession = 'ecumenical') {
     }));
   }
 
-  // If there are feasts for this day but none matched the strict confession filter,
-  // return the primary feast of this day instead of an artificial fallback patron!
+  // 3. If there are feasts for this day in the primary calendar, return them
   if (dayFeasts.length > 0) {
     return dayFeasts.map(s => ({
       ...s,
@@ -3620,7 +3641,17 @@ export function getSaintsForDate(date, confession = 'ecumenical') {
     }));
   }
 
-  // Fallback tradition-specific patron for ordinary ferias
+  // 4. For ecumenical or unassigned days, consult the universal early church feast
+  const orthFallback = getOrthodoxSaintsForDate(date);
+  if (orthFallback && orthFallback.length > 0) {
+    return orthFallback.map(s => ({
+      ...s,
+      dateStr: `${m}/${d}`,
+      colorMeta: LITURGICAL_COLORS[s.color] || LITURGICAL_COLORS.white
+    }));
+  }
+
+  // 5. Fallback tradition-specific patron for ordinary ferias
   const fallbackList = TRADITION_FALLBACK_PATRONS[normConf] || TRADITION_FALLBACK_PATRONS.ecumenical;
   const fallbackIndex = (m * 31 + d) % fallbackList.length;
   const patron = fallbackList[fallbackIndex];

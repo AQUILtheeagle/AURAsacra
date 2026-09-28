@@ -1,5 +1,5 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
-const CACHE_NAME = 'aura-sacra-v1.2.8';
+const CACHE_NAME = 'aura-sacra-v1.2.9';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -34,6 +34,7 @@ const ASSETS_TO_CACHE = [
   './js/data/saints.js',
   './js/data/saints-i18n.js',
   './js/data/daily-saints.js',
+  './js/data/orthodox-saints.js',
   './js/components/navbar.js',
   './js/components/sidebar.js',
   './js/components/bottom-nav.js',

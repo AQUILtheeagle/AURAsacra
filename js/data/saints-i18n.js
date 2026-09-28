@@ -3184,6 +3184,21 @@ export function translateSaintTitle(rawTitle, lang = 'it', fallbackTitle = '') {
 
   let trans = rawTitle;
   const tokens = [
+    ['Great Martyr', { it: 'Grande Martire', es: 'Gran Mártir', fr: 'Grand Martyr', de: 'Großmärtyrer', pt: 'Grande Mártir', ro: 'Mare Mucenic', la: 'Magnus Martyr', ru: 'Великомученик' }],
+    ['Hieromartyr', { it: 'Ieromartire', es: 'Hieromártir', fr: 'Hiéromartyr', de: 'Hieromärtyrer', pt: 'Hieromártir', ro: 'Sfințit Mucenic', la: 'Hieromartyr', ru: 'Священномученик' }],
+    ['Venerable-Martyr', { it: 'Venerabile Martire', es: 'Venerable Mártir', fr: 'Vénérable Martyr', de: 'Ehrwürdiger Märtyrer', pt: 'Venerável Mártir', ro: 'Cuvios Mucenic', la: 'Venerabilis Martyr', ru: 'Преподобномученик' }],
+    ['Equal-to-the-Apostles', { it: 'Eguale agli Apostoli', es: 'Igual a los Apóstoles', fr: 'Égal aux Apôtres', de: 'Apostelgleicher', pt: 'Igual aos Apóstolos', ro: 'Întocmai cu Apostolii', la: 'Aequalis Apostolis', ru: 'Равноапостольный' }],
+    ['Unmercenary', { it: 'Anargiro (Gratuito)', es: 'Anárgiro', fr: 'Anargyre', de: 'Uneigennütziger Arzt', pt: 'Anárgiro', ro: 'Doctor fără de arginți', la: 'Anargyros', ru: 'Бессребреник' }],
+    ['Wonderworker', { it: 'Taumaturgo', es: 'Taumaturgo', fr: 'Thaumaturge', de: 'Wundertäter', pt: 'Taumaturgo', ro: 'Făcător de minuni', la: 'Thaumaturgus', ru: 'Чудотворец' }],
+    ['Confessor', { it: 'Confessore', es: 'Confesor', fr: 'Confesseur', de: 'Bekenner', pt: 'Confessor', ro: 'Mărturisitor', la: 'Confessor', ru: 'Исповедник' }],
+    ['Prophet', { it: 'Profeta', es: 'Profeta', fr: 'Prophète', de: 'Prophet', pt: 'Profeta', ro: 'Proroc', la: 'Propheta', ru: 'Пророк' }],
+    ['Protomartyr', { it: 'Protomartire', es: 'Protomártir', fr: 'Protomartyr', de: 'Erstmärtyrer', pt: 'Protomártir', ro: 'Întâiul Mucenic', la: 'Protomartyr', ru: 'Первомученик' }],
+    ['Archdeacon', { it: 'Arcidiacono', es: 'Archidiácono', fr: 'Archidiacre', de: 'Erzdiakon', pt: 'Arquidiácono', ro: 'Arhidiacon', la: 'Archidiaconus', ru: 'Архидиакон' }],
+    ['Archbishop', { it: 'Arcivescovo', es: 'Arzobispo', fr: 'Archevêque', de: 'Erzbischof', pt: 'Arcebispo', ro: 'Arhiepiscop', la: 'Archiepiscopus', ru: 'Архиепископ' }],
+    ['Metropolitan', { it: 'Metropolita', es: 'Metropolita', fr: 'Métropolite', de: 'Metropolit', pt: 'Metropolita', ro: 'Mitropolit', la: 'Metropolita', ru: 'Митрополит' }],
+    ['Patriarch', { it: 'Patriarca', es: 'Patriarca', fr: 'Patriarche', de: 'Patriarch', pt: 'Patriarca', ro: 'Patriarh', la: 'Patriarcha', ru: 'Патриарх' }],
+    ['Stylite', { it: 'Stilita', es: 'Estilita', fr: 'Stylite', de: 'Stylit', pt: 'Estilita', ro: 'Stâlpnic', la: 'Stylita', ru: 'Столпник' }],
+    ['Venerable', { it: 'Venerabile', es: 'Venerable', fr: 'Vénérable', de: 'Ehrwürdiger', pt: 'Venerável', ro: 'Cuvios', la: 'Venerabilis', ru: 'Преподобный' }],
     ['Apostle and Evangelist', { it: 'Apostolo ed Evangelista', es: 'Apóstol y Evangelista', fr: 'Apôtre et Évangéliste', de: 'Apostel und Evangelist', pt: 'Apóstolo e Evangelista', ro: 'Apostol și Evanghelist', la: 'Apostolus et Evangelista', ru: 'Апостол и Евангелист' }],
     ['Doctor of the Church', { it: 'Dottore della Chiesa', es: 'Doctor de la Iglesia', fr: "Docteur de l'Église", de: 'Kirchenlehrer', pt: 'Doutor da Igreja', ro: 'Învățător al Bisericii', la: 'Ecclesiae Doctor', ru: 'Учитель Церкви' }],
     ['Bishop and Martyr', { it: 'Vescovo e Martire', es: 'Obispo y Mártir', fr: 'Évêque et Martyr', de: 'Bischof und Märtyrer', pt: 'Bispo e Mártir', ro: 'Episcop și Mucenic', la: 'Episcopus et Martyr', ru: 'Епископ и Священномученик' }],
