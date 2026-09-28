@@ -63,80 +63,15 @@ export const LITURGICAL_COLORS = {
     textClass: 'text-red-400 dark:text-red-300',
     symbol: '🔴',
     desc: 'Holy Apostles, Evangelists & Martyrs of the Christian Faith'
-  },
-  purple: {
-    id: 'purple',
-    name: 'Purple',
-    name_it: 'Viola',
-    name_ro: 'Violet',
-    name_la: 'Purpureus',
-    name_es: 'Morado',
-    name_fr: 'Violet',
-    name_de: 'Violett',
-    name_pt: 'Roxo',
-    name_ru: 'Фиолетовый',
-    dotClass: 'bg-purple-600 ring-1 ring-purple-400',
-    badgeClass: 'bg-purple-600/20 text-purple-400 border-purple-500/60',
-    borderClass: 'border-purple-500/60',
-    textClass: 'text-purple-400 dark:text-purple-300',
-    symbol: '🟣',
-    desc: 'Penitential days, Advent & Lent'
-  },
-  green: {
-    id: 'green',
-    name: 'Green',
-    name_it: 'Verde',
-    name_ro: 'Verde',
-    name_la: 'Viridis',
-    name_es: 'Verde',
-    name_fr: 'Vert',
-    name_de: 'Grün',
-    name_pt: 'Verde',
-    name_ru: 'Зеленый',
-    dotClass: 'bg-stone-100 ring-1 ring-stone-300 dark:ring-stone-600',
-    badgeClass: 'bg-stone-100/15 text-stone-100 border-stone-300/60 dark:border-stone-500/80',
-    borderClass: 'border-stone-300/80 dark:border-stone-600/80',
-    textClass: 'text-stone-100 dark:text-stone-100',
-    symbol: '⚪',
-    desc: 'Ordinary Time & Hope of Resurrection'
-  },
-  rose: {
-    id: 'rose',
-    name: 'Rose',
-    name_it: 'Rosa',
-    name_ro: 'Roz',
-    name_la: 'Rosaceus',
-    name_es: 'Rosa',
-    name_fr: 'Rose',
-    name_de: 'Rosa',
-    name_pt: 'Rosa',
-    name_ru: 'Розовый',
-    dotClass: 'bg-pink-500 ring-1 ring-pink-400',
-    badgeClass: 'bg-pink-600/20 text-pink-400 border-pink-500/60',
-    borderClass: 'border-pink-500/60',
-    textClass: 'text-pink-400 dark:text-pink-300',
-    symbol: '🌸',
-    desc: 'Gaudete & Laetare Sundays'
-  },
-  gold: {
-    id: 'gold',
-    name: 'Gold',
-    name_it: 'Oro',
-    name_ro: 'Auriu',
-    name_la: 'Aureus',
-    name_es: 'Dorado',
-    name_fr: 'Or',
-    name_de: 'Gold',
-    name_pt: 'Dourado',
-    name_ru: 'Золотой',
-    dotClass: 'bg-stone-100 ring-1 ring-stone-300 dark:ring-stone-600',
-    badgeClass: 'bg-stone-100/15 text-stone-100 border-stone-300/60 dark:border-stone-500/80',
-    borderClass: 'border-stone-300/80 dark:border-stone-600/80',
-    textClass: 'text-stone-100 dark:text-stone-100',
-    symbol: '⚪',
-    desc: 'Solemnities of highest dignity, Easter & Christmas'
   }
 };
+
+// Aliases ensuring only White, Blue, and Red ever resolve in Aura Sacra
+LITURGICAL_COLORS.purple = LITURGICAL_COLORS.white;
+LITURGICAL_COLORS.violet = LITURGICAL_COLORS.white;
+LITURGICAL_COLORS.green = LITURGICAL_COLORS.white;
+LITURGICAL_COLORS.gold = LITURGICAL_COLORS.white;
+LITURGICAL_COLORS.rose = LITURGICAL_COLORS.white;
 
 export const DAILY_SAINTS_CALENDAR = {
 
@@ -2923,8 +2858,8 @@ export const DAILY_SAINTS_CALENDAR = {
       name_la: "Vigilia Omnium Sanctorum",
       name_ro: "Ajunul Tuturor Sfin\u021bilor",
       title: "Expectation of the Heavenly City",
-      title_it: "Attesa Orante della Citt\u00e0 Celeste",
-      color: "violet",
+      title_it: "Attesa Orante della Città Celeste",
+      color: "white",
       rank: "memorial",
       quote: "\u00abBlessed are the pure in heart, for they shall see God.\u00bb",
       quote_it: "\u00abBeati i puri di cuore, perch\u00e9 vedranno Dio.\u00bb",
@@ -2964,7 +2899,7 @@ export const DAILY_SAINTS_CALENDAR = {
       name_ro: "Pomenirea Tuturor Credincio\u0219ilor R\u0103posa\u021bi",
       title: "Prayer for the Souls of the Departed in Christ",
       title_it: "Preghiera e Suffragio per i Fratelli e le Sorelle Addormentati nel Signore",
-      color: "violet",
+      color: "white",
       rank: "feast",
       quote: "\u00abI am the resurrection, and the life: he that believeth in me, though he were dead, yet shall he live: And whosoever liveth and believeth in me shall never die.\u00bb",
       quote_it: "\u00abIo sono la risurrezione e la vita; chi crede in me, anche se muore, vivr\u00e0; chiunque vive e crede in me, non morir\u00e0 in eterno.\u00bb",
@@ -3670,7 +3605,8 @@ export function getTodaySaints(confession = 'ecumenical') {
 }
 
 export function getLiturgicalColorMeta(colorKey, lang = 'it') {
-  const meta = LITURGICAL_COLORS[colorKey] || LITURGICAL_COLORS.white;
+  const normKey = (colorKey === 'blue' || colorKey === 'red') ? colorKey : 'white';
+  const meta = LITURGICAL_COLORS[normKey] || LITURGICAL_COLORS.white;
   const localizedName = (lang && meta[`name_${lang}`]) || meta.name_it || meta.name;
   return {
     ...meta,

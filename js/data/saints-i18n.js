@@ -3006,52 +3006,15 @@ export const COLORS_I18N = {
     "de": "Rot",
     "pt": "Vermelho",
     "ru": "Красный"
-  },
-  "purple": {
-    "en": "Purple",
-    "it": "Viola",
-    "ro": "Violet",
-    "la": "Purpureus",
-    "es": "Morado",
-    "fr": "Violet",
-    "de": "Violett",
-    "pt": "Roxo",
-    "ru": "Фиолетовый"
-  },
-  "green": {
-    "en": "Green",
-    "it": "Verde",
-    "ro": "Verde",
-    "la": "Viridis",
-    "es": "Verde",
-    "fr": "Vert",
-    "de": "Grün",
-    "pt": "Verde",
-    "ru": "Зеленый"
-  },
-  "rose": {
-    "en": "Rose",
-    "it": "Rosa",
-    "ro": "Roz",
-    "la": "Rosaceus",
-    "es": "Rosa",
-    "fr": "Rose",
-    "de": "Rosa",
-    "pt": "Rosa",
-    "ru": "Розовый"
-  },
-  "gold": {
-    "en": "Gold",
-    "it": "Oro",
-    "ro": "Auriu",
-    "la": "Aureus",
-    "es": "Dorado",
-    "fr": "Or",
-    "de": "Gold",
-    "pt": "Dourado",
-    "ru": "Золотой"
   }
 };
+
+// Fallback aliases ensuring only White, Blue, Red exist in Aura Sacra
+COLORS_I18N.purple = COLORS_I18N.white;
+COLORS_I18N.violet = COLORS_I18N.white;
+COLORS_I18N.green = COLORS_I18N.white;
+COLORS_I18N.gold = COLORS_I18N.white;
+COLORS_I18N.rose = COLORS_I18N.white;
 
 export const RANKS_I18N = {
   "solemnity": {
@@ -3128,7 +3091,8 @@ export function localizeScriptureRef(scriptureRef, lang = 'it') {
 }
 
 export function getLocalizedColorName(colorKey, lang = 'it') {
-  const col = COLORS_I18N[colorKey] || COLORS_I18N.white;
+  const norm = (colorKey === 'blue' || colorKey === 'red') ? colorKey : 'white';
+  const col = COLORS_I18N[norm] || COLORS_I18N.white;
   return col[lang] || col.it || col.en;
 }
 
