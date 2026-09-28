@@ -2,12 +2,13 @@
 import { BIBLE_BOOKS, SCRIPTURE_TEXTS, ensureFullBibleLoaded, getLoadedBibleBooks } from '../data/scriptures.js';
 import { SUPPORTED_BIBLES, getDefaultBibleForLanguage, getArchivalChapter } from '../data/scripture-archives.js';
 import { icons } from '../icons.js';
-import { getHighlights, saveHighlight, removeHighlight } from '../db.js';
+import { getHighlights, saveHighlight, removeHighlight, getSetting } from '../db.js';
 import { getLanguage, t, onLanguageChange } from '../i18n.js';
 
 let activeBookId = 'matt';
 let activeChapter = 5;
 let activeBibleVersion = null;
+let activeCanon = null;
 let activeHighlights = [];
 const selectedVerses = new Set();
 let lastLoadedLang = null;
@@ -46,6 +47,18 @@ export async function renderBibleReader(container, onOpenShareCard) {
     activeBibleVersion = getDefaultBibleForLanguage(currentLang);
     lastLoadedLang = currentLang;
   }
+  if (!activeCanon) {
+    const userConfession = await getSetting('user_confession', 'ecumenical');
+    if (userConfession === 'catholic' || userConfession === 'traditional') {
+      activeCanon = 'catholic';
+    } else if (userConfession === 'orthodox') {
+      activeCanon = 'orthodox';
+    } else if (userConfession === 'protestant') {
+      activeCanon = 'protestant';
+    } else {
+      activeCanon = 'all';
+    }
+  }
   await ensureFullBibleLoaded(activeBibleVersion);
 
   const norm = normalizeBookAndChapter(activeBookId, activeChapter);
@@ -53,6 +66,22 @@ export async function renderBibleReader(container, onOpenShareCard) {
   activeChapter = norm.chapter;
 
   activeHighlights = await getHighlights(activeBookId, activeChapter);
+
+  function filterBooksByCanon(books, canonId) {
+    if (!canonId || canonId === 'all') return books;
+    if (canonId === 'protestant') {
+      return books.filter((b) => b.testament !== 'Deuterocanon & Apocrypha');
+    }
+    if (canonId === 'catholic') {
+      const catholicDeut = ['tob', 'jdt', 'wis', 'sir', 'bar', '1macc', '2macc'];
+      return books.filter((b) => b.testament !== 'Deuterocanon & Apocrypha' || catholicDeut.includes(b.id));
+    }
+    if (canonId === 'orthodox') {
+      const orthodoxDeut = ['tob', 'jdt', 'wis', 'sir', 'bar', '1macc', '2macc', '1esd', 'man', 'prazar', 'sus', 'bel'];
+      return books.filter((b) => b.testament !== 'Deuterocanon & Apocrypha' || orthodoxDeut.includes(b.id));
+    }
+    return books;
+  }
 
   function getCitationRange(bookTitle, chapterNum, verseNums) {
     if (!verseNums || verseNums.length === 0) return `${bookTitle} ${chapterNum}`;
@@ -85,9 +114,10 @@ export async function renderBibleReader(container, onOpenShareCard) {
   async function updateView() {
     await ensureFullBibleLoaded(activeBibleVersion);
 
-    const activeBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+    const allAvailableBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+    const activeBooks = filterBooksByCanon(allAvailableBooks, activeCanon);
     const currentBookIndex = activeBooks.findIndex((b) => b.id === activeBookId);
-    const book = currentBookIndex >= 0 ? activeBooks[currentBookIndex] : (BIBLE_BOOKS.find((b) => b.id === activeBookId) || BIBLE_BOOKS[2]);
+    const book = currentBookIndex >= 0 ? activeBooks[currentBookIndex] : (activeBooks[0] || BIBLE_BOOKS[0]);
     activeBookId = book.id;
 
     const availableChapters = book.chapters || [1];
@@ -159,15 +189,21 @@ export async function renderBibleReader(container, onOpenShareCard) {
           <!-- Top Row: Bible Version & Status Badge -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-4">
             
-            <!-- Version Selector with Icon -->
-            <div class="flex items-center gap-2 flex-1 min-w-0">
+            <!-- Version & Canon Selectors with Icon -->
+            <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 flex-1 min-w-0">
               <span class="text-amber-600 flex-shrink-0">${icons.book('w-5 h-5')}</span>
-              <select id="select-bible-version" class="flex-1 min-w-0 w-full max-w-full bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('reader.canonicalArchive', 'Historic Canonical Scripture Archive')}">
+              <select id="select-bible-version" class="flex-1 min-w-[130px] bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('reader.canonicalArchive', 'Historic Canonical Scripture Archive')}">
                 ${SUPPORTED_BIBLES.map((b) => `
                   <option value="${b.id}" ${b.id === activeBibleVersion ? 'selected' : ''}>
                     ${b.flag} ${b.label} — ${b.name}
                   </option>
                 `).join('')}
+              </select>
+              <select id="select-bible-canon" class="w-auto min-w-[130px] bg-[var(--bg-secondary)] border border-stone-300 dark:border-stone-700 rounded-xl px-2.5 py-2 text-xs font-semibold text-[var(--text-primary)] focus:outline-none focus:border-amber-600 cursor-pointer shadow-sm truncate notranslate" translate="no" title="${t('reader.canon', 'Scripture Canon')}">
+                <option value="catholic" ${activeCanon === 'catholic' ? 'selected' : ''}>🕊️ ${t('reader.canonCatholic', 'Catholic (73)')}</option>
+                <option value="orthodox" ${activeCanon === 'orthodox' ? 'selected' : ''}>☦️ ${t('reader.canonOrthodox', 'Orthodox (78)')}</option>
+                <option value="protestant" ${activeCanon === 'protestant' ? 'selected' : ''}>📖 ${t('reader.canonProtestant', 'Protestant (66)')}</option>
+                <option value="all" ${activeCanon === 'all' ? 'selected' : ''}>🏛️ ${t('reader.canonAll', 'All Books (80)')}</option>
               </select>
             </div>
 
@@ -406,11 +442,28 @@ export async function renderBibleReader(container, onOpenShareCard) {
       });
     }
 
+    // 0b. Scripture Canon Selector Change
+    const canonSelect = container.querySelector('#select-bible-canon');
+    if (canonSelect) {
+      canonSelect.addEventListener('change', async (e) => {
+        activeCanon = e.target.value;
+        const allAvailableBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+        const currentActiveBooks = filterBooksByCanon(allAvailableBooks, activeCanon);
+        if (!currentActiveBooks.some((b) => b.id === activeBookId)) {
+          activeBookId = currentActiveBooks[0]?.id || 'gen';
+          activeChapter = 1;
+        }
+        selectedVerses.clear();
+        await updateView();
+      });
+    }
+
     // 1. Book Selector Change
     container.querySelector('#select-bible-book').addEventListener('change', async (e) => {
       activeBookId = e.target.value;
-      const activeBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
-      const targetBook = activeBooks.find((b) => b.id === activeBookId) || BIBLE_BOOKS.find((b) => b.id === activeBookId);
+      const allAvailableBooks = getLoadedBibleBooks(activeBibleVersion) || BIBLE_BOOKS;
+      const currentActiveBooks = filterBooksByCanon(allAvailableBooks, activeCanon);
+      const targetBook = currentActiveBooks.find((b) => b.id === activeBookId) || allAvailableBooks.find((b) => b.id === activeBookId);
       activeChapter = targetBook?.chapters?.[0] || 1;
       selectedVerses.clear();
       activeHighlights = await getHighlights(activeBookId, activeChapter);
@@ -432,7 +485,7 @@ export async function renderBibleReader(container, onOpenShareCard) {
         if (currentChapterIndex > 0) {
           activeChapter = availableChapters[currentChapterIndex - 1];
         } else if (currentBookIndex > 0) {
-          const prevBook = BIBLE_BOOKS[currentBookIndex - 1];
+          const prevBook = activeBooks[currentBookIndex - 1];
           activeBookId = prevBook.id;
           activeChapter = prevBook.chapters[prevBook.chapters.length - 1];
         }
@@ -448,10 +501,10 @@ export async function renderBibleReader(container, onOpenShareCard) {
       nextBtn.addEventListener('click', async () => {
         if (currentChapterIndex < availableChapters.length - 1) {
           activeChapter = availableChapters[currentChapterIndex + 1];
-        } else if (currentBookIndex < BIBLE_BOOKS.length - 1) {
-          const nextBook = BIBLE_BOOKS[currentBookIndex + 1];
+        } else if (currentBookIndex < activeBooks.length - 1) {
+          const nextBook = activeBooks[currentBookIndex + 1];
           activeBookId = nextBook.id;
-          activeChapter = nextBook.chapters[0];
+          activeChapter = nextBook.chapters[0] || 1;
         }
         selectedVerses.clear();
         activeHighlights = await getHighlights(activeBookId, activeChapter);

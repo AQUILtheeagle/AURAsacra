@@ -189,6 +189,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Send anonymous suggestions directly via GitHub Issues'
     },
     reader: {
+      canon: 'Scripture Canon',
+      canonAll: 'All Books (80)',
+      canonCatholic: 'Catholic (73)',
+      canonOrthodox: 'Orthodox (78)',
+      canonProtestant: 'Protestant (66)',
       testamentOld: 'Old Testament',
       testamentDeut: 'Deuterocanon & Apocrypha',
       testamentWisdom: 'Wisdom & Poetry',
@@ -625,6 +630,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Invia suggerimenti e segnalazioni anonime direttamente tramite GitHub Issues'
     },
     reader: {
+      canon: 'Canone Scritturale',
+      canonAll: 'Tutti i Libri (80)',
+      canonCatholic: 'Cattolico (73)',
+      canonOrthodox: 'Ortodosso (78)',
+      canonProtestant: 'Protestante (66)',
       testamentOld: 'Antico Testamento',
       testamentDeut: 'Deuterocanonici e Apocrifi',
       testamentWisdom: 'Sapienza e Poesia',
@@ -1061,6 +1071,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Trimite propuneri sau semnalări anonime direct pe GitHub Issues'
     },
     reader: {
+      canon: 'Canonul Biblic',
+      canonAll: 'Toate Cărți (80)',
+      canonCatholic: 'Catolic (73)',
+      canonOrthodox: 'Ortodox (78)',
+      canonProtestant: 'Protestant (66)',
       testamentOld: 'Vechiul Testament',
       testamentDeut: 'Deuterocanonice și Cărți Neincluse',
       testamentWisdom: 'Înțelepciune și Poezie',
@@ -1497,6 +1512,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Envoyez vos suggestions et signalements directement via GitHub Issues'
     },
     reader: {
+      canon: 'Canon des Écritures',
+      canonAll: 'Tous les Livres (80)',
+      canonCatholic: 'Catholique (73)',
+      canonOrthodox: 'Orthodoxe (78)',
+      canonProtestant: 'Protestant (66)',
       testamentOld: 'Ancien Testament',
       testamentDeut: 'Deutérocanoniques et Apocryphes',
       testamentWisdom: 'Sagesse et Poésie',
@@ -1933,6 +1953,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Envía sugerencias o incidencias directamente mediante GitHub Issues'
     },
     reader: {
+      canon: 'Canon Bíblico',
+      canonAll: 'Todos los Libros (80)',
+      canonCatholic: 'Católico (73)',
+      canonOrthodox: 'Ortodoxo (78)',
+      canonProtestant: 'Protestante (66)',
       testamentOld: 'Antiguo Testamento',
       testamentDeut: 'Deuterocanónicos y Apócrifos',
       testamentWisdom: 'Sabiduría y Poesía',
@@ -2369,6 +2394,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Envie sugestões ou reporte falhas diretamente via GitHub Issues'
     },
     reader: {
+      canon: 'Cânon Bíblico',
+      canonAll: 'Todos os Livros (80)',
+      canonCatholic: 'Católico (73)',
+      canonOrthodox: 'Ortodoxo (78)',
+      canonProtestant: 'Protestante (66)',
       testamentOld: 'Antigo Testamento',
       testamentDeut: 'Deuterocanônicos e Apócrifos',
       testamentWisdom: 'Sabedoria e Poesia',
@@ -2805,6 +2835,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Sende Vorschläge oder Fehlerberichte direkt über GitHub Issues'
     },
     reader: {
+      canon: 'Biblischer Kanon',
+      canonAll: 'Alle Bücher (80)',
+      canonCatholic: 'Katholisch (73)',
+      canonOrthodox: 'Orthodox (78)',
+      canonProtestant: 'Protestantisch (66)',
       testamentOld: 'Altes Testament',
       testamentDeut: 'Spätschriften und Apokryphen',
       testamentWisdom: 'Weisheit und Dichtung',
@@ -3240,6 +3275,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Направляйте предложения и замечания прямо через GitHub Issues'
     },
     reader: {
+      canon: 'Библейский канон',
+      canonAll: 'Все книги (80)',
+      canonCatholic: 'Католический (73)',
+      canonOrthodox: 'Православный (78)',
+      canonProtestant: 'Протестантский (66)',
       testamentOld: 'Ветхий Завет',
       testamentDeut: 'Второканонические Книги',
       testamentWisdom: 'Учительные Книги и Псалтирь',
@@ -3676,6 +3716,11 @@ export const TRANSLATIONS = {
       feedbackDesc: 'Mitte consilia aut relationes directe per GitHub Issues'
     },
     reader: {
+      canon: 'Canon Scripturae',
+      canonAll: 'Omnes Libri (80)',
+      canonCatholic: 'Catholicus (73)',
+      canonOrthodox: 'Orthodoxus (78)',
+      canonProtestant: 'Protestanticus (66)',
       testamentOld: 'Vetus Testamentum',
       testamentDeut: 'Libri Deuterocanonici',
       testamentWisdom: 'Sapientia et Poesis',
