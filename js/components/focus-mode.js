@@ -1,4 +1,4 @@
-// Focus & Work with God Component (Candle + Procedural Rain + Pomodoro)
+// Focus & Work with God Component (Candle + Procedural Rain + Focus Timer)
 import { icons } from '../icons.js';
 import { toggleRain, isPlayingRain, setRainVolume, getRainVolume, playMonasticBell } from '../audio-engine.js';
 import { t } from '../i18n.js';
@@ -60,7 +60,7 @@ export function renderFocusMode(container) {
             <!-- Preset Buttons -->
             <div class="flex items-center gap-2 mt-4 text-xs font-sans">
               <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 cursor-pointer" data-min="15">15 min</button>
-              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 font-bold text-amber-600 cursor-pointer" data-min="25">25 min (Pomodoro)</button>
+              <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 font-bold text-amber-600 cursor-pointer" data-min="25">25 min</button>
               <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 cursor-pointer" data-min="45">45 min</button>
               <button class="preset-btn px-3 py-1 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-amber-600 cursor-pointer" data-min="60">60 min</button>
             </div>
