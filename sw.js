@@ -1,11 +1,12 @@
 // Aura Sacra Service Worker - 100% Offline & Airplane Mode Resilient
-const CACHE_NAME = 'aura-sacra-v1.4.5';
+const CACHE_NAME = 'aura-sacra-v1.4.6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './candle-popup.html',
   './manifest.json',
   './css/style.css',
+  './js/tailwindcss.js',
   './js/app.js',
   './js/i18n.js',
   './js/db.js',
@@ -59,8 +60,7 @@ const ASSETS_TO_CACHE = [
   './icons/favicon.png',
   './icons/logo.png',
   './icons/icon-192.png',
-  './icons/icon-512.png',
-  'https://cdn.tailwindcss.com'
+  './icons/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {

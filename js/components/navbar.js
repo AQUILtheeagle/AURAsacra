@@ -12,7 +12,7 @@ export function renderNavbar(container, state, onNavigate, onOpenModal) {
         
         <!-- Logo & Title -->
         <div class="flex items-center gap-2 sm:gap-3 cursor-pointer select-none min-w-0 flex-shrink-0" id="nav-brand">
-          <img src="./icons/logo.png" alt="Aura Sacra Logo" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-sm border border-amber-600/40 flex-shrink-0">
+          <img src="./icons/logo.png" alt="Aura Sacra Logo" width="40" height="40" style="width: 36px; height: 36px; max-width: 40px; max-height: 40px;" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-sm border border-amber-600/40 flex-shrink-0">
           <div class="min-w-0">
             <h1 class="text-base sm:text-2xl font-bold tracking-wider sm:tracking-widest text-[var(--accent-vermilion)] leading-tight whitespace-nowrap">AURA SACRA</h1>
             <p class="text-xs text-[var(--text-muted)] font-serif italic hidden sm:block">${t('nav.brandSub', 'Universal Christian Platform • 100% Offline')}</p>

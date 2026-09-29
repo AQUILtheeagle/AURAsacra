@@ -13,7 +13,7 @@ export function renderOnboardingModal(container, onComplete) {
         
         <!-- Header Section (Fixed at top of modal) -->
         <div class="p-4 sm:p-6 pb-2.5 sm:pb-3 flex-shrink-0 text-center space-y-1.5 sm:space-y-2 border-b border-stone-200/50 dark:border-stone-800/50">
-          <img src="./icons/logo.png" alt="Aura Sacra" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl mx-auto shadow-md border-2 border-amber-600/50 object-cover">
+          <img src="./icons/logo.png" alt="Aura Sacra" width="64" height="64" style="width: 56px; height: 56px; max-width: 64px; max-height: 64px;" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl mx-auto shadow-md border-2 border-amber-600/50 object-cover">
           <div>
             <h2 class="text-xl sm:text-2xl font-bold font-display text-[var(--accent-vermilion)] leading-tight">
               ${t('onboarding.welcome', 'Welcome to Aura Sacra')}
